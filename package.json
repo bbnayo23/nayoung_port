@@ -1,0 +1,17 @@
+{
+  "name": "nayoung-port",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "turbo dev --filter=port",
+    "dev:all": "turbo dev",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "lint": "turbo lint",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.18"
+  },
+  "packageManager": "pnpm@10.12.4"
+}
