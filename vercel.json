@@ -1,7 +1,4 @@
 {
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm --filter port build",
-  "outputDirectory": "packages/port/dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
