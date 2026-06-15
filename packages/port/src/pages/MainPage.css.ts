@@ -5,6 +5,7 @@ export const container = style({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '1rem',
   minHeight: '100vh',
   fontFamily: 'sans-serif',
 })

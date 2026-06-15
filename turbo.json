@@ -5,14 +5,14 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "build-storybook": {
+      "outputs": ["storybook-static/**"]
+    },
     "dev": {
-      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
-    "typecheck": {
-      "dependsOn": ["^build"]
-    },
+    "typecheck": {},
     "lint": {},
     "clean": {
       "cache": false

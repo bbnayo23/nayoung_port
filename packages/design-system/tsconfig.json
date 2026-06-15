@@ -1,0 +1,7 @@
+{
+  "extends": "@port/typescript-config/react.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src", ".storybook", "vite.lib.config.ts"]
+}

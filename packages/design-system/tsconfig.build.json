@@ -1,0 +1,13 @@
+{
+  "extends": "@port/typescript-config/library.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "types": [],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": false
+  },
+  "include": ["src"],
+  "exclude": ["**/*.stories.tsx"]
+}

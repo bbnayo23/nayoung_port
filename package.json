@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "turbo dev --filter=port",
     "dev:all": "turbo dev",
+    "dev:dashboard": "turbo dev --filter=@port/dashboard",
+    "dev:icons": "turbo dev --filter=@port/icon-library",
+    "storybook": "turbo dev --filter=@port/design-system",
     "build": "turbo build",
+    "build:storybook": "turbo build-storybook",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
     "clean": "turbo clean"
