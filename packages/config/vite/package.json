@@ -1,0 +1,30 @@
+{
+  "name": "@port/vite-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./app": {
+      "import": "./dist/app.js",
+      "types": "./dist/app.d.ts"
+    },
+    "./library": {
+      "import": "./dist/library.js",
+      "types": "./dist/library.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "vite": ">=6.0.0",
+    "@vanilla-extract/vite-plugin": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vanilla-extract/vite-plugin": "^5.2.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12"
+  }
+}
