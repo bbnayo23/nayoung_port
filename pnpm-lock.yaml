@@ -47,9 +47,6 @@ importers:
       '@port/typescript-config':
         specifier: workspace:*
         version: link:../config/typescript
-      '@port/vite-config':
-        specifier: workspace:*
-        version: link:../config/vite
       '@types/node':
         specifier: ^24.12.3
         version: 24.13.2
