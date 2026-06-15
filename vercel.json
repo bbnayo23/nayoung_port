@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "packages/port/dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
