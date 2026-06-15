@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm turbo build --filter=port",
+  "outputDirectory": "packages/port/dist",
+  "installCommand": "pnpm install"
+}
