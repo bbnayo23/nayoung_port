@@ -1,4 +1,7 @@
 {
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @port/vite-config build && pnpm --filter port build",
+  "outputDirectory": "packages/port/dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
