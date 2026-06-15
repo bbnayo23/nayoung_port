@@ -1,3 +1,7 @@
-import { createAppConfig } from '@port/vite-config/app'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 
-export default createAppConfig()
+export default defineConfig({
+  plugins: [react(), vanillaExtractPlugin()],
+})
