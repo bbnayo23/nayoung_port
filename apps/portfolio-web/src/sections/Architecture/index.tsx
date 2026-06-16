@@ -50,7 +50,7 @@ export function Architecture() {
         <h2 className={sectionTitle}>System Design</h2>
 
         <div className={grid}>
-          <div className={blockFull}>
+          <div className={blockFull} data-glass>
             <p className={blockTitle}>Monorepo Structure</p>
             <pre className={diagram}>
               <code>
@@ -65,14 +65,14 @@ export function Architecture() {
             </pre>
           </div>
 
-          <div className={block}>
+          <div className={block} data-glass>
             <p className={blockTitle}>Design System Layers</p>
             <pre className={diagram}>
               <code>{designSystemLayers}</code>
             </pre>
           </div>
 
-          <div className={block}>
+          <div className={block} data-glass>
             <p className={blockTitle}>Theme Token Structure</p>
             <div className={tokenRow}>
               {themeTokens.map((t) => (
@@ -84,7 +84,7 @@ export function Architecture() {
             </div>
           </div>
 
-          <div className={blockFull}>
+          <div className={blockFull} data-glass>
             <p className={blockTitle}>Component Rules</p>
             <ol className={ruleList}>
               {componentRules.map((rule, i) => (

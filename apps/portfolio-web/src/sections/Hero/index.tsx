@@ -1,91 +1,192 @@
-import { brand, personal, techStack } from '../../data'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { brand, personal } from '../../data'
 import {
-  section, noiseLayer, scanlines, scanBar, content,
-  sticker, stickerDot,
-  nameWrap, name,
-  manifesto, manifestoBig, initialN, initialY, manifestoSub, stamp,
-  bio, roles, roleTag, stack, chip, chipAccent, chipPurple,
-  actions, btnPrimary, btnGhost,
-  symbols, symbol, scrollHint, scrollArrow,
+  section, gridLines, content,
+  eyebrow, eyebrowAccent,
+  name, nameReg, rule, ruleAccent,
+  body, col, lead, leadSep, bio, manifesto, manifestoMark,
+  index, indexItem, indexNum, indexLabel, indexArrow,
+  actions, btnPrimary, btnGhost, footMeta,
 } from './Hero.css'
 
-export function Hero() {
+const GLYPHS = '!<>-_\\/[]{}=+*^?#§%&Ø0123456789'
+
+function scrambled(text: string) {
+  return text
+    .split('')
+    .map((c) => (c === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0]))
+    .join('')
+}
+
+/** 랜덤 글자로 지지직거리다 제자리를 찾아가는 디코딩 텍스트 */
+function Scramble({
+  text, className, playOnHover = false,
+}: { text: string; className?: string; playOnHover?: boolean }) {
+  const [display, setDisplay] = useState(() => (playOnHover ? text : scrambled(text)))
+  const raf = useRef(0)
+
+  const run = useCallback(() => {
+    cancelAnimationFrame(raf.current)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplay(text)
+      return
+    }
+    let tick = 0
+    const step = () => {
+      tick++
+      const revealed = tick * 0.25
+      let out = ''
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i]
+        out += c === ' ' ? ' ' : i < revealed ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0]
+      }
+      setDisplay(out)
+      if (revealed < text.length) raf.current = requestAnimationFrame(step)
+      else setDisplay(text)
+    }
+    raf.current = requestAnimationFrame(step)
+  }, [text])
+
+  useLayoutEffect(() => {
+    if (!playOnHover) run()
+    return () => cancelAnimationFrame(raf.current)
+  }, [run, playOnHover])
+
   return (
-    <section id="hero" className={section} aria-label="Introduction">
-      <div className={noiseLayer} aria-hidden="true" />
-      <div className={scanlines} aria-hidden="true" />
-      <div className={scanBar} aria-hidden="true" />
+    <span className={className} onMouseEnter={playOnHover ? run : undefined}>
+      {display}
+    </span>
+  )
+}
 
-      {/* 도형 심볼 — 글리치 포스터의 기하 기호 */}
-      <div className={symbols} aria-hidden="true">
-        <svg className={symbol} viewBox="0 0 34 34" fill="none">
-          <circle cx="17" cy="17" r="14" stroke="currentColor" strokeWidth="2" />
-        </svg>
-        <svg className={symbol} viewBox="0 0 34 34" fill="none">
-          <rect x="4" y="4" width="26" height="26" stroke="currentColor" strokeWidth="2" />
-          <circle cx="17" cy="17" r="4" fill="currentColor" />
-        </svg>
-        <svg className={symbol} viewBox="0 0 34 34" fill="none">
-          <path d="M17 4 L31 30 H3 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-        </svg>
-        <svg className={symbol} viewBox="0 0 34 34" fill="none">
-          <path d="M6 6 L28 28 M28 6 L6 28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-        <svg className={symbol} viewBox="0 0 34 34" fill="none">
-          <rect x="5" y="5" width="24" height="24" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </div>
+const indexLinks = [
+  { num: '01', label: 'Career', href: '#career' },
+  { num: '02', label: 'Projects', href: '#projects' },
+  { num: '03', label: 'Architecture', href: '#architecture' },
+  { num: '04', label: 'Playground', href: '#playground' },
+]
 
-      <div className={content}>
-        <span className={sticker}>
-          <span className={stickerDot} aria-hidden="true" />
-          REC · Available for opportunities
-        </span>
+export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
-        <div className={nameWrap}>
-          <h1 className={name} data-text={personal.nameEn}>
-            {personal.nameEn}
-          </h1>
+  useEffect(() => {
+    const sec = sectionRef.current
+    const stage = contentRef.current
+    if (!sec || !stage) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    // 1) 3D 패럴랙스 틸트 (rAF 보간)
+    let targetRx = 0, targetRy = 0, curRx = 0, curRy = 0, raf = 0
+    const onMove = (e: MouseEvent) => {
+      const r = sec.getBoundingClientRect()
+      const x = e.clientX - r.left
+      const y = e.clientY - r.top
+      targetRx = (x / r.width - 0.5) * 10
+      targetRy = -(y / r.height - 0.5) * 10
+    }
+    const onLeave = () => {
+      targetRx = 0
+      targetRy = 0
+    }
+    const loop = () => {
+      curRx += (targetRx - curRx) * 0.08
+      curRy += (targetRy - curRy) * 0.08
+      stage.style.setProperty('--rx', `${curRx.toFixed(2)}deg`)
+      stage.style.setProperty('--ry', `${curRy.toFixed(2)}deg`)
+      raf = requestAnimationFrame(loop)
+    }
+    sec.addEventListener('mousemove', onMove)
+    sec.addEventListener('mouseleave', onLeave)
+    raf = requestAnimationFrame(loop)
+
+    // 2) 마그네틱 버튼
+    const btns = Array.from(sec.querySelectorAll<HTMLElement>('[data-magnetic]'))
+    const btnCleanups = btns.map((btn) => {
+      const move = (e: MouseEvent) => {
+        const r = btn.getBoundingClientRect()
+        const mx = (e.clientX - (r.left + r.width / 2)) * 0.3
+        const my = (e.clientY - (r.top + r.height / 2)) * 0.4
+        btn.style.setProperty('--mx', `${mx.toFixed(1)}px`)
+        btn.style.setProperty('--my', `${my.toFixed(1)}px`)
+      }
+      const leave = () => {
+        btn.style.setProperty('--mx', '0px')
+        btn.style.setProperty('--my', '0px')
+      }
+      btn.addEventListener('mousemove', move)
+      btn.addEventListener('mouseleave', leave)
+      return () => {
+        btn.removeEventListener('mousemove', move)
+        btn.removeEventListener('mouseleave', leave)
+      }
+    })
+
+    return () => {
+      cancelAnimationFrame(raf)
+      sec.removeEventListener('mousemove', onMove)
+      sec.removeEventListener('mouseleave', onLeave)
+      btnCleanups.forEach((fn) => fn())
+    }
+  }, [])
+
+  return (
+    <section id="hero" ref={sectionRef} className={section} aria-label="Introduction">
+      <div className={gridLines} aria-hidden="true" />
+
+      <div ref={contentRef} className={content}>
+        <div className={eyebrow}>
+          <span>Portfolio — <Scramble text={brand.expansion} className={eyebrowAccent} /></span>
+          <span>{personal.location}</span>
         </div>
 
-        <div className={manifesto}>
-          <p className={manifestoBig} data-text="Next Yourself.">
-            <span className={initialN}>N</span>ext{' '}
-            <span className={initialY}>Y</span>ourself.
-          </p>
-          <span className={stamp} aria-hidden="true">{brand.monogram}</span>
-          <span className={manifestoSub}>{brand.manifesto[1]} {brand.manifesto[2]}</span>
+        <h1 className={name}>
+          <Scramble text={personal.nameEn} />
+          <span className={nameReg} aria-hidden="true">®</span>
+        </h1>
+
+        <div className={rule} aria-hidden="true">
+          <span className={ruleAccent} />
         </div>
 
-        <p className={bio}>{personal.bio}</p>
-
-        <div className={roles} aria-label="Roles">
-          {personal.roles.map((r) => (
-            <span key={r} className={roleTag}>{r}</span>
-          ))}
-        </div>
-
-        <div className={stack} aria-label="Tech stack">
-          {techStack.map((tech) => (
-            <span
-              key={tech.name}
-              className={`${chip} ${tech.type === 'ai' ? chipPurple : tech.type === 'lang' ? chipAccent : ''}`}
-            >
-              {tech.name}
+        <div className={body}>
+          <div className={col}>
+            <p className={lead}>
+              {personal.roles.map((r, i) => (
+                <span key={r}>
+                  {r}
+                  {i < personal.roles.length - 1 && <span className={leadSep}>/</span>}
+                </span>
+              ))}
+            </p>
+            <p className={bio}>{personal.bio}</p>
+            <span className={manifesto}>
+              <span className={manifestoMark}>{brand.monogram}</span>
+              {brand.manifesto.join(' ')}
             </span>
-          ))}
-        </div>
 
-        <div className={actions}>
-          <a href="#projects" className={btnPrimary}>View Projects →</a>
-          <a href={`mailto:${personal.email}`} className={btnGhost}>Get in touch</a>
+            <div className={actions}>
+              <a href="#projects" className={btnPrimary} data-magnetic>View Work ↗</a>
+              <a href={`mailto:${personal.email}`} className={btnGhost} data-magnetic>Get in touch</a>
+            </div>
+          </div>
+
+          <nav className={index} aria-label="Sections">
+            {indexLinks.map((l) => (
+              <a key={l.href} href={l.href} className={indexItem}>
+                <span className={indexNum}>{l.num}</span>
+                <Scramble text={l.label} className={indexLabel} playOnHover />
+                <span className={indexArrow} aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
 
-      <span className={scrollHint} aria-hidden="true">
-        <span className={scrollArrow}>↓</span>
-        scroll
-      </span>
+      <div className={footMeta} aria-hidden="true">
+        <span>Available for opportunities</span>
+        <span>© 2026 — {personal.nameEn}</span>
+      </div>
     </section>
   )
 }

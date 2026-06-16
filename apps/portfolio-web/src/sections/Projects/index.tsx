@@ -22,7 +22,7 @@ export function Projects() {
 
         <div className={grid}>
           {projects.map((project) => (
-            <article key={project.id} className={card}>
+            <article key={project.id} className={card} data-glass>
               <div className={cardHeader}>
                 <h3 className={cardName}>{project.name}</h3>
                 <span className={statusBadge[project.status]}>

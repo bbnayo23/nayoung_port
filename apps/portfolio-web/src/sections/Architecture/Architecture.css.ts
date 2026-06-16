@@ -1,158 +1,156 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../styles/tokens.css'
+import { swiss } from '../../styles/swiss'
+import { glassPanel } from '../../styles/glass.css'
 
 export const section = style({
-  paddingTop: vars.space['24'],
-  paddingBottom: vars.space['24'],
-  paddingLeft: vars.space['8'],
-  paddingRight: vars.space['8'],
+  paddingBlock: '104px',
+  paddingInline: '56px',
+  borderTop: `1px solid ${swiss.color.line}`,
   '@media': {
-    'screen and (max-width: 768px)': {
-      paddingTop: vars.space['16'],
-      paddingBottom: vars.space['16'],
-      paddingLeft: vars.space['5'],
-      paddingRight: vars.space['5'],
-    },
+    'screen and (max-width: 900px)': { paddingBlock: '72px', paddingInline: '28px' },
+    'screen and (max-width: 560px)': { paddingInline: '20px' },
   },
 })
 
 export const inner = style({
-  maxWidth: '960px',
+  maxWidth: '1240px',
   margin: '0 auto',
 })
 
 export const sectionTag = style({
-  display: 'inline-block',
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
-  color: vars.color.textTertiary,
+  display: 'inline-flex',
+  alignItems: 'center',
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
   letterSpacing: '0.1em',
   textTransform: 'uppercase',
-  marginBottom: vars.space['3'],
+  color: swiss.color.inkSoft,
+  marginBottom: '20px',
+  selectors: {
+    '&::before': {
+      content: '""',
+      display: 'inline-block',
+      width: '8px',
+      height: '8px',
+      marginRight: '10px',
+      backgroundImage: swiss.gradient,
+    },
+  },
 })
 
 export const sectionTitle = style({
-  fontSize: vars.fontSize['3xl'],
-  fontWeight: 700,
-  letterSpacing: '-1px',
-  color: vars.color.text,
-  marginBottom: vars.space['16'],
+  fontFamily: swiss.font.sans,
+  fontWeight: 800,
+  fontSize: 'clamp(36px, 6vw, 76px)',
+  lineHeight: '0.95',
+  letterSpacing: '-0.035em',
+  textTransform: 'uppercase',
+  color: swiss.color.ink,
+  marginBottom: '56px',
   '@media': {
-    'screen and (max-width: 640px)': {
-      fontSize: vars.fontSize['2xl'],
-      marginBottom: vars.space['10'],
-    },
+    'screen and (max-width: 640px)': { marginBottom: '40px' },
   },
 })
 
 export const grid = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: vars.space['4'],
+  gap: '20px',
   '@media': {
-    'screen and (max-width: 700px)': {
-      gridTemplateColumns: '1fr',
-    },
+    'screen and (max-width: 700px)': { gridTemplateColumns: '1fr' },
   },
 })
 
-export const block = style({
-  padding: vars.space['6'],
-  borderRadius: vars.radius.xl,
-  border: `1px solid ${vars.color.border}`,
-  background: vars.color.surface,
-})
+export const block = style([glassPanel, {
+  padding: '28px',
+  borderRadius: '16px',
+}])
 
-export const blockFull = style({
+export const blockFull = style([glassPanel, {
+  padding: '28px',
+  borderRadius: '16px',
   gridColumn: '1 / -1',
-  padding: vars.space['6'],
-  borderRadius: vars.radius.xl,
-  border: `1px solid ${vars.color.border}`,
-  background: vars.color.surface,
-})
+}])
 
 export const blockTitle = style({
-  fontSize: vars.fontSize.sm,
-  fontFamily: vars.font.mono,
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
   fontWeight: 500,
-  color: vars.color.textSecondary,
-  marginBottom: vars.space['5'],
-  letterSpacing: '0.05em',
+  color: swiss.color.inkSoft,
+  marginBottom: '20px',
+  letterSpacing: '0.06em',
   textTransform: 'uppercase',
 })
 
 export const diagram = style({
-  fontFamily: vars.font.mono,
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textSecondary,
-  lineHeight: vars.lineHeight.relaxed,
-  background: vars.color.bg,
-  borderRadius: vars.radius.lg,
-  padding: vars.space['5'],
-  border: `1px solid ${vars.color.border}`,
+  fontFamily: swiss.font.mono,
+  fontSize: '13px',
+  color: swiss.color.inkSoft,
+  lineHeight: '1.75',
+  background: swiss.color.paperAlt,
+  borderRadius: '2px',
+  padding: '20px',
+  border: `1px solid ${swiss.color.line}`,
   overflowX: 'auto',
   whiteSpace: 'pre',
 })
 
 export const diagramHighlight = style({
-  color: vars.color.accent,
+  color: swiss.color.accent,
+  fontWeight: 600,
 })
 
 export const tokenRow = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.space['3'],
 })
 
 export const tokenItem = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: vars.space['3'],
-  paddingTop: vars.space['3'],
-  paddingBottom: vars.space['3'],
-  borderBottom: `1px solid ${vars.color.border}`,
-  ':last-child': {
-    borderBottom: 'none',
-  },
+  gap: '12px',
+  padding: '12px 0',
+  borderBottom: `1px solid ${swiss.color.line}`,
+  ':last-child': { borderBottom: 'none' },
 })
 
 export const tokenName = style({
-  fontSize: vars.fontSize.sm,
-  fontFamily: vars.font.mono,
-  color: vars.color.text,
+  fontSize: '13px',
+  fontFamily: swiss.font.mono,
+  color: swiss.color.ink,
 })
 
 export const tokenValue = style({
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
-  color: vars.color.textTertiary,
+  fontSize: '12px',
+  fontFamily: swiss.font.mono,
+  color: swiss.color.inkFaint,
   textAlign: 'right',
 })
 
 export const ruleList = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.space['3'],
+  gap: '14px',
 })
 
 export const ruleItem = style({
   display: 'flex',
-  gap: vars.space['3'],
+  gap: '14px',
   alignItems: 'flex-start',
 })
 
 export const ruleNum = style({
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
-  color: vars.color.accent,
-  fontWeight: 500,
-  minWidth: '20px',
-  paddingTop: '1px',
+  fontSize: '12px',
+  fontFamily: swiss.font.mono,
+  color: swiss.color.accent,
+  fontWeight: 600,
+  minWidth: '22px',
+  paddingTop: '2px',
 })
 
 export const ruleText = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textSecondary,
-  lineHeight: vars.lineHeight.normal,
+  fontSize: '14px',
+  color: swiss.color.inkSoft,
+  lineHeight: '1.6',
 })

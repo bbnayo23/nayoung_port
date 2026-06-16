@@ -23,7 +23,7 @@ export function Playground() {
 
         <div className={grid}>
           {playgroundItems.map((item) => (
-            <article key={item.id} className={card}>
+            <article key={item.id} className={card} data-glass>
               <div className={cardIcon} aria-hidden="true">
                 {icons[item.id]}
               </div>

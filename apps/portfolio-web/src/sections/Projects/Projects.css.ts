@@ -1,164 +1,156 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../styles/tokens.css'
+import { swiss } from '../../styles/swiss'
+import { glassPanel } from '../../styles/glass.css'
 
 export const section = style({
-  paddingTop: vars.space['24'],
-  paddingBottom: vars.space['24'],
-  paddingLeft: vars.space['8'],
-  paddingRight: vars.space['8'],
-  background: vars.color.bgSecondary,
+  paddingBlock: '104px',
+  paddingInline: '56px',
+  background: swiss.glass.tint,
+  borderTop: `1px solid ${swiss.color.line}`,
   '@media': {
-    'screen and (max-width: 768px)': {
-      paddingTop: vars.space['16'],
-      paddingBottom: vars.space['16'],
-      paddingLeft: vars.space['5'],
-      paddingRight: vars.space['5'],
-    },
+    'screen and (max-width: 900px)': { paddingBlock: '72px', paddingInline: '28px' },
+    'screen and (max-width: 560px)': { paddingInline: '20px' },
   },
 })
 
 export const inner = style({
-  maxWidth: '960px',
+  maxWidth: '1240px',
   margin: '0 auto',
 })
 
 export const sectionTag = style({
-  display: 'inline-block',
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
-  color: vars.color.textTertiary,
+  display: 'inline-flex',
+  alignItems: 'center',
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
   letterSpacing: '0.1em',
   textTransform: 'uppercase',
-  marginBottom: vars.space['3'],
+  color: swiss.color.inkSoft,
+  marginBottom: '20px',
+  selectors: {
+    '&::before': {
+      content: '""',
+      display: 'inline-block',
+      width: '8px',
+      height: '8px',
+      marginRight: '10px',
+      backgroundImage: swiss.gradient,
+    },
+  },
 })
 
 export const sectionTitle = style({
-  fontSize: vars.fontSize['3xl'],
-  fontWeight: 700,
-  letterSpacing: '-1px',
-  color: vars.color.text,
-  marginBottom: vars.space['16'],
+  fontFamily: swiss.font.sans,
+  fontWeight: 800,
+  fontSize: 'clamp(36px, 6vw, 76px)',
+  lineHeight: '0.95',
+  letterSpacing: '-0.035em',
+  textTransform: 'uppercase',
+  color: swiss.color.ink,
+  marginBottom: '56px',
   '@media': {
-    'screen and (max-width: 640px)': {
-      fontSize: vars.fontSize['2xl'],
-      marginBottom: vars.space['10'],
-    },
+    'screen and (max-width: 640px)': { marginBottom: '40px' },
   },
 })
 
 export const grid = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: vars.space['4'],
+  gap: '20px',
   '@media': {
-    'screen and (max-width: 700px)': {
-      gridTemplateColumns: '1fr',
-    },
+    'screen and (max-width: 700px)': { gridTemplateColumns: '1fr' },
   },
 })
 
-export const card = style({
+export const card = style([glassPanel, {
   display: 'flex',
   flexDirection: 'column',
-  padding: vars.space['6'],
-  borderRadius: vars.radius.xl,
-  border: `1px solid ${vars.color.border}`,
-  background: vars.color.surface,
-  transition: `border-color ${vars.transition.base}, background ${vars.transition.base}`,
-  ':hover': {
-    borderColor: vars.color.borderHover,
-    background: vars.color.surfaceHover,
+  padding: '28px',
+  borderRadius: '16px',
+  selectors: {
+    '&:hover': {
+      borderColor: `${swiss.color.accent}66`,
+      boxShadow: '0 24px 54px rgba(13,148,136,0.16), inset 0 1px 0 rgba(255,255,255,0.75)',
+    },
   },
-})
+}])
 
 export const cardHeader = style({
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  gap: vars.space['3'],
-  marginBottom: vars.space['3'],
+  gap: '12px',
+  marginBottom: '14px',
 })
 
 export const cardName = style({
-  fontSize: vars.fontSize.lg,
-  fontWeight: 600,
-  color: vars.color.text,
+  fontFamily: swiss.font.sans,
+  fontSize: '22px',
+  fontWeight: 700,
+  letterSpacing: '-0.02em',
+  color: swiss.color.ink,
 })
 
 const statusBase = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: vars.space['1'],
-  paddingTop: vars.space['1'],
-  paddingBottom: vars.space['1'],
-  paddingLeft: vars.space['2'],
-  paddingRight: vars.space['2'],
-  borderRadius: vars.radius.full,
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
+  gap: '5px',
+  padding: '4px 9px',
+  borderRadius: '2px',
+  fontSize: '11px',
+  fontFamily: swiss.font.mono,
   fontWeight: 500,
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
   border: '1px solid',
   whiteSpace: 'nowrap',
   flexShrink: 0,
 })
 
 export const statusBadge = styleVariants({
-  shipped: [statusBase, {
-    color: vars.color.green,
-    background: vars.color.greenSubtle,
-    borderColor: vars.color.greenBorder,
-  }],
-  'in-progress': [statusBase, {
-    color: vars.color.accent,
-    background: vars.color.accentSubtle,
-    borderColor: vars.color.accentBorder,
-  }],
-  experiment: [statusBase, {
-    color: vars.color.purple,
-    background: vars.color.purpleSubtle,
-    borderColor: vars.color.purpleBorder,
-  }],
+  shipped: [statusBase, { color: swiss.color.ink, borderColor: swiss.color.ink }],
+  'in-progress': [statusBase, { color: swiss.color.accent, borderColor: `${swiss.color.accent}66` }],
+  experiment: [statusBase, { color: swiss.color.inkSoft, borderColor: swiss.color.line, borderStyle: 'dashed' }],
 })
 
 export const cardTagline = style({
-  fontSize: vars.fontSize.sm,
-  fontFamily: vars.font.mono,
-  color: vars.color.textTertiary,
-  marginBottom: vars.space['3'],
+  fontSize: '13px',
+  fontFamily: swiss.font.mono,
+  color: swiss.color.inkFaint,
+  marginBottom: '14px',
 })
 
 export const cardDesc = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textSecondary,
-  lineHeight: vars.lineHeight.relaxed,
+  fontSize: '14px',
+  color: swiss.color.inkSoft,
+  lineHeight: '1.7',
   flexGrow: 1,
-  marginBottom: vars.space['5'],
+  marginBottom: '24px',
 })
 
 export const cardFooter = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: vars.space['3'],
+  gap: '12px',
   marginTop: 'auto',
 })
 
 export const cardTags = style({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: vars.space['2'],
+  gap: '8px',
 })
 
 export const cardLink = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: vars.space['1'],
-  fontSize: vars.fontSize.sm,
-  color: vars.color.accent,
-  fontWeight: 500,
+  gap: '5px',
+  fontFamily: swiss.font.sans,
+  fontSize: '14px',
+  fontWeight: 600,
+  color: swiss.color.ink,
   whiteSpace: 'nowrap',
-  transition: `color ${vars.transition.fast}`,
-  ':hover': {
-    color: vars.color.accentHover,
-  },
+  transition: `color 0.3s ease, transform 0.4s ${swiss.ease.smooth}`,
+  ':hover': { color: swiss.color.accent, transform: 'translateX(3px)' },
 })

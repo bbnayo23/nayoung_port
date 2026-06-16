@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css'
-import { vars } from './tokens.css'
+import { swiss } from './swiss'
 
 globalStyle('*, *::before, *::after', {
   boxSizing: 'border-box',
@@ -12,15 +12,18 @@ globalStyle('html', {
   textRendering: 'optimizeLegibility',
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
-  colorScheme: 'dark',
+  colorScheme: 'light',
 })
 
 globalStyle('body', {
-  fontFamily: vars.font.sans,
-  fontSize: vars.fontSize.base,
-  lineHeight: vars.lineHeight.normal,
-  color: vars.color.text,
-  background: vars.color.bg,
+  fontFamily: swiss.font.sans,
+  fontSize: '16px',
+  lineHeight: 1.6,
+  color: swiss.color.ink,
+  backgroundColor: swiss.color.paper,
+  backgroundImage: swiss.mesh,
+  backgroundAttachment: 'fixed',
+  backgroundRepeat: 'no-repeat',
   overflowX: 'hidden',
   minHeight: '100dvh',
 })
@@ -52,30 +55,31 @@ globalStyle('ul, ol', {
 })
 
 globalStyle('h1, h2, h3, h4, h5, h6', {
-  fontWeight: 600,
-  lineHeight: vars.lineHeight.tight,
+  fontWeight: 700,
+  lineHeight: 1.1,
 })
 
 globalStyle(':focus-visible', {
-  outline: `2px solid ${vars.color.accent}`,
+  outline: `2px solid ${swiss.color.accent}`,
   outlineOffset: '3px',
-  borderRadius: vars.radius.sm,
+  borderRadius: '2px',
 })
 
 globalStyle('::selection', {
-  background: vars.color.accentSubtle,
-  color: vars.color.text,
+  background: swiss.color.accent,
+  color: swiss.color.paper,
 })
 
 globalStyle('::-webkit-scrollbar', {
-  width: '6px',
+  width: '10px',
 })
 
 globalStyle('::-webkit-scrollbar-track', {
-  background: 'transparent',
+  background: swiss.color.paper,
 })
 
 globalStyle('::-webkit-scrollbar-thumb', {
-  background: vars.color.surface,
-  borderRadius: vars.radius.full,
+  background: swiss.color.paperAlt,
+  border: `2px solid ${swiss.color.paper}`,
+  borderRadius: '999px',
 })

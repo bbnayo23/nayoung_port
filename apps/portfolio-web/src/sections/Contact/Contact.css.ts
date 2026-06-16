@@ -1,147 +1,164 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../styles/tokens.css'
+import { swiss } from '../../styles/swiss'
 
 export const section = style({
-  paddingTop: vars.space['24'],
-  paddingBottom: vars.space['24'],
-  paddingLeft: vars.space['8'],
-  paddingRight: vars.space['8'],
+  paddingBlock: '104px',
+  paddingInline: '56px',
+  borderTop: `1px solid ${swiss.color.line}`,
   '@media': {
-    'screen and (max-width: 768px)': {
-      paddingTop: vars.space['16'],
-      paddingBottom: vars.space['16'],
-      paddingLeft: vars.space['5'],
-      paddingRight: vars.space['5'],
-    },
+    'screen and (max-width: 900px)': { paddingBlock: '72px', paddingInline: '28px' },
+    'screen and (max-width: 560px)': { paddingInline: '20px' },
   },
 })
 
 export const inner = style({
-  maxWidth: '960px',
+  maxWidth: '1240px',
   margin: '0 auto',
 })
 
 export const sectionTag = style({
-  display: 'inline-block',
-  fontSize: vars.fontSize.xs,
-  fontFamily: vars.font.mono,
-  color: vars.color.textTertiary,
+  display: 'inline-flex',
+  alignItems: 'center',
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
   letterSpacing: '0.1em',
   textTransform: 'uppercase',
-  marginBottom: vars.space['3'],
-})
-
-export const sectionTitle = style({
-  fontSize: vars.fontSize['3xl'],
-  fontWeight: 700,
-  letterSpacing: '-1px',
-  color: vars.color.text,
-  marginBottom: vars.space['4'],
-  '@media': {
-    'screen and (max-width: 640px)': {
-      fontSize: vars.fontSize['2xl'],
+  color: swiss.color.inkSoft,
+  marginBottom: '20px',
+  selectors: {
+    '&::before': {
+      content: '""',
+      display: 'inline-block',
+      width: '8px',
+      height: '8px',
+      marginRight: '10px',
+      backgroundImage: swiss.gradient,
     },
   },
 })
 
+export const sectionTitle = style({
+  fontFamily: swiss.font.sans,
+  fontWeight: 800,
+  fontSize: 'clamp(40px, 8vw, 96px)',
+  lineHeight: '0.95',
+  letterSpacing: '-0.035em',
+  textTransform: 'uppercase',
+  color: swiss.color.ink,
+  marginBottom: '16px',
+})
+
 export const sectionDesc = style({
-  fontSize: vars.fontSize.lg,
-  color: vars.color.textSecondary,
-  lineHeight: vars.lineHeight.normal,
-  maxWidth: '480px',
-  marginBottom: vars.space['12'],
+  fontSize: '18px',
+  color: swiss.color.inkSoft,
+  lineHeight: '1.6',
+  maxWidth: '500px',
+  marginBottom: '48px',
   '@media': {
-    'screen and (max-width: 640px)': {
-      fontSize: vars.fontSize.md,
-    },
+    'screen and (max-width: 640px)': { fontSize: '16px' },
   },
 })
 
 export const links = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.space['3'],
-  maxWidth: '480px',
+  borderTop: `1px solid ${swiss.color.ink}`,
+  maxWidth: '640px',
 })
 
 export const link = style({
+  position: 'relative',
+  overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  paddingTop: vars.space['5'],
-  paddingBottom: vars.space['5'],
-  paddingLeft: vars.space['5'],
-  paddingRight: vars.space['5'],
-  borderRadius: vars.radius.xl,
-  border: `1px solid ${vars.color.border}`,
-  background: vars.color.surface,
-  color: vars.color.text,
-  transition: `border-color ${vars.transition.base}, background ${vars.transition.base}`,
-  ':hover': {
-    borderColor: vars.color.borderHover,
-    background: vars.color.surfaceHover,
+  padding: '24px 4px',
+  borderBottom: `1px solid ${swiss.color.line}`,
+  color: swiss.color.ink,
+  transition: `padding-left 0.45s ${swiss.ease.smooth}, background 0.3s ease`,
+  selectors: {
+    // 대각선 샤인 스윕
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: '-60%',
+      width: '40%',
+      height: '100%',
+      background: `linear-gradient(105deg, transparent, ${swiss.color.accentSoft}33, transparent)`,
+      transform: 'skewX(-18deg)',
+      transition: `left 0.6s ${swiss.ease.smooth}`,
+      pointerEvents: 'none',
+    },
+    '&:hover': { paddingLeft: '18px', background: `${swiss.color.accentSoft}10` },
+    '&:hover::before': { left: '120%' },
   },
 })
 
 export const linkLeft = style({
   display: 'flex',
   alignItems: 'center',
-  gap: vars.space['4'],
+  gap: '18px',
 })
 
 export const linkIcon = style({
-  width: '36px',
-  height: '36px',
-  borderRadius: vars.radius.md,
-  background: vars.color.surface,
-  border: `1px solid ${vars.color.border}`,
+  width: '40px',
+  height: '40px',
+  borderRadius: '2px',
+  background: 'transparent',
+  border: `1px solid ${swiss.color.line}`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: vars.fontSize.md,
+  fontSize: '16px',
   flexShrink: 0,
 })
 
 export const linkLabel = style({
-  fontSize: vars.fontSize.base,
-  fontWeight: 500,
-  color: vars.color.text,
+  fontFamily: swiss.font.sans,
+  fontSize: '17px',
+  fontWeight: 600,
+  color: swiss.color.ink,
 })
 
 export const linkValue = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textSecondary,
-  fontFamily: vars.font.mono,
+  fontSize: '13px',
+  color: swiss.color.inkSoft,
+  fontFamily: swiss.font.mono,
 })
 
 export const linkArrow = style({
-  color: vars.color.textTertiary,
-  fontSize: vars.fontSize.md,
+  color: swiss.color.inkFaint,
+  fontSize: '18px',
+  transition: `transform 0.4s ${swiss.ease.smooth}, color 0.3s ease`,
+  selectors: {
+    [`${link}:hover &`]: { transform: 'translate(4px, -4px)', color: swiss.color.accent },
+  },
 })
 
 export const footer = style({
-  marginTop: vars.space['20'],
-  paddingTop: vars.space['6'],
-  borderTop: `1px solid ${vars.color.border}`,
+  marginTop: '80px',
+  paddingTop: '24px',
+  borderTop: `1px solid ${swiss.color.line}`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: vars.space['4'],
+  gap: '16px',
+  fontFamily: swiss.font.mono,
   '@media': {
-    'screen and (max-width: 500px)': {
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-    },
+    'screen and (max-width: 500px)': { flexDirection: 'column', alignItems: 'flex-start' },
   },
 })
 
 export const footerLeft = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textTertiary,
-  fontFamily: vars.font.mono,
+  fontSize: '13px',
+  color: swiss.color.ink,
+  fontFamily: swiss.font.mono,
 })
 
 export const footerRight = style({
-  fontSize: vars.fontSize.sm,
-  color: vars.color.textTertiary,
+  fontSize: '12px',
+  color: swiss.color.inkFaint,
+  textTransform: 'uppercase',
+  letterSpacing: '0.06em',
 })

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { glitch } from '../../styles/glitch'
+import { swiss } from '../../styles/swiss'
 
 export const header = style({
   position: 'fixed',
@@ -7,38 +7,38 @@ export const header = style({
   left: 0,
   right: 0,
   zIndex: 100,
-  height: '60px',
+  height: '64px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  paddingInline: '40px',
-  color: glitch.color.text,
+  paddingInline: '56px',
+  color: swiss.color.ink,
   borderBottom: '1px solid transparent',
-  transition: 'background 0.2s ease, border-color 0.2s ease',
+  transition: `background 0.45s ${swiss.ease.smooth}, border-color 0.45s ${swiss.ease.smooth}`,
   '@media': {
-    'screen and (max-width: 768px)': { paddingInline: '20px' },
+    'screen and (max-width: 900px)': { paddingInline: '28px' },
+    'screen and (max-width: 560px)': { paddingInline: '20px' },
   },
 })
 
 export const headerScrolled = style({
-  background: 'rgba(10, 10, 11, 0.8)',
-  backdropFilter: 'blur(12px)',
-  WebkitBackdropFilter: 'blur(12px)',
-  borderBottomColor: glitch.color.line,
+  background: swiss.glass.bg,
+  backdropFilter: swiss.glass.blur,
+  WebkitBackdropFilter: swiss.glass.blur,
+  borderBottomColor: `${swiss.color.accent}33`,
 })
 
 export const logo = style({
   display: 'inline-flex',
   alignItems: 'baseline',
-  fontFamily: glitch.font.display,
-  fontSize: '24px',
-  letterSpacing: '0.5px',
+  fontFamily: swiss.font.sans,
+  fontSize: '20px',
+  fontWeight: 800,
+  letterSpacing: '-0.03em',
   textTransform: 'lowercase',
-  color: glitch.color.text,
-  transition: 'text-shadow 0.18s ease',
-  ':hover': {
-    textShadow: `-2px 0 ${glitch.color.red}, 2px 0 ${glitch.color.cyan}`,
-  },
+  color: swiss.color.ink,
+  transition: `color 0.3s ease`,
+  ':hover': { color: swiss.color.accent },
 })
 
 export const logoExpand = style({
@@ -47,12 +47,13 @@ export const logoExpand = style({
   maxWidth: 0,
   opacity: 0,
   whiteSpace: 'nowrap',
-  fontFamily: glitch.font.mono,
-  fontSize: '13px',
-  letterSpacing: '0.06em',
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
+  fontWeight: 400,
+  letterSpacing: '0.04em',
   textTransform: 'uppercase',
-  color: glitch.color.cyan,
-  transition: 'max-width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease, margin-left 0.35s cubic-bezier(0.16,1,0.3,1)',
+  color: swiss.color.accent,
+  transition: `max-width 0.4s ${swiss.ease.soft}, opacity 0.3s ease, margin-left 0.4s ${swiss.ease.soft}`,
   selectors: {
     [`${logo}:hover &`]: { maxWidth: '160px', opacity: 1, marginLeft: '10px' },
   },
@@ -67,7 +68,7 @@ export const nav = style({
 export const navList = style({
   display: 'flex',
   alignItems: 'center',
-  gap: '22px',
+  gap: '24px',
   '@media': {
     'screen and (max-width: 600px)': { display: 'none' },
   },
@@ -75,24 +76,25 @@ export const navList = style({
 
 export const navLink = style({
   position: 'relative',
-  fontFamily: glitch.font.mono,
-  fontSize: '13px',
-  color: glitch.color.textDim,
-  transition: 'color 0.2s ease',
+  fontFamily: swiss.font.sans,
+  fontSize: '14px',
+  fontWeight: 500,
+  color: swiss.color.inkSoft,
+  transition: 'color 0.3s ease',
   selectors: {
     '&::after': {
       content: '""',
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: '-4px',
+      bottom: '-5px',
       height: '2px',
-      background: glitch.color.cyan,
+      background: swiss.color.accent,
       transformOrigin: 'left center',
       transform: 'scaleX(0)',
-      transition: 'transform 0.25s cubic-bezier(0.16,1,0.3,1)',
+      transition: `transform 0.35s ${swiss.ease.soft}`,
     },
-    '&:hover': { color: glitch.color.text },
+    '&:hover': { color: swiss.color.ink },
     '&:hover::after': { transform: 'scaleX(1)' },
   },
 })
@@ -100,18 +102,19 @@ export const navLink = style({
 export const contactBtn = style({
   display: 'inline-flex',
   alignItems: 'center',
-  padding: '8px 16px',
-  fontFamily: glitch.font.mono,
-  fontSize: '13px',
-  letterSpacing: '0.04em',
-  color: glitch.color.text,
-  background: 'transparent',
-  border: `1px solid ${glitch.color.line}`,
-  transition: 'border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease',
+  padding: '9px 18px',
+  fontFamily: swiss.font.sans,
+  fontSize: '14px',
+  fontWeight: 600,
+  color: swiss.color.paper,
+  background: swiss.color.ink,
+  border: `1px solid ${swiss.color.ink}`,
+  borderRadius: '2px',
+  transition: `background 0.3s ease, border-color 0.3s ease, transform 0.4s ${swiss.ease.smooth}`,
   ':hover': {
-    borderColor: glitch.color.cyan,
-    color: glitch.color.cyan,
-    boxShadow: `0 0 16px ${glitch.color.cyan}33`,
+    background: swiss.color.accent,
+    borderColor: swiss.color.accent,
+    transform: 'translateY(-2px)',
   },
   '@media': {
     'screen and (max-width: 400px)': { display: 'none' },
