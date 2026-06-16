@@ -1,5 +1,5 @@
 {
-  "outputDirectory": "packages/port/dist",
+  "outputDirectory": "apps/portfolio-web/dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "turbo dev --filter=port",
+    "dev": "turbo dev --filter=@port/portfolio-web",
     "dev:all": "turbo dev",
     "dev:dashboard": "turbo dev --filter=@port/dashboard",
     "dev:icons": "turbo dev --filter=@port/icon-library",
@@ -12,9 +12,12 @@
     "build:storybook": "turbo build-storybook",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
     "turbo": "^2.9.18"
   },
   "packageManager": "pnpm@10.12.4"

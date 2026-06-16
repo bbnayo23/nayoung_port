@@ -1,3 +1,3 @@
 {
-  "typescript.tsdk": "packages/port/node_modules/typescript/lib"
+  "typescript.tsdk": "apps/portfolio-web/node_modules/typescript/lib"
 }
