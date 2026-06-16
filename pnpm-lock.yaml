@@ -18,11 +18,139 @@ importers:
         specifier: ^2.9.18
         version: 2.9.18
 
+  apps/dashboard:
+    dependencies:
+      '@port/design-system':
+        specifier: workspace:*
+        version: link:../design-system
+      '@port/icon-library':
+        specifier: workspace:*
+        version: link:../icon-library
+      react:
+        specifier: ^19.2.6
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.7(react@19.2.7)
+    devDependencies:
+      '@port/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/config/eslint
+      '@port/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/config/typescript
+      '@port/vite-config':
+        specifier: workspace:*
+        version: link:../../packages/config/vite
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      eslint:
+        specifier: ^10.3.0
+        version: 10.5.0
+      typescript:
+        specifier: ~6.0.2
+        version: 6.0.3
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
+
+  apps/design-system:
+    dependencies:
+      '@port/icon-library':
+        specifier: workspace:*
+        version: link:../icon-library
+      '@vanilla-extract/css':
+        specifier: ^1.20.1
+        version: 1.20.1
+    devDependencies:
+      '@port/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/config/eslint
+      '@port/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/config/typescript
+      '@port/vite-config':
+        specifier: workspace:*
+        version: link:../../packages/config/vite
+      '@storybook/addon-a11y':
+        specifier: ^10.3.4
+        version: 10.4.4(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
+      '@storybook/addon-docs':
+        specifier: ^10.3.4
+        version: 10.4.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0))
+      '@storybook/react-vite':
+        specifier: ^10.3.4
+        version: 10.4.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@6.0.3)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0))
+      '@types/node':
+        specifier: ^24.12.3
+        version: 24.13.2
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      eslint:
+        specifier: ^10.3.0
+        version: 10.5.0
+      react:
+        specifier: ^19.2.6
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.7(react@19.2.7)
+      storybook:
+        specifier: ^10.3.4
+        version: 10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      typescript:
+        specifier: ~6.0.2
+        version: 6.0.3
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
+
+  apps/icon-library:
+    devDependencies:
+      '@port/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/config/eslint
+      '@port/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/config/typescript
+      '@port/vite-config':
+        specifier: workspace:*
+        version: link:../../packages/config/vite
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      eslint:
+        specifier: ^10.3.0
+        version: 10.5.0
+      react:
+        specifier: ^19.2.6
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.7(react@19.2.7)
+      typescript:
+        specifier: ~6.0.2
+        version: 6.0.3
+      vite:
+        specifier: ^8.0.12
+        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
+
   apps/portfolio-web:
     dependencies:
       '@port/design-system':
         specifier: workspace:*
-        version: link:../../packages/design-system
+        version: link:../design-system
       '@vanilla-extract/css':
         specifier: ^1.20.1
         version: 1.20.1
@@ -92,134 +220,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.0.1
         version: 6.0.2(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0))
-      vite:
-        specifier: ^8.0.12
-        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
-
-  packages/dashboard:
-    dependencies:
-      '@port/design-system':
-        specifier: workspace:*
-        version: link:../design-system
-      '@port/icon-library':
-        specifier: workspace:*
-        version: link:../icon-library
-      react:
-        specifier: ^19.2.6
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.6
-        version: 19.2.7(react@19.2.7)
-    devDependencies:
-      '@port/eslint-config':
-        specifier: workspace:*
-        version: link:../config/eslint
-      '@port/typescript-config':
-        specifier: workspace:*
-        version: link:../config/typescript
-      '@port/vite-config':
-        specifier: workspace:*
-        version: link:../config/vite
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.17
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.17)
-      eslint:
-        specifier: ^10.3.0
-        version: 10.5.0
-      typescript:
-        specifier: ~6.0.2
-        version: 6.0.3
-      vite:
-        specifier: ^8.0.12
-        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
-
-  packages/design-system:
-    dependencies:
-      '@port/icon-library':
-        specifier: workspace:*
-        version: link:../icon-library
-      '@vanilla-extract/css':
-        specifier: ^1.20.1
-        version: 1.20.1
-    devDependencies:
-      '@port/eslint-config':
-        specifier: workspace:*
-        version: link:../config/eslint
-      '@port/typescript-config':
-        specifier: workspace:*
-        version: link:../config/typescript
-      '@port/vite-config':
-        specifier: workspace:*
-        version: link:../config/vite
-      '@storybook/addon-a11y':
-        specifier: ^10.3.4
-        version: 10.4.4(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))
-      '@storybook/addon-docs':
-        specifier: ^10.3.4
-        version: 10.4.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0))
-      '@storybook/react-vite':
-        specifier: ^10.3.4
-        version: 10.4.4(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(storybook@10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@6.0.3)(vite@8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0))
-      '@types/node':
-        specifier: ^24.12.3
-        version: 24.13.2
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.17
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.17)
-      eslint:
-        specifier: ^10.3.0
-        version: 10.5.0
-      react:
-        specifier: ^19.2.6
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.6
-        version: 19.2.7(react@19.2.7)
-      storybook:
-        specifier: ^10.3.4
-        version: 10.4.4(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      typescript:
-        specifier: ~6.0.2
-        version: 6.0.3
-      vite:
-        specifier: ^8.0.12
-        version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
-
-  packages/icon-library:
-    devDependencies:
-      '@port/eslint-config':
-        specifier: workspace:*
-        version: link:../config/eslint
-      '@port/typescript-config':
-        specifier: workspace:*
-        version: link:../config/typescript
-      '@port/vite-config':
-        specifier: workspace:*
-        version: link:../config/vite
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.17
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.17)
-      eslint:
-        specifier: ^10.3.0
-        version: 10.5.0
-      react:
-        specifier: ^19.2.6
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.6
-        version: 19.2.7(react@19.2.7)
-      typescript:
-        specifier: ~6.0.2
-        version: 6.0.3
       vite:
         specifier: ^8.0.12
         version: 8.0.16(@types/node@24.13.2)(esbuild@0.28.1)(yaml@2.9.0)
