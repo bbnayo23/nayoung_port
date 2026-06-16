@@ -8,7 +8,7 @@ export default function App() {
       <p style={{ color: '#666' }}>
         공유 패키지(@port/design-system, @port/icon-library)를 소비하는 독립 서브 앱
       </p>
-      <Button icon={<IconHeart size={18} />}>Design System Button</Button>
+      <Button leftIcon={<IconHeart size={18} />}>Design System Button</Button>
     </main>
   )
 }
