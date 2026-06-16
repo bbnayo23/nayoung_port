@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { header, headerScrolled, logo, nav, navList, navLink, contactBtn } from './Nav.css'
+import { brand } from '../../data'
+import { header, headerScrolled, logo, logoExpand, nav, navList, navLink, contactBtn } from './Nav.css'
 
 const links = [
   { href: '#career', label: 'Career' },
@@ -19,8 +20,9 @@ export function Nav() {
 
   return (
     <header className={`${header} ${scrolled ? headerScrolled : ''}`} role="banner">
-      <a href="#hero" className={logo} aria-label="Home">
-        ny.
+      <a href="#hero" className={logo} aria-label={`Home — ${brand.expansion}`}>
+        {brand.monogram}.
+        <span className={logoExpand} aria-hidden="true">{brand.expansion}</span>
       </a>
       <nav className={nav} aria-label="Main navigation">
         <ul className={navList}>

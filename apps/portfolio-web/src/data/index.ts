@@ -9,6 +9,16 @@ export const personal = {
   bio: 'UI 인프라와 디자인 시스템을 설계합니다.\nAI 기반 개발 도구와 코드 생성 실험을 탐구합니다.',
 }
 
+/**
+ * ny — 이름(Nayoung)이자 신념의 약자.
+ * N.Y. = Next Yourself. 받쳐주는 매니페스토 라인과 함께 개인 브랜드를 구성한다.
+ */
+export const brand = {
+  monogram: 'ny',
+  expansion: 'Next Yourself',
+  manifesto: ['Next Yourself.', 'Stay Young.', 'Keep Challenging.'],
+} as const
+
 export const techStack = [
   { name: 'TypeScript', type: 'lang' },
   { name: 'React 19', type: 'framework' },
