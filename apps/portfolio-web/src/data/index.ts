@@ -19,17 +19,6 @@ export const brand = {
   manifesto: ['Next Yourself.', 'Stay Young.', 'Keep Challenging.'],
 } as const
 
-export const techStack = [
-  { name: 'TypeScript', type: 'lang' },
-  { name: 'React 19', type: 'framework' },
-  { name: 'vanilla-extract', type: 'styling' },
-  { name: 'Turborepo', type: 'tooling' },
-  { name: 'Vite 8', type: 'tooling' },
-  { name: 'Claude API', type: 'ai' },
-  { name: 'Storybook', type: 'tooling' },
-  { name: 'pnpm', type: 'tooling' },
-] as const
-
 export type CareerItem = {
   company: string
   role: string

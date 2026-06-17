@@ -14,10 +14,7 @@ export const swiss = {
     inkFaint: '#8f919e',
     line: 'rgba(26, 28, 38, 0.12)',
     lineSoft: 'rgba(26, 28, 38, 0.05)',
-    // 같은 블루-바이올렛 톤의 3색 조화 (analogous)
-    c1: '#5b6cff', // 페리윙클 인디고
-    c2: '#8b5cf6', // 바이올렛
-    c3: '#4d9bff', // 애저 블루
+    c2: '#8b5cf6', // 바이올렛 글로우(GlassCursor)
     accent: '#4e5ad4', // 가독성용 솔리드 (라인·작은 텍스트)
     accentSoft: '#6d7cff', // 글레어·글로우
     accentDeep: '#3742a3',
@@ -27,7 +24,6 @@ export const swiss = {
   // 글래스 패널 — 더 투명하게(탁함↓), 블러는 적당히
   glass: {
     bg: 'rgba(255, 255, 255, 0.22)',
-    bgStrong: 'rgba(255, 255, 255, 0.4)',
     tint: 'rgba(255, 255, 255, 0.05)',
     border: 'rgba(255, 255, 255, 0.66)',
     blur: 'saturate(155%) blur(13px)',

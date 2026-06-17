@@ -9,7 +9,7 @@ const links = [
   { href: '#playground', label: 'Playground' },
 ]
 
-export function Nav() {
+export function Nav({ onShow3D }: { onShow3D?: () => void }) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -34,6 +34,16 @@ export function Nav() {
             </li>
           ))}
         </ul>
+        {onShow3D && (
+          <button
+            type="button"
+            className={navLink}
+            onClick={onShow3D}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit' }}
+          >
+            3D 공간 ↗
+          </button>
+        )}
         <a href="#contact" className={contactBtn}>
           Contact
         </a>

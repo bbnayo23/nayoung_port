@@ -1,55 +1,41 @@
-import { useEffect } from 'react'
-import { Nav } from '../components/Nav'
-import { GlassCursor } from '../components/GlassCursor'
-import { Hero } from '../sections/Hero'
-import { Career } from '../sections/Career'
-import { Projects } from '../sections/Projects'
-import { Architecture } from '../sections/Architecture'
-import { Playground } from '../sections/Playground'
-import { Contact } from '../sections/Contact'
-import { main } from './MainPage.css'
+import { Suspense, lazy, useEffect, useState } from 'react'
+import { useCanRender3D } from '../hooks/useCanRender3D'
+import FallbackPage from './FallbackPage'
+
+// 3D 번들은 무겁다 — 폴백 환경에선 아예 로드하지 않도록 동적 임포트
+const Experience = lazy(() =>
+  import('../three/Experience').then((m) => ({ default: m.Experience })),
+)
+
+type Mode = 'auto' | 'three' | 'text'
 
 export default function MainPage() {
-  // 모든 유리 패널([data-glass])에 커서 추적 글레어 + 3D 틸트 배선
+  const can3D = useCanRender3D()
+  const [mode, setMode] = useState<Mode>('auto')
+
+  // 사용자가 마지막으로 고른 모드를 기억
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const els = Array.from(document.querySelectorAll<HTMLElement>('[data-glass]'))
-    const cleanups = els.map((el) => {
-      const move = (e: PointerEvent) => {
-        const r = el.getBoundingClientRect()
-        const x = e.clientX - r.left
-        const y = e.clientY - r.top
-        el.style.setProperty('--gx', `${x}px`)
-        el.style.setProperty('--gy', `${y}px`)
-        el.style.setProperty('--tx', `${(x / r.width - 0.5) * 8}deg`)
-        el.style.setProperty('--ty', `${-(y / r.height - 0.5) * 8}deg`)
-      }
-      const leave = () => {
-        el.style.setProperty('--tx', '0deg')
-        el.style.setProperty('--ty', '0deg')
-      }
-      el.addEventListener('pointermove', move)
-      el.addEventListener('pointerleave', leave)
-      return () => {
-        el.removeEventListener('pointermove', move)
-        el.removeEventListener('pointerleave', leave)
-      }
-    })
-    return () => cleanups.forEach((fn) => fn())
+    const saved = localStorage.getItem('port:mode')
+    if (saved === 'three' || saved === 'text') setMode(saved)
   }, [])
 
-  return (
-    <>
-      <GlassCursor />
-      <Nav />
-      <main className={main}>
-        <Hero />
-        <Career />
-        <Projects />
-        <Architecture />
-        <Playground />
-        <Contact />
-      </main>
-    </>
-  )
+  const choose = (m: Mode) => {
+    setMode(m)
+    if (m === 'three' || m === 'text') localStorage.setItem('port:mode', m)
+  }
+
+  // 판정 전(can3D === null)에는 잠깐 빈 화면
+  if (can3D === null && mode === 'auto') return null
+
+  const show3D = mode === 'three' || (mode === 'auto' && can3D === true)
+
+  if (show3D) {
+    return (
+      <Suspense fallback={null}>
+        <Experience onShowText={() => choose('text')} />
+      </Suspense>
+    )
+  }
+
+  return <FallbackPage onShow3D={() => choose('three')} />
 }
