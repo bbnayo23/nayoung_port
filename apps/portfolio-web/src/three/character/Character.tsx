@@ -5,22 +5,25 @@ import { useGame } from '../store'
 import { dampAngle, damp, clamp } from '../utils'
 
 /** 디자이너 토이풍 팔레트 — 파스텔 핑크 베어 후드 + 코지 원지 + 에어맥스 + 헤드셋 */
+/** 네온 코드월드에 맞춘 우주인 팔레트 — 웜 스킨/블러시 유지(유일한 난색), 수트는 바이올렛/시안, 헤드셋·스우시는 단일 마젠타 히어로 */
 const COL = {
-  skin: '#ffe2cb',
-  blush: '#ff9db5',
-  hood: '#ff9ec2', // 파스텔 핑크 베어 후드
-  hoodLit: '#ffb9d6',
-  earIn: '#ffd5e4',
-  onesie: '#fff5f9', // 부드러운 크림화이트 원지
-  onesieShade: '#ffe4ee',
-  hair: '#f4cd86', // 이마 위로 삐져나온 금발 프린지
-  cans: '#fef4f8', // 헤드셋 컵(화이트)
-  cansRim: '#ff6f9c', // 헤드셋 발광 링(핑크)
-  band: '#2c3148', // 헤드셋 밴드
-  shoe: '#fcfcff', // 에어맥스 화이트 어퍼
-  sole: '#e6ecff', // 미드솔
-  swoosh: '#ff6f9c', // 스우시 액센트
-  air: '#7cc8ff', // 에어 버블(블루)
+  skin: '#ffe2cb', // 웜 페이스(유지) — 쿨 보이드에서 또렷하게 튐
+  blush: '#ff9db5', // 볼/하트 포켓 난색(유지)
+  hood: '#8a6bff', // 네온 바이올렛 베어 후드
+  hoodLit: '#a98bff',
+  earIn: '#c9b6ff',
+  onesie: '#eef1ff', // 네온을 받는 쿨 루미너스 스페이스수트
+  onesieShade: '#cfd6ff',
+  hair: '#f0cf95', // 살짝 쿨해진 금발 프린지(난색 브레이크)
+  cans: '#eef1ff', // 헤드셋 컵
+  cansRim: '#ff4fd8', // 헤드셋 발광 링 — 단일 마젠타 히어로
+  band: '#232a44', // 헤드셋 밴드(쿨 다크)
+  graphite: '#232a44', // 도구 다크 매트 바디
+  steel: '#dfe6ff', // 도구 브러시드 스틸(밝은 타격면)
+  shoe: '#f4f7ff', // 에어맥스 어퍼
+  sole: '#cfd6ff', // 미드솔
+  swoosh: '#ff4fd8', // 스우시 — 마젠타 히어로
+  air: '#37e0ff', // 에어 버블/렌치 팁/스러스터(네온 시안)
   eye: '#3b2f3a',
 }
 
@@ -46,6 +49,10 @@ export function Character() {
   const legR = useRef<THREE.Group>(null)
   const armL = useRef<THREE.Group>(null)
   const armR = useRef<THREE.Group>(null)
+  const hammerEdge = useRef<THREE.Mesh>(null) // 망치 머리 네온 엣지 (타격 시 발광)
+  const toolLight = useRef<THREE.PointLight>(null)
+  const screwGroup = useRef<THREE.Group>(null) // 드라이버 그룹 (샤프트 +Y 축으로 트위스트)
+  const screwTip = useRef<THREE.Mesh>(null) // 드라이버 플랫헤드 팁 (트위스트 시 발광)
 
   const phase = useRef(0)
   const stride = useRef(0)
@@ -110,6 +117,31 @@ export function Character() {
     if (armR.current) {
       armR.current.rotation.x = reachX - sweep + scull
       armR.current.rotation.z = -outZ
+    }
+
+    // 수리 '뚝딱뚝딱' 펄스 — fx 동안 빠르게 내려치는 망치질(반복 타격), fx 로 감쇠
+    const fx = g.fixing.value
+    if (fx > 0) g.fixing.value = Math.max(0, fx - dt * 2.2) // ~0.45s
+    const strike = fx > 0 ? Math.abs(Math.sin(t * 38)) * fx : 0 // 반복 다운스트로크
+    if (armR.current) {
+      armR.current.rotation.x += strike * 0.85 // 내려치는 스윙
+      armR.current.position.z = -strike * 0.03 // 살짝 반동
+    }
+    if (hammerEdge.current) {
+      // 타격 피크에 네온 시안 → 흰빛 번쩍
+      ;(hammerEdge.current.material as THREE.MeshBasicMaterial).color.setRGB(0.22 + strike * 0.78, 0.78 + strike * 0.22, 1)
+    }
+    if (toolLight.current) toolLight.current.intensity = strike * 5
+
+    // 좌수 드라이버 — 자기 샤프트(+Y)축으로 좌우 트위스트(나사 조이기), fx 로 자동 복귀 (망치 38 vs 30 교차 위상)
+    const twist = fx > 0 ? Math.sin(t * 30) * fx : 0
+    if (screwGroup.current) {
+      screwGroup.current.rotation.y = twist * 1.4 // ±~80° 비틀기, fx→0 이면 0
+      screwGroup.current.position.y = -0.5 - Math.abs(twist) * 0.012 // 회전마다 살짝 눌러박는 보브
+    }
+    if (screwTip.current) {
+      const heat = Math.abs(twist)
+      ;(screwTip.current.material as THREE.MeshBasicMaterial).color.setRGB(0.22 + heat * 0.78, 0.78 + heat * 0.22, 1) // 시안→흰빛
     }
 
     // 다리 — 뒤로 뻗어 물장구
@@ -189,19 +221,98 @@ export function Character() {
             <circleGeometry args={[0.05, 18]} />
             <meshBasicMaterial color={COL.blush} toneMapped={false} />
           </mesh>
+          {/* 우주 정비사 수트 LED — 그린/앰버 상태등 */}
+          <mesh position={[-0.1, 0.6, 0.205]}>
+            <circleGeometry args={[0.016, 12]} />
+            <meshBasicMaterial color="#5ef0c0" toneMapped={false} />
+          </mesh>
+          <mesh position={[0.1, 0.6, 0.205]}>
+            <circleGeometry args={[0.016, 12]} />
+            <meshBasicMaterial color="#ff9d52" toneMapped={false} />
+          </mesh>
+          {/* 등 뒤 백팩 스러스터 */}
+          <group position={[0, 0.66, -0.18]}>
+            <mesh castShadow>
+              <capsuleGeometry args={[0.06, 0.12, 6, 12]} />
+              <meshStandardMaterial color={COL.onesieShade} roughness={0.8} />
+            </mesh>
+            <mesh position={[0, -0.1, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <circleGeometry args={[0.03, 14]} />
+              <meshBasicMaterial color={COL.air} toneMapped={false} />
+            </mesh>
+          </group>
 
           {/* ===== 팔: 원지 소매 + 둥근 paw ===== */}
           {([-1, 1] as const).map((sgn) => (
             <group key={sgn} ref={sgn < 0 ? armL : armR} position={[sgn * 0.24, 0.74, 0]}>
-              <mesh castShadow position={[0, -0.13, 0]}>
-                <capsuleGeometry args={[0.075, 0.16, 8, 16]} />
+              {/* 길어진 팔 — 손에 든 도구가 몸에 가리지 않고 보이도록 */}
+              <mesh castShadow position={[0, -0.22, 0]}>
+                <capsuleGeometry args={[0.072, 0.32, 8, 16]} />
                 <meshStandardMaterial color={COL.onesie} roughness={0.85} emissive={COL.onesie} emissiveIntensity={0.07} />
               </mesh>
               {/* 둥근 손(paw) */}
-              <mesh castShadow position={[0, -0.26, 0]}>
+              <mesh castShadow position={[0, -0.46, 0]}>
                 <sphereGeometry args={[0.082, 16, 14]} />
                 <meshStandardMaterial color={COL.onesieShade} roughness={0.8} />
               </mesh>
+              {/* ===== 수리 망치 (오른손에만) — 뚝딱뚝딱, 굵은 클로해머 실루엣 ===== */}
+              {sgn > 0 && (
+                <group position={[0, -0.5, 0.04]} rotation={[Math.PI * 0.12, 0, 0]}>
+                  {/* 손잡이 — 그래파이트 매트, 더 길게 */}
+                  <mesh castShadow>
+                    <capsuleGeometry args={[0.026, 0.26, 6, 12]} />
+                    <meshStandardMaterial color={COL.graphite} roughness={0.55} metalness={0.45} />
+                  </mesh>
+                  {/* 망치 머리 — 굵은 브러시드 스틸 블록 */}
+                  <mesh castShadow position={[0, 0.16, 0]} rotation={[0, 0, Math.PI / 2]}>
+                    <boxGeometry args={[0.095, 0.22, 0.095]} />
+                    <meshStandardMaterial color={COL.steel} roughness={0.22} metalness={0.85} />
+                  </mesh>
+                  {/* 뒤쪽 클로(노루발) — 망치임이 분명해지도록 */}
+                  <mesh castShadow position={[0, 0.16, -0.07]} rotation={[-0.5, 0, 0]}>
+                    <boxGeometry args={[0.05, 0.07, 0.06]} />
+                    <meshStandardMaterial color={COL.steel} roughness={0.25} metalness={0.85} />
+                  </mesh>
+                  {/* 앞면 네온 타격 엣지 — 타격 시 흰빛 번쩍 */}
+                  <mesh ref={hammerEdge} position={[0, 0.16, 0.058]}>
+                    <boxGeometry args={[0.2, 0.06, 0.014]} />
+                    <meshBasicMaterial color={COL.air} toneMapped={false} />
+                  </mesh>
+                  <pointLight ref={toolLight} position={[0, 0.16, 0.08]} color="#37e0ff" intensity={0} distance={2.2} decay={2} />
+                </group>
+              )}
+              {/* ===== 수리 드라이버 (왼손에만) — 나사 조이기 ===== */}
+              {sgn < 0 && (
+                <group ref={screwGroup} position={[0, -0.5, 0.04]} rotation={[Math.PI * 0.12, 0, 0]}>
+                  {/* 그립 — 굵은 그래파이트 */}
+                  <mesh castShadow>
+                    <capsuleGeometry args={[0.032, 0.14, 6, 12]} />
+                    <meshStandardMaterial color={COL.graphite} roughness={0.5} metalness={0.4} />
+                  </mesh>
+                  {/* 그립 시안 링 (정적 정체성 액센트) */}
+                  <mesh position={[0, 0.055, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                    <torusGeometry args={[0.034, 0.006, 8, 16]} />
+                    <meshBasicMaterial color={COL.air} toneMapped={false} />
+                  </mesh>
+                  {/* 스틸 그립 리브 2줄 (프리미엄 머신드 디테일) */}
+                  {[0.02, -0.02].map((gy) => (
+                    <mesh key={gy} position={[0, gy, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                      <torusGeometry args={[0.033, 0.004, 6, 14]} />
+                      <meshStandardMaterial color={COL.steel} roughness={0.3} metalness={0.85} />
+                    </mesh>
+                  ))}
+                  {/* 메탈 샤프트 (+Y = 트위스트 축), 더 길고 굵은 브러시드 스틸 */}
+                  <mesh castShadow position={[0, 0.14, 0]}>
+                    <cylinderGeometry args={[0.013, 0.016, 0.15, 12]} />
+                    <meshStandardMaterial color={COL.steel} roughness={0.2} metalness={0.9} />
+                  </mesh>
+                  {/* 플랫헤드 팁 — 발광 시안, 트위스트 시 흰빛 */}
+                  <mesh ref={screwTip} position={[0, 0.225, 0]}>
+                    <boxGeometry args={[0.032, 0.026, 0.008]} />
+                    <meshBasicMaterial color={COL.air} toneMapped={false} />
+                  </mesh>
+                </group>
+              )}
             </group>
           ))}
 
@@ -252,7 +363,7 @@ export function Character() {
                 {/* 큰 하이라이트 */}
                 <mesh position={[sgn * 0.022, 0.03, 0.058]}>
                   <sphereGeometry args={[0.03, 14, 14]} />
-                  <meshBasicMaterial color="#ffffff" toneMapped={false} />
+                  <meshBasicMaterial color="#f4f8ff" toneMapped={false} />
                 </mesh>
                 {/* 작은 보조 하이라이트 */}
                 <mesh position={[-sgn * 0.018, -0.028, 0.055]}>

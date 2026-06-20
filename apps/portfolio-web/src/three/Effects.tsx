@@ -13,7 +13,7 @@ export function Effects() {
     <EffectComposer multisampling={0}>
       <Bloom intensity={1.2} luminanceThreshold={0.4} luminanceSmoothing={0.3} mipmapBlur radius={0.72} />
       <Scanline opacity={0.1} density={1.3} />
-      <Vignette eskil={false} offset={0.18} darkness={0.72} />
+      <Vignette eskil={false} offset={0.12} darkness={0.82} />
       <Glitch
         delay={new Vector2(2.8, 6.5)}
         duration={new Vector2(0.1, 0.28)}

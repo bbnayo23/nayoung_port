@@ -17,7 +17,6 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
   const quality = useQuality()
   const [active, setActive] = useState<RoomConfig | null>(null)
   const [entered, setEntered] = useState<RoomConfig | null>(null)
-  const [fixed, setFixed] = useState(0)
 
   // 게이트(에러) 클릭 시 그 방으로 바로 다이브 — 인자가 없으면 현재 락온된 방
   const handleEnter = useCallback(
@@ -60,7 +59,7 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
               onRoomChange={setActive}
               onEnter={handleEnter}
               onExit={handleExit}
-              onFixError={() => setFixed((n) => n + 1)}
+              onFixError={() => {}}
             />
           </GameProvider>
         </Suspense>
@@ -70,7 +69,6 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
       <Hud
         active={active}
         entered={entered}
-        fixed={fixed}
         onEnter={handleEnter}
         onExit={handleExit}
         onShowText={onShowText}

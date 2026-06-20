@@ -1,7 +1,7 @@
 import { brand, personal } from '../../data'
 import type { RoomConfig } from '../scene/rooms'
 import {
-  hudRoot, scanlines, vfxTint, topBar, brandMark, brandName, topRight, textLink, counter, counterNum,
+  hudRoot, scanlines, vfxTint, topBar, brandMark, brandName, topRight, textLink,
   hint, hintKey,
   lockChip, lockText, lockName, lockSub, lockBtn,
   detailDock, detailInner, detailMain, detailSide, dockDesc,
@@ -17,14 +17,12 @@ import {
 export function Hud({
   active,
   entered,
-  fixed = 0,
   onEnter,
   onExit,
   onShowText,
 }: {
   active: RoomConfig | null
   entered: RoomConfig | null
-  fixed?: number
   onEnter?: () => void
   onExit?: () => void
   onShowText?: () => void
@@ -39,9 +37,6 @@ export function Hud({
         <div className={brandName}>
           <span className={brandMark}>{brand.monogram}</span>
           {personal.nameEn}
-          <span className={counter}>
-            <span className={counterNum}>{fixed}</span> errors fixed
-          </span>
         </div>
         <div className={topRight}>
           <button type="button" className={textLink} onClick={onShowText}>

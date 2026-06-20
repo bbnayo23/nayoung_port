@@ -1,6 +1,5 @@
 import { Suspense, useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { ContactShadows } from '@react-three/drei'
 import { useGame } from '../store'
 import { Lighting } from './Lighting'
 import { CodeSpace } from './CodeSpace'
@@ -78,6 +77,14 @@ export function World({
   // 프레임 루프(컨트롤/카메라)가 읽도록 모드/게이트를 ref 에 반영
   game.mode.value = mode
   game.roomX.value = room?.doorPosition[0] ?? null
+  game.tier.value = quality
+
+  // 포탈 락온 라이징 엣지에 '뚝딱' 수리 펄스 발사 (RoomProximity 가 id 변경시에만 onChange → 머무는 동안 재발사 안 함)
+  const prevActiveId = useRef<string | null>(null)
+  useEffect(() => {
+    if (active && active.id !== prevActiveId.current) game.fixing.value = 1
+    prevActiveId.current = active?.id ?? null
+  }, [active, game])
 
   // 블랙홀 다이브 / 퇴장 시퀀스 (흡입 → 차원 내부 도착 → 입력 해제)
   const prevEntered = useRef<RoomConfig | null>(null)
@@ -85,6 +92,7 @@ export function World({
     let timer: ReturnType<typeof setTimeout> | undefined
     if (entered) {
       game.diving.value = true
+      game.fixing.value = 1 // 다이브 순간 두 번째 '뚝딱'
       // 1) 공중에 떠 있는 포탈(블랙홀 중심)으로 빨려듦
       const [px, py, pz] = entered.doorPosition
       game.charTarget.set(px, py, pz)
@@ -109,10 +117,10 @@ export function World({
 
   return (
     <>
-      <color attach="background" args={['#070b14']} />
-      <fog attach="fog" args={['#070b14', 14, 38]} />
+      <color attach="background" args={['#05060f']} />
+      <fog attach="fog" args={['#0a0b24', 9, 40]} />
 
-      <Lighting shadows={quality === 'high'} />
+      <Lighting />
       <CodeSpace quality={quality} />
       <Suspense fallback={null}>
         <ErrorTokens count={quality === 'high' ? 4 : 3} onFix={onFixError} />
@@ -133,7 +141,6 @@ export function World({
       {room && <ProjectSpace room={room} />}
 
       <Character />
-      <ContactShadows position={[0, 0.02, 0]} scale={22} far={9} blur={2.8} opacity={0.35} color="#000814" resolution={quality === 'high' ? 512 : 256} />
 
       <FlightControls />
       <MoveMarker />

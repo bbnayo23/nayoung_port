@@ -14,10 +14,10 @@ export const INTERIOR_STAND_Z = WALL_Z - ROOM_DEPTH * 0.55 // ≈ -10.85
 /** 보이드에서 게이트 앞 대기 지점 z (퇴장 시 목표) */
 export const DOOR_FRONT_Z = -3.9
 
-/** 코드 보이드 비행 경계 — 공중(y) 포함 자유 비행 */
-export const FLIGHT_BOUND = { x: 9, yMin: 0.7, yMax: 7, zNear: 7, zFar: -6.3 }
-/** 캐릭터 비행 기본 고도(스폰/대기) */
-export const FLIGHT_Y = 2.2
+/** 코드 보이드 비행 경계 — 바닥 없는 볼륨(yMin 음수 → 캐릭터가 발밑 보이드로도 잠수) */
+export const FLIGHT_BOUND = { x: 11, yMin: -10, yMax: 12, zNear: 7, zFar: -6.3 }
+/** 캐릭터 비행 기본 고도(스폰/대기) — 무대 위가 아닌 볼륨 중간에 떠 있는 느낌 */
+export const FLIGHT_Y = 1.5
 
 /**
  * 현재 모드에 맞게 3D 목표 좌표를 비행 가능 영역으로 제한한다.

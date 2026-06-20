@@ -52,10 +52,10 @@ export const rooms: RoomConfig[] = [
     href: '/design-system',
     doorPosition: [-5.6, 3.5, -5.0], // 좌측·높이 떠 있음
     palette: {
-      wall: '#1a1330',
-      floor: '#100b22',
-      accent: '#c792ea',
-      light: '#b07cf0',
+      wall: '#170c2e',
+      floor: '#0c0720',
+      accent: '#b66dff', // 네온 바이올렛
+      light: '#a85cf5',
     },
   },
   {
@@ -72,10 +72,10 @@ export const rooms: RoomConfig[] = [
     href: '/dashboard',
     doorPosition: [1.2, 1.5, -6.0], // 중앙-우측·낮고 깊게
     palette: {
-      wall: '#0c1730',
-      floor: '#081024',
-      accent: '#82aaff',
-      light: '#5b8def',
+      wall: '#08152e',
+      floor: '#050e22',
+      accent: '#37e0ff', // 네온 시안
+      light: '#3aa9f0',
     },
   },
   {
@@ -92,10 +92,10 @@ export const rooms: RoomConfig[] = [
     href: '/icons',
     doorPosition: [4.8, 4.4, -4.4], // 우측·가장 높고 가깝게
     palette: {
-      wall: '#0d1a12',
-      floor: '#091310',
-      accent: '#c3e88d',
-      light: '#9bd66a',
+      wall: '#1a0a22',
+      floor: '#120618',
+      accent: '#ff4fd8', // 네온 마젠타 (그린→마젠타: 트라이어드 합류 + 바이올렛과 구분)
+      light: '#e63cc4',
     },
   },
 ]

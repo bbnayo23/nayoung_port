@@ -38,6 +38,7 @@ export function FlightControls() {
   const onClick = (e: ThreeEvent<MouseEvent>) => {
     if (game.diving.value) return // 다이브 중엔 입력 잠금
     e.stopPropagation()
+    game.fixing.value = 1 // 이동 클릭마다 양손 수리 제스처(망치·드라이버) 발화
     const { depth } = aim(e)
     // 커서 깊이보다 살짝 앞으로(스트로크) → 클릭할수록 그 방향으로 헤엄쳐 나아감
     _pt.copy(_origin).addScaledVector(_dir, depth + STROKE)

@@ -28,12 +28,16 @@ export type GameState = {
   mode: { value: 'living' | 'focus' | 'room' }
   /** 현재 관련 게이트의 x 좌표 (room/focus 모드에서 경계 기준) */
   roomX: { value: number | null }
+  /** 수리 '뚝딱' 펄스 — World 가 포탈 락온/다이브 라이징 엣지에 1로 세팅, Character 가 매 프레임 감쇠해 렌치 토크+팁 플래시를 구동 */
+  fixing: { value: number }
+  /** 렌더 품질 티어 — Character 가 Sparkles 게이팅에 참조 (props 없이 읽기 위해 store 경유) */
+  tier: { value: 'high' | 'low' }
 }
 
 function createGameState(): GameState {
   return {
-    charPos: new THREE.Vector3(0, 2.2, 5),
-    charTarget: new THREE.Vector3(0, 2.2, 5),
+    charPos: new THREE.Vector3(0, 1.5, 5),
+    charTarget: new THREE.Vector3(0, 1.5, 5),
     gaze: new THREE.Vector3(0, 2, -2),
     moving: { value: false },
     facing: { value: Math.PI }, // 초기에 안쪽(에러 게이트 방향)을 바라봄
@@ -42,6 +46,8 @@ function createGameState(): GameState {
     zoom: { value: 1 },
     mode: { value: 'living' },
     roomX: { value: null },
+    fixing: { value: 0 },
+    tier: { value: 'high' },
   }
 }
 

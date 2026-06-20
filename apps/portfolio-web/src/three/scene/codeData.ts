@@ -2,15 +2,15 @@
 
 /** Material/Dracula 계열 신택스 컬러 */
 export const CODE_COLOR = {
-  keyword: '#c792ea',
-  string: '#c3e88d',
-  func: '#82aaff',
-  number: '#f78c6c',
-  comment: '#546e7a',
-  text: '#a6accd',
-  error: '#ff5370',
-  fixed: '#c3e88d',
-  bg: '#070b14',
+  keyword: '#b66dff', // 트라이어드 바이올렛
+  string: '#5ef0c0', // 네온 민트
+  func: '#4cc8ff', // 일렉트릭 시안블루
+  number: '#ff9d52', // 단일 웜 오렌지 스파크
+  comment: '#5a6a9c', // 의도적으로 가라앉힌 슬레이트-바이올렛
+  text: '#c2c8f5', // 쿨 오프화이트 라벤더 (본문)
+  error: '#ff4f7d', // 핫 핑크레드 (알람/브로큰)
+  fixed: '#5ef0c0', // 민트 (resolved)
+  bg: '#05060f', // 쿨 니어블랙 (BASE_BG)
 }
 
 /** 허브에 떠다니는 일반 코드 라인 (color 는 라인 대표색) */
