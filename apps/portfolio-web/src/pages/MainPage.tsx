@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { useCanRender3D } from '../hooks/useCanRender3D'
 import FallbackPage from './FallbackPage'
 
@@ -11,18 +11,9 @@ type Mode = 'auto' | 'three' | 'text'
 
 export default function MainPage() {
   const can3D = useCanRender3D()
+  // 항상 3D 우선 — 이전 선택을 기억하지 않고, 열 때마다 auto(가능 기기면 3D)로 시작한다.
+  // 텍스트 전환은 세션 내에서만 유지된다.
   const [mode, setMode] = useState<Mode>('auto')
-
-  // 사용자가 마지막으로 고른 모드를 기억
-  useEffect(() => {
-    const saved = localStorage.getItem('port:mode')
-    if (saved === 'three' || saved === 'text') setMode(saved)
-  }, [])
-
-  const choose = (m: Mode) => {
-    setMode(m)
-    if (m === 'three' || m === 'text') localStorage.setItem('port:mode', m)
-  }
 
   // 판정 전(can3D === null)에는 잠깐 빈 화면
   if (can3D === null && mode === 'auto') return null
@@ -32,10 +23,10 @@ export default function MainPage() {
   if (show3D) {
     return (
       <Suspense fallback={null}>
-        <Experience onShowText={() => choose('text')} />
+        <Experience onShowText={() => setMode('text')} />
       </Suspense>
     )
   }
 
-  return <FallbackPage onShow3D={() => choose('three')} />
+  return <FallbackPage onShow3D={() => setMode('three')} />
 }
