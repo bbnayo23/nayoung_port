@@ -60,9 +60,6 @@ importers:
 
   apps/design-system:
     dependencies:
-      '@port/icon-library':
-        specifier: workspace:*
-        version: link:../icon-library
       '@vanilla-extract/css':
         specifier: ^1.20.1
         version: 1.20.1
@@ -70,6 +67,9 @@ importers:
       '@port/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config/eslint
+      '@port/icon-library':
+        specifier: workspace:*
+        version: link:../icon-library
       '@port/typescript-config':
         specifier: workspace:*
         version: link:../../packages/config/typescript
