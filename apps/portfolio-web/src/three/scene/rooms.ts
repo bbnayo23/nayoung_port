@@ -49,7 +49,7 @@ export const rooms: RoomConfig[] = [
     description:
       '타입 세이프 CSS-in-TypeScript 컴포넌트 라이브러리. 디자인 토큰부터 컴포넌트 API까지 전 계층을 설계하고 모노레포로 공유한다.',
     tags: ['vanilla-extract', 'Storybook', 'Turborepo'],
-    href: '/design-system',
+    href: '/design-system/',
     doorPosition: [-5.6, 3.5, -5.0], // 좌측·높이 떠 있음
     palette: {
       wall: '#170c2e',

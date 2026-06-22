@@ -7,6 +7,10 @@ dist/
 dist-ssr/
 storybook-static/
 
+# 포트폴리오 빌드 시 생성되는 임베드 산출물 (icon-library 쇼케이스 / design-system 스토리북)
+apps/portfolio-web/public/icons/
+apps/portfolio-web/public/design-system/
+
 # Source maps
 *.map
 

@@ -94,7 +94,7 @@ export const projects: Project[] = [
     tags: ["vanilla-extract", "TypeScript", "Storybook", "Turborepo"],
     status: "in-progress",
     category: "system",
-    link: "/design-system",
+    link: "/design-system/",
   },
   {
     id: "claude-experiments",

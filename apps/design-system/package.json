@@ -14,6 +14,7 @@
     "storybook": "storybook dev -p 6006",
     "build": "vite build --config vite.lib.config.ts && tsc -p tsconfig.build.json",
     "build-storybook": "storybook build",
+    "build:embed": "storybook build --output-dir ../portfolio-web/public/design-system",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
