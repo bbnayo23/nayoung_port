@@ -1,7 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { swiss } from './swiss'
-
-const reduce = 'screen and (prefers-reduced-motion: reduce)'
+import { swiss, reduceMotion as reduce } from './swiss'
 
 /**
  * 반투명 유리 패널. 커서 위치(--gx/--gy)를 따라 틸 글레어가 번지고,

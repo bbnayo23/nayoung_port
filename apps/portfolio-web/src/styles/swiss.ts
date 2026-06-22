@@ -40,3 +40,6 @@ export const swiss = {
     smooth: 'cubic-bezier(0.32, 0.72, 0, 1)',
   },
 } as const
+
+/** prefers-reduced-motion 미디어 쿼리 키 (vanilla-extract @media 키로 공용 사용) */
+export const reduceMotion = 'screen and (prefers-reduced-motion: reduce)'

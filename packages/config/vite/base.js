@@ -39,7 +39,9 @@ export function createBaseConfig() {
     },
     build: {
       target: 'es2023',
-      sourcemap: true,
+      // 프로덕션(Vercel: NODE_ENV=production)에선 소스맵을 내보내지 않아 배포 용량을 줄인다.
+      // 로컬 빌드/dev 서버에선 디버깅을 위해 유지.
+      sourcemap: process.env.NODE_ENV !== 'production',
     },
   })
 }

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { swiss } from '../../styles/swiss'
+import { swiss, reduceMotion } from '../../styles/swiss'
 
 /** 돋보기 렌즈 — 뒤 콘텐츠(main 복제본)를 확대해 원형으로 보여준다 */
 export const lens = style({
@@ -21,7 +21,7 @@ export const lens = style({
   transition: 'opacity 0.25s ease',
   willChange: 'transform',
   '@media': {
-    'screen and (prefers-reduced-motion: reduce)': { display: 'none' },
+    [reduceMotion]: { display: 'none' },
     '(pointer: coarse)': { display: 'none' },
   },
 })
