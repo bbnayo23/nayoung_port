@@ -1,69 +1,72 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
 
 /**
- * 디자인 토큰 컨트랙트.
+ * 디자인 토큰 컨트랙트 — XDR(xdr-basic) 테마 기준.
  *
  * `createGlobalTheme(':root', …)` 는 토큰을 CSS 커스텀 프로퍼티로 `:root` 에 굽고,
  * 동시에 타입 안전한 `vars` 참조 객체를 돌려준다. 모든 컴포넌트는 하드코딩된 값 대신
  * 이 `vars` 만 참조한다 (MUI 의 theme 와 동일한 철학 — single source of truth).
  *
- * 다크 테마 등 추가 테마가 필요하면 동일한 컨트랙트로 `createTheme(vars, {…})` 를 만들어
- * 특정 스코프(class)에 적용하면 된다.
+ * 색상값은 @feature-fe/ui 의 XDR 라이트 테마(`themes/xdr-basic.css.ts`)와 일치한다.
+ * - 브랜드(주조색): 페리윙클 인디고 #7187ff
+ * - 캔버스: 차가운 회청색 배경(#f0f3f6) 위 순백 surface(#ffffff)
+ * - 그림자: primary 를 낮은 불투명도로 틴팅한 자주빛
+ * 다크 테마가 필요하면 동일 컨트랙트로 `createTheme(vars, {…})` 를 만들어 스코프에 적용한다.
  */
 export const vars = createGlobalTheme(':root', {
   color: {
-    /** 브랜드(주조색) 스케일 — 50(연함) → 900(진함) */
+    /** 브랜드(주조색) 스케일 — XDR primary(#7187ff) 앵커. 600=primary / 700=hover / 800=active */
     brand: {
-      50: '#eef2ff',
-      100: '#e0e7ff',
-      200: '#c7d2fe',
-      300: '#a5b4fc',
-      400: '#818cf8',
-      500: '#6366f1',
-      600: '#4f46e5',
-      700: '#4338ca',
-      800: '#3730a3',
-      900: '#312e81',
+      50: '#f1f3ff',
+      100: '#e4e8ff',
+      200: '#c4ccff',
+      300: '#a6b3ff',
+      400: '#8a9bff',
+      500: '#7d91ff',
+      600: '#7187ff',
+      700: '#5a6ee0',
+      800: '#4a5dc0',
+      900: '#3a4aa0',
     },
-    /** 중립(회색) 스케일 */
+    /** 중립(회청색) 스케일 — XDR neutral 계열 */
     gray: {
-      50: '#f9fafb',
-      100: '#f3f4f6',
-      200: '#e5e7eb',
-      300: '#d1d5db',
-      400: '#9ca3af',
-      500: '#6b7280',
-      600: '#4b5563',
-      700: '#374151',
-      800: '#1f2937',
-      900: '#111827',
+      50: '#f8f9fa',
+      100: '#f1f3ff',
+      200: '#e4e8ff',
+      300: '#dee2e6',
+      400: '#c8cfd8',
+      500: '#b5bbc2',
+      600: '#6c757d',
+      700: '#495057',
+      800: '#343a40',
+      900: '#212529',
     },
-    /** 의미색 (status) — 각 base + 연한 배경(soft) */
-    success: '#16a34a',
-    successSoft: '#dcfce7',
-    warning: '#d97706',
-    warningSoft: '#fef3c7',
-    danger: '#dc2626',
-    dangerSoft: '#fee2e2',
-    info: '#2563eb',
-    infoSoft: '#dbeafe',
-    /** 표면(surface) */
-    background: '#ffffff',
+    /** 의미색 (status) — XDR base + 연한 배경(soft) */
+    success: '#12b886',
+    successSoft: '#e6f7f1',
+    warning: '#f59f00',
+    warningSoft: '#fff4e0',
+    danger: '#fa5252',
+    dangerSoft: '#ffe9e9',
+    info: '#7187ff',
+    infoSoft: '#eef1ff',
+    /** 표면(surface) — 회청색 캔버스 위 순백 카드 */
+    background: '#f0f3f6',
     surface: '#ffffff',
-    surfaceMuted: '#f9fafb',
-    border: '#e5e7eb',
-    borderStrong: '#d1d5db',
-    overlay: 'rgba(17, 24, 39, 0.5)',
+    surfaceMuted: '#f0f2f4',
+    border: '#dee2e6',
+    borderStrong: '#c8cfd8',
+    overlay: 'rgba(0, 0, 0, 0.5)',
     /** 텍스트 */
-    text: '#111827',
-    textSecondary: '#6b7280',
-    textDisabled: '#9ca3af',
+    text: '#343a40',
+    textSecondary: '#6c757d',
+    textDisabled: '#b5bbc2',
     textInverse: '#ffffff',
-    /** 포커스 링 */
-    focusRing: 'rgba(99, 102, 241, 0.45)',
+    /** 포커스 링 — XDR primary 기반 */
+    focusRing: 'rgba(113, 135, 255, 0.45)',
   },
 
-  /** 간격 스케일 (4px 베이스) */
+  /** 간격 스케일 (4px 베이스) — XDR spacing 과 동일 (xs4/sm8/md16/lg24/xl32/xxl48) */
   space: {
     0: '0',
     1: '0.25rem',
@@ -78,10 +81,10 @@ export const vars = createGlobalTheme(':root', {
     16: '4rem',
   },
 
-  /** 모서리 반경 */
+  /** 모서리 반경 — XDR radius (sm 6px / md 8px / lg 12px) */
   radius: {
     none: '0',
-    sm: '4px',
+    sm: '6px',
     md: '8px',
     lg: '12px',
     xl: '16px',
@@ -90,16 +93,19 @@ export const vars = createGlobalTheme(':root', {
 
   font: {
     family: {
-      sans: "'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      mono: "'SF Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+      /** XDR UI 텍스트 — Noto Sans */
+      sans: "'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+      /** 코드/로그 뷰어 전용 — JetBrains Mono */
+      mono: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
     },
+    /** 폰트 사이즈 (px) — 정보 밀도 높은 화면 기준. 기본 size=md → 12px */
     size: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      md: '0.95rem',
-      lg: '1.125rem',
-      xl: '1.375rem',
-      '2xl': '1.75rem',
+      xs: '10px',
+      sm: '11px',
+      md: '12px',
+      lg: '14px',
+      xl: '16px',
+      '2xl': '20px',
     },
     weight: {
       regular: '400',
@@ -114,12 +120,12 @@ export const vars = createGlobalTheme(':root', {
     },
   },
 
-  /** 그림자 */
+  /** 그림자 — XDR 자주빛 틴팅 (primary 저불투명도) */
   shadow: {
-    sm: '0 1px 2px rgba(17, 24, 39, 0.06)',
-    md: '0 4px 12px rgba(17, 24, 39, 0.1)',
-    lg: '0 12px 32px rgba(17, 24, 39, 0.16)',
-    focus: '0 0 0 3px rgba(99, 102, 241, 0.45)',
+    sm: '0 1px 3px rgba(113, 135, 255, 0.08)',
+    md: '0 4px 12px rgba(113, 135, 255, 0.12)',
+    lg: '0 8px 24px rgba(113, 135, 255, 0.16)',
+    focus: '0 0 0 3px rgba(113, 135, 255, 0.45)',
   },
 
   /** z-index 스택 — 레이어 컴포넌트가 공유 */

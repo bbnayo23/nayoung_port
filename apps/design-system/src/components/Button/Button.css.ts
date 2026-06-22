@@ -62,7 +62,7 @@ export const variants = styleVariants(
     danger: {
       background: vars.color.danger,
       color: vars.color.textInverse,
-      selectors: { '&:hover:not(:disabled)': { background: '#b91c1c' } },
+      selectors: { '&:hover:not(:disabled)': { background: '#e03131' } },
     },
   },
   'ds-button-variant',
