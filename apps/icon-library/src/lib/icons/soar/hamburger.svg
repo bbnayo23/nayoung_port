@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Icon: hamburger -->
+  <!-- Unicode: &#xe929; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M0 806.4v-102.4h1024v102.4zM0 499.2v-102.4h1024v102.4zM0 192v-102.4h1024v102.4z" fill="currentColor"/>
+  </g>
+</svg>

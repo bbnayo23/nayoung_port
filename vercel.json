@@ -1,6 +1,7 @@
 {
   "outputDirectory": "apps/portfolio-web/dist",
   "rewrites": [
+    { "source": "/icons/(.*)", "destination": "/icons/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Icon: folder -->
+  <!-- Unicode: &#xe90b; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M0 0v896h308.032l75.968-128h640v-768z" fill="currentColor"/>
+  </g>
+</svg>

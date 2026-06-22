@@ -1,2 +1,5 @@
 # Vite preview build
 dist-ssr/
+
+# Generated: icon-library showcase (built into dist/icons by the build prebuild)
+/public/icons/

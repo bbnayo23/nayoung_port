@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10240 1024" width="10240" height="1024">
+  <!-- Icon: line -->
+  <!-- Unicode: &#xe929; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M10240-64h-2048v1024h2048zM6144-64h-2048v1024h2048zM2048-64h-2048v1024h2048z" fill="currentColor"/>
+  </g>
+</svg>

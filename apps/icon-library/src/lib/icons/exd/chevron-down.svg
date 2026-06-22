@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Icon: chevron-down -->
+  <!-- Unicode: &#xe94e; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M225.835 524.502l256-256c16.683-16.683 43.691-16.683 60.331 0l256 256c16.683 16.683 16.683 43.691 0 60.331s-43.691 16.683-60.331 0l-225.835-225.835-225.835 225.835c-16.683 16.683-43.691 16.683-60.331 0s-16.683-43.691 0-60.331z" fill="currentColor"/>
+  </g>
+</svg>

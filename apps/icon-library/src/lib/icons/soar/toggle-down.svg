@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Icon: toggle-down -->
+  <!-- Unicode: &#xe909; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M1024 630.614l-511.817-511.817-146.59 146.59 511.817 511.817zM511.817 411.609l-146.223-146.223-365.594 365.594 146.223 146.223z" fill="currentColor"/>
+  </g>
+</svg>

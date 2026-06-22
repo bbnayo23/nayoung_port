@@ -89,7 +89,7 @@ export const rooms: RoomConfig[] = [
     description:
       '일관된 그리드와 스트로크 규칙으로 설계한 SVG 아이콘 세트. 쇼케이스에서 검색·복사·프리뷰를 제공한다.',
     tags: ['SVG', 'React', 'Design Tokens'],
-    href: '/icons',
+    href: '/icons/',
     doorPosition: [4.8, 4.4, -4.4], // 우측·가장 높고 가깝게
     palette: {
       wall: '#1a0a22',

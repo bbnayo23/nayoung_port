@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 781 1024" width="781" height="1024">
+  <!-- Icon: arrow-left -->
+  <!-- Unicode: &#xe93d; -->
+  <g transform="scale(1, -1) translate(0, -960)">
+    <path d="M448-64l332.8 12.8-435.2 499.2 435.2 512h-332.8l-448-512z" fill="currentColor"/>
+  </g>
+</svg>

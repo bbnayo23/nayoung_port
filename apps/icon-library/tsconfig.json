@@ -1,4 +1,12 @@
 {
   "extends": "@port/typescript-config/react.json",
-  "include": ["src", "vite.config.ts", "vite.lib.config.ts"]
+  "compilerOptions": {
+    "paths": {
+      "@igloo/igloo-icons": ["./src/lib/main.ts"],
+      "@/*": ["./src/*"],
+      "@icons/*": ["./src/lib/icons/*"],
+      "@showcase/*": ["./src/showcase/*"]
+    }
+  },
+  "include": ["src", "vite.config.ts", "vite.lib.config.ts", "vite.showcase.config.ts"]
 }
