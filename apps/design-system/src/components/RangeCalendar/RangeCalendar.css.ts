@@ -49,7 +49,7 @@ export const absoluteTrigger = style({
   border: `1px solid ${vars.color.border}`,
   borderRadius: vars.radius.md,
   backgroundColor: vars.color.surface,
-  padding: `0 ${vars.space[12]} 0 ${vars.space[2]}`,
+  padding: `0 36px 0 8px`,
   transition: `all ${vars.duration.fast} ease`,
   ':hover': {
     borderColor: vars.color.borderStrong,
@@ -214,5 +214,5 @@ export const dateInputInvalid = style({
 
 export const calendarInner = style({
   flex: 1,
-  padding: vars.space[4],
+  padding: '12px',
 })

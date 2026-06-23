@@ -93,14 +93,14 @@ export const inputSize = styleVariants({
   md: [
     inputBase,
     {
-      width: 18,
-      height: 18,
+      width: 16,
+      height: 16,
       selectors: {
         '&:checked::after': {
           top: 2,
-          left: 5,
+          left: 4,
           width: 5,
-          height: 9,
+          height: 8,
         },
         '&:indeterminate::after': {
           width: 8,

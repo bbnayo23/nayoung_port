@@ -16,8 +16,8 @@ export const input = style({
   backgroundColor: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: vars.radius.md,
-  padding: `${vars.space[2]} ${vars.space[4]}`,
-  paddingRight: vars.space[12],
+  padding: `6px 12px`,
+  paddingRight: '36px',
   outline: 'none',
   transition: `border-color ${vars.duration.fast} ease, box-shadow ${vars.duration.fast} ease`,
   '::placeholder': {

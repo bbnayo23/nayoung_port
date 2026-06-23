@@ -39,7 +39,7 @@ export const trigger = style(
     gap: vars.space[2],
     border: '1px solid transparent',
     background: 'transparent',
-    padding: `${vars.space[2]} ${vars.space[4]}`,
+    padding: '6px 20px',
     fontFamily: vars.font.family.sans,
     fontSize: vars.font.size.md,
     fontWeight: vars.font.weight.medium,

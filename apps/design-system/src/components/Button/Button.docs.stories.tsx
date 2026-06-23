@@ -197,159 +197,161 @@ const PropsTable = ({ rows }: { rows: PropRow[] }) => (
 const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'outline', 'ghost', 'danger']
 const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
 
-export const Documentation: Story = {
-  render: () => {
-    const [count, setCount] = useState(0)
-    return (
-      <DocPage>
-        {/* Header */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: t.text }}>Button</h1>
-          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.8, color: t.textSecondary, maxWidth: 600 }}>
-            5가지 variant와 3가지 size를 지원하는 버튼 컴포넌트입니다. 로딩 스피너, 아이콘 슬롯, fullWidth를 내장합니다.
-          </p>
-          <CodeBlock>{`import { Button } from '@ds/components/Button'`}</CodeBlock>
-        </div>
+const DocumentationView = () => {
+  const [count, setCount] = useState(0)
+  return (
+    <DocPage>
+      {/* Header */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: t.text }}>Button</h1>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.8, color: t.textSecondary, maxWidth: 600 }}>
+          5가지 variant와 3가지 size를 지원하는 버튼 컴포넌트입니다. 로딩 스피너, 아이콘 슬롯, fullWidth를 내장합니다.
+        </p>
+        <CodeBlock>{`import { Button } from '@ds/components/Button'`}</CodeBlock>
+      </div>
 
-        {/* API */}
-        <Section gap={16}>
-          <SectionTitle>API</SectionTitle>
-          <Card>
-            <PropsTable
-              rows={[
-                {
-                  name: 'variant',
-                  type: "'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'",
-                  defaultVal: "'primary'",
-                  desc: '버튼 스타일 변형',
-                },
-                {
-                  name: 'size',
-                  type: "'sm' | 'md' | 'lg'",
-                  defaultVal: "'md'",
-                  desc: '버튼 크기 — sm(h32) · md(h40) · lg(h48)',
-                },
-                {
-                  name: 'loading',
-                  type: 'boolean',
-                  defaultVal: 'false',
-                  desc: '로딩 스피너 표시. 클릭과 포인터 이벤트를 비활성화합니다.',
-                },
-                { name: 'fullWidth', type: 'boolean', defaultVal: 'false', desc: '부모 컨테이너 너비에 맞춥니다.' },
-                {
-                  name: 'disabled',
-                  type: 'boolean',
-                  defaultVal: 'false',
-                  desc: '비활성 상태 — opacity 0.5, cursor not-allowed',
-                },
-                { name: 'leftIcon', type: 'ReactNode', desc: '텍스트 왼쪽에 표시할 아이콘 슬롯' },
-                { name: 'rightIcon', type: 'ReactNode', desc: '텍스트 오른쪽에 표시할 아이콘 슬롯' },
-              ]}
-            />
-          </Card>
-        </Section>
+      {/* API */}
+      <Section gap={16}>
+        <SectionTitle>API</SectionTitle>
+        <Card>
+          <PropsTable
+            rows={[
+              {
+                name: 'variant',
+                type: "'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'",
+                defaultVal: "'primary'",
+                desc: '버튼 스타일 변형',
+              },
+              {
+                name: 'size',
+                type: "'sm' | 'md' | 'lg'",
+                defaultVal: "'md'",
+                desc: '버튼 크기 — sm(h32) · md(h40) · lg(h48)',
+              },
+              {
+                name: 'loading',
+                type: 'boolean',
+                defaultVal: 'false',
+                desc: '로딩 스피너 표시. 클릭과 포인터 이벤트를 비활성화합니다.',
+              },
+              { name: 'fullWidth', type: 'boolean', defaultVal: 'false', desc: '부모 컨테이너 너비에 맞춥니다.' },
+              {
+                name: 'disabled',
+                type: 'boolean',
+                defaultVal: 'false',
+                desc: '비활성 상태 — opacity 0.5, cursor not-allowed',
+              },
+              { name: 'leftIcon', type: 'ReactNode', desc: '텍스트 왼쪽에 표시할 아이콘 슬롯' },
+              { name: 'rightIcon', type: 'ReactNode', desc: '텍스트 오른쪽에 표시할 아이콘 슬롯' },
+            ]}
+          />
+        </Card>
+      </Section>
 
-        {/* Variants */}
-        <Section gap={16}>
-          <SectionTitle>Variant</SectionTitle>
-          <Card>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
-              {VARIANTS.map((v) => (
-                <div key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                  <Button variant={v}>{v}</Button>
-                  <InlineCode>{v}</InlineCode>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </Section>
+      {/* Variants */}
+      <Section gap={16}>
+        <SectionTitle>Variant</SectionTitle>
+        <Card>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+            {VARIANTS.map((v) => (
+              <div key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                <Button variant={v}>{v}</Button>
+                <InlineCode>{v}</InlineCode>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </Section>
 
-        {/* Sizes */}
-        <Section gap={16}>
-          <SectionTitle>Size</SectionTitle>
-          <Card>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-end' }}>
-              {SIZES.map((s) => (
-                <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                  <Button size={s}>Button</Button>
-                  <InlineCode>{`size="${s}"`}</InlineCode>
-                  <code style={{ fontSize: 10, color: t.textMuted, fontFamily: 'monospace' }}>
-                    {s === 'sm' ? 'h-32 · 12px' : s === 'md' ? 'h-40 · 14px' : 'h-48 · 16px'}
-                  </code>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </Section>
+      {/* Sizes */}
+      <Section gap={16}>
+        <SectionTitle>Size</SectionTitle>
+        <Card>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-end' }}>
+            {SIZES.map((s) => (
+              <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                <Button size={s}>Button</Button>
+                <InlineCode>{`size="${s}"`}</InlineCode>
+                <code style={{ fontSize: 10, color: t.textMuted, fontFamily: 'monospace' }}>
+                  {s === 'sm' ? 'h-32 · 12px' : s === 'md' ? 'h-40 · 14px' : 'h-48 · 16px'}
+                </code>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </Section>
 
-        {/* States */}
-        <Section gap={16}>
-          <SectionTitle>State</SectionTitle>
-          <Card>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
-              {[
-                { label: 'Default', props: {} },
-                { label: 'Disabled', props: { disabled: true } },
-                { label: 'Loading', props: { loading: true } },
-              ].map(({ label, props }) => (
-                <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                  <Button {...(props as object)}>{label}</Button>
-                  <InlineCode>{label.toLowerCase()}</InlineCode>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </Section>
+      {/* States */}
+      <Section gap={16}>
+        <SectionTitle>State</SectionTitle>
+        <Card>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+            {[
+              { label: 'Default', props: {} },
+              { label: 'Disabled', props: { disabled: true } },
+              { label: 'Loading', props: { loading: true } },
+            ].map(({ label, props }) => (
+              <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                <Button {...(props as object)}>{label}</Button>
+                <InlineCode>{label.toLowerCase()}</InlineCode>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </Section>
 
-        {/* With Icons */}
-        <Section gap={16}>
-          <SectionTitle>Icon 사용</SectionTitle>
-          <CodeBlock>{`<Button leftIcon={<span>+</span>}>추가</Button>
+      {/* With Icons */}
+      <Section gap={16}>
+        <SectionTitle>Icon 사용</SectionTitle>
+        <CodeBlock>{`<Button leftIcon={<span>+</span>}>추가</Button>
 <Button rightIcon={<span>→</span>} variant="outline">다음</Button>`}</CodeBlock>
-          <Card>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
-              <Button leftIcon={<span style={{ fontSize: 14 }}>+</span>}>추가</Button>
-              <Button rightIcon={<span style={{ fontSize: 14 }}>→</span>} variant="outline">
-                다음
-              </Button>
-              <Button leftIcon={<span style={{ fontSize: 14 }}>↓</span>} variant="secondary">
-                다운로드
-              </Button>
-              <Button leftIcon={<span style={{ fontSize: 14 }}>+</span>} variant="ghost" size="sm">
-                ghost sm
-              </Button>
-            </div>
-          </Card>
-        </Section>
+        <Card>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+            <Button leftIcon={<span style={{ fontSize: 14 }}>+</span>}>추가</Button>
+            <Button rightIcon={<span style={{ fontSize: 14 }}>→</span>} variant="outline">
+              다음
+            </Button>
+            <Button leftIcon={<span style={{ fontSize: 14 }}>↓</span>} variant="secondary">
+              다운로드
+            </Button>
+            <Button leftIcon={<span style={{ fontSize: 14 }}>+</span>} variant="ghost" size="sm">
+              ghost sm
+            </Button>
+          </div>
+        </Card>
+      </Section>
 
-        {/* Full Width */}
-        <Section gap={16}>
-          <SectionTitle>Full Width</SectionTitle>
-          <CodeBlock>{`<Button fullWidth>Full Width Button</Button>`}</CodeBlock>
-          <Card style={{ maxWidth: 360 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <Button fullWidth>primary fullWidth</Button>
-              <Button fullWidth variant="secondary">
-                secondary fullWidth
-              </Button>
-            </div>
-          </Card>
-        </Section>
+      {/* Full Width */}
+      <Section gap={16}>
+        <SectionTitle>Full Width</SectionTitle>
+        <CodeBlock>{`<Button fullWidth>Full Width Button</Button>`}</CodeBlock>
+        <Card style={{ maxWidth: 360 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <Button fullWidth>primary fullWidth</Button>
+            <Button fullWidth variant="secondary">
+              secondary fullWidth
+            </Button>
+          </div>
+        </Card>
+      </Section>
 
-        {/* Interactive */}
-        <Section gap={16}>
-          <SectionTitle>인터랙티브 예제</SectionTitle>
-          <Card>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <Button onClick={() => setCount((c) => c + 1)}>클릭</Button>
-              <Button variant="secondary" onClick={() => setCount(0)}>
-                초기화
-              </Button>
-              <code style={{ fontFamily: 'monospace', fontSize: 13, color: t.textSecondary }}>클릭 횟수: {count}</code>
-            </div>
-          </Card>
-        </Section>
-      </DocPage>
-    )
-  },
+      {/* Interactive */}
+      <Section gap={16}>
+        <SectionTitle>인터랙티브 예제</SectionTitle>
+        <Card>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Button onClick={() => setCount((c) => c + 1)}>클릭</Button>
+            <Button variant="secondary" onClick={() => setCount(0)}>
+              초기화
+            </Button>
+            <code style={{ fontFamily: 'monospace', fontSize: 13, color: t.textSecondary }}>클릭 횟수: {count}</code>
+          </div>
+        </Card>
+      </Section>
+    </DocPage>
+  )
+}
+
+export const Documentation: Story = {
+  render: () => <DocumentationView />,
 }

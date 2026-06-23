@@ -6,7 +6,7 @@ export const root = style(
   {
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: vars.radius.lg,
+    borderRadius: vars.radius.md,
     background: vars.color.surface,
     color: vars.color.text,
     fontFamily: vars.font.family.sans,

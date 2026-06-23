@@ -16,7 +16,7 @@ export const root = style(
     border: '1px solid transparent',
     borderRadius: vars.radius.md,
     fontFamily: vars.font.family.sans,
-    fontWeight: vars.font.weight.semibold,
+    fontWeight: vars.font.weight.medium,
     lineHeight: vars.font.lineHeight.tight,
     cursor: 'pointer',
     whiteSpace: 'nowrap',
@@ -70,9 +70,9 @@ export const variants = styleVariants(
 
 export const sizes = styleVariants(
   {
-    sm: { fontSize: vars.font.size.sm, padding: `0 ${vars.space[3]}`, height: '2rem' },
-    md: { fontSize: vars.font.size.md, padding: `0 ${vars.space[4]}`, height: '2.5rem' },
-    lg: { fontSize: vars.font.size.lg, padding: `0 ${vars.space[5]}`, height: '3rem' },
+    sm: { fontSize: vars.font.size.sm, padding: '4px 8px', height: '28px' },
+    md: { fontSize: vars.font.size.md, padding: '8px 12px', height: '32px' },
+    lg: { fontSize: vars.font.size.lg, padding: '12px 16px', height: '36px' },
   },
   'ds-button-size',
 )

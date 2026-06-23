@@ -8,7 +8,7 @@ export const base = style(
     justifyContent: 'center',
     border: 'none',
     cursor: 'pointer',
-    borderRadius: vars.radius.sm,
+    borderRadius: vars.radius.full,
     transition: vars.duration.fast,
     outline: 'none',
     flexShrink: 0,

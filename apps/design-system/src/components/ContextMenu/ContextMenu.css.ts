@@ -18,7 +18,7 @@ export const item = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.space[2],
-  padding: `${vars.space[1]} ${vars.space[4]}`,
+  padding: `6px 12px`,
   fontSize: vars.font.size.sm,
   color: vars.color.text,
   cursor: 'pointer',

@@ -34,7 +34,7 @@ export const field = style(
     gap: vars.space[2],
     width: '100%',
     border: '1px solid transparent',
-    borderRadius: vars.radius.md,
+    borderRadius: vars.radius.sm,
     background: vars.color.surface,
     color: vars.color.text,
     transition: `border-color ${vars.duration.fast} ease, background ${vars.duration.fast} ease, box-shadow ${vars.duration.fast} ease`,
@@ -66,9 +66,9 @@ export const variants = styleVariants(
 /** size: sm | md | lg (패딩 + 높이 + 글자 크기) */
 export const sizes = styleVariants(
   {
-    sm: { minHeight: '2rem', padding: `0 ${vars.space[3]}`, fontSize: vars.font.size.sm },
-    md: { minHeight: '2.5rem', padding: `0 ${vars.space[3]}`, fontSize: vars.font.size.md },
-    lg: { minHeight: '3rem', padding: `0 ${vars.space[4]}`, fontSize: vars.font.size.lg },
+    sm: { minHeight: '28px', padding: '4px 8px', fontSize: vars.font.size.sm },
+    md: { minHeight: '32px', padding: '6px 10px', fontSize: vars.font.size.md },
+    lg: { minHeight: '36px', padding: '8px 12px', fontSize: vars.font.size.lg },
   },
   'ds-input-size',
 )

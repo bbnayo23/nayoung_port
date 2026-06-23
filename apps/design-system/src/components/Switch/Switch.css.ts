@@ -62,7 +62,7 @@ const thumbBase = style({
 
 export const trackSize = styleVariants({
   sm: [trackBase, { width: 28, height: 16 }],
-  md: [trackBase, { width: 36, height: 20 }],
+  md: [trackBase, { width: 40, height: 22 }],
   lg: [trackBase, { width: 44, height: 24 }],
 })
 
@@ -82,11 +82,11 @@ export const thumbSize = styleVariants({
   md: [
     thumbBase,
     {
-      width: 16,
-      height: 16,
+      width: 18,
+      height: 18,
       selectors: {
         [`${hiddenInput}:checked ~ * > &`]: {
-          transform: 'translateX(16px)',
+          transform: 'translateX(18px)',
         },
       },
     },

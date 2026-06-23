@@ -98,14 +98,14 @@ export const vars = createGlobalTheme(':root', {
       /** 코드/로그 뷰어 전용 — JetBrains Mono */
       mono: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
     },
-    /** 폰트 사이즈 (px) — 정보 밀도 높은 화면 기준. 기본 size=md → 12px */
+    /** 폰트 사이즈 (px) — OneUI XDR 스케일과 일치. 기본 size=md → 14px */
     size: {
-      xs: '10px',
-      sm: '11px',
-      md: '12px',
-      lg: '14px',
-      xl: '16px',
-      '2xl': '20px',
+      xs: '11px',
+      sm: '12px',
+      md: '14px',
+      lg: '16px',
+      xl: '20px',
+      '2xl': '24px',
     },
     weight: {
       regular: '400',
@@ -141,9 +141,9 @@ export const vars = createGlobalTheme(':root', {
 
   /** 트랜지션 duration */
   duration: {
-    fast: '0.12s',
-    normal: '0.2s',
-    slow: '0.32s',
+    fast: '150ms',
+    normal: '250ms',
+    slow: '350ms',
   },
 })
 

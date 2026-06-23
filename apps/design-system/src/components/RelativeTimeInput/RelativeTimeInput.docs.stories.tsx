@@ -2,10 +2,10 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ReactNode, CSSProperties } from 'react'
 import { vars } from '../../theme/tokens.css'
-import { Calendar } from './Calendar'
+import { RelativeTimeInput } from './RelativeTimeInput'
 
 const meta = {
-  title: 'StyleGuide/Calendar',
+  title: 'StyleGuide/RelativeTimeInput',
   parameters: { layout: 'fullscreen' },
 } satisfies Meta
 
@@ -21,7 +21,9 @@ const t = {
   textSecondary: vars.color.textSecondary,
   textMuted: vars.color.textDisabled,
   primary: vars.color.brand[600],
-  error: vars.color.danger,
+  success: vars.color.success,
+  danger: vars.color.danger,
+  info: vars.color.info,
   radius: vars.radius.md,
   radiusSm: vars.radius.sm,
 } as const
@@ -185,106 +187,135 @@ const PropsTable = ({ rows }: { rows: PropRow[] }) => (
 )
 
 const DocumentationView = () => {
-  const [selected, setSelected] = useState<Date | undefined>(new Date())
-  const today = new Date()
-  const disabledBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
-  const disabledAfter = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)
-  const [rangeSelected, setRangeSelected] = useState<Date | undefined>(new Date())
+  const [value, setValue] = useState('1h')
+  const isValid = /^\d+[smhd]$/.test(value)
 
   return (
     <DocPage>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: t.text }}>Calendar</h1>
+        <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: t.text }}>RelativeTimeInput</h1>
         <p style={{ margin: 0, fontSize: 14, lineHeight: 1.8, color: t.textSecondary, maxWidth: 600 }}>
-          react-day-picker 기반의 날짜 선택 컴포넌트입니다. 단일 날짜 선택, 날짜 범위 제한, 비활성 날짜 등을 지원합니다.
+          상대 시간 문자열(예: <InlineCode>1h</InlineCode> · <InlineCode>30m</InlineCode>)을 입력받는 작고 고정폭의
+          텍스트 필드입니다. <InlineCode>isValid</InlineCode> 가 <InlineCode>false</InlineCode> 이면 error 테두리를
+          표시하며, 입력 길이는 <InlineCode>maxLength=6</InlineCode> 으로 고정되어 있습니다. monospace · 가운데 정렬 ·
+          폭 80px 의 단일 input 으로 렌더됩니다.
         </p>
-        <CodeBlock>{`import { Calendar } from '@ds/components/Calendar'`}</CodeBlock>
+        <CodeBlock>{`import { RelativeTimeInput } from '@nayoung-port/design-system/components/RelativeTimeInput'`}</CodeBlock>
       </div>
 
       <Section>
-        <SectionTitle>API</SectionTitle>
+        <SectionTitle>API — RelativeTimeInput</SectionTitle>
         <DocCard>
           <PropsTable
             rows={[
-              { name: 'selected', type: 'Date | undefined', desc: '현재 선택된 날짜' },
-              { name: 'onSelect', type: '(date: Date | undefined) => void', desc: '날짜 선택 시 호출되는 콜백' },
-              { name: 'disabledBefore', type: 'Date', desc: '이 날짜 이전은 선택 불가' },
-              { name: 'disabledAfter', type: 'Date', desc: '이 날짜 이후는 선택 불가' },
-              { name: 'className', type: 'string', desc: '최상위 wrapper에 추가할 className' },
+              {
+                name: 'value',
+                type: 'string',
+                defaultVal: "''",
+                desc: '현재 입력 값(controlled). 미지정 시 빈 문자열로 렌더된다.',
+              },
+              {
+                name: 'onChange',
+                type: '(value: string) => void',
+                desc: '입력이 바뀔 때 변경된 문자열 값을 그대로 전달한다. native event 가 아닌 string 을 받는다.',
+              },
+              {
+                name: 'onBlur',
+                type: '() => void',
+                desc: '필드에서 포커스가 빠질 때 호출된다(인자 없음). 입력값 검증/포맷 정규화 시점으로 사용한다.',
+              },
+              {
+                name: 'isValid',
+                type: 'boolean',
+                desc: 'false 일 때만 invalid 스타일(danger 테두리 + danger 포커스 링)을 적용한다. undefined/true 는 기본 스타일.',
+              },
+              {
+                name: 'placeholder',
+                type: 'string',
+                desc: '빈 입력 시 표시되는 안내 문구. 예) "1h"',
+              },
+              {
+                name: 'className',
+                type: 'string',
+                desc: '루트 input 에 병합되는 추가 클래스',
+              },
+              {
+                name: '...rest',
+                type: "Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'>",
+                desc: 'input 에 전달되는 나머지 HTML 속성(disabled, name, aria-* 등). value/onChange 는 위 시그니처로 대체되어 제외된다.',
+              },
             ]}
           />
         </DocCard>
+        <p style={{ margin: 0, fontSize: 12, color: t.textMuted, lineHeight: 1.7 }}>
+          참고 — <InlineCode>type="text"</InlineCode> 와 <InlineCode>maxLength=6</InlineCode> 은 컴포넌트 내부에서
+          고정값으로 설정되어 있어 prop 으로 노출되지 않습니다.
+        </p>
       </Section>
 
       <Section>
         <SectionTitle>기본 사용</SectionTitle>
-        <CodeBlock>{`const [selected, setSelected] = useState<Date | undefined>(new Date())
-
-<Calendar selected={selected} onSelect={setSelected} />`}</CodeBlock>
+        <CodeBlock>{`<RelativeTimeInput placeholder="1h" />
+<RelativeTimeInput value="30m" />`}</CodeBlock>
         <DocCard>
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <Calendar selected={selected} onSelect={setSelected} />
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-end' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <span style={{ fontSize: 12, color: t.textMuted }}>선택된 날짜</span>
-              <span style={{ fontSize: 14, color: t.text, fontWeight: 600 }}>
-                {selected?.toLocaleDateString('ko-KR') ?? '없음'}
-              </span>
+              <InlineCode>placeholder</InlineCode>
+              <RelativeTimeInput placeholder="1h" />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <InlineCode>value="30m"</InlineCode>
+              <RelativeTimeInput value="30m" />
             </div>
           </div>
         </DocCard>
       </Section>
 
       <Section>
-        <SectionTitle>날짜 범위 제한</SectionTitle>
-        <CodeBlock>{`const today = new Date()
-const disabledBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
-const disabledAfter  = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)
+        <SectionTitle>상태 — valid · invalid · disabled</SectionTitle>
+        <CodeBlock>{`<RelativeTimeInput value="1h" isValid />
+<RelativeTimeInput value="abc" isValid={false} />
+<RelativeTimeInput value="1h" disabled />`}</CodeBlock>
+        <DocCard>
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <InlineCode>기본 (valid)</InlineCode>
+              <RelativeTimeInput value="1h" isValid />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <InlineCode>{'isValid={false}'}</InlineCode>
+              <RelativeTimeInput value="abc" isValid={false} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <InlineCode>disabled</InlineCode>
+              <RelativeTimeInput value="1h" disabled />
+            </div>
+          </div>
+          <p style={{ margin: '12px 0 0', fontSize: 12, color: t.textMuted, lineHeight: 1.7 }}>
+            <strong style={{ color: t.danger }}>invalid</strong> 은 danger 테두리, <strong>disabled</strong> 는 opacity
+            0.5 + not-allowed 커서로 표현됩니다. <strong style={{ color: t.primary }}>focus</strong> 상태(brand 테두리 +
+            포커스 링)는 아래 필드를 클릭해 직접 확인하세요.
+          </p>
+        </DocCard>
+      </Section>
 
-<Calendar
-  selected={selected}
-  onSelect={setSelected}
-  disabledBefore={disabledBefore}
-  disabledAfter={disabledAfter}
+      <Section>
+        <SectionTitle>인터랙션 — controlled + 검증</SectionTitle>
+        <CodeBlock>{`const [value, setValue] = useState('1h')
+const isValid = /^\\d+[smhd]$/.test(value)
+
+<RelativeTimeInput
+  value={value}
+  onChange={setValue}
+  isValid={isValid}
+  placeholder="1h"
 />`}</CodeBlock>
         <DocCard>
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <Calendar
-              selected={rangeSelected}
-              onSelect={setRangeSelected}
-              disabledBefore={disabledBefore}
-              disabledAfter={disabledAfter}
-            />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <span style={{ fontSize: 12, color: t.textMuted }}>선택 범위</span>
-              <span style={{ fontSize: 13, color: t.textSecondary }}>
-                오늘 기준 <InlineCode>±7일</InlineCode>만 선택 가능
-              </span>
-            </div>
-          </div>
-        </DocCard>
-      </Section>
-
-      <Section>
-        <SectionTitle>날짜별 스타일 상태</SectionTitle>
-        <DocCard>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Calendar selected={new Date()} onSelect={() => {}} />
-            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginTop: 8 }}>
-              {[
-                { label: '오늘 (today)', desc: '볼드 + brand[600] 색상' },
-                { label: '선택됨 (selected)', desc: 'brand[600] 배경 + 흰 텍스트' },
-                { label: '일요일', desc: 'danger 색상' },
-                { label: '비활성 (disabled)', desc: 'opacity 0.3 + 취소선 + 클릭 불가' },
-                { label: '이번 달 외 날짜 (outside)', desc: 'textDisabled + opacity 0.4' },
-              ].map(({ label, desc }) => (
-                <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: t.text }}>
-                    <InlineCode>{label}</InlineCode>
-                  </span>
-                  <span style={{ fontSize: 12, color: t.textMuted }}>{desc}</span>
-                </div>
-              ))}
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 320 }}>
+            <RelativeTimeInput value={value} onChange={setValue} isValid={isValid} placeholder="1h" />
+            <span style={{ fontSize: 12, color: isValid ? t.success : t.danger }}>
+              {value.length === 0 ? '입력 없음' : isValid ? '유효한 값' : '유효하지 않음 (예: 1h, 30m, 45s, 2d)'}
+            </span>
           </div>
         </DocCard>
       </Section>
