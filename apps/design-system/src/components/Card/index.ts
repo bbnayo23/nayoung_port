@@ -1,8 +1,6 @@
-export { Card } from './Card'
-export type {
-  CardProps,
-  CardHeaderProps,
-  CardBodyProps,
-  CardFooterProps,
-} from './Card'
-export type { CardVariant, CardPadding } from './Card.css'
+import Card from './Card'
+export { default as CardSkeleton } from './CardSkeleton'
+
+export * from './Card.types'
+
+export default Card

@@ -1,3 +1,6 @@
-export { ToastProvider, useToast } from './Toast'
-export type { ToastProviderProps, ToastOptions } from './Toast'
-export type { ToastVariant, ToastPosition } from './Toast.css'
+import Toast from './Toast'
+
+export { Toaster, toast } from './Toast'
+export * from './Toast.types'
+
+export default Toast

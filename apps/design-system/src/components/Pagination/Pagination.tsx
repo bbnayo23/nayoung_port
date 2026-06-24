@@ -1,142 +1,161 @@
-import { cx } from '../../utils'
-import * as styles from './Pagination.css'
+import { useId, useState } from 'react'
+import { ExdPagingLIcon, ExdPagingRIcon } from '@port/icon-library'
+import { usePages } from './Pagination.hooks'
+import {
+  paginationBar,
+  pageSizeDropdown,
+  paginationCenter,
+  pagination,
+  paginationItem,
+  pageInfo,
+  pageJump,
+} from './Pagination.css'
+import { Dropdown } from '../Dropdown'
+import type { PaginationProps } from './Pagination.types'
+import cn from 'classnames'
 
-export interface PaginationProps {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-  /** 가운데에 표시할 최대 페이지 버튼 수 (기본 5) */
-  maxDisplay?: number
-  /** `«` `»` 첫/마지막 페이지 버튼 노출 */
-  showFirstLast?: boolean
-  /** `‹` `›` 이전/다음 페이지 버튼 노출 (기본 true) */
-  showPrevNext?: boolean
-  /** 모든 버튼 비활성화 — fetching 중 사용 */
-  disabled?: boolean
-  className?: string
-}
-
-const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max)
-
-const getVisiblePages = (currentPage: number, totalPages: number, maxDisplay: number) => {
-  const safeTotal = Math.max(1, totalPages)
-  const safeMax = Math.max(1, Math.min(maxDisplay, safeTotal))
-  const half = Math.floor(safeMax / 2)
-
-  let start = currentPage - half
-  let end = currentPage + (safeMax - 1 - half)
-
-  if (start < 1) {
-    end += 1 - start
-    start = 1
-  }
-  if (end > safeTotal) {
-    start -= end - safeTotal
-    end = safeTotal
-  }
-  start = Math.max(1, start)
-
-  const pages: number[] = []
-  for (let p = start; p <= end; p += 1) pages.push(p)
-  return {
-    pages,
-    hasLeftEllipsis: start > 1,
-    hasRightEllipsis: end < safeTotal,
-  }
-}
-
-export const Pagination = ({
-  currentPage,
+const Pagination: React.FC<PaginationProps> = ({
   totalPages,
+  currentPage,
   onPageChange,
   maxDisplay = 5,
   showFirstLast = false,
   showPrevNext = true,
-  disabled = false,
+  size = 'md',
   className,
-}: PaginationProps) => {
-  const safeTotal = Math.max(1, totalPages)
-  const page = clamp(currentPage, 1, safeTotal)
-  const { pages, hasLeftEllipsis, hasRightEllipsis } = getVisiblePages(page, safeTotal, maxDisplay)
+  disabled = false,
+  totalItems,
+  itemsPerPage,
+  itemsPerPageOptions,
+  onItemsPerPageChange,
+  showPageInfo = false,
+  showPageJump = false,
+  showItemsPerPage = false,
+  ...props
+}) => {
+  const id = useId()
+  const { pages, start, end } = usePages(totalPages, currentPage, maxDisplay)
+  const [jumpValue, setJumpValue] = useState('')
 
-  const go = (target: number) => {
-    const next = clamp(target, 1, safeTotal)
-    if (next !== page) onPageChange(next)
+  const hasGapFromStart = start > 1
+  const hasGapFromEnd = end < totalPages
+  const showFirst = showFirstLast && hasGapFromStart
+  const showLast = showFirstLast && hasGapFromEnd
+
+  let iconSize = 10
+  if (size === 'lg') iconSize = 12
+  if (size === 'sm') iconSize = 8
+
+  const hasExtras = showItemsPerPage || showPageInfo || showPageJump
+
+  const handleJump = () => {
+    const page = parseInt(jumpValue, 10)
+    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+      onPageChange(page)
+    }
+    setJumpValue('')
   }
 
-  return (
-    <nav
-      className={cx(styles.container, className)}
-      aria-label="Pagination"
-      aria-busy={disabled || undefined}
-    >
-      {showFirstLast && (
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => go(1)}
-          disabled={disabled || page === 1}
-          aria-label="First page"
-        >
-          «
-        </button>
-      )}
+  const paginationContent = (
+    <ul className={cn(pagination, 'pagination', `pagination-${size}`, disabled && 'disabled')} {...props}>
       {showPrevNext && (
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => go(page - 1)}
-          disabled={disabled || page === 1}
-          aria-label="Previous page"
+        <li
+          className={cn(paginationItem, 'prev', currentPage === 1 && 'disabled')}
+          onClick={() => onPageChange(currentPage - 1)}
         >
-          ‹
-        </button>
+          <ExdPagingLIcon size={iconSize} />
+        </li>
       )}
-      {hasLeftEllipsis && (
-        <span className={styles.ellipsis} aria-hidden="true">
-          …
-        </span>
+      {showFirst && (
+        <li className={cn(paginationItem, 'page', 1 === currentPage && 'active')} onClick={() => onPageChange(1)}>
+          1
+        </li>
       )}
-      {pages.map((p) => (
-        <button
-          key={p}
-          type="button"
-          className={styles.pageButton}
-          onClick={() => go(p)}
-          disabled={disabled}
-          aria-current={p === page ? 'page' : undefined}
-          aria-label={`Page ${p}`}
+      {hasGapFromStart && (
+        <li className={cn(paginationItem, 'ellipsis')} onClick={() => onPageChange(start - 1)}>
+          ...
+        </li>
+      )}
+      {pages.map((page) => (
+        <li
+          key={`${id}-${page}`}
+          className={cn(paginationItem, 'page', page === currentPage && 'active')}
+          onClick={() => onPageChange(page)}
         >
-          {p}
-        </button>
+          {page}
+        </li>
       ))}
-      {hasRightEllipsis && (
-        <span className={styles.ellipsis} aria-hidden="true">
-          …
-        </span>
+      {hasGapFromEnd && (
+        <li className={cn(paginationItem, 'ellipsis')} onClick={() => onPageChange(end + 1)}>
+          ...
+        </li>
+      )}
+      {showLast && (
+        <li
+          className={cn(paginationItem, 'page', totalPages === currentPage && 'active')}
+          onClick={() => onPageChange(totalPages)}
+        >
+          {totalPages}
+        </li>
       )}
       {showPrevNext && (
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => go(page + 1)}
-          disabled={disabled || page === safeTotal}
-          aria-label="Next page"
+        <li
+          className={cn(paginationItem, 'next', currentPage === totalPages && 'disabled')}
+          onClick={() => onPageChange(currentPage + 1)}
         >
-          ›
-        </button>
+          <ExdPagingRIcon size={iconSize} />
+        </li>
       )}
-      {showFirstLast && (
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => go(safeTotal)}
-          disabled={disabled || page === safeTotal}
-          aria-label="Last page"
-        >
-          »
-        </button>
+    </ul>
+  )
+
+  if (!hasExtras) {
+    return paginationContent
+  }
+
+  const formattedTotalItems = totalItems?.toLocaleString()
+
+  return (
+    <div className={cn(paginationBar, 'pagination-bar', `pagination-bar-${size}`, className)}>
+      {showItemsPerPage && itemsPerPageOptions && itemsPerPageOptions.length > 0 && (
+        <div className={pageSizeDropdown}>
+          <Dropdown
+            options={itemsPerPageOptions.map((opt) => ({ value: String(opt), label: `${opt} 건` }))}
+            value={itemsPerPage !== null && itemsPerPage !== undefined ? String(itemsPerPage) : undefined}
+            onChange={(value) => onItemsPerPageChange?.(Number(value))}
+            size={size}
+          />
+        </div>
       )}
-    </nav>
+
+      <div className={paginationCenter}>
+        {paginationContent}
+
+        {showPageInfo && (
+          <span className={cn(pageInfo, 'pagination-page-info')}>
+            전체 {totalPages}페이지 중 {currentPage} 페이지
+            {totalItems !== undefined && ` (${formattedTotalItems} 항목)`}
+          </span>
+        )}
+      </div>
+
+      {showPageJump && (
+        <span className={cn(pageJump, 'pagination-page-jump')}>
+          <input
+            type="text"
+            value={jumpValue}
+            placeholder={String(currentPage)}
+            onChange={(e) => setJumpValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleJump()
+            }}
+            onBlur={handleJump}
+          />
+          / {totalPages}
+        </span>
+      )}
+    </div>
   )
 }
+
+export default Pagination

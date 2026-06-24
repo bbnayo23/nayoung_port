@@ -1,26 +1,23 @@
 import { globalStyle, style } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { vars } from '../../theme/contract.css'
 
 export const wrapper = style({
-  fontFamily: vars.font.family.sans,
-  fontSize: vars.font.size.sm,
+  fontFamily: vars.font.family,
+  fontSize: vars.font.sizeSm,
 })
 
 const rdpCellSize = 32
 
 globalStyle(`${wrapper} .rdp-root`, {
   // @ts-expect-error CSS custom properties
-  '--rdp-accent-color': vars.color.brand[600],
-  '--rdp-accent-background-color': `rgba(113, 135, 255, 0.1)`,
+  '--rdp-accent-color': vars.color.primary,
+  '--rdp-accent-background-color': `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
   '--rdp-day-height': `${rdpCellSize}px`,
   '--rdp-day-width': `${rdpCellSize}px`,
   '--rdp-day_button-width': `${rdpCellSize}px`,
   '--rdp-day_button-height': `${rdpCellSize}px`,
-  fontFamily: vars.font.family.sans,
-})
-
-globalStyle(`${wrapper} .rdp-chevron`, {
-  fill: vars.color.textSecondary,
+  '--rdp-nav-height': `${rdpCellSize}px`,
+  fontFamily: vars.font.family,
 })
 
 globalStyle(`${wrapper} .rdp-nav`, {
@@ -32,7 +29,7 @@ globalStyle(`${wrapper} .rdp-nav`, {
   right: 0,
   display: 'flex',
   alignItems: 'center',
-  padding: `0 ${vars.space[2]}`,
+  padding: `0 ${vars.spacing.sm}`,
   height: 'var(--rdp-day-height)',
   zIndex: 1,
   pointerEvents: 'none',
@@ -40,12 +37,19 @@ globalStyle(`${wrapper} .rdp-nav`, {
 
 globalStyle(`${wrapper} .rdp-button_previous, ${wrapper} .rdp-button_next`, {
   pointerEvents: 'auto',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: `${rdpCellSize}px`,
+  height: `${rdpCellSize}px`,
+  color: vars.color.textSecondary,
+  flexShrink: 0,
 })
 
 globalStyle(`${wrapper} .rdp-month_caption`, {
   color: vars.color.text,
-  fontWeight: vars.font.weight.medium,
-  fontSize: vars.font.size.md,
+  fontWeight: vars.font.weightMedium,
+  fontSize: vars.font.sizeMd,
   display: 'flex',
   justifyContent: 'center',
   width: '100%',
@@ -56,57 +60,66 @@ globalStyle(`${wrapper} .rdp-month`, {
 })
 
 globalStyle(`${wrapper} .rdp-weekday`, {
-  color: vars.color.textDisabled,
-  fontSize: vars.font.size.xs,
-  fontWeight: vars.font.weight.medium,
+  color: vars.color.textMuted,
+  fontSize: vars.font.sizeXs,
+  fontWeight: vars.font.weightMedium,
 })
 
-// 일요일 (첫 번째 열) 빨간색
 globalStyle(`${wrapper} .rdp-weekday:first-child`, {
-  color: vars.color.danger,
+  color: vars.color.error,
 })
 
 globalStyle(`${wrapper} .rdp-day:nth-child(7n+1)`, {
-  color: vars.color.danger,
+  color: vars.color.error,
 })
 
 globalStyle(`${wrapper} .rdp-day`, {
   color: vars.color.text,
   borderRadius: vars.radius.full,
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
 })
 
 globalStyle(`${wrapper} .rdp-day:hover`, {
-  backgroundColor: vars.color.surfaceMuted,
+  backgroundColor: vars.color.surfaceHover,
 })
 
 globalStyle(`${wrapper} .rdp-today`, {
-  fontWeight: vars.font.weight.bold,
-  color: vars.color.brand[600],
+  fontWeight: vars.font.weightBold,
+  color: vars.color.primary,
 })
 
-globalStyle(`${wrapper} .rdp-selected .rdp-day_button`, {
-  backgroundColor: vars.color.brand[600],
-  color: vars.color.textInverse,
+globalStyle(`${wrapper} .rdp-today:not(.rdp-selected) .rdp-day_button`, {
+  boxShadow: `inset 0 0 0 2px ${vars.color.primary}`,
   borderRadius: vars.radius.full,
 })
 
+globalStyle(`${wrapper} .rdp-day_button`, {
+  border: 'none',
+  fontSize: vars.font.sizeSm,
+})
+
+globalStyle(`${wrapper} .rdp-selected .rdp-day_button`, {
+  backgroundColor: vars.color.primary,
+  color: vars.color.textInverse,
+  borderRadius: vars.radius.full,
+  fontSize: vars.font.sizeSm,
+  fontWeight: vars.font.weightNormal,
+})
+
 globalStyle(`${wrapper} .rdp-outside`, {
-  color: vars.color.textDisabled,
-  opacity: 0.4,
+  color: vars.color.textMuted,
 })
 
 globalStyle(`${wrapper} .rdp-range_middle`, {
-  backgroundColor: `rgba(113, 135, 255, 0.1)`,
+  backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
 })
 
-// disabled는 다른 상태(today, selected, 일요일 등)보다 항상 우선
 globalStyle(`${wrapper} .rdp-disabled`, {
-  opacity: 0.3,
+  opacity: 0.4,
   cursor: 'not-allowed',
   pointerEvents: 'none',
-  color: `${vars.color.textDisabled} !important`,
-  fontWeight: `${vars.font.weight.regular} !important`,
+  color: `${vars.color.textMuted} !important`,
+  fontWeight: `${vars.font.weightNormal} !important`,
   backgroundColor: 'transparent !important',
   textDecoration: 'line-through',
 })

@@ -1,171 +1,168 @@
-import { keyframes, style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { style, globalStyle, keyframes, createVar } from '@vanilla-extract/css'
+import { vars } from '../../theme/contract.css'
+
+export const toastDurationVar = createVar()
+
+const toastProgress = keyframes({
+  from: { transform: 'scaleX(1)' },
+  to: { transform: 'scaleX(0)' },
+})
 
 const slideInRight = keyframes({
-  from: { opacity: 0, transform: 'translateX(16px)' },
+  from: { opacity: 0, transform: 'translateX(100%)' },
   to: { opacity: 1, transform: 'translateX(0)' },
 })
-
 const slideInLeft = keyframes({
-  from: { opacity: 0, transform: 'translateX(-16px)' },
+  from: { opacity: 0, transform: 'translateX(-100%)' },
   to: { opacity: 1, transform: 'translateX(0)' },
 })
+const slideInDown = keyframes({
+  from: { opacity: 0, transform: 'translateY(-100%)' },
+  to: { opacity: 1, transform: 'translateY(0)' },
+})
+const slideInUp = keyframes({
+  from: { opacity: 0, transform: 'translateY(100%)' },
+  to: { opacity: 1, transform: 'translateY(0)' },
+})
+const slideOutRight = keyframes({
+  from: { opacity: 1, transform: 'translateX(0)' },
+  to: { opacity: 0, transform: 'translateX(100%)' },
+})
+const slideOutLeft = keyframes({
+  from: { opacity: 1, transform: 'translateX(0)' },
+  to: { opacity: 0, transform: 'translateX(-100%)' },
+})
+const slideOutUp = keyframes({
+  from: { opacity: 1, transform: 'translateY(0)' },
+  to: { opacity: 0, transform: 'translateY(-100%)' },
+})
+const slideOutDown = keyframes({
+  from: { opacity: 1, transform: 'translateY(0)' },
+  to: { opacity: 0, transform: 'translateY(100%)' },
+})
 
-/** 한쪽 코너에 고정되는 toast viewport — column 으로 쌓인다. */
-export const viewport = style(
-  {
-    position: 'fixed',
-    zIndex: vars.zIndex.toast,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.space[3],
-    width: '360px',
-    maxWidth: 'calc(100vw - 2rem)',
-    pointerEvents: 'none',
-  },
-  'ds-toast-viewport',
-)
+export const toastWrapper = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 12,
+  padding: '12px 20px',
+  borderRadius: vars.radius.md,
+  boxShadow: '2px 2px 6px rgba(0, 0, 0, 0.3)',
+  minWidth: 320,
+  maxWidth: 500,
+  position: 'relative',
+  overflow: 'hidden',
+  backgroundColor: `var(--color-toast-bg, ${vars.color.surface})`,
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+})
 
-/** viewport 코너 위치 + 진입 애니메이션 방향 */
-export const positions = styleVariants(
-  {
-    'top-right': {
-      top: vars.space[4],
-      right: vars.space[4],
-      alignItems: 'flex-end',
-    },
-    'top-left': {
-      top: vars.space[4],
-      left: vars.space[4],
-      alignItems: 'flex-start',
-    },
-    'bottom-right': {
-      bottom: vars.space[4],
-      right: vars.space[4],
-      alignItems: 'flex-end',
-      flexDirection: 'column-reverse',
-    },
-    'bottom-left': {
-      bottom: vars.space[4],
-      left: vars.space[4],
-      alignItems: 'flex-start',
-      flexDirection: 'column-reverse',
-    },
-  },
-  'ds-toast-position',
-)
+/* ── Content ── */
+globalStyle(`${toastWrapper} .toast-content`, { flex: 1, minWidth: 0 })
 
-/** 개별 toast 카드 */
-export const card = style(
-  {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: vars.space[3],
-    width: '100%',
-    padding: '12px 20px',
-    borderRadius: vars.radius.md,
-    borderLeft: `4px solid transparent`,
-    background: vars.color.surface,
-    boxShadow: '2px 2px 6px rgba(0, 0, 0, 0.3)',
-    pointerEvents: 'auto',
-  },
-  'ds-toast-card',
-)
+globalStyle(`${toastWrapper} .toast-content .toast-title`, {
+  fontWeight: 500,
+  fontSize: vars.font.sizeSm,
+  lineHeight: 1.2,
+  marginBottom: 6,
+  wordBreak: 'break-word',
+  color: `var(--color-toast-title, ${vars.color.text})`,
+})
 
-/** 진입 애니메이션 — 좌/우 슬라이드 */
-export const enterRight = style(
-  { animation: `${slideInRight} ${vars.duration.normal} ease` },
-  'ds-toast-enter-right',
-)
-export const enterLeft = style(
-  { animation: `${slideInLeft} ${vars.duration.normal} ease` },
-  'ds-toast-enter-left',
-)
+globalStyle(`${toastWrapper} .toast-content .toast-message`, {
+  color: `var(--color-toast-message, ${vars.color.textSecondary})`,
+  fontSize: vars.font.sizeSm,
+  lineHeight: 1.5,
+  wordBreak: 'break-word',
+})
 
-/** 좌측 accent 보더 + 아이콘 색상 = variant 색 */
-export const variants = styleVariants(
-  {
-    info: { borderLeftColor: vars.color.info, color: vars.color.info },
-    success: { borderLeftColor: vars.color.success, color: vars.color.success },
-    warning: { borderLeftColor: vars.color.warning, color: vars.color.warning },
-    danger: { borderLeftColor: vars.color.danger, color: vars.color.danger },
-  },
-  'ds-toast-variant',
-)
+globalStyle(`${toastWrapper} .toast-action`, { position: 'absolute', top: 10, right: 45 })
 
-export const icon = style(
-  {
-    flexShrink: 0,
-    width: '1.25rem',
-    height: '1.25rem',
-    marginTop: '1px',
-  },
-  'ds-toast-icon',
-)
+/* ── Close ── */
+globalStyle(`${toastWrapper} .toast-close`, {
+  flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 18,
+  height: 18,
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  padding: 0,
+  borderRadius: vars.radius.sm,
+  color: 'currentColor',
+  opacity: 0.7,
+  transition: `all ${vars.transition.fast}`,
+  marginLeft: 'auto',
+})
 
-export const body = style(
-  {
-    flex: 1,
-    minWidth: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.space[1],
-  },
-  'ds-toast-body',
-)
+globalStyle(`${toastWrapper} .toast-close:hover`, {
+  opacity: 1,
+  backgroundColor: vars.color.surfaceHover,
+  transform: 'scale(1.1)',
+})
 
-export const title = style(
-  {
-    fontFamily: vars.font.family.sans,
-    fontSize: vars.font.size.sm,
-    fontWeight: vars.font.weight.medium,
-    lineHeight: vars.font.lineHeight.tight,
-    color: vars.color.text,
-  },
-  'ds-toast-title',
-)
+globalStyle(`${toastWrapper} .toast-close:active`, { transform: 'scale(0.95)' })
 
-export const description = style(
-  {
-    fontFamily: vars.font.family.sans,
-    fontSize: vars.font.size.xs,
-    lineHeight: vars.font.lineHeight.normal,
-    color: vars.color.textSecondary,
-  },
-  'ds-toast-description',
-)
+globalStyle(`${toastWrapper} .toast-close svg`, {
+  fill: vars.color.textSecondary,
+})
 
-export const closeButton = style(
-  {
-    flexShrink: 0,
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '1.5rem',
-    height: '1.5rem',
-    marginTop: '-2px',
-    marginRight: '-4px',
-    padding: 0,
-    border: 'none',
-    borderRadius: vars.radius.sm,
-    background: 'transparent',
-    color: vars.color.textSecondary,
-    cursor: 'pointer',
-    transition: `background ${vars.duration.fast} ease, color ${vars.duration.fast} ease`,
-    selectors: {
-      '&:hover': {
-        background: vars.color.gray[100],
-        color: vars.color.text,
-      },
-      '&:focus-visible': {
-        outline: 'none',
-        boxShadow: vars.shadow.focus,
-      },
-    },
-  },
-  'ds-toast-close',
-)
+/* ── Variant icons ── */
+globalStyle(`${toastWrapper}.toast-success .toast-icon svg, ${toastWrapper}.toast-success .toast-icon svg path`, {
+  fill: vars.color.success,
+})
+globalStyle(`${toastWrapper}.toast-error .toast-icon svg, ${toastWrapper}.toast-error .toast-icon svg path`, {
+  fill: vars.color.error,
+})
+globalStyle(`${toastWrapper}.toast-warning .toast-icon svg, ${toastWrapper}.toast-warning .toast-icon svg path`, {
+  fill: vars.color.warning,
+})
+globalStyle(`${toastWrapper}.toast-info .toast-icon svg, ${toastWrapper}.toast-info .toast-icon svg path`, {
+  fill: vars.color.info,
+})
 
-export type ToastVariant = keyof typeof variants
-export type ToastPosition = keyof typeof positions
+/* ── Position animations ── */
+globalStyle(`${toastWrapper}.toast-top-right, ${toastWrapper}.toast-bottom-right`, {
+  animation: `${slideInRight} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+})
+globalStyle(`${toastWrapper}.toast-top-right.is-closing, ${toastWrapper}.toast-bottom-right.is-closing`, {
+  animation: `${slideOutRight} 0.3s ease forwards`,
+})
+
+globalStyle(`${toastWrapper}.toast-top-left, ${toastWrapper}.toast-bottom-left`, {
+  animation: `${slideInLeft} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+})
+globalStyle(`${toastWrapper}.toast-top-left.is-closing, ${toastWrapper}.toast-bottom-left.is-closing`, {
+  animation: `${slideOutLeft} 0.3s ease forwards`,
+})
+
+globalStyle(`${toastWrapper}.toast-top-center`, {
+  animation: `${slideInDown} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+})
+globalStyle(`${toastWrapper}.toast-top-center.is-closing`, {
+  animation: `${slideOutUp} 0.3s ease forwards`,
+})
+
+globalStyle(`${toastWrapper}.toast-bottom-center`, {
+  animation: `${slideInUp} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+})
+globalStyle(`${toastWrapper}.toast-bottom-center.is-closing`, {
+  animation: `${slideOutDown} 0.3s ease forwards`,
+})
+
+/* ── Auto-dismiss progress bar ── */
+export const toastProgressBar = style({
+  position: 'absolute',
+  left: 0,
+  bottom: 0,
+  height: 2,
+  width: '100%',
+  transformOrigin: 'left',
+  animation: `${toastProgress} ${toastDurationVar} linear forwards`,
+})
+
+globalStyle(`${toastWrapper}.toast-success ${toastProgressBar}`, { background: vars.color.success })
+globalStyle(`${toastWrapper}.toast-error   ${toastProgressBar}`, { background: vars.color.error })
+globalStyle(`${toastWrapper}.toast-warning ${toastProgressBar}`, { background: vars.color.warning })
+globalStyle(`${toastWrapper}.toast-info    ${toastProgressBar}`, { background: vars.color.info })

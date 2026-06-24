@@ -1,5 +1,0 @@
-export { ReactSelect } from './ReactSelect'
-export type { ReactSelectProps, ReactSelectOption } from './ReactSelect'
-export { ReactMultiSelect } from './ReactMultiSelect'
-export type { ReactMultiSelectProps } from './ReactMultiSelect'
-export { reactSelectCss } from './ReactSelect.css'

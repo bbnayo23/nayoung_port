@@ -1,2 +1,2 @@
-export { HighlightText } from './HighlightText'
-export type { HighlightTextProps } from './HighlightText'
+export { default as HighlightText, default } from './HighlightText'
+export type { HighlightTextProps } from './types'

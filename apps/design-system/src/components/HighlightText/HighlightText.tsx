@@ -1,20 +1,9 @@
 import Highlighter from 'react-highlight-words'
+import type { HighlightTextProps } from './types'
 import { useShouldRenderPlain } from './hooks'
 import * as styles from './HighlightText.css'
 
-export interface HighlightTextProps {
-  text: string
-  searchWords: Array<string | RegExp>
-  caseSensitive?: boolean
-  className?: string
-}
-
-export const HighlightText = ({
-  text,
-  searchWords,
-  caseSensitive = false,
-  className,
-}: HighlightTextProps) => {
+export const HighlightText = ({ text, searchWords, caseSensitive = false, className }: HighlightTextProps) => {
   const plain = useShouldRenderPlain(text, searchWords)
 
   if (plain) {
@@ -33,3 +22,5 @@ export const HighlightText = ({
     />
   )
 }
+
+export default HighlightText

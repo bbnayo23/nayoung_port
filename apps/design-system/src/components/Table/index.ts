@@ -1,10 +1,5 @@
-export { Table } from './Table'
-export type {
-  TableProps,
-  TableHeadProps,
-  TableBodyProps,
-  TableRowProps,
-  TableHeaderCellProps,
-  TableCellProps,
-} from './Table'
-export type { TableVariant, TableSize, TableAlign } from './Table.css'
+import Table from './Table'
+
+export * from './Table.types'
+
+export default Table

@@ -1,129 +1,218 @@
-import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { style, globalStyle, keyframes } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
+import type { RecipeVariants } from '@vanilla-extract/recipes'
+import { vars } from '../../theme/contract.css'
 
-/** 루트 컨테이너 */
-export const root = style(
-  {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.space[4],
-    fontFamily: vars.font.family.sans,
-  },
-  'ds-tabs',
-)
+export const tabs = style({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+})
 
-/** 트리거를 담는 탭 리스트 (role="tablist") — variant 별 하단 보더 처리 */
-export const list = styleVariants(
-  {
-    line: {
-      display: 'flex',
-      gap: vars.space[1],
-      borderBottom: `1px solid ${vars.color.border}`,
-    },
-    enclosed: {
-      display: 'flex',
-      gap: vars.space[1],
-      borderBottom: `1px solid ${vars.color.border}`,
-    },
-  },
-  'ds-tabs-list',
-)
+globalStyle(`${tabs}.tabs-vertical`, { flexDirection: 'row' })
 
-/** 개별 탭 버튼 공통 스타일 */
-export const trigger = style(
-  {
-    position: 'relative',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: vars.space[2],
-    border: '1px solid transparent',
-    background: 'transparent',
-    padding: '6px 20px',
-    fontFamily: vars.font.family.sans,
-    fontSize: vars.font.size.md,
-    fontWeight: vars.font.weight.medium,
-    lineHeight: vars.font.lineHeight.tight,
-    color: vars.color.textSecondary,
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    userSelect: 'none',
-    transition: `background ${vars.duration.fast} ease, border-color ${vars.duration.fast} ease, color ${vars.duration.fast} ease`,
-    selectors: {
-      '&:focus-visible': {
-        outline: 'none',
-        boxShadow: vars.shadow.focus,
-        borderRadius: vars.radius.sm,
-      },
-      '&:hover:not(:disabled)': {
-        color: vars.color.text,
-      },
-      '&:disabled': {
-        opacity: 0.5,
-        cursor: 'not-allowed',
-      },
+/* ── List ── */
+export const tabsList = style({
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  gap: 12,
+  overflowX: 'auto',
+  scrollbarWidth: 'none',
+})
+
+globalStyle(`${tabsList}::-webkit-scrollbar`, { display: 'none' })
+
+globalStyle(`${tabsList}.tabs-vertical`, {
+  borderBottom: 0,
+  flexDirection: 'column',
+  minWidth: 'fit-content',
+  alignItems: 'flex-start',
+})
+
+/* enclosed variant: tablist 자체에 배경 컨테이너 */
+globalStyle(`${tabsList}.tabs-enclosed`, {
+  backgroundColor: `var(--color-tab-enclosed-bg, ${vars.color.surfaceHover})`,
+  borderRadius: vars.radius.md,
+  padding: 4,
+  gap: 2,
+})
+
+/* ── Tab Button base ── */
+const tabButtonBase = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 6,
+  border: 'none',
+  background: 'transparent',
+  whiteSpace: 'nowrap',
+  cursor: 'pointer',
+  position: 'relative',
+  transition: `all ${vars.transition.fast}`,
+  outline: 'none',
+  flexShrink: 0,
+  selectors: {
+    '&:disabled': { color: vars.color.textMuted, cursor: 'default' },
+    '&:focus-visible, &.is-focus': {
+      outline: `2px solid ${vars.color.primary}`,
+      outlineOffset: 2,
+      borderRadius: vars.radius.sm,
     },
   },
-  'ds-tabs-trigger',
-)
+})
 
-/** line variant 트리거 — 하단 인디케이터(언더라인) */
-export const triggerLine = style(
-  {
-    marginBottom: '-1px',
-    borderBottom: '2px solid transparent',
-  },
-  'ds-tabs-trigger-line',
-)
+globalStyle(`${tabButtonBase} .tab-button-icon`, { display: 'flex', alignItems: 'center' })
+globalStyle(`${tabButtonBase}:disabled .tab-button-icon`, { opacity: 0.4 })
 
-/** line variant 활성 트리거 */
-export const triggerLineActive = style(
-  {
-    color: vars.color.brand[600],
-    borderBottomColor: vars.color.brand[600],
-    fontWeight: vars.font.weight.semibold,
-  },
-  'ds-tabs-trigger-line-active',
-)
-
-/** enclosed variant 트리거 — 박스형 탭 */
-export const triggerEnclosed = style(
-  {
-    marginBottom: '-1px',
-    borderTopLeftRadius: vars.radius.md,
-    borderTopRightRadius: vars.radius.md,
-    borderColor: 'transparent',
-  },
-  'ds-tabs-trigger-enclosed',
-)
-
-/** enclosed variant 활성 트리거 */
-export const triggerEnclosedActive = style(
-  {
-    color: vars.color.text,
-    background: vars.color.surface,
-    borderColor: vars.color.border,
-    borderBottomColor: vars.color.surface,
-    fontWeight: vars.font.weight.semibold,
-  },
-  'ds-tabs-trigger-enclosed-active',
-)
-
-/** 탭 패널 (role="tabpanel") */
-export const panel = style(
-  {
-    color: vars.color.text,
-    fontSize: vars.font.size.md,
-    lineHeight: vars.font.lineHeight.normal,
-    selectors: {
-      '&:focus-visible': {
-        outline: 'none',
-        boxShadow: vars.shadow.focus,
-        borderRadius: vars.radius.sm,
-      },
+/* ── outline variant ── */
+const tabButtonOutline = style({
+  fontSize: vars.font.sizeSm,
+  color: `var(--color-tab-text, ${vars.color.text})`,
+  padding: '6px 20px',
+  borderRadius: 20,
+  border: '1px solid transparent',
+  selectors: {
+    '&.is-active': {
+      border: `1px solid ${vars.color.primary}`,
+      color: vars.color.primary,
+    },
+    '&:hover:not(:disabled):not(.is-active), &.is-hover:not(:disabled):not(.is-active)': {
+      color: vars.color.primary,
+      borderColor: vars.color.primary,
     },
   },
-  'ds-tabs-panel',
-)
+})
 
-export type TabsVariant = keyof typeof list
+globalStyle(`${tabButtonOutline} .tab-button-icon svg`, { fill: `var(--color-tab-text, ${vars.color.text})` })
+globalStyle(`${tabButtonOutline}.is-active .tab-button-icon svg`, { fill: vars.color.primary })
+globalStyle(`${tabButtonOutline}:hover:not(:disabled):not(.is-active) .tab-button-icon svg`, {
+  fill: vars.color.primary,
+})
+
+/* ── underline variant ── */
+const tabButtonUnderline = style({
+  fontSize: vars.font.sizeMd,
+  fontWeight: 500,
+  padding: '6px 8px',
+  color: `var(--color-tab-text, ${vars.color.textSecondary})`,
+  letterSpacing: '-0.16px',
+  width: 'fit-content',
+  selectors: {
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 2,
+      backgroundColor: 'transparent',
+      transition: `background-color ${vars.transition.fast}`,
+    },
+    '&:hover:not(:disabled):not(.is-active), &.is-hover:not(:disabled):not(.is-active)': { color: vars.color.primary },
+    '&:hover:not(:disabled):not(.is-active)::after, &.is-hover:not(:disabled):not(.is-active)::after': {
+      backgroundColor: vars.color.primary,
+    },
+    '&.is-active': { color: vars.color.primary, backgroundColor: 'transparent', fontWeight: 700 },
+    '&.is-active::after': { backgroundColor: vars.color.primary },
+  },
+})
+
+globalStyle(`${tabButtonUnderline} .tab-button-icon svg`, {
+  fill: `var(--color-tab-text, ${vars.color.textSecondary})`,
+})
+globalStyle(`${tabButtonUnderline}.is-active .tab-button-icon svg`, { fill: vars.color.primary })
+globalStyle(`${tabButtonUnderline}:hover:not(:disabled):not(.is-active) .tab-button-icon svg`, {
+  fill: vars.color.primary,
+})
+
+/* ── enclosed variant (구 fill) ── */
+const tabButtonEnclosed = style({
+  fontSize: vars.font.sizeSm,
+  color: `var(--color-tab-text, ${vars.color.textSecondary})`,
+  padding: '6px 16px',
+  borderRadius: vars.radius.sm,
+  selectors: {
+    '&.is-active': {
+      backgroundColor: `var(--color-tab-item-active-bg, ${vars.color.surface})`,
+      color: vars.color.text,
+      fontWeight: 600,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+    },
+    '&:hover:not(:disabled):not(.is-active), &.is-hover:not(:disabled):not(.is-active)': {
+      color: vars.color.text,
+      backgroundColor: vars.color.surfaceHover,
+    },
+  },
+})
+
+globalStyle(`${tabButtonEnclosed} .tab-button-icon svg`, {
+  fill: `var(--color-tab-text, ${vars.color.textSecondary})`,
+})
+globalStyle(`${tabButtonEnclosed}.is-active .tab-button-icon svg`, { fill: vars.color.text })
+globalStyle(`${tabButtonEnclosed}:hover:not(:disabled):not(.is-active) .tab-button-icon svg`, {
+  fill: vars.color.text,
+})
+
+/* ── fill variant ── */
+const tabButtonFill = style({
+  fontSize: vars.font.sizeSm,
+  color: `var(--color-tab-text, ${vars.color.textSecondary})`,
+  padding: '6px 16px',
+  borderRadius: 20,
+  selectors: {
+    '&.is-active': {
+      backgroundColor: vars.color.primary,
+      color: vars.color.textInverse,
+      fontWeight: 500,
+    },
+    '&:hover:not(:disabled):not(.is-active), &.is-hover:not(:disabled):not(.is-active)': {
+      color: vars.color.primary,
+      backgroundColor: vars.color.surfaceHover,
+    },
+  },
+})
+
+globalStyle(`${tabButtonFill} .tab-button-icon svg`, { fill: `var(--color-tab-text, ${vars.color.textSecondary})` })
+globalStyle(`${tabButtonFill}.is-active .tab-button-icon svg`, { fill: vars.color.textInverse })
+globalStyle(`${tabButtonFill}:hover:not(:disabled):not(.is-active) .tab-button-icon svg`, { fill: vars.color.primary })
+
+/* ── Tab Button Recipe ── */
+export const tabButtonRecipe = recipe({
+  base: tabButtonBase,
+  variants: {
+    variant: {
+      outline: tabButtonOutline,
+      underline: tabButtonUnderline,
+      enclosed: tabButtonEnclosed,
+      fill: tabButtonFill,
+    },
+  },
+  defaultVariants: { variant: 'underline' },
+})
+
+export type TabButtonVariants = RecipeVariants<typeof tabButtonRecipe>
+
+/* ── Contents ── */
+const fadeIn = keyframes({
+  from: { opacity: 0, transform: 'translateY(4px)' },
+  to: { opacity: 1, transform: 'translateY(0)' },
+})
+
+export const tabContents = style({
+  position: 'relative',
+  width: '100%',
+  boxSizing: 'border-box',
+  display: 'none',
+  animation: `${fadeIn} 0.2s ease-in-out`,
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  },
+})
+
+globalStyle(`${tabContents}.is-active`, {
+  display: 'block',
+  height: '100%',
+})

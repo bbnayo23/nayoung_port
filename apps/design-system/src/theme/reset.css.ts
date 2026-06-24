@@ -1,5 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css'
-import { vars } from './tokens.css'
+import './xdr.css'
+import { vars } from './contract.css'
 
 /**
  * 디자인 시스템 전역 베이스. 컴포넌트가 일관된 타이포·박스모델 위에서 렌더되도록
@@ -11,9 +12,9 @@ globalStyle('*, *::before, *::after', {
 
 globalStyle('body', {
   margin: 0,
-  fontFamily: vars.font.family.sans,
-  fontSize: vars.font.size.md,
-  lineHeight: vars.font.lineHeight.normal,
+  fontFamily: vars.font.family,
+  fontSize: vars.font.sizeMd,
+  lineHeight: 1.5,
   color: vars.color.text,
   backgroundColor: vars.color.background,
   WebkitFontSmoothing: 'antialiased',

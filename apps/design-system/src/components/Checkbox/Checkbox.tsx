@@ -1,41 +1,62 @@
-import { useEffect, useRef, type InputHTMLAttributes, type ReactNode } from 'react'
-import { cx } from '../../utils'
-import * as styles from './Checkbox.css'
-import type { CheckboxSize } from './Checkbox.css'
+import { forwardRef } from 'react'
+import { ExdCheckIcon } from '@port/icon-library'
+import { checkbox } from './Checkbox.css'
+import type { CheckboxInterface } from './Checkbox.types'
+import cn from 'classnames'
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  checkboxSize?: CheckboxSize
-  label?: ReactNode
-  error?: boolean
-  indeterminate?: boolean
-  className?: string
-}
-
-export const Checkbox = ({
-  checkboxSize = 'md',
-  label,
-  error,
-  disabled,
-  indeterminate,
-  className,
-  ...rest
-}: CheckboxProps) => {
-  const ref = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (ref.current) ref.current.indeterminate = indeterminate ?? false
-  }, [indeterminate])
+const Checkbox = forwardRef<HTMLInputElement, CheckboxInterface>(function Checkbox(props, ref) {
+  const {
+    checked = false,
+    disabled = false,
+    indeterminate = false,
+    onChange = () => false,
+    className,
+    id,
+    label,
+    labelDirection = 'right',
+    color,
+    size,
+    error = false,
+    ...rest
+  } = props
 
   return (
-    <label className={cx(styles.wrapper, disabled && styles.wrapperDisabled, className)}>
+    <label
+      className={cn(
+        checkbox,
+        'checkbox-wrapper',
+        !!label && `label-${labelDirection}`,
+        checked && 'checked',
+        disabled && 'disabled',
+        indeterminate && 'indeterminate',
+        color,
+        size && `size-${size}`,
+        error && 'error',
+        className,
+      )}
+      htmlFor={id}
+    >
+      {label && labelDirection === 'left' && <span className="checkbox-label">{label}</span>}
       <input
-        ref={ref}
         type="checkbox"
-        className={cx(styles.inputSize[checkboxSize], error && styles.inputError)}
+        className="checkbox-input"
+        id={id}
+        checked={checked}
         disabled={disabled}
+        ref={ref}
+        onChange={onChange}
+        aria-checked={indeterminate ? 'mixed' : checked}
         {...rest}
       />
-      {label !== null && label !== undefined && <span className={styles.label}>{label}</span>}
+      <span className={cn('custom-checkbox', disabled && 'disabled')}>
+        <ExdCheckIcon className="checkbox-icon" />
+        <span className="checkbox-indeterminate" />
+      </span>
+      {label && labelDirection === 'right' && <span className="checkbox-label">{label}</span>}
     </label>
   )
-}
+})
+
+Checkbox.displayName = 'Checkbox'
+
+export default Checkbox

@@ -1,2 +1,2 @@
-export { Calendar } from './Calendar'
-export type { CalendarProps } from './Calendar'
+export { default as Calendar, default } from './Calendar'
+export type { CalendarProps } from './types'

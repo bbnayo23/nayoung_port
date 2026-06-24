@@ -1,12 +1,12 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { vars } from '../../theme/contract.css'
 
 export const menu = style({
   position: 'fixed',
   zIndex: 2000,
   minWidth: 160,
   margin: 0,
-  padding: `${vars.space[1]} 0`,
+  padding: '4px 0',
   listStyle: 'none',
   backgroundColor: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
@@ -17,20 +17,20 @@ export const menu = style({
 export const item = style({
   display: 'flex',
   alignItems: 'center',
-  gap: vars.space[2],
-  padding: `6px 12px`,
-  fontSize: vars.font.size.sm,
+  gap: 8,
+  padding: '6px 12px',
+  fontSize: vars.font.sizeSm,
   color: vars.color.text,
   cursor: 'pointer',
   userSelect: 'none',
   position: 'relative',
   selectors: {
-    "&:hover:not([aria-disabled='true'])": {
-      backgroundColor: vars.color.surfaceMuted,
+    "&:hover:not([aria-disabled='true']), &.is-hover:not([aria-disabled='true'])": {
+      backgroundColor: vars.color.surfaceHover,
     },
-    '&:focus': {
+    '&:focus, &.is-focus': {
       outline: 'none',
-      backgroundColor: vars.color.surfaceMuted,
+      backgroundColor: vars.color.surfaceHover,
     },
   },
 })
@@ -41,7 +41,7 @@ export const itemDisabled = style({
 })
 
 export const itemActive = style({
-  backgroundColor: vars.color.surfaceMuted,
+  backgroundColor: vars.color.surfaceHover,
 })
 
 export const icon = style({
@@ -55,15 +55,16 @@ export const icon = style({
 })
 
 export const divider = style({
-  margin: `${vars.space[1]} 0`,
+  margin: '4px 0',
   height: 1,
   backgroundColor: vars.color.border,
 })
 
 export const chevron = style({
   marginLeft: 'auto',
-  paddingLeft: vars.space[2],
-  fontSize: vars.font.size.xs,
+  paddingLeft: 8,
+  display: 'inline-flex',
+  alignItems: 'center',
   color: vars.color.textSecondary,
   flexShrink: 0,
 })
@@ -75,7 +76,7 @@ export const subMenu = style({
   zIndex: 2001,
   minWidth: 160,
   margin: 0,
-  padding: `${vars.space[1]} 0`,
+  padding: '4px 0',
   listStyle: 'none',
   backgroundColor: vars.color.surface,
   border: `1px solid ${vars.color.border}`,

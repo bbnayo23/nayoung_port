@@ -1,162 +1,154 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
-
-// === Trigger ===
+import { vars } from '../../theme/contract.css'
 
 export const triggerWrapper = style({
   display: 'inline-flex',
   position: 'relative',
 })
 
-export const relativeTriggerWrapper = style({
-  position: 'relative',
-  display: 'inline-flex',
-})
-
-// 상대시간 트리거 (단일 input) — 기본 너비 140px, triggerWidth prop으로 오버라이드 가능
 export const relativeTrigger = style({
-  width: '140px',
-  padding: `${vars.space[2]} ${vars.space[4]}`,
-  paddingRight: vars.space[12],
-  fontFamily: vars.font.family.sans,
-  fontSize: vars.font.size.sm,
+  width: 140,
+  padding: `6px 12px`,
+  paddingRight: 36,
+  fontFamily: vars.font.family,
+  fontSize: vars.font.sizeSm,
   color: vars.color.text,
   backgroundColor: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: vars.radius.md,
   outline: 'none',
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
   textAlign: 'center',
   ':hover': {
-    borderColor: vars.color.borderStrong,
+    borderColor: vars.color.borderHover,
   },
   ':focus': {
-    borderColor: vars.color.brand[600],
-    boxShadow: `0 0 0 2px rgba(113, 135, 255, 0.2)`,
+    borderColor: vars.color.primary,
+    boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
   },
   ':disabled': {
-    opacity: 0.5,
+    opacity: 0.4,
     cursor: 'not-allowed',
   },
 })
 
-// 절대시간 트리거 (두 개 input + ~)
 export const absoluteTrigger = style({
   position: 'relative',
   display: 'inline-flex',
   alignItems: 'center',
-  gap: vars.space[2],
+  gap: 6,
   border: `1px solid ${vars.color.border}`,
   borderRadius: vars.radius.md,
   backgroundColor: vars.color.surface,
   padding: `0 36px 0 8px`,
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
   ':hover': {
-    borderColor: vars.color.borderStrong,
+    borderColor: vars.color.borderHover,
   },
   selectors: {
     '&:focus-within': {
-      borderColor: vars.color.brand[600],
-      boxShadow: `0 0 0 2px rgba(113, 135, 255, 0.2)`,
+      borderColor: vars.color.primary,
+      boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
     },
   },
 })
 
 export const absoluteInput = style({
-  width: '160px',
-  padding: `${vars.space[2]} ${vars.space[1]}`,
+  width: 160,
+  padding: `6px 4px`,
   fontFamily: 'monospace',
-  fontSize: vars.font.size.sm,
+  fontSize: vars.font.sizeSm,
   color: vars.color.text,
   backgroundColor: 'transparent',
   border: 'none',
   outline: 'none',
   textAlign: 'center',
   '::placeholder': {
-    color: vars.color.textDisabled,
+    color: vars.color.textMuted,
   },
 })
 
 export const separator = style({
-  color: vars.color.textDisabled,
-  fontSize: vars.font.size.sm,
+  color: vars.color.textMuted,
+  fontSize: vars.font.sizeSm,
   flexShrink: 0,
   userSelect: 'none',
 })
 
 export const triggerOpen = style({
-  borderColor: vars.color.brand[600],
-  boxShadow: `0 0 0 2px rgba(113, 135, 255, 0.2)`,
+  borderColor: vars.color.primary,
+  boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
 })
 
 export const calendarIcon = style({
   position: 'absolute',
-  right: vars.space[2],
+  right: 8,
   top: '50%',
   transform: 'translateY(-50%)',
   display: 'flex',
   alignItems: 'center',
-  color: vars.color.textDisabled,
+  color: vars.color.textMuted,
   cursor: 'pointer',
   padding: 0,
   border: 'none',
   backgroundColor: 'transparent',
   outline: 'none',
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
   ':hover': {
     color: vars.color.text,
   },
+  ':disabled': {
+    opacity: 0.4,
+    cursor: 'not-allowed',
+  },
 })
 
-// === Panel ===
-
 export const panel = style({
-  position: 'fixed',
   display: 'flex',
   flexDirection: 'row',
   border: `1px solid ${vars.color.border}`,
   borderRadius: vars.radius.lg,
   backgroundColor: vars.color.surface,
-  overflow: 'hidden',
-  fontFamily: vars.font.family.sans,
   boxShadow: vars.shadow.md,
-  zIndex: vars.zIndex.dropdown,
+  overflow: 'hidden',
+  fontFamily: vars.font.family,
 })
 
 export const sidebar = style({
   display: 'flex',
   flexDirection: 'column',
-  width: '110px',
+  width: 110,
   flexShrink: 0,
   borderRight: `1px solid ${vars.color.border}`,
   backgroundColor: vars.color.background,
-  padding: `${vars.space[2]} 0`,
+  padding: '4px 0',
 })
 
 export const presetButton = style({
   display: 'block',
   width: '100%',
   textAlign: 'left',
-  padding: `${vars.space[2]} ${vars.space[4]}`,
+  padding: '6px 12px',
   border: 'none',
   backgroundColor: 'transparent',
   color: vars.color.text,
-  fontSize: vars.font.size.sm,
-  fontFamily: vars.font.family.sans,
+  fontSize: vars.font.sizeSm,
+  fontFamily: vars.font.family,
   cursor: 'pointer',
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
   outline: 'none',
+  borderRadius: vars.radius.sm,
   ':hover': {
-    backgroundColor: vars.color.surfaceMuted,
+    backgroundColor: vars.color.surfaceHover,
   },
 })
 
 export const presetButtonActive = style({
-  backgroundColor: vars.color.brand[600],
-  color: vars.color.textInverse,
-  fontWeight: vars.font.weight.medium,
+  backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  color: vars.color.primary,
+  fontWeight: vars.font.weightMedium,
   ':hover': {
-    backgroundColor: vars.color.brand[700],
+    backgroundColor: `color-mix(in srgb, ${vars.color.primary} 15%, transparent)`,
   },
 })
 
@@ -185,34 +177,34 @@ export const dateInput = style({
   display: 'block',
   width: '100%',
   boxSizing: 'border-box',
-  padding: `${vars.space[2]} ${vars.space[4]}`,
+  padding: '6px 12px',
   border: 'none',
   borderBottom: `1px solid ${vars.color.border}`,
   backgroundColor: vars.color.surface,
   color: vars.color.text,
-  fontSize: vars.font.size.sm,
+  fontSize: vars.font.sizeSm,
   fontFamily: 'monospace',
   outline: 'none',
-  transition: `all ${vars.duration.fast} ease`,
+  transition: vars.transition.fast,
   '::placeholder': {
-    color: vars.color.textDisabled,
+    color: vars.color.textMuted,
   },
   ':focus': {
-    borderBottomColor: vars.color.brand[600],
-    boxShadow: `0 2px 0 0 rgba(113, 135, 255, 0.2)`,
+    borderBottomColor: vars.color.primary,
+    boxShadow: `0 2px 0 0 color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
   },
 })
 
 export const dateInputInvalid = style({
-  borderBottomColor: vars.color.danger,
-  color: vars.color.danger,
+  borderBottomColor: vars.color.error,
+  color: vars.color.error,
   ':focus': {
-    borderBottomColor: vars.color.danger,
-    boxShadow: `0 2px 0 0 rgba(250, 82, 82, 0.2)`,
+    borderBottomColor: vars.color.error,
+    boxShadow: `0 2px 0 0 color-mix(in srgb, ${vars.color.error} 20%, transparent)`,
   },
 })
 
 export const calendarInner = style({
   flex: 1,
-  padding: '12px',
+  padding: 12,
 })

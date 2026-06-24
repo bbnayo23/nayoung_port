@@ -1,72 +1,75 @@
-import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { recipe } from '@vanilla-extract/recipes'
+import type { RecipeVariants } from '@vanilla-extract/recipes'
+import { vars } from '../../theme/contract.css'
 
-export const base = style(
-  {
+export const iconButtonRecipe = recipe({
+  base: {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     border: 'none',
+    background: 'transparent',
     cursor: 'pointer',
-    borderRadius: vars.radius.full,
-    transition: vars.duration.fast,
-    outline: 'none',
+    borderRadius: '50%',
+    color: vars.color.text,
+    transition: `background ${vars.transition.fast}`,
     flexShrink: 0,
+    outline: 'none',
     selectors: {
-      '&:disabled': {
-        opacity: 0.4,
-        cursor: 'not-allowed',
+      '&:disabled': { opacity: 0.4, cursor: 'not-allowed' },
+    },
+  },
+  variants: {
+    size: {
+      sm: { padding: 4, minWidth: 24, minHeight: 24 },
+      md: { padding: 6, minWidth: 28, minHeight: 28 },
+      lg: { padding: 8, minWidth: 32, minHeight: 32 },
+    },
+    variant: {
+      default: {
+        backgroundColor: vars.color.surface,
+        border: `1px solid ${vars.color.border}`,
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { backgroundColor: vars.color.surfaceHover },
+        },
+      },
+      primary: {
+        backgroundColor: vars.color.primary,
+        color: vars.color.textInverse,
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { opacity: 0.9 },
+        },
+      },
+      danger: {
+        backgroundColor: vars.color.error,
+        color: vars.color.textInverse,
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { opacity: 0.9 },
+        },
+      },
+      ghost: {
+        backgroundColor: 'transparent',
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { backgroundColor: vars.color.surfaceHover },
+        },
+      },
+      outline: {
+        backgroundColor: 'transparent',
+        border: `1px solid ${vars.color.border}`,
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { backgroundColor: vars.color.surfaceHover },
+        },
+      },
+      circle: {
+        backgroundColor: vars.color.surface,
+        border: `1px solid ${vars.color.border}`,
+        selectors: {
+          '&:hover:not(:disabled), &.is-hover:not(:disabled)': { backgroundColor: vars.color.surfaceHover },
+        },
       },
     },
   },
-  'ds-icon-button',
-)
+  defaultVariants: { size: 'md' },
+})
 
-export const variant = styleVariants(
-  {
-    default: {
-      backgroundColor: vars.color.surface,
-      color: vars.color.text,
-      border: `1px solid ${vars.color.border}`,
-      selectors: {
-        '&:hover:not(:disabled)': { backgroundColor: vars.color.surfaceMuted },
-      },
-    },
-    primary: {
-      backgroundColor: vars.color.brand[600],
-      color: vars.color.textInverse,
-      border: 'none',
-      selectors: {
-        '&:hover:not(:disabled)': { opacity: 0.9 },
-      },
-    },
-    danger: {
-      backgroundColor: vars.color.danger,
-      color: vars.color.textInverse,
-      border: 'none',
-      selectors: {
-        '&:hover:not(:disabled)': { opacity: 0.9 },
-      },
-    },
-    ghost: {
-      backgroundColor: 'transparent',
-      color: vars.color.text,
-      border: 'none',
-      selectors: {
-        '&:hover:not(:disabled)': { backgroundColor: vars.color.surfaceMuted },
-      },
-    },
-  },
-  'ds-icon-button-variant',
-)
-
-export const size = styleVariants(
-  {
-    sm: { width: 24, height: 24 },
-    md: { width: 28, height: 28 },
-  },
-  'ds-icon-button-size',
-)
-
-export type IconButtonVariant = keyof typeof variant
-export type IconButtonSize = keyof typeof size
+export type IconButtonVariants = RecipeVariants<typeof iconButtonRecipe>

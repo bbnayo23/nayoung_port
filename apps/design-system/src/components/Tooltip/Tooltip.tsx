@@ -1,138 +1,100 @@
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type ReactElement,
-  type ReactNode,
-} from 'react'
-import { Portal } from '../../utils/Portal'
-import { cx } from '../../utils/cx'
-import * as styles from './Tooltip.css'
+import { useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { usePopper } from 'react-popper'
+import { tooltipBox, tooltipArrow } from './Tooltip.css'
+import type { TooltipProps } from './Tooltip.types'
+import cn from 'classnames'
 
-export type TooltipPlacement = 'top' | 'right' | 'bottom' | 'left'
+const OPEN_DELAY = 50
+const CLOSE_DELAY = 100
 
-export interface TooltipProps {
-  /** 툴팁에 표시할 내용 */
-  content: ReactNode
-  /** 트리거 기준 표시 위치 (기본 'top') */
-  placement?: TooltipPlacement
-  /** 표시까지의 지연 시간(ms, 기본 200) */
-  delay?: number
-  /** 트리거가 될 단일 엘리먼트 */
-  children: ReactElement
-}
+export const Tooltip = ({
+  children,
+  content,
+  placement = 'top',
+  open,
+  className,
+  onOpen,
+  onClose,
+  onChangeShow: _onChangeShow,
+  portal = false,
+  portalTarget,
+  popperOptions,
+  ...rest
+}: TooltipProps) => {
+  const openTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [isShow, setIsShow] = useState(false)
 
-/** 트리거 사각형 + placement 로 fixed 좌표를 계산한다 (viewport 기준). */
-function computePosition(rect: DOMRect, placement: TooltipPlacement) {
-  const gap = 8
-  switch (placement) {
-    case 'top':
-      return {
-        left: rect.left + rect.width / 2,
-        top: rect.top - gap,
-        transform: 'translate(-50%, -100%)',
-      }
-    case 'bottom':
-      return {
-        left: rect.left + rect.width / 2,
-        top: rect.bottom + gap,
-        transform: 'translate(-50%, 0)',
-      }
-    case 'left':
-      return {
-        left: rect.left - gap,
-        top: rect.top + rect.height / 2,
-        transform: 'translate(-100%, -50%)',
-      }
-    case 'right':
-    default:
-      return {
-        left: rect.right + gap,
-        top: rect.top + rect.height / 2,
-        transform: 'translate(0, -50%)',
-      }
-  }
-}
+  // 콜백 ref — setState로 마운트 시 리렌더를 트리거해야 usePopper가 위치를 계산함
+  const [referenceEl, setReferenceEl] = useState<HTMLDivElement | null>(null)
+  const [popperEl, setPopperEl] = useState<HTMLDivElement | null>(null)
+  const [arrowEl, setArrowEl] = useState<HTMLDivElement | null>(null)
 
-/**
- * 트리거에 hover / focus 하면 Portal 로 띄우는 툴팁.
- *
- * 트리거는 `display:inline-flex` 래퍼 `<span>` 으로 감싸 mouse/focus 핸들러와
- * 측정용 ref 를 안정적으로 부착한다. 보여질 때 트리거의 `getBoundingClientRect()`
- * 를 읽어 `position:fixed` 좌표(스크롤 오프셋 불필요)로 배치한다.
- *
- * a11y: 툴팁 엘리먼트에 `role="tooltip"` + id 를 부여하고, 트리거 래퍼에
- * `aria-describedby` 로 연결한다. hover/focus 로 표시, mouseleave/blur/Escape 로 숨김.
- */
-export function Tooltip({ content, placement = 'top', delay = 200, children }: TooltipProps) {
-  const id = useId()
-  const triggerRef = useRef<HTMLSpanElement>(null)
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
-  const [open, setOpen] = useState(false)
-  const [coords, setCoords] = useState<{ left: number; top: number; transform: string }>({
-    left: 0,
-    top: 0,
-    transform: '',
+  const { styles, attributes, state } = usePopper(referenceEl, popperEl, {
+    placement,
+    modifiers: [
+      { name: 'arrow', options: { element: arrowEl } },
+      { name: 'offset', options: { offset: [0, 8] } },
+    ],
+    ...popperOptions,
   })
 
-  const clearTimer = useCallback(() => {
-    if (timerRef.current !== undefined) {
-      clearTimeout(timerRef.current)
-      timerRef.current = undefined
+  const handleShow = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
     }
-  }, [])
+    if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current)
+    openTimeoutRef.current = setTimeout(() => {
+      if (typeof open === 'boolean') {
+        onOpen?.()
+        return
+      }
+      setIsShow(true)
+    }, OPEN_DELAY)
+  }
 
-  const show = useCallback(() => {
-    clearTimer()
-    timerRef.current = setTimeout(() => {
-      const el = triggerRef.current
-      if (!el) return
-      setCoords(computePosition(el.getBoundingClientRect(), placement))
-      setOpen(true)
-    }, delay)
-  }, [clearTimer, delay, placement])
-
-  const hide = useCallback(() => {
-    clearTimer()
-    setOpen(false)
-  }, [clearTimer])
-
-  useEffect(() => clearTimer, [clearTimer])
-
-  useEffect(() => {
-    if (!open) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') hide()
+  const handleHide = () => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current)
+      openTimeoutRef.current = null
     }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [open, hide])
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
+    closeTimeoutRef.current = setTimeout(() => {
+      if (typeof open === 'boolean') {
+        onClose?.()
+        return
+      }
+      setIsShow(false)
+    }, CLOSE_DELAY)
+  }
+
+  const arrowClass = state?.placement?.split('-')[0] || placement
+
+  const tooltipContent = (
+    <div
+      ref={setPopperEl}
+      className={cn(tooltipBox, 'tooltip-box', { show: isShow || open }, className)}
+      style={styles.popper}
+      {...attributes.popper}
+    >
+      {content}
+      <div ref={setArrowEl} className={cn(tooltipArrow, arrowClass)} style={styles.arrow} />
+    </div>
+  )
+
+  const selectTarget = () => {
+    if (portalTarget) return typeof portalTarget === 'function' ? portalTarget() : portalTarget
+    return document.body
+  }
 
   return (
-    <span
-      ref={triggerRef}
-      className={styles.trigger}
-      aria-describedby={open ? id : undefined}
-      onMouseEnter={show}
-      onMouseLeave={hide}
-      onFocus={show}
-      onBlur={hide}
-    >
+    <div ref={setReferenceEl} onMouseEnter={handleShow} onMouseLeave={handleHide} {...rest} className="tooltip-wrapper">
       {children}
-      {open && (
-        <Portal>
-          <div
-            id={id}
-            role="tooltip"
-            className={cx(styles.box)}
-            style={{ left: coords.left, top: coords.top, transform: coords.transform }}
-          >
-            {content}
-          </div>
-        </Portal>
-      )}
-    </span>
+      {portal ? createPortal(tooltipContent, selectTarget()) : tooltipContent}
+    </div>
   )
 }
+
+export default Tooltip

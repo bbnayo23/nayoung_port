@@ -1,111 +1,201 @@
-import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { style, globalStyle } from '@vanilla-extract/css'
+import { vars } from '../../theme/contract.css'
 
-/** 가로 스크롤을 담당하는 래퍼 */
-export const wrapper = style(
-  {
-    width: '100%',
-    overflowX: 'auto',
-  },
-  'ds-table-wrapper',
-)
-
-/** stickyHeader 사용 시 헤더가 머무를 수 있도록 래퍼에 높이/스크롤 컨텍스트 부여 */
-export const wrapperSticky = style(
-  {
-    overflowY: 'auto',
-  },
-  'ds-table-wrapper-sticky',
-)
-
-/** table 루트 ('ds-table' 디버그 네임) */
-export const root = style(
-  {
-    borderCollapse: 'collapse',
-    fontFamily: vars.font.family.sans,
-    color: vars.color.text,
-    background: vars.color.surface,
-  },
-  'ds-table',
-)
-
-export const fullWidth = style({ width: '100%' }, 'ds-table-full')
-
-/** 본문 행 — 하단 보더 */
-export const row = style(
-  {
-    borderBottom: `1px solid ${vars.color.border}`,
-  },
-  'ds-table-row',
-)
-
-/**
- * striped — tbody 의 짝수 번째 행 배경을 surfaceMuted 로.
- * tbody 에 부착하여 자식 tr 을 선택한다.
- */
-export const stripedBody = style({}, 'ds-table-striped')
-
-// 자식 tr 을 타겟하므로 globalStyle 로 분리 (vanilla-extract 의 style 셀렉터 제약)
-globalStyle(`${stripedBody} > tr:nth-of-type(even)`, {
-  background: vars.color.surfaceMuted,
+/* ── Wrapper (toolbar 포함 시) ── */
+export const tableWrap = style({
+  display: 'flex',
+  flexDirection: 'column',
 })
 
-/** 셀 공통(헤더/데이터) — 텍스트 정렬 기본값 */
-export const cellBase = style(
+export const tableToolbar = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: '4px 8px',
+  gap: 4,
+  borderBottom: `1px solid ${vars.color.border}`,
+  background: vars.color.surface,
+})
+
+export const tableEmptyCell = style({
+  padding: '32px 16px',
+  textAlign: 'center',
+  color: vars.color.textSecondary,
+  fontSize: vars.font.sizeSm,
+})
+
+export const table = style({
+  width: '100%',
+  borderCollapse: 'collapse',
+  backgroundColor: vars.color.surface,
+  color: vars.color.text,
+  fontSize: vars.font.sizeSm,
+  border: `1px solid ${vars.color.border}`,
+})
+
+/* ── Size variants ── */
+globalStyle(`${table}.table-sm`, { fontSize: vars.font.sizeXs })
+globalStyle(`${table}.table-sm th, ${table}.table-sm td`, { padding: '0 8px', height: 32 })
+globalStyle(`${table}.table-md`, { fontSize: vars.font.sizeSm })
+globalStyle(`${table}.table-md th, ${table}.table-md td`, { padding: '0 8px', height: 32 })
+globalStyle(`${table}.table-lg`, { fontSize: vars.font.sizeMd })
+globalStyle(`${table}.table-lg th, ${table}.table-lg td`, { padding: '0 12px', height: 40 })
+
+/* ── Bordered (셀 간 세로 보더 — ag-grid 동일) ── */
+globalStyle(`${table} th, ${table} td`, {
+  borderBottom: `1px solid ${vars.color.border}`,
+  borderRight: `1px solid ${vars.color.border}`,
+})
+
+globalStyle(`${table} th:last-child, ${table} td:last-child`, {
+  borderRight: 'none',
+})
+
+/* ── table-bordered 추가 보더 ── */
+globalStyle(`${table}.table-bordered`, { border: `1px solid ${vars.color.border}` })
+globalStyle(`${table}.table-bordered th, ${table}.table-bordered td`, {
+  border: `1px solid ${vars.color.border}`,
+})
+
+/* ── Striped ── */
+globalStyle(`${table}.table-striped tbody tr:nth-child(even)`, {
+  backgroundColor: vars.color.surfaceHover,
+})
+
+/* ── Hoverable ── */
+globalStyle(`${table}.table-hoverable tbody tr:hover`, {
+  backgroundColor: vars.color.surfaceHover,
+})
+
+/* ── Head (ag-grid 통일: bgSurface, fontWeight 700) ── */
+export const tableHead = style({
+  backgroundColor: vars.color.surface,
+  color: vars.color.text,
+  fontWeight: 700,
+})
+
+globalStyle(`${tableHead} th`, {
+  borderBottom: `0.5px solid ${vars.color.border}`,
+})
+
+/* ── Body ── */
+export const tableBody = style({})
+
+/* ── Row ── */
+export const tableRow = style({
+  transition: `background-color ${vars.transition.fast}`,
+})
+
+globalStyle(`${tableRow}.table-row-active`, {
+  backgroundColor: 'transparent',
+})
+
+/* expanded 콘텐츠 행: 배경 투명 + 패딩 조정 */
+globalStyle(`${tableRow}.table-row-active + tr td`, {
+  backgroundColor: 'transparent',
+  padding: '12px 16px',
+  lineHeight: 1.5,
+  fontSize: vars.font.sizeSm,
+  color: vars.color.textSecondary,
+})
+
+globalStyle(`${tableRow}.table-row-expandable`, { cursor: 'pointer' })
+
+/* ── Cell ── */
+export const tableCell = style({
+  lineHeight: '32px',
+  verticalAlign: 'middle',
+})
+
+globalStyle(`${tableCell}.align-center`, { textAlign: 'center' })
+globalStyle(`${tableCell}.align-right`, { textAlign: 'right' })
+
+/* ── Header Cell ── */
+export const tableHeaderCell = style({
+  lineHeight: '32px',
+  verticalAlign: 'middle',
+  textAlign: 'left',
+  whiteSpace: 'nowrap',
+  position: 'relative',
+})
+
+globalStyle(`${tableHeaderCell}.align-center`, { textAlign: 'center' })
+globalStyle(`${tableHeaderCell}.align-right`, { textAlign: 'right' })
+
+globalStyle(`${tableHeaderCell}.sortable`, {
+  cursor: 'pointer',
+  userSelect: 'none',
+})
+
+/* ── Sort indicator (ag-grid 방식: 단일 아이콘만 표시) ── */
+globalStyle(`${tableHeaderCell} .sort-indicator`, {
+  display: 'inline-flex',
+  alignItems: 'center',
+  marginLeft: 4,
+  verticalAlign: 'middle',
+  opacity: 0,
+  transition: `opacity ${vars.transition.fast}`,
+})
+
+globalStyle(`${tableHeaderCell}.sortable:hover .sort-indicator`, {
+  opacity: 0.5,
+})
+
+globalStyle(`${tableHeaderCell} .sort-indicator.sort-active-asc, ${tableHeaderCell} .sort-indicator.sort-active-desc`, {
+  opacity: 1,
+})
+
+/* 기본: 둘 다 숨김 */
+globalStyle(`${tableHeaderCell} .sort-indicator .sort-asc, ${tableHeaderCell} .sort-indicator .sort-desc`, {
+  display: 'none',
+  color: vars.color.textSecondary,
+})
+
+/* hover 미정렬: asc만 미리보기 */
+globalStyle(
+  `${tableHeaderCell}.sortable:hover .sort-indicator:not(.sort-active-asc):not(.sort-active-desc) .sort-asc`,
   {
-    textAlign: 'left',
-    verticalAlign: 'middle',
+    display: 'inline-block',
   },
-  'ds-table-cell',
 )
 
-/** 헤더 셀 — 굵은 텍스트 + 보조 색 */
-export const headerCell = style(
-  {
-    fontWeight: vars.font.weight.semibold,
-    color: vars.color.textSecondary,
-    whiteSpace: 'nowrap',
-  },
-  'ds-table-header-cell',
-)
+/* 활성 정렬: 해당 방향만 표시 */
+globalStyle(`${tableHeaderCell} .sort-indicator.sort-active-asc .sort-asc`, {
+  display: 'inline-block',
+  color: vars.color.primary,
+})
 
-/** size 별 셀 패딩/폰트 밀도 */
-export const sizes = styleVariants(
-  {
-    sm: {
-      padding: `${vars.space[2]} ${vars.space[3]}`,
-      fontSize: vars.font.size.sm,
-    },
-    md: {
-      padding: `${vars.space[3]} ${vars.space[4]}`,
-      fontSize: vars.font.size.md,
-    },
-  },
-  'ds-table-size',
-)
+globalStyle(`${tableHeaderCell} .sort-indicator.sort-active-desc .sort-desc`, {
+  display: 'inline-block',
+  color: vars.color.primary,
+})
 
-/** 텍스트 정렬 맵 */
-export const aligns = styleVariants(
-  {
-    left: { textAlign: 'left' },
-    center: { textAlign: 'center' },
-    right: { textAlign: 'right' },
-  },
-  'ds-table-align',
-)
+globalStyle(`${tableCell}.table-expand-cell-width`, {
+  width: 32,
+  textAlign: 'center',
+  padding: '0 !important' as '0',
+  verticalAlign: 'middle',
+})
 
-/** stickyHeader — thead th 를 상단에 고정 */
-export const stickyHeaderCell = style(
-  {
-    position: 'sticky',
-    top: 0,
-    zIndex: vars.zIndex.sticky,
-    background: vars.color.surface,
-    borderBottom: `1px solid ${vars.color.border}`,
-  },
-  'ds-table-sticky-header',
-)
+/* ── Expand Icon ── */
+export const expandIcon = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 20,
+  height: 20,
+  borderRadius: '50%',
+  cursor: 'pointer',
+  color: vars.color.textSecondary,
+  transition: `transform ${vars.transition.fast}, background ${vars.transition.fast}`,
+})
 
-export type TableVariant = 'simple' | 'striped'
-export type TableSize = keyof typeof sizes
-export type TableAlign = keyof typeof aligns
+globalStyle(`${expandIcon}:hover`, {
+  background: vars.color.surfaceHover,
+})
+
+globalStyle(`${expandIcon} svg`, {
+  flexShrink: 0,
+})
+
+globalStyle(`${expandIcon}.expanded`, { transform: 'rotate(90deg)' })

@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import type { RefObject } from 'react'
-import type { ContextMenuItem } from './ContextMenu'
+import type { ContextMenuItem } from './types'
 
-/** 선택 가능한 (비-디바이더, 비활성화 아님) 아이템의 인덱스만 반환 */
 const getSelectableIndexes = (items: ContextMenuItem[]) =>
   items.reduce<number[]>((acc, it, idx) => {
     if (!it.divider && !it.disabled) acc.push(idx)
@@ -12,22 +11,16 @@ const getSelectableIndexes = (items: ContextMenuItem[]) =>
 export interface ClampedPosition {
   left: number
   top: number
-  /** 측정 완료 전에는 false — 메뉴를 visibility: hidden 으로 감춰 최초 프레임 깜빡임 방지 */
   measured: boolean
 }
 
-/** 메뉴 위치를 뷰포트 안으로 클램프. 측정이 완료되기 전에는 `measured: false` 를 반환. */
 export const useClampedPosition = (
   ref: RefObject<HTMLElement | null>,
   open: boolean,
   x: number,
   y: number,
 ): ClampedPosition => {
-  const [pos, setPos] = useState<ClampedPosition>({
-    left: x,
-    top: y,
-    measured: false,
-  })
+  const [pos, setPos] = useState<ClampedPosition>({ left: x, top: y, measured: false })
 
   useLayoutEffect(() => {
     if (!open) {
@@ -49,7 +42,6 @@ export const useClampedPosition = (
   return pos
 }
 
-/** 외부 클릭 시 닫기 */
 export const useOutsideClose = (ref: RefObject<HTMLElement | null>, open: boolean, onClose: () => void) => {
   useEffect(() => {
     if (!open) return
@@ -61,17 +53,12 @@ export const useOutsideClose = (ref: RefObject<HTMLElement | null>, open: boolea
   }, [open, onClose, ref])
 }
 
-/**
- * 서브메뉴 flip: li 요소의 우측 공간이 subMenu 너비보다 작으면 좌측으로 flip.
- * subMenuWidth 는 추정치(160) 사용 — 측정 전이므로.
- */
 export const shouldFlipSubMenu = (liEl: HTMLElement | null): boolean => {
   if (!liEl) return false
   const rect = liEl.getBoundingClientRect()
   return window.innerWidth - rect.right < 164
 }
 
-/** 키보드 내비게이션 (ArrowUp/Down/Left/Right/Enter/Escape). 디바이더/비활성화는 스킵, 루프. */
 export const useMenuKeyboard = (
   open: boolean,
   items: ContextMenuItem[],
@@ -135,9 +122,8 @@ export const useMenuKeyboard = (
         const it = items[active]
         if (it && !it.divider && !it.disabled) {
           e.preventDefault()
-          if (it.children && it.children.length > 0) {
-            openSubMenu(active)
-          } else if (it.onSelect) {
+          if (it.children && it.children.length > 0) openSubMenu(active)
+          else if (it.onSelect) {
             it.onSelect()
             onClose()
           }

@@ -1,153 +1,144 @@
-import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '../../theme/tokens.css'
+import { style, globalStyle } from '@vanilla-extract/css'
+import { vars } from '../../theme/contract.css'
 
-export const wrapper = style({
+export const checkbox = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: vars.space[2],
+  gap: 6,
   cursor: 'pointer',
-  fontFamily: vars.font.family.sans,
-  userSelect: 'none',
-})
-
-export const wrapperDisabled = style({
-  opacity: 0.5,
-  cursor: 'not-allowed',
-})
-
-const inputBase = style({
-  appearance: 'none',
-  margin: 0,
-  flexShrink: 0,
-  border: `2px solid ${vars.color.border}`,
-  borderRadius: vars.radius.sm,
-  backgroundColor: 'transparent',
-  cursor: 'inherit',
-  transition: vars.duration.fast,
-  position: 'relative',
-  selectors: {
-    '&:checked': {
-      backgroundColor: vars.color.brand[600],
-      borderColor: vars.color.brand[600],
-    },
-    '&:checked::after': {
-      content: '""',
-      position: 'absolute',
-      display: 'block',
-      borderStyle: 'solid',
-      borderColor: vars.color.textInverse,
-      borderWidth: '0 2px 2px 0',
-      transform: 'rotate(45deg)',
-    },
-    '&:focus-visible': {
-      outline: 'none',
-      boxShadow: `0 0 0 2px ${vars.color.background}, 0 0 0 4px ${vars.color.brand[600]}`,
-    },
-    '&:hover:not(:disabled)': {
-      borderColor: vars.color.borderStrong,
-    },
-    '&:checked:hover:not(:disabled)': {
-      backgroundColor: vars.color.brand[700],
-      borderColor: vars.color.brand[700],
-    },
-    '&:indeterminate': {
-      backgroundColor: vars.color.brand[600],
-      borderColor: vars.color.brand[600],
-    },
-    '&:indeterminate::after': {
-      content: '""',
-      position: 'absolute',
-      display: 'block',
-      backgroundColor: vars.color.textInverse,
-      borderRadius: 1,
-      borderStyle: 'none',
-      borderWidth: 0,
-      transform: 'none',
-    },
-  },
-})
-
-export const inputSize = styleVariants({
-  sm: [
-    inputBase,
-    {
-      width: 14,
-      height: 14,
-      borderRadius: 4,
-      selectors: {
-        '&:checked::after': {
-          top: 1,
-          left: 3,
-          width: 4,
-          height: 7,
-        },
-        '&:indeterminate::after': {
-          width: 6,
-          height: 2,
-          top: 6,
-          left: 4,
-        },
-      },
-    },
-  ],
-  md: [
-    inputBase,
-    {
-      width: 16,
-      height: 16,
-      selectors: {
-        '&:checked::after': {
-          top: 2,
-          left: 4,
-          width: 5,
-          height: 8,
-        },
-        '&:indeterminate::after': {
-          width: 8,
-          height: 2,
-          top: 8,
-          left: 5,
-        },
-      },
-    },
-  ],
-  lg: [
-    inputBase,
-    {
-      width: 22,
-      height: 22,
-      borderWidth: 2,
-      selectors: {
-        '&:checked::after': {
-          top: 2,
-          left: 6,
-          width: 6,
-          height: 11,
-        },
-        '&:indeterminate::after': {
-          width: 10,
-          height: 2,
-          top: 10,
-          left: 6,
-        },
-      },
-    },
-  ],
-})
-
-export const inputError = style({
-  borderColor: vars.color.danger,
-  selectors: {
-    '&:focus-visible': {
-      boxShadow: `0 0 0 2px ${vars.color.background}, 0 0 0 4px ${vars.color.danger}`,
-    },
-  },
-})
-
-export const label = style({
-  fontSize: vars.font.size.md,
+  fontSize: vars.font.sizeSm,
   color: vars.color.text,
-  lineHeight: 1,
+  userSelect: 'none',
+  position: 'relative',
 })
 
-export type CheckboxSize = keyof typeof inputSize
+globalStyle(`${checkbox}.label-left`, { flexDirection: 'row-reverse' })
+globalStyle(`${checkbox}.label-right`, { flexDirection: 'row' })
+globalStyle(`${checkbox}.disabled`, { opacity: 0.4, cursor: 'not-allowed' })
+
+globalStyle(`${checkbox} input[type='checkbox']`, {
+  border: 0,
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: 1,
+})
+
+globalStyle(`${checkbox} .custom-checkbox`, {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 16,
+  height: 16,
+  minWidth: 16,
+  flexShrink: 0,
+  border: `2px solid var(--color-checkbox-border, ${vars.color.border})`,
+  borderRadius: 3,
+  background: 'transparent',
+  transition: `background-color ${vars.transition.fast}, border-color ${vars.transition.fast}`,
+  position: 'relative',
+  boxSizing: 'border-box',
+})
+
+globalStyle(`${checkbox} .custom-checkbox .checkbox-icon`, {
+  position: 'absolute',
+  width: 12,
+  height: 12,
+  visibility: 'hidden',
+  fill: vars.color.textInverse,
+  color: vars.color.textInverse,
+})
+
+globalStyle(
+  `${checkbox} .custom-checkbox .checkbox-icon path, ${checkbox} .custom-checkbox .checkbox-icon polyline, ${checkbox} .custom-checkbox .checkbox-icon line`,
+  { fill: vars.color.textInverse, stroke: vars.color.textInverse },
+)
+
+globalStyle(`${checkbox} .custom-checkbox .checkbox-indeterminate`, {
+  position: 'absolute',
+  width: 8,
+  height: 2,
+  background: vars.color.textInverse,
+  borderRadius: 1,
+  visibility: 'hidden',
+})
+
+globalStyle(
+  `${checkbox}.checked:not(.indeterminate):not(.danger):not(.warning):not(.success):not(.info) .custom-checkbox`,
+  {
+    backgroundColor: vars.color.primary,
+    borderColor: vars.color.primary,
+  },
+)
+
+globalStyle(`${checkbox}.checked:not(.indeterminate) .custom-checkbox .checkbox-icon`, {
+  visibility: 'visible',
+})
+
+globalStyle(`${checkbox}.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.primary,
+  borderColor: vars.color.primary,
+})
+
+globalStyle(`${checkbox}.indeterminate .custom-checkbox .checkbox-indeterminate`, {
+  visibility: 'visible',
+})
+
+globalStyle(`${checkbox}:not(.checked):not(.indeterminate):not(.disabled):hover .custom-checkbox`, {
+  borderColor: vars.color.primary,
+})
+
+globalStyle(`${checkbox}.danger .custom-checkbox`, { borderColor: vars.color.error })
+globalStyle(`${checkbox}.danger.checked .custom-checkbox, ${checkbox}.danger.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.error,
+  borderColor: vars.color.error,
+})
+
+globalStyle(`${checkbox}.warning .custom-checkbox`, { borderColor: vars.color.warning })
+globalStyle(`${checkbox}.warning.checked .custom-checkbox, ${checkbox}.warning.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.warning,
+  borderColor: vars.color.warning,
+})
+
+globalStyle(`${checkbox}.success .custom-checkbox`, { borderColor: vars.color.success })
+globalStyle(`${checkbox}.success.checked .custom-checkbox, ${checkbox}.success.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.success,
+  borderColor: vars.color.success,
+})
+
+globalStyle(`${checkbox}.info .custom-checkbox`, { borderColor: vars.color.info })
+globalStyle(`${checkbox}.info.checked .custom-checkbox, ${checkbox}.info.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.info,
+  borderColor: vars.color.info,
+})
+
+globalStyle(`${checkbox} .checkbox-label`, {
+  fontSize: vars.font.sizeSm,
+  color: `var(--color-checkbox-label, ${vars.color.text})`,
+  userSelect: 'none',
+  fontWeight: 500,
+  lineHeight: '16px',
+})
+
+// ── size variants ─────────────────────────────────────────────────────────────
+globalStyle(`${checkbox}.size-sm .custom-checkbox`, { width: 14, height: 14, minWidth: 14 })
+globalStyle(`${checkbox}.size-sm .custom-checkbox .checkbox-icon`, { width: 10, height: 10 })
+globalStyle(`${checkbox}.size-sm .custom-checkbox .checkbox-indeterminate`, { width: 6 })
+globalStyle(`${checkbox}.size-sm .checkbox-label`, { fontSize: vars.font.sizeXs, lineHeight: '14px' })
+
+globalStyle(`${checkbox}.size-lg .custom-checkbox`, { width: 20, height: 20, minWidth: 20 })
+globalStyle(`${checkbox}.size-lg .custom-checkbox .checkbox-icon`, { width: 14, height: 14 })
+globalStyle(`${checkbox}.size-lg .custom-checkbox .checkbox-indeterminate`, { width: 10 })
+globalStyle(`${checkbox}.size-lg .checkbox-label`, { fontSize: 13, lineHeight: '20px' })
+
+// ── error state ───────────────────────────────────────────────────────────────
+globalStyle(`${checkbox}.error .custom-checkbox`, { borderColor: vars.color.error })
+globalStyle(`${checkbox}.error.checked .custom-checkbox, ${checkbox}.error.indeterminate .custom-checkbox`, {
+  backgroundColor: vars.color.error,
+  borderColor: vars.color.error,
+})

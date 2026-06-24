@@ -1,2 +1,2 @@
-export { CalendarInput } from './CalendarInput'
-export type { CalendarInputProps } from './CalendarInput'
+export { default as CalendarInput, default } from './CalendarInput'
+export type { CalendarInputProps } from './types'

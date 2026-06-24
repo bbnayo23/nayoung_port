@@ -1,273 +1,383 @@
 import {
-  useRef,
-  useCallback,
-  useState,
+  forwardRef,
   useMemo,
-  useLayoutEffect,
-  useEffect,
+  useState,
+  useCallback,
+  type CSSProperties,
   type ReactNode,
+  type MouseEvent,
+  type MutableRefObject,
 } from 'react'
-import { cx } from '../../utils'
-import { Portal } from '../../utils'
-import * as styles from './Dropdown.css'
+import Select, {
+  type StylesConfig,
+  type GroupBase,
+  type MultiValue,
+  type SingleValue,
+  type OptionProps,
+  type MultiValueProps,
+  type PlaceholderProps,
+  type MenuListProps,
+  type MenuProps,
+  type SelectComponentsConfig,
+  components as rsComponents,
+} from 'react-select'
+import type { DropdownProps, DropdownSingleProps, DropdownMultiProps } from './Dropdown.types'
+import {
+  dropdownWrapper,
+  dropdownContainer,
+  dropdownLabel,
+  dropdownSelectAll,
+  dropdownSelectAllContent,
+  dropdownCountBadge,
+  dropdownResetBtn,
+  dropdownResetRow,
+  dropdownDivider,
+  multiValueBadge,
+} from './Dropdown.css'
+import { buildDropdownStyles } from './Dropdown.styles'
+import Checkbox from '../Checkbox'
+import Badge from '../Badge'
 
-// ---------------------------------------------------------------------------
-// 타입 (types.ts 를 Dropdown.tsx 에 통합)
-// ---------------------------------------------------------------------------
+type RSOption = { value: string; label: string; isDisabled?: boolean; variant?: string; isDivider?: boolean }
 
-export type DropdownItem<T = string> =
-  | {
-      type?: 'item'
-      label: string
-      value: T
-      disabled?: boolean
-      searchFixed?: boolean
-      /** 항목 우측에 부가 정보 (e.g. 타입 라벨) 를 회색으로 표시 */
-      description?: string
-    }
-  | { type: 'divider'; key: string }
+// ── SelectAll MenuList (전체 선택 행 포함) ────────────────────────────────────
 
-export interface DropdownProps<T = string> {
-  items?: DropdownItem<T>[]
-  value?: T
-  onChange?: (value: T) => void
-  placeholder?: string
-  /** trigger 에 표시할 고정 텍스트. value/selectedItem 보다 우선 */
-  label?: string
-  searchable?: boolean
-  disabled?: boolean
-  className?: string
-  /** trigger 너비를 고정한다. label 이 길어져도 너비가 변하지 않도록. */
-  width?: number | string
-  placement?: 'bottom' | 'top'
-  /** items 기반 렌더링 대신 커스텀 패널을 렌더링. close()로 패널 닫기 */
-  renderPanel?: (close: () => void) => ReactNode
-}
-
-// ---------------------------------------------------------------------------
-// 내부 유틸
-// ---------------------------------------------------------------------------
-
-function isSelectableItem<T>(
-  item: DropdownItem<T>,
-): item is Extract<DropdownItem<T>, { label: string }> {
-  return !('type' in item && item.type === 'divider')
-}
-
-interface PanelPosition {
-  top: number
-  left: number
-  minWidth: number
-}
-
-// ---------------------------------------------------------------------------
-// Dropdown
-// ---------------------------------------------------------------------------
-
-export function Dropdown<T = string>({
-  items = [],
-  value,
-  onChange,
-  placeholder = '선택하세요',
-  label,
-  searchable = false,
-  disabled = false,
-  className,
-  width,
-  placement = 'bottom',
-  renderPanel,
-}: DropdownProps<T>) {
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
-
-  // ---- 열림/닫힘 + 검색 상태 ----
-  const [isOpen, setIsOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const toggle = useCallback(() => {
-    setIsOpen((prev) => {
-      if (prev) setSearchQuery('')
-      return !prev
-    })
-  }, [])
-
-  const close = useCallback(() => {
-    setIsOpen(false)
-    setSearchQuery('')
-  }, [])
-
-  const select = useCallback(
-    (itemValue: T) => {
-      onChange?.(itemValue)
-      close()
-    },
-    [onChange, close],
-  )
-
-  // ---- 필터링 + 선택 항목 ----
-  const filteredItems = useMemo(() => {
-    if (!searchable || !searchQuery.trim()) return items
-    const query = searchQuery.toLowerCase()
-    return items.filter((item) =>
-      isSelectableItem(item)
-        ? item.searchFixed || item.label.toLowerCase().includes(query)
-        : true,
-    )
-  }, [items, searchQuery, searchable])
-
-  const selectedItem = useMemo(
-    () => items.find((item) => isSelectableItem(item) && item.value === value) ?? null,
-    [items, value],
-  )
-
-  // ---- 패널 위치 계산 ----
-  const [panelPos, setPanelPos] = useState<PanelPosition>({ top: 0, left: 0, minWidth: 0 })
-
-  const updatePosition = useCallback(() => {
-    if (!triggerRef.current) return
-    const rect = triggerRef.current.getBoundingClientRect()
-    let left = rect.left + window.scrollX
-
-    // viewport clamping: 패널이 오른쪽으로 넘치면 조정
-    if (panelRef.current) {
-      const panelWidth = panelRef.current.offsetWidth
-      if (left + panelWidth > window.innerWidth) {
-        left = Math.max(0, window.innerWidth - panelWidth - 8)
-      }
-    }
-
-    const panelHeight =
-      placement === 'top' && panelRef.current ? panelRef.current.offsetHeight : 0
-
-    setPanelPos({
-      top:
-        placement === 'top'
-          ? rect.top + window.scrollY - panelHeight
-          : rect.bottom + window.scrollY,
-      left,
-      minWidth: rect.width,
-    })
-  }, [placement])
-
-  useLayoutEffect(() => {
-    if (isOpen) {
-      updatePosition()
-      requestAnimationFrame(() => updatePosition())
-    }
-  }, [isOpen, updatePosition])
-
-  // ---- scroll / resize / Escape / click-outside ----
-  useEffect(() => {
-    if (!isOpen) return
-
-    const handleScroll = () => updatePosition()
-    const handleResize = () => updatePosition()
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close()
-    }
-    const handlePointerDown = (e: PointerEvent) => {
-      const target = e.target as Node
-      if (
-        !triggerRef.current?.contains(target) &&
-        !panelRef.current?.contains(target)
-      ) {
-        close()
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, true)
-    window.addEventListener('resize', handleResize)
-    document.addEventListener('keydown', handleKeyDown)
-    document.addEventListener('pointerdown', handlePointerDown)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll, true)
-      window.removeEventListener('resize', handleResize)
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('pointerdown', handlePointerDown)
-    }
-  }, [isOpen, close, updatePosition])
-
-  const triggerText =
-    label ?? (selectedItem && 'label' in selectedItem ? selectedItem.label : null)
-
+const SelectAllMenuList = (props: MenuListProps<RSOption, true, GroupBase<RSOption>>) => {
+  const selectProps = props.selectProps as typeof props.selectProps & {
+    _allSelected?: boolean
+    _someSelected?: boolean
+    _onToggleAll?: () => void
+    _selectedCount?: number
+    _onReset?: () => void
+  }
+  const { _allSelected = false, _someSelected = false, _onToggleAll, _selectedCount = 0, _onReset } = selectProps
+  const hasSelection = _selectedCount > 0
   return (
-    <>
-      <button
-        ref={triggerRef}
-        type="button"
-        className={cx(styles.trigger, isOpen && styles.triggerOpen, className)}
-        onClick={toggle}
-        disabled={disabled}
-        style={width !== undefined ? { width } : undefined}
-      >
-        {triggerText !== null ? (
-          <span className={styles.triggerLabel}>{triggerText}</span>
-        ) : (
-          <span className={cx(styles.triggerLabel, styles.placeholder)}>{placeholder}</span>
-        )}
-        <span className={cx(styles.arrow, isOpen && styles.arrowOpen)}>▼</span>
-      </button>
-
-      {isOpen && (
-        <Portal>
-          <div
-            ref={panelRef}
-            className={styles.panel}
-            style={{
-              top: panelPos.top,
-              left: panelPos.left,
-              minWidth: panelPos.minWidth,
+    <rsComponents.MenuList {...props}>
+      <div className={dropdownSelectAll}>
+        <div className={dropdownSelectAllContent} onClick={_onToggleAll}>
+          <Checkbox checked={_allSelected} indeterminate={_someSelected && !_allSelected} onChange={() => {}} />
+          <span>전체</span>
+          {hasSelection && <span className={dropdownCountBadge}>{_selectedCount}</span>}
+        </div>
+        {_onReset && hasSelection && (
+          <button
+            type="button"
+            className={dropdownResetBtn}
+            onClick={(e) => {
+              e.stopPropagation()
+              _onReset()
             }}
           >
-            {renderPanel ? (
-              renderPanel(close)
-            ) : (
-              <>
-                {searchable && (
-                  <input
-                    className={styles.searchInput}
-                    type="text"
-                    placeholder="검색"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    autoFocus
-                  />
-                )}
-                <div className={styles.list}>
-                  {filteredItems.length === 0 ? (
-                    <div className={styles.empty}>검색 결과가 없습니다</div>
-                  ) : (
-                    filteredItems.map((item) =>
-                      'type' in item && item.type === 'divider' ? (
-                        <div key={item.key} className={styles.divider} />
-                      ) : (
-                        <div
-                          key={String(item.value)}
-                          className={cx(
-                            styles.item,
-                            item.value === value && styles.itemSelected,
-                            item.disabled && styles.itemDisabled,
-                          )}
-                          onClick={() => !item.disabled && select(item.value)}
-                        >
-                          {item.value === value && (
-                            <span className={styles.checkmark}>✓</span>
-                          )}
-                          <span className={styles.itemLabel}>{item.label}</span>
-                          {item.description && (
-                            <span className={styles.itemDescription}>{item.description}</span>
-                          )}
-                        </div>
-                      ),
-                    )
-                  )}
-                </div>
-              </>
-            )}
-          </div>
-        </Portal>
-      )}
-    </>
+            초기화
+          </button>
+        )}
+      </div>
+      {props.children}
+    </rsComponents.MenuList>
   )
 }
+
+const ResetMenuList = (props: MenuListProps<RSOption, true, GroupBase<RSOption>>) => {
+  const selectProps = props.selectProps as typeof props.selectProps & {
+    _selectedCount?: number
+    _onReset?: () => void
+  }
+  const { _selectedCount = 0, _onReset } = selectProps
+  return (
+    <rsComponents.MenuList {...props}>
+      {_onReset && _selectedCount > 0 && (
+        <div className={dropdownResetRow}>
+          <button type="button" className={dropdownResetBtn} onClick={_onReset}>
+            초기화
+          </button>
+        </div>
+      )}
+      {props.children}
+    </rsComponents.MenuList>
+  )
+}
+
+// ── Multi 옵션 렌더러 ────────────────────────────────────────────────────────
+
+const CheckboxOption = (props: OptionProps<RSOption, true, GroupBase<RSOption>>) => {
+  if (props.data.isDivider) return <div className={dropdownDivider} />
+  return (
+    <rsComponents.Option {...props}>
+      <Checkbox checked={props.isSelected} onChange={() => {}} />
+      <span>{props.label}</span>
+    </rsComponents.Option>
+  )
+}
+
+const SingleOption = (props: OptionProps<RSOption, false, GroupBase<RSOption>>) => {
+  if (props.data.isDivider) return <div className={dropdownDivider} />
+  return <rsComponents.Option {...props} />
+}
+
+const TagMultiValue = (props: MultiValueProps<RSOption, true, GroupBase<RSOption>>) => (
+  <Badge size="sm" variant="tag" color={props.data.variant} className={multiValueBadge}>
+    {props.data.label}
+  </Badge>
+)
+
+const TagClosableMultiValue = (props: MultiValueProps<RSOption, true, GroupBase<RSOption>>) => (
+  <Badge
+    size="sm"
+    variant="tag"
+    color={props.data.variant}
+    closable
+    onRemove={() => {
+      props.removeProps.onClick?.({} as MouseEvent<HTMLDivElement>)
+    }}
+    className={multiValueBadge}
+  >
+    {props.data.label}
+  </Badge>
+)
+
+const createMultiPlaceholder = (displayMode: 'count' | 'values') => {
+  const MultiPlaceholder = (props: PlaceholderProps<RSOption, true, GroupBase<RSOption>>) => {
+    const selected = (props.selectProps.value ?? []) as RSOption[]
+    const allOptions = (props.selectProps.options ?? []) as RSOption[]
+
+    let text: string
+    if (selected.length === 0) text = String(props.selectProps.placeholder ?? '선택')
+    else if (selected.length === allOptions.length) text = '전체'
+    else if (displayMode === 'values') text = selected.map((o) => o.label).join(', ')
+    else if (selected.length === 1) text = selected[0]?.label ?? ''
+    else text = `${selected.length}개 선택`
+
+    const hasValue = selected.length > 0
+    return (
+      <div
+        {...props.innerProps}
+        style={{
+          ...props.innerProps?.style,
+          color: hasValue
+            ? 'var(--dropdown-text, var(--color-text-primary))'
+            : 'var(--dropdown-placeholder-text, var(--color-text-disabled))',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          position: 'absolute',
+          maxWidth: 'calc(100% - 8px)',
+        }}
+        title={displayMode === 'values' && hasValue ? text : undefined}
+      >
+        {text}
+      </div>
+    )
+  }
+  MultiPlaceholder.displayName = 'MultiPlaceholder'
+  return MultiPlaceholder
+}
+
+// ── Wrapper 공통 렌더링 ──────────────────────────────────────────────────────
+
+const DropdownShell = forwardRef<
+  HTMLDivElement,
+  {
+    label?: string
+    className?: string
+    style?: CSSProperties
+    children: ReactNode
+    size?: 'sm' | 'md' | 'lg'
+  }
+>(({ label, className, style, children, size = 'md' }, ref) => {
+  const cls = label ? dropdownWrapper : dropdownContainer
+  return (
+    <div ref={ref} className={`${cls} dropdown-${size}${className ? ` ${className}` : ''}`} style={style}>
+      {label && <label className={dropdownLabel}>{label}</label>}
+      {children}
+    </div>
+  )
+})
+DropdownShell.displayName = 'DropdownShell'
+
+// ── Dropdown Component ───────────────────────────────────────────────────────
+
+export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
+  const {
+    options,
+    placeholder = '선택',
+    label,
+    size = 'md',
+    disabled = false,
+    className,
+    style,
+    width,
+    forceOpen = false,
+    searchable,
+    placement,
+    maxWidth,
+    renderPanel,
+  } = props
+
+  const mergedStyle = useMemo(() => {
+    const base = { ...style } as CSSProperties
+    if (width) {
+      const w = typeof width === 'number' ? `${width}px` : width
+      ;(base as Record<string, unknown>)['--dropdown-width'] = w
+      base.width = w
+    }
+    if (maxWidth) {
+      base.maxWidth = typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth
+    }
+    return Object.keys(base).length === 0 ? style : base
+  }, [style, width, maxWidth])
+
+  const [panelOpen, setPanelOpen] = useState(false)
+
+  const isMulti = !!props.multiSelect
+
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
+  const wrapperRefCallback = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        setPortalTarget((node.closest('[data-solution]') as HTMLElement) || document.body)
+      }
+      if (typeof ref === 'function') ref(node)
+      else if (ref) (ref as MutableRefObject<HTMLDivElement | null>).current = node
+    },
+    [ref],
+  )
+
+  const rsOptions: RSOption[] = useMemo(
+    () =>
+      options.map((o) => ({
+        value: o.value,
+        label: o.label,
+        isDisabled: o.disabled || o.isDivider,
+        variant: o.variant,
+        isDivider: o.isDivider,
+      })),
+    [options],
+  )
+
+  const selectableRsOptions = useMemo(() => rsOptions.filter((o) => !o.isDivider), [rsOptions])
+  const isTagsMode =
+    isMulti &&
+    'multiDisplayMode' in props &&
+    (props.multiDisplayMode === 'tags' || props.multiDisplayMode === 'tags-closable')
+  const styles = useMemo(
+    () => buildDropdownStyles(size, !!label, isMulti, isTagsMode),
+    [size, label, isMulti, isTagsMode],
+  )
+
+  const renderPanelMenuComponent = useMemo(() => {
+    if (!renderPanel) return undefined
+    const RenderPanelMenu = (menuProps: MenuProps<RSOption, boolean, GroupBase<RSOption>>) => (
+      <rsComponents.Menu {...menuProps}>{renderPanel(() => setPanelOpen(false))}</rsComponents.Menu>
+    )
+    RenderPanelMenu.displayName = 'RenderPanelMenu'
+    return RenderPanelMenu
+  }, [renderPanel])
+
+  const commonSelectProps = {
+    options: rsOptions,
+    placeholder,
+    isDisabled: disabled,
+    isSearchable: searchable ?? false,
+    menuIsOpen: forceOpen ? true : renderPanel ? panelOpen : undefined,
+    onMenuOpen: renderPanel ? () => setPanelOpen(true) : undefined,
+    onMenuClose: renderPanel ? () => setPanelOpen(false) : undefined,
+    menuPortalTarget: portalTarget,
+    menuPlacement: (placement ?? 'auto') as 'bottom' | 'top' | 'auto',
+  }
+
+  if (!isMulti) {
+    const singleProps = props as DropdownSingleProps
+    const selectedOption = rsOptions.find((o) => o.value === (singleProps.value ?? singleProps.defaultValue)) ?? null
+
+    return (
+      <DropdownShell ref={wrapperRefCallback} label={label} className={className} style={mergedStyle} size={size}>
+        <Select<RSOption, false>
+          {...commonSelectProps}
+          value={selectedOption}
+          defaultValue={
+            singleProps.defaultValue ? rsOptions.find((o) => o.value === singleProps.defaultValue) : undefined
+          }
+          onChange={(opt: SingleValue<RSOption>) => {
+            if (opt) singleProps.onChange?.(opt.value, { value: opt.value, label: opt.label, disabled: opt.isDisabled })
+          }}
+          styles={styles as StylesConfig<RSOption, false>}
+          components={{
+            IndicatorSeparator: () => null,
+            Option: SingleOption,
+            ...(renderPanelMenuComponent ? { Menu: renderPanelMenuComponent } : {}),
+          }}
+        />
+      </DropdownShell>
+    )
+  }
+
+  const multiProps = props as DropdownMultiProps
+  const displayMode = multiProps.multiDisplayMode ?? 'count'
+  const resolvedValues = multiProps.values ?? multiProps.value
+  const selectedOptions = rsOptions.filter((o) => resolvedValues?.includes(o.value))
+  const isTagDisplay = displayMode === 'tags' || displayMode === 'tags-closable'
+  const placeholderMode = isTagDisplay ? ('count' as const) : (displayMode as 'count' | 'values')
+  const PlaceholderComp = useMemo(() => createMultiPlaceholder(placeholderMode), [placeholderMode])
+
+  const showSelectAll = multiProps.hideSelectAll === false
+  const allSelected = showSelectAll && selectedOptions.length === selectableRsOptions.length
+  const someSelected = showSelectAll && selectedOptions.length > 0 && !allSelected
+  const handleToggleAll = useCallback(() => {
+    if (allSelected) {
+      multiProps.onChange?.([], [])
+    } else {
+      multiProps.onChange?.(
+        selectableRsOptions.map((o) => o.value),
+        selectableRsOptions.map((o) => ({ value: o.value, label: o.label, disabled: o.isDisabled })),
+      )
+    }
+  }, [allSelected, selectableRsOptions, multiProps])
+
+  const multiComponents: Partial<SelectComponentsConfig<RSOption, true, GroupBase<RSOption>>> = {
+    IndicatorSeparator: () => null,
+    Option: CheckboxOption,
+    ...(isTagDisplay
+      ? { MultiValue: displayMode === 'tags-closable' ? TagClosableMultiValue : TagMultiValue }
+      : { Placeholder: PlaceholderComp }),
+    ...(showSelectAll ? { MenuList: SelectAllMenuList } : multiProps.onReset ? { MenuList: ResetMenuList } : {}),
+    ...(renderPanelMenuComponent ? { Menu: renderPanelMenuComponent } : {}),
+  }
+
+  return (
+    <DropdownShell ref={wrapperRefCallback} label={label} className={className} style={mergedStyle} size={size}>
+      <Select<RSOption, true>
+        {...commonSelectProps}
+        isMulti
+        value={selectedOptions}
+        defaultValue={
+          multiProps.defaultValue ? rsOptions.filter((o) => multiProps.defaultValue!.includes(o.value)) : undefined
+        }
+        onChange={(opts: MultiValue<RSOption>) => {
+          multiProps.onChange?.(
+            opts.map((o) => o.value),
+            opts.map((o) => ({ value: o.value, label: o.label, disabled: o.isDisabled })),
+          )
+        }}
+        closeMenuOnSelect={false}
+        hideSelectedOptions={false}
+        controlShouldRenderValue={isTagDisplay}
+        styles={styles as StylesConfig<RSOption, true>}
+        components={multiComponents}
+        {...(showSelectAll || multiProps.onReset
+          ? ({
+              ...(showSelectAll && {
+                _allSelected: allSelected,
+                _someSelected: someSelected,
+                _onToggleAll: handleToggleAll,
+              }),
+              _selectedCount: selectedOptions.length,
+              _onReset: multiProps.onReset,
+            } as Record<string, unknown>)
+          : {})}
+      />
+    </DropdownShell>
+  )
+})
+
+Dropdown.displayName = 'Dropdown'
