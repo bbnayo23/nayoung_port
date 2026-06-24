@@ -40,7 +40,8 @@ tsc -b && vite build                               # public/** 가 dist/ 로 복
 
 ## 스타일링 — 두 체계가 공존
 
-- 기본은 **vanilla-extract** (`*.css.ts`). 토큰은 `@port/design-system` 의 `vars`(`src/theme/tokens.css.ts`)에서 온다.
+- 기본은 **vanilla-extract** (`*.css.ts`). 토큰은 `@port/design-system` 의 `vars`(`src/theme/contract.css.ts` — `createGlobalThemeContract`, prefix `ds-`)에서 온다. 값은 `src/theme/xdr.css.ts` 가 `:root` 에 굽고, 테마 무관 스케일은 `src/theme/tokens.ts`(`commonTokens`)에 있다. 컴포넌트는 `vars.color.primary` / `vars.transition.fast` / `vars.font.sizeXs` 형태로 참조한다.
+- design-system 컴포넌트는 **`@vanilla-extract/recipes` 의 `recipe`** 로 variant 를 구성하고, 컴포넌트별 `Comp.tokens.ts` 가 `globalStyle(':root', createXTokens())` 로 `--color-*` 커스텀 프로퍼티를 주입한다. 클래스 병합은 `cx` 가 아니라 **`classnames`(cn)** 를 쓴다.
 - **예외: `icon-library` 는 `styled-components` 를 쓴다.** 두 체계를 한 패키지 안에서 섞지 말 것.
 - SVG 는 `*.svg?react` 로 import 하면 svgr 이 `currentColor` 기반 React 컴포넌트로 변환한다 (fill/stroke 제거 → `color` 로 제어). 설정은 `packages/config/vite/base.js` 에 있고 모든 앱이 공유한다.
 
@@ -98,13 +99,19 @@ three.js를 건드릴 때 알아야 할 비자명한 설계:
 
 > 컴포넌트 작성 디테일(vanilla-extract `ds-*` 디버그 네임, `cx` 병합 순서, compound 패턴, props 설계, 아이콘 출처, 신규 컴포넌트 체크리스트 등)은 [`apps/design-system/components-guide.md`](apps/design-system/components-guide.md) 참조.
 
-컴포넌트마다 두 종류의 스토리가 있다:
+**스토리는 컴포넌트와 분리돼 `src/stories/<Comp>/` 에 둔다** (컴포넌트 구현은 `src/components/<Comp>/`). 컴포넌트마다 두 종류의 스토리가 있다:
 
 - `*.stories.tsx` — variant/상태별 일반 스토리.
 - `*.docs.stories.tsx` — 단일 `Documentation` 스토리. inline style + `vars` 토큰으로 손수 구성한 문서 페이지다. (이 문서 페이지에 한해 inline style 을 쓴다 — 일반 컴포넌트 구현은 `.css.ts` 를 쓴다.)
+
+두 파일은 **같은 `title: 'StyleGuide/<Comp>'`** 를 써서 스토리북 사이드바에서 한 노드로 합쳐진다 (예제 스토리 + Documentation 이 함께 보인다). 소스에 docs 가 없는 컴포넌트(ContextMenu·HighlightText)는 예제 스토리만 둔다.
 
 **함정 — `render` 콜백 안에서 hook 호출 금지.** `render: () => { const [x] = useState(...) }` 는 `react-hooks/rules-of-hooks` 위반이다 (콜백이 컴포넌트로 인식되지 않음). 상태가 필요하면 대문자 컴포넌트로 분리하고 `render: () => <DocumentationView />` 로 렌더한다.
 
 ## 컴포넌트 출처 메모
 
-`design-system` 의 다수 컴포넌트는 사내 `@feature-fe/ui` 에서 포팅됐다 (`src/index.ts` 의 "ported from" 주석 참고). 동작/네이밍이 그쪽 관습을 따르는 경우가 있다.
+`design-system` 의 컴포넌트(43개)는 **2026-OneUI 의 `style-guide-components`**(`D:\develop\2026-OneUI\packages\ui\src\style-guide-components`)에서 포팅됐다. 동작/네이밍/토큰 체계가 그쪽 관습을 따른다. 포팅 시 `@ui/*` → 상대경로, `@igloo/igloo-icons` → `@port/icon-library`(Xdr* 아이콘) 로 재작성한다. 일부 아이콘은 미존재분을 가장 가까운 Xdr* 로 치환했다.
+
+`src/components/{COMPONENT_GUIDE,CUSTOMIZATION_RULES}.md` 는 이 style-guide-components 패턴(recipe + `Comp.tokens.ts` + 컨트랙트)을 설명하는 원본 가이드다.
+
+> 위치 지정 `Portal`(`src/components/Portal`, triggerRef/panelRef 기반)은 드롭다운류 내부용이라 배럴(`src/index.ts`)에 노출하지 않는다 — 공개 `Portal` 은 `src/utils` 의 단순 createPortal 래퍼다.
