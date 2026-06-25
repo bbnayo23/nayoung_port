@@ -6,9 +6,9 @@ import {
 } from './Playground.css'
 
 const icons: Record<string, string> = {
-  'claude-ui-gen': '⚡',
-  'theme-test': '🎨',
-  'ai-motion': '✦',
+  'design-tokens': '🎨',
+  'component-playground': '⚡',
+  'motion-ui': '✦',
 }
 
 export function Playground() {
@@ -18,7 +18,7 @@ export function Playground() {
         <span className={sectionTag}>04 — Playground</span>
         <h2 className={sectionTitle}>Experiments</h2>
         <p className={sectionDesc}>
-          Claude API와 Claude Code를 활용한 UI 실험 및 개발 도구 탐구.
+          디자인 토큰·공통 컴포넌트·인터랙션을 다듬는 UI 실험과 퍼블리싱 탐구.
         </p>
 
         <div className={grid}>

@@ -2,16 +2,16 @@ export const personal = {
   name: "박나영",
   nameEn: "Nayoung Park",
   email: "monello94@naver.com",
-  github: "https://github.com/nayoung",
+  github: "https://github.com/bbnayo23/nayoung_port",
   location: "Seoul, Korea",
   available: true,
-  roles: ["Design System Engineer", "Frontend Engineer", "AI Engineer"],
-  bio: "UI 인프라와 디자인 시스템을 설계합니다.\nAI 기반 개발 도구와 코드 생성 실험을 탐구합니다.",
+  roles: ["Frontend Engineer", "UI/UX Developer", "Design Engineer"],
+  bio: "SIEM 보안 관제 솔루션의 UI/UX를 개선하고 웹 퍼블리싱 & 프론트엔드 개발을 담당합니다.\n디자인과 개발이 같은 기준을 쓰도록 디자인 시스템을 구축하고 운영합니다.",
 };
 
 /**
  * ny — 이름(Nayoung)이자 신념의 약자.
- * N.Y. = Next Yourself. 받쳐주는 매니페스토 라인과 함께 개인 브랜드를 구성한다.
+ * N.Y. = Next Yourself.
  */
 export const brand = {
   monogram: "ny",
@@ -34,20 +34,26 @@ export const career: CareerItem[] = [
     role: "Frontend Engineer",
     period: "2023 — Present",
     description:
-      "SIEM 플랫폼 프론트엔드 개발 및 내부 디자인 시스템 아키텍처 설계",
-    tags: ["TypeScript", "React", "Design System", "vanilla-extract"],
+      "SIEM 보안 관제 솔루션의 UI/UX 개선과 웹 퍼블리싱, 프론트엔드 개발, 디자인 시스템 구축·운영을 담당",
+    tags: [
+      "React",
+      "TypeScript",
+      "styled-components",
+      "vanilla-extract",
+      "Figma",
+    ],
     highlights: [
       {
-        title: "SIEM Dashboard",
-        detail: "보안 이벤트 실시간 시각화 대시보드 · Lead Frontend",
-      },
-      {
-        title: "AI Assistant",
-        detail: "Claude API 기반 사내 AI 어시스턴트 구축",
+        title: "Security Dashboard UI/UX",
+        detail: "복잡한 보안 데이터의 정보구조 개선 · 사용성·일관성 향상",
       },
       {
         title: "Design System",
-        detail: "컴포넌트 라이브러리 설계 · Storybook 문서화",
+        detail: "공통 컴포넌트 표준화 · 디자인-개발 협업 체계 구축",
+      },
+      {
+        title: "Web Publishing",
+        detail: "React 기반 화면 퍼블리싱 · 재사용·유지보수 구조 설계",
       },
     ],
   },
@@ -67,70 +73,66 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "siem-dashboard",
-    name: "SIEM Dashboard",
-    tagline: "Security Information & Event Management",
+    name: "Security Dashboard UI/UX",
+    tagline: "SIEM Security Monitoring Solution",
     description:
-      "대규모 보안 이벤트를 실시간으로 시각화하고 분석하는 엔터프라이즈 대시보드. WebSocket 기반 스트리밍, D3.js 커스텀 차트, 복잡한 필터링 시스템 구현.",
-    tags: ["TypeScript", "React", "D3.js", "WebSocket"],
-    status: "shipped",
-    category: "product",
-  },
-  {
-    id: "ai-assistant",
-    name: "AI Assistant",
-    tagline: "Claude API Powered Interface",
-    description:
-      "Claude API를 활용한 사내 AI 어시스턴트. 자연어로 보안 로그 쿼리, 이벤트 요약, 대응 가이드 제공. Server-sent events 기반 스트리밍 응답 구현.",
-    tags: ["Claude API", "React 19", "TypeScript", "SSE"],
+      "복잡한 보안 데이터를 사용자가 빠르게 인지할 수 있도록 정보구조를 개선한 보안 관제 대시보드. 사용자 관점에서 화면 흐름과 인터페이스를 재설계하고, 대시보드 사용성과 시각적 일관성을 확보.",
+    tags: [
+      "React",
+      "TypeScript",
+      "styled-components",
+      "vanilla-extract",
+      "UI/UX",
+    ],
     status: "shipped",
     category: "product",
   },
   {
     id: "design-system",
     name: "Design System",
-    tagline: "vanilla-extract · Storybook · Turborepo",
+    tagline: "공통 컴포넌트 표준화 & 운영",
     description:
-      "타입 세이프 CSS-in-TypeScript 기반 컴포넌트 라이브러리. 디자인 토큰부터 컴포넌트 API까지 전 계층 설계. Monorepo 구조로 다중 앱에서 공유.",
-    tags: ["vanilla-extract", "TypeScript", "Storybook", "Turborepo"],
+      "버튼·입력폼·테이블·모달·탭 등 UI 컴포넌트를 표준화한 디자인 시스템. 디자인과 개발이 동일한 기준으로 사용할 수 있는 체계를 구축해 UI 일관성을 높이고 유지보수 비용을 줄임.",
+    tags: ["vanilla-extract", "TypeScript", "Storybook", "Figma"],
     status: "in-progress",
     category: "system",
     link: "/design-system/",
   },
   {
-    id: "claude-experiments",
-    name: "Claude Design Experiments",
-    tagline: "AI-driven UI generation",
+    id: "frontend-architecture",
+    name: "Frontend Architecture",
+    tagline: "재사용성 · 유지보수성 · 확장성",
     description:
-      "Claude Code와 Claude API를 활용한 UI 자동 생성, 테마 실험, 컴포넌트 코드 생성 케이스 컬렉션.",
-    tags: ["Claude API", "Claude Code", "React", "vanilla-extract"],
-    status: "experiment",
-    category: "experiment",
+      "컴포넌트 재사용성과 유지보수성을 고려한 프론트엔드 구조 설계. 서비스 확장성을 염두에 두고 개발 생산성을 높이는 개발 환경을 구축해 디자인-개발 협업 효율을 개선.",
+    tags: ["React", "TypeScript", "Architecture"],
+    status: "in-progress",
+    category: "system",
   },
 ];
 
 export const playgroundItems = [
   {
-    id: "claude-ui-gen",
-    title: "Claude UI Generation",
+    id: "design-tokens",
+    title: "Design Token Lab",
     description:
-      "Claude API로 React 컴포넌트 코드 자동 생성 실험. vanilla-extract 스타일 포함한 완성 코드 출력.",
-    tags: ["Claude API", "Code Generation"],
-    status: "experiment" as const,
-  },
-  {
-    id: "theme-test",
-    title: "Theme Test Lab",
-    description:
-      "CSS 변수 기반 실시간 테마 전환 실험. Design Token 구조와 컴포넌트 반응성 검증.",
-    tags: ["CSS Variables", "vanilla-extract", "Tokens"],
+      "vanilla-extract 기반 디자인 토큰 구조와 실시간 테마 전환 실험. 컬러·타이포·스페이싱 토큰 체계와 컴포넌트 반응성 검증.",
+    tags: ["vanilla-extract", "Design Tokens"],
     status: "in-progress" as const,
   },
   {
-    id: "ai-motion",
-    title: "AI Motion Design",
+    id: "component-playground",
+    title: "Component Playground",
     description:
-      "Claude로 CSS 애니메이션 패턴 생성 및 최적화 실험. Web Vitals 영향 측정 포함.",
-    tags: ["CSS Animation", "Claude API", "Web Vitals"],
+      "Storybook으로 공통 컴포넌트의 variant와 상태를 문서화하고 인터랙션을 검증하는 실험. 디자인-개발 협업 기준 정리.",
+    tags: ["Storybook", "React", "TypeScript"],
+    status: "in-progress" as const,
+  },
+  {
+    id: "motion-ui",
+    title: "Motion & Micro-interaction",
+    description:
+      "사용성을 해치지 않는 선에서 화면 전환과 마이크로 인터랙션을 다듬는 CSS 모션 실험.",
+    tags: ["CSS Animation", "UI/UX"],
     status: "experiment" as const,
   },
 ];

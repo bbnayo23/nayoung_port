@@ -1,24 +1,36 @@
-import { personal } from '../../data'
+import { personal } from "../../data";
 import {
-  section, inner, sectionTag, sectionTitle, sectionDesc,
-  links, link, linkLeft, linkIcon, linkLabel, linkValue, linkArrow,
-  footer, footerLeft, footerRight,
-} from './Contact.css'
+  section,
+  inner,
+  sectionTag,
+  sectionTitle,
+  sectionDesc,
+  links,
+  link,
+  linkLeft,
+  linkIcon,
+  linkLabel,
+  linkValue,
+  linkArrow,
+  footer,
+  footerLeft,
+  footerRight,
+} from "./Contact.css";
 
 const contactLinks = [
   {
-    icon: '✉',
-    label: 'Email',
+    icon: "✉",
+    label: "Email",
     value: personal.email,
     href: `mailto:${personal.email}`,
   },
   {
-    icon: '↗',
-    label: 'GitHub',
-    value: personal.github.replace('https://', ''),
+    icon: "↗",
+    label: "GitHub",
+    value: personal.github.replace("https://", ""),
     href: personal.github,
   },
-]
+];
 
 export function Contact() {
   return (
@@ -36,28 +48,34 @@ export function Contact() {
               key={c.label}
               href={c.href}
               className={link}
-              target={c.href.startsWith('http') ? '_blank' : undefined}
-              rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              target={c.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                c.href.startsWith("http") ? "noopener noreferrer" : undefined
+              }
             >
               <div className={linkLeft}>
-                <span className={linkIcon} aria-hidden="true">{c.icon}</span>
+                <span className={linkIcon} aria-hidden="true">
+                  {c.icon}
+                </span>
                 <div>
                   <p className={linkLabel}>{c.label}</p>
                   <p className={linkValue}>{c.value}</p>
                 </div>
               </div>
-              <span className={linkArrow} aria-hidden="true">→</span>
+              <span className={linkArrow} aria-hidden="true">
+                →
+              </span>
             </a>
           ))}
         </nav>
 
         <footer className={footer}>
-          <span className={footerLeft}>nayoung.dev</span>
+          <span className={footerLeft}>bbnayo23/nayoung_port</span>
           <span className={footerRight}>
             Built with React 19 · vanilla-extract · Turborepo
           </span>
         </footer>
       </div>
     </section>
-  )
+  );
 }
