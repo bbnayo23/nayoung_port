@@ -1,0 +1,46 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './IconButton.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>아이콘 전용 버튼 컴포넌트</Subtitle>
+
+아이콘 전용 버튼 컴포넌트입니다. `icon` prop 또는 `children`으로 아이콘을 전달하며, `size`와 `variant`로 외형을 제어합니다. `forwardRef`를 지원하며 표준 `HTMLButtonElement` 속성을 모두 그대로 전달합니다.
+
+<Source code={`import IconButton from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 버튼 크기 |
+| `variant` | `'default' \| 'ghost' \| 'outline' \| 'circle'` | `'ghost'` | 버튼 스타일 변형 |
+| `icon` | `ReactNode` | — | 버튼 내부에 렌더링할 아이콘. children보다 우선합니다. |
+| `disabled` | `boolean` | `false` | 비활성화 상태 |
+| `className` | `string` | — | 루트 요소에 추가할 CSS 클래스 |
+
+## 변형
+
+용도에 따라 ghost, outline, circle, default 중 선택합니다.
+
+<Canvas of={Stories.Variants} />
+
+## 크기
+
+<Canvas of={Stories.Sizes} />
+
+## 상태
+
+<Canvas of={Stories.States} />
+
+## 아이콘 예시
+
+@port/icon-library 아이콘을 icon prop에 전달하는 기본 패턴입니다.
+
+<Canvas of={Stories.IconSet} />
+
+## Playground
+
+<Canvas of={Stories.Playground} />

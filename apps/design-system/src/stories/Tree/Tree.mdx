@@ -1,0 +1,63 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './Tree.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>계층 구조 데이터를 트리 형태로 표시하는 컴포넌트</Subtitle>
+
+계층 구조 데이터를 트리 형태로 표시하는 컴포넌트입니다. 노드 선택, 펼치기/접기, 비활성화, controlled 모드를 지원합니다. 키보드 접근성(`Enter` · `Arrow`)이 내장되어 있습니다.
+
+<Source code={`import { Tree } from '@port/design-system'
+import type { TreeNode } from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `nodes` | `TreeNode[]` | — | 트리 노드 데이터 배열. 각 노드는 id, label, children?, disabled? 를 가집니다. |
+| `expandedIds` | `string[]` | — | 현재 펼쳐진 노드 id 목록 (controlled). 미전달 시 내부 상태로 관리됩니다. |
+| `onExpandChange` | `(ids: string[]) => void` | — | 펼치기/접기 변경 핸들러 |
+| `selectedId` | `string` | — | 현재 선택된 노드 id (controlled) |
+| `onSelect` | `(id: string) => void` | — | 노드 선택 핸들러 |
+| `className` | `string` | — | 루트 ul 요소에 추가할 CSS 클래스 |
+
+### TreeNode
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `id` | `string` | — | 노드 고유 식별자 |
+| `label` | `ReactNode` | — | 노드 표시 텍스트 또는 JSX |
+| `children` | `TreeNode[]` | — | 하위 노드 배열. 있으면 펼치기 아이콘 표시 |
+| `disabled` | `boolean` | — | 비활성화 — 클릭 불가, 시각적으로 흐리게 표시 |
+
+## 기본 사용
+
+화살표 클릭으로 펼치고, 노드 클릭으로 선택합니다.
+
+<Canvas of={Stories.Default} />
+
+## 깊은 중첩 구조
+
+3단계 이상 중첩된 트리 구조입니다.
+
+<Canvas of={Stories.DeepNesting} />
+
+## 비활성화 노드 (disabled)
+
+disabled 노드는 선택·포커스가 불가합니다.
+
+<Canvas of={Stories.DisabledNodes} />
+
+## Controlled 모드
+
+`expandedIds` + `onExpandChange`를 전달하면 펼치기 상태를 외부에서 제어합니다.
+
+<Canvas of={Stories.Controlled} />
+
+## Dropdown 패널
+
+Dropdown 컴포넌트의 `renderPanel`을 사용해 Tree를 패널로 표시합니다.
+
+<Canvas of={Stories.DropdownTree} />

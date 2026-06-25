@@ -1,0 +1,61 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './Modal.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>다이얼로그 모달과 사이드 패널을 지원하는 오버레이 컴포넌트</Subtitle>
+
+`createPortal`로 DOM 최상위에 렌더링하며, `Modal.Header` · `Modal.Body` · `Modal.Footer` 컴파운드 패턴으로 구성합니다. `open` · `onClose`로 완전 제어(controlled)합니다.
+
+<Source code={`import Modal from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `open` | `boolean` | — | 모달 표시 여부. false이고 isClosing도 false이면 null 반환 (required) |
+| `onClose` | `() => void` | — | 닫기 콜백 — 딤드 클릭, 사이드 패널 닫기 버튼 클릭 시 호출 (required) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 모달 너비 크기 (type='modal'에만 영향) |
+| `type` | `'modal' \| 'sidepanel'` | `'modal'` | 표시 형태 — modal은 중앙, sidepanel은 좌/우 슬라이드 |
+| `position` | `'left' \| 'right'` | — | 사이드 패널 위치 (type='sidepanel'일 때만 적용) |
+| `showDimmed` | `boolean` | `false` | 사이드 패널에서도 딤드 오버레이를 표시할지 여부. modal 타입은 항상 표시 |
+| `showCloseButton` | `boolean` | `true` | 사이드 패널 우상단 × 버튼 표시 여부 |
+| `isClosing` | `boolean` | `false` | 닫힘 애니메이션 트리거. true이면 open=false여도 마운트 유지 |
+| `portalTarget` | `Element \| (() => Element)` | `document.body` | Portal 렌더 대상. [data-solution] 요소가 있으면 그것이 기본값 |
+| `className` | `string` | — | 모달 래퍼 div에 추가할 CSS 클래스 |
+
+### 서브 컴포넌트
+
+| 컴포넌트 | 역할 |
+| --- | --- |
+| `Modal.Header` | 모달 상단 제목 영역 — 닫기 버튼이 없는 경우 제목만 표시 |
+| `Modal.Body` | 모달 본문 스크롤 영역 — 주요 콘텐츠 배치 |
+| `Modal.Footer` | 모달 하단 액션 버튼 영역 — 확인/취소 등 버튼 배치 |
+
+## Playground
+
+Controls 패널에서 size · type · position 등을 조정한 뒤 버튼으로 모달을 엽니다.
+
+<Canvas of={Stories.Playground} />
+
+<Controls of={Stories.Playground} />
+
+## Size
+
+sm · md · lg 세 가지 크기를 각각 열어볼 수 있습니다. (type="modal")
+
+<Canvas of={Stories.Sizes} />
+
+## 사이드 패널
+
+`type="sidepanel"`과 `position`으로 좌/우측 슬라이드 패널을 표시합니다. `showCloseButton`으로 닫기 버튼을 추가합니다.
+
+<Canvas of={Stories.SidePanel} />
+
+## 딤드 사이드 패널
+
+`showDimmed=true`로 설정하면 사이드 패널 뒤에도 딤드 오버레이가 표시됩니다. modal 타입은 항상 딤드가 표시됩니다.
+
+<Canvas of={Stories.WithDimmed} />

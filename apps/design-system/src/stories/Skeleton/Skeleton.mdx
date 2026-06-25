@@ -1,0 +1,41 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './Skeleton.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>데이터 로딩 중 콘텐츠 자리를 채워주는 플레이스홀더</Subtitle>
+
+데이터 로딩 중 콘텐츠 자리를 채워주는 플레이스홀더입니다. `variant`로 모양을 선택하고 `width` · `height`로 크기를 지정합니다.
+
+<Source code={`import Skeleton from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `variant` | `'rectangular' \| 'rounded' \| 'circle'` | `'rectangular'` | 스켈레톤 모양 — rectangular(직사각형), rounded(둥근 모서리), circle(원형) |
+| `width` | `string \| number` | — | 너비. 숫자는 px로 처리, 문자열은 CSS 값 그대로 적용 (예: '100%', '240px') |
+| `height` | `string \| number` | — | 높이. 미설정 시 variant에 따른 기본값 적용 |
+| `className` | `string` | — | 루트 요소에 추가할 CSS 클래스 |
+
+## Playground
+
+<Canvas of={Stories.Playground} />
+
+## Variant
+
+<Canvas of={Stories.Variants} />
+
+## 텍스트 라인
+
+<Canvas of={Stories.TextLines} />
+
+## CardSkeleton
+
+<Canvas of={Stories.CardSkeletonStory} />
+
+## 대시보드 플레이스홀더
+
+<Canvas of={Stories.DashboardPlaceholder} />

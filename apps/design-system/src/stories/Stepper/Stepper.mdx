@@ -1,0 +1,81 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './Stepper.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>다단계 작업의 진행 상태를 시각화하는 컴포넌트</Subtitle>
+
+다단계 작업의 진행 상태를 시각화하는 컴포넌트입니다. 수평·수직 방향을 지원하며 `Stepper.Step` · `Stepper.Connector` · `Stepper.Content` · `Stepper.Controls` 의 compound 패턴으로 구성합니다.
+
+<Source code={`import Stepper from '@port/design-system'`} language="tsx" />
+
+## API
+
+### Stepper
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `position` | `'horizontal' \| 'vertical'` | `'horizontal'` | 스텝 배치 방향 |
+| `showNumbers` | `boolean` | `true` | 스텝 아이콘에 번호 표시 여부 |
+| `children` | `ReactNode` | — | Stepper.Step, Stepper.Connector 등을 children으로 전달합니다. |
+
+### Stepper.Step
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `id` | `string \| number` | — | 스텝 식별자 |
+| `title` | `string` | — | 스텝 제목 |
+| `description` | `string` | — | 스텝 부가 설명 (선택) |
+| `stepNumber` | `number` | — | 표시할 순서 번호 (0-based) |
+| `isActive` | `boolean` | — | 현재 활성 스텝 |
+| `isCompleted` | `boolean` | — | 완료된 스텝 — 체크 아이콘 표시 |
+| `isError` | `boolean` | — | 오류 상태 — X 아이콘 표시 |
+| `isDisabled` | `boolean` | — | 비활성화 상태 |
+| `isOptional` | `boolean` | — | (Optional) 표시 |
+| `isClickable` | `boolean` | — | 클릭 가능 여부 |
+| `onClick` | `() => void` | — | 스텝 클릭 핸들러 |
+
+### Stepper.Connector
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `isCompleted` | `boolean` | — | 완료된 구간 — 강조 선 표시 |
+
+### Stepper.Controls
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `onPrevious / onNext / onComplete` | `() => void` | — | 이전·다음·완료 버튼 핸들러 |
+| `previousButtonText / nextButtonText / completeButtonText` | `string` | `'Previous' / 'Next' / 'Complete'` | 버튼 레이블 |
+| `showPrevious / showNext / showComplete` | `boolean` | `true` | 버튼 표시 여부 |
+| `isPreviousDisabled / isNextDisabled / isCompleteDisabled` | `boolean` | — | 버튼 비활성화 여부 |
+
+## 수평 방향 (기본)
+
+이전 · 다음 · 완료 버튼으로 스텝을 직접 탐색합니다. 완료된 스텝을 클릭하면 되돌아갈 수 있습니다.
+
+<Canvas of={Stories.Interactive} />
+
+## 수직 방향
+
+<Canvas of={Stories.Vertical} />
+
+## 스텝 상태
+
+completed · active · error · disabled · optional 다섯 가지 상태를 비교합니다.
+
+<Canvas of={Stories.StepStates} />
+
+## showNumbers=false
+
+번호 대신 완료 시 체크 아이콘만 표시합니다.
+
+<Canvas of={Stories.WithoutNumbers} />
+
+## Playground
+
+<Canvas of={Stories.Playground} />
+
+<Controls />

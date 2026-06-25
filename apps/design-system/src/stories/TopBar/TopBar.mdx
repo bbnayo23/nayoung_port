@@ -1,0 +1,139 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './TopBar.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>XDR 레이아웃 상단 우측에 고정되는 액션 바</Subtitle>
+
+XDR 레이아웃 상단 우측에 고정되는 액션 바입니다. 알림, 다운로드, 사용자 메뉴(테마/언어/로그아웃), 앱 전환 팝오버 4개의 버튼으로 구성됩니다. 팝오버는 영역 외부 클릭 시 자동으로 닫힙니다.
+
+<Source
+  code={`import TopBar from '@port/design-system'
+import type {
+  TopBarProps,
+  TopBarNotiItem,
+  TopBarDownloadItem,
+  TopBarProduct,
+  TopBarLangItem,
+  ThemeMode,
+  LangCode,
+} from '@port/design-system'`}
+  language="tsx"
+/>
+
+## API — TopBarProps
+
+### 사용자 정보
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `userName` | `string` | `'관리자'` | 사용자 이름 — 사용자 팝오버 프로필에 표시 |
+| `userEmail` | `string` | `'admin@example.com'` | 사용자 이메일 |
+| `userRole` | `string` | `'Admin'` | 사용자 역할 배지 텍스트 |
+
+### 알림
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `notiCount` | `number` | `0` | 알림 아이콘 배지 숫자. 0이면 미표시, 99 초과 시 "99+" |
+| `notiItems` | `TopBarNotiItem[]` | — | 알림 팝오버 목록. 미전달 시 내장 기본값 사용 |
+| `onNotificationClick` | `() => void` | — | 알림 아이콘 버튼 클릭 콜백 |
+| `onNotiItemClick` | `(id: string) => void` | — | 알림 항목 클릭 콜백 — 읽음 처리에 사용 |
+| `onNotiReadAll` | `() => void` | — | '모두 읽음' 버튼 클릭 콜백 |
+
+### 다운로드
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `downloadItems` | `TopBarDownloadItem[]` | — | 다운로드 팝오버 목록. 미전달 시 내장 기본값 사용 |
+| `onDownloadClick` | `() => void` | — | 다운로드 아이콘 버튼 클릭 콜백 |
+| `onDownloadItemClick` | `(id: string) => void` | — | 다운로드 항목 클릭 콜백 |
+
+### 테마 / 언어
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'light'` | 초기 테마 모드 |
+| `defaultLang` | `'ko' \| 'en' \| 'ja'` | `'ko'` | 초기 언어 코드 |
+| `langs` | `TopBarLangItem[]` | — | 언어 선택 목록. 미전달 시 ko/en/ja 기본값 사용 |
+| `onThemeChange` | `(mode: ThemeMode) => void` | — | 테마 변경 콜백 |
+| `onLangChange` | `(lang: LangCode) => void` | — | 언어 변경 콜백 |
+
+### 앱 전환 / 기타
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `products` | `TopBarProduct[]` | — | 앱 전환 팝오버 목록. 미전달 시 XDR/RN/UD 기본값 사용 |
+| `defaultActiveProduct` | `string` | `'xdr'` | 초기 활성 프로덕트 id |
+| `onProductChange` | `(id: string) => void` | — | 프로덕트 변경 콜백 |
+| `onProfileClick` | `() => void` | — | 프로필 영역 클릭 콜백 |
+| `onProgramInfoClick` | `() => void` | — | 프로그램 정보 메뉴 클릭 콜백 |
+| `onLogoutClick` | `() => void` | — | 로그아웃 메뉴 클릭 콜백 |
+| `className` | `string` | — | 루트 요소에 추가할 CSS 클래스 |
+
+### 타입 정의
+
+<Source
+  code={`type ThemeMode = 'light' | 'dark' | 'system'
+type LangCode  = 'ko' | 'en' | 'ja'
+
+interface TopBarLangItem {
+  code:  LangCode
+  label: string
+  flag:  string
+}
+
+interface TopBarProduct {
+  id:    string
+  label: ReactNode
+}
+
+interface TopBarNotiItem {
+  id:       string
+  title:    string
+  message?: string
+  time?:    string
+  read?:    boolean
+}
+
+interface TopBarDownloadItem {
+  id:        string
+  fileName:  string
+  fileSize?: string
+  status:    'done' | 'progress' | 'error'
+  progress?: number
+}`}
+  language="tsx"
+/>
+
+## Playground
+
+<Canvas of={Stories.Playground} />
+
+<Controls />
+
+## 알림 읽음 처리
+
+`notiItems`를 state로 관리하고 `onNotiItemClick`으로 개별 읽음 처리, `onNotiReadAll`로 전체 읽음 처리합니다.
+
+<Canvas of={Stories.WithNotifications} />
+
+## 다운로드 상태 표시
+
+`status: 'done' | 'progress' | 'error'` 로 다운로드 상태를 표시합니다. `progress`는 0-100 숫자로 진행률을 나타냅니다.
+
+<Canvas of={Stories.WithDownloads} />
+
+## 커스텀 프로덕트 목록
+
+`products` prop으로 앱 전환 팝오버 목록을 커스터마이징합니다. `label`은 `ReactNode`이므로 JSX로 커스텀 표현이 가능합니다.
+
+<Canvas of={Stories.CustomProducts} />
+
+## 이벤트 콜백
+
+각 버튼을 클릭하면 대응하는 이벤트 콜백이 발생하며, 이벤트 로그로 확인할 수 있습니다.
+
+<Canvas of={Stories.WithCallbacks} />

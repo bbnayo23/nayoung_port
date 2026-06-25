@@ -1,0 +1,45 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './Checkbox.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>checked · indeterminate · disabled 상태와 color variant를 지원하는 체크박스</Subtitle>
+
+checked · indeterminate · disabled 3가지 상태와 4가지 color variant를 지원하는 체크박스 컴포넌트입니다. 라벨을 좌·우로 배치할 수 있습니다.
+
+<Source code={`import Checkbox from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `checked` | `boolean` | `false` | 체크 상태 |
+| `indeterminate` | `boolean` | `false` | 중간(mixed) 상태 — checked와 독립적으로 동작 |
+| `disabled` | `boolean` | `false` | 비활성화 — opacity 0.5, cursor not-allowed |
+| `label` | `string \| ReactNode` | — | 체크박스 옆에 표시할 라벨 |
+| `labelDirection` | `'left' \| 'right'` | `'right'` | 라벨 위치 |
+| `color` | `'danger' \| 'warning' \| 'success' \| 'info'` | — | 체크 색상 variant |
+| `onChange` | `(e: ChangeEvent) => void` | — | 상태 변경 핸들러 |
+| `id` | `string` | — | label htmlFor 연결용 id |
+
+## Playground
+
+<Canvas of={Stories.Playground} />
+
+## State
+
+<Canvas of={Stories.States} />
+
+## Color
+
+<Canvas of={Stories.Colors} />
+
+## LabelDirection
+
+<Canvas of={Stories.LabelDirection} />
+
+## 인터랙티브 예제 — 전체 동의
+
+<Canvas of={Stories.Interactive} />

@@ -1,0 +1,58 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './Pagination.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>테이블·목록 하단에 위치하는 페이지 탐색 컴포넌트</Subtitle>
+
+`totalPages`·`currentPage`·`onPageChange` 세 props만으로 기본 동작하며, `showPageInfo`·`showPageJump`·`showItemsPerPage` 옵션으로 확장할 수 있습니다.
+
+<Source code={`import Pagination from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `totalPages` | `number` | — | 총 페이지 수 (required) |
+| `currentPage` | `number` | — | 현재 활성 페이지 번호 (required) |
+| `onPageChange` | `(page: number) => void` | — | 페이지 변경 콜백 (required) |
+| `maxDisplay` | `number` | `5` | 한 번에 표시할 페이지 버튼 수 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 크기 variant |
+| `disabled` | `boolean` | `false` | 전체 비활성화 |
+| `showFirstLast` | `boolean` | `false` | 첫/마지막 페이지 이동 버튼 표시 |
+| `showPrevNext` | `boolean` | `true` | 이전/다음 버튼 표시 |
+| `showPageInfo` | `boolean` | `false` | 현재 페이지 / 전체 페이지 정보 텍스트 표시 |
+| `showPageJump` | `boolean` | `false` | 페이지 직접 입력 input 표시 |
+| `showItemsPerPage` | `boolean` | `false` | 페이지당 항목 수 드롭다운 표시 |
+| `totalItems` | `number` | — | 전체 항목 수 — showPageInfo와 함께 사용 |
+| `itemsPerPage` | `number` | — | 현재 페이지당 항목 수 |
+| `itemsPerPageOptions` | `number[]` | — | 페이지당 항목 수 선택 목록 (예: [50, 100, 200]) |
+| `onItemsPerPageChange` | `(n: number) => void` | — | 페이지당 항목 수 변경 콜백 |
+
+## Playground
+
+Controls 패널에서 모든 props를 실시간으로 조정합니다.
+
+<Canvas of={Stories.Playground} />
+
+<Controls of={Stories.Playground} />
+
+## 크기 비교
+
+`size` prop으로 sm · md · lg를 선택합니다.
+
+<Canvas of={Stories.Sizes} />
+
+## 확장 기능
+
+`showPageInfo` · `showPageJump` · `showItemsPerPage`를 함께 사용해 풀 기능 페이지네이션 바를 구성합니다.
+
+<Canvas of={Stories.WithExtras} />
+
+## 비활성화
+
+`disabled` prop으로 전체 페이지네이션을 비활성화합니다.
+
+<Canvas of={Stories.Disabled} />

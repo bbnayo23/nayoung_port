@@ -1,0 +1,73 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './AlertModal.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>사용자 확인이 필요한 알림 · 경고 · 확인 다이얼로그</Subtitle>
+
+사용자 확인이 필요한 알림, 경고, 확인 다이얼로그를 표시하는 컴포넌트입니다. `AlertModal.Header` · `AlertModal.Body` · `AlertModal.Footer` 컴파운드 패턴으로 구성되며, `createPortal`을 사용해 DOM 트리 밖에 렌더링됩니다.
+
+<Source code={`import AlertModal from '@port/design-system'`} language="tsx" />
+
+## API
+
+### AlertModal
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `open` | `boolean` | `false` | 모달 열림/닫힘 상태. 호출자가 직접 제어합니다 (controlled). |
+| `onClose` | `() => void` | — | 배경(dimmed) 클릭 또는 닫기 트리거 시 호출되는 콜백 |
+| `closeOnOverlay` | `boolean` | `true` | 배경(dimmed) 클릭으로 모달을 닫을지 여부 |
+| `children` | `ReactNode` | — | AlertModal.Header · Body · Footer 서브컴포넌트 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'sm'` | 모달 크기 |
+| `portalTarget` | `Element \| DocumentFragment \| () => Element \| DocumentFragment` | — | portal 렌더링 대상. 기본값은 document.body |
+| `className` | `string` | — | 모달 래퍼 요소에 추가할 CSS 클래스 |
+
+### AlertModal.Header
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `title` | `string` | — | 헤더에 표시할 제목 텍스트 |
+| `icon` | `ReactNode` | — | 헤더 상단에 표시할 아이콘. @port/icon-library의 Xdr* 아이콘을 권장합니다. |
+| `type` | `'info' \| 'success' \| 'warning' \| 'error' \| 'confirm'` | `'info'` | 아이콘 색상 변형. 각 타입에 맞는 색상이 자동 적용됩니다. |
+
+### AlertModal.Body
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `description` | `ReactNode` | — | 본문 메시지. p 태그로 감싸져 렌더링됩니다. |
+| `children` | `ReactNode` | — | 커스텀 본문 콘텐츠. description과 함께 사용 가능합니다. |
+
+### AlertModal.Footer
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `showCancelButton` | `boolean` | `false` | 취소 버튼 표시 여부 |
+| `primaryLabel` | `string` | `'OK'` | 확인(주요) 버튼 텍스트 |
+| `secondaryLabel` | `string` | — | 보조 버튼 텍스트. 제공 시 취소 버튼과 확인 버튼 사이에 렌더링됩니다. |
+| `cancelLabel` | `string` | `'Cancel'` | 취소 버튼 텍스트 |
+| `confirmVariant` | `'info' \| 'success' \| 'warning' \| 'error' \| 'confirm'` | `'info'` | 확인 버튼 색상 변형. error 타입이면 danger 버튼으로 렌더링됩니다. |
+| `onPrimary` | `() => void` | — | 확인(주요) 버튼 클릭 콜백 |
+| `onSecondary` | `() => void` | — | 보조 버튼 클릭 콜백 |
+| `onCancel` | `() => void` | — | 취소 버튼 클릭 콜백 |
+| `children` | `ReactNode` | — | 커스텀 버튼 영역. 제공 시 기본 버튼을 대체합니다. |
+
+## 기본 사용법
+
+open state를 관리하고 onClose · onPrimary 콜백으로 제어합니다.
+
+<Canvas of={Stories.Playground} />
+
+## 타입
+
+info / success / warning / error / confirm 5가지 타입을 확인할 수 있습니다. 각 타입에 맞는 아이콘 색상과 확인 버튼 색상이 적용됩니다.
+
+<Canvas of={Stories.AlertTypes} />
+
+## 취소 버튼 패턴
+
+showCancelButton으로 취소 버튼을 표시합니다. 파괴적 작업 확인에 적합합니다.
+
+<Canvas of={Stories.WithCancel} />

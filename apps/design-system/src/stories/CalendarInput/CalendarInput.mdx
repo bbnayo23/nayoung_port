@@ -1,0 +1,43 @@
+import { Meta, Title, Subtitle, Source, Canvas } from '@storybook/addon-docs/blocks'
+import * as Stories from './CalendarInput.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>텍스트 입력과 달력 팝업을 결합한 날짜 선택 컴포넌트</Subtitle>
+
+텍스트 입력과 달력 팝업을 결합한 날짜 선택 컴포넌트입니다. 입력 필드를 클릭하면 달력 팝업이 열리고, 날짜 선택 시 `YYYY-MM-DD HH:mm:ss` 형식으로 값이 채워집니다.
+
+<Source code={`import { CalendarInput } from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `value` | `string` | — | 입력 필드에 표시되는 텍스트 값 (controlled) |
+| `selectedDate` | `Date \| null` | — | 달력에서 하이라이트할 선택된 날짜 |
+| `onDateSelect` | `(date: Date \| undefined) => void` | — | 달력에서 날짜 클릭 시 호출. 선택 해제 시 undefined |
+| `onInputChange` | `(text: string) => void` | — | 입력 필드 직접 타이핑 시 호출 |
+| `onInputBlur` | `() => void` | — | 입력 필드 blur 시 호출 |
+| `disabledBefore` | `Date` | — | 이 날짜 이전은 달력에서 선택 불가 |
+| `disabledAfter` | `Date` | — | 이 날짜 이후는 달력에서 선택 불가 |
+| `placeholder` | `string` | `'YYYY-MM-DD HH:mm:ss'` | 입력 필드 placeholder |
+| `disabled` | `boolean` | — | 비활성화 — 입력 및 달력 팝업 불가 |
+| `className` | `string` | — | 최상위 wrapper에 추가할 className. 너비 조정은 이 prop이나 부모 컨테이너로 제어합니다. |
+
+## 기본 사용
+
+<Canvas of={Stories.Playground} />
+
+## 초기값 설정
+
+<Canvas of={Stories.WithPreselectedDate} />
+
+## 날짜 범위 제한
+
+<Canvas of={Stories.WithDisabledRange} />
+
+## Disabled
+
+<Canvas of={Stories.Disabled} />

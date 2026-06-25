@@ -1,0 +1,39 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './Collapse.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>단일 콘텐츠를 접고 펼치는 컴포넌트</Subtitle>
+
+단일 콘텐츠를 접고 펼치는 컴포넌트입니다. card · row · more · horizontal 4가지 variant와 uncontrolled / controlled 두 가지 제어 방식을 지원합니다.
+
+<Source code={`import { Collapse } from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `variant` | `'card' \| 'row' \| 'more' \| 'horizontal'` | `'card'` | 스타일 변형 |
+| `header` | `ReactNode` | — | 헤더 영역 (클릭 시 토글). 생략하면 외부 open 제어만 가능 |
+| `defaultOpen` | `boolean` | `false` | 초기 열림 상태 (uncontrolled) |
+| `open` | `boolean` | — | 제어 모드 열림 상태. onOpenChange와 함께 사용 |
+| `onOpenChange` | `(open: boolean) => void` | — | 열림 상태 변경 콜백 |
+| `children` | `ReactNode` | — | 펼쳐지는 콘텐츠 영역 |
+
+## Playground
+
+<Controls />
+
+## Variants
+
+card · row · more 세 가지 variant를 비교합니다.
+
+<Canvas of={Stories.Variants} />
+
+## ShowMore
+
+variant="more" — 목록 일부를 먼저 보여주고 클릭 시 나머지를 펼칩니다.
+
+<Canvas of={Stories.ShowMore} />

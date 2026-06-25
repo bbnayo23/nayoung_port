@@ -1,0 +1,63 @@
+import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
+import * as Stories from './PageHeader.stories'
+
+<Meta of={Stories} />
+
+<Title />
+
+<Subtitle>페이지 최상단에 위치하는 헤더 컴포넌트</Subtitle>
+
+페이지 최상단에 위치하는 헤더 컴포넌트입니다. `title` · `subtitle` · `breadcrumbs` · `tags` · `actions` 슬롯으로 구성되며, `onBack` 핸들러를 지정하면 뒤로가기 버튼이 자동으로 렌더됩니다.
+
+<Source code={`import PageHeader from '@port/design-system'`} language="tsx" />
+
+## API
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `title` | `string` | — | 페이지 타이틀 — h1 태그로 자동 렌더됩니다. (required) |
+| `subtitle` | `string` | — | 타이틀 옆에 표시되는 보조 텍스트 |
+| `breadcrumbs` | `BreadcrumbItem[]` | — | 브레드크럼 경로 배열. 배열 전달 시 Breadcrumbs 컴포넌트로 자동 렌더. |
+| `tags` | `ReactNode` | — | 타이틀 행 가운데 슬롯. 상태 칩(ACTIVE · DRAFT · ARCHIVED) 등에 사용. |
+| `actions` | `ReactNode` | — | 타이틀 행 우측 슬롯. 버튼, 드롭다운 등 액션 영역. |
+| `backButton` | `ReactNode` | — | 커스텀 뒤로가기 버튼 슬롯. 지정 시 onBack보다 우선합니다. |
+| `onBack` | `() => void` | — | 지정 시 기본 뒤로가기 아이콘 버튼이 자동 렌더됩니다. |
+| `divider` | `boolean` | `false` | 헤더 하단 구분선 표시 여부 |
+| `className` | `string` | — | 루트 header 요소에 추가할 CSS 클래스 |
+
+### BreadcrumbItem
+
+| Prop | Type | Default | 설명 |
+| --- | --- | --- | --- |
+| `key` | `string` | — | React key — 고유한 식별자 (required) |
+| `label` | `string` | — | 표시 텍스트 (required) |
+| `href` | `string` | — | 링크 URL. 지정 시 a 태그로 렌더. |
+| `onClick` | `() => void` | — | 클릭 핸들러. href 없이 지정 시 button으로 렌더. |
+
+## Playground
+
+<Canvas of={Stories.Playground} />
+
+<Controls of={Stories.Playground} />
+
+## 브레드크럼
+
+<Canvas of={Stories.WithBreadcrumbs} />
+
+## 액션 버튼 슬롯
+
+actions prop에 ReactNode를 전달하면 헤더 우측에 렌더됩니다.
+
+<Canvas of={Stories.WithActions} />
+
+## 뒤로가기 버튼
+
+onBack 핸들러를 전달하면 좌측에 화살표 아이콘 버튼이 자동 렌더됩니다.
+
+<Canvas of={Stories.WithBackButton} />
+
+## 상태 태그 슬롯
+
+tags prop으로 타이틀 옆에 상태 칩을 렌더합니다.
+
+<Canvas of={Stories.WithTags} />

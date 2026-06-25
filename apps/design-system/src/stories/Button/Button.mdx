@@ -1,0 +1,76 @@
+{/*
+  Button.mdx — MDX 문서 페이지 샘플
+
+  ▸ 이 파일은 기존 `Button.docs.stories.tsx`(손수 만든 Documentation 스토리)를
+    "대체"하지 않고 "공존"한다. 둘 다 같은 StyleGuide/Button 노드 아래 모인다.
+      - Button.stories.tsx        → Playground / Variants / … 등 일반 스토리
+      - Button.docs.stories.tsx   → Documentation (inline style 로 직접 그린 문서 스토리)
+      - Button.mdx (이 파일)       → Storybook Docs 블록으로 구성한 "Docs" 페이지
+
+  ▸ 작동 원리
+      .storybook/main.ts 의 stories glob 에 이미 mdx 패턴(src 하위 모든 .mdx)이
+      들어 있고 addon-docs 가 설치돼 있어, 이 파일은 추가 설정 없이 자동 수집된다.
+      (주의: JSX 주석 안에 glob 의 별표-슬래시 조합을 그대로 적으면 주석이
+       조기에 닫혀 빌드가 깨진다.)
+
+  ▸ docs.stories.tsx 와의 차이
+      - docs.stories.tsx : 모든 레이아웃을 inline style + vars 토큰으로 직접 그린다.
+        디자인 자유도가 높지만 마크다운/Canvas 블록 같은 Storybook 기본 문서 기능은 못 쓴다.
+      - mdx : 마크다운 산문 + <Canvas>/<Controls> 같은 doc 블록으로 "스토리를 재사용"한다.
+        stories.tsx 의 스토리를 import 해서 그대로 박아 넣으므로 문서와 예제가 항상 동기화된다.
+
+  ▸ Storybook 10 — doc 블록은 '@storybook/addon-docs/blocks' 에서 import 한다
+      (구버전의 '@storybook/blocks' 는 addon-docs 로 통합됨).
+*/}
+
+import { Meta, Title, Subtitle, Description, Primary, Controls, Canvas, Source } from '@storybook/addon-docs/blocks'
+import * as ButtonStories from './Button.stories'
+
+{/*
+  <Meta of={...}> 로 이 MDX 를 Button.stories.tsx 의 meta 에 "연결" 한다.
+  → title 을 따로 안 적어도 StyleGuide/Button 노드에 Docs 페이지로 붙는다.
+  → 별도 노드로 두고 싶다면 of 대신 title="StyleGuide/Button/Guide" 를 쓴다.
+*/}
+<Meta of={ButtonStories} />
+
+<Title />
+
+<Subtitle>5가지 variant · 3가지 size 를 지원하는 기본 버튼</Subtitle>
+
+5가지 variant와 3가지 size를 지원하는 버튼 컴포넌트입니다.
+로딩 스피너, 아이콘 슬롯, `fullWidth`를 내장합니다.
+
+<Source code={`import { Button } from '@port/design-system'`} language="tsx" />
+
+## Playground
+
+`Primary` 는 meta 의 첫 스토리(여기서는 `Playground`)를 렌더하고,
+`Controls` 는 그 스토리의 argTypes 를 표로 보여준다 — props 표를 손으로 만들 필요가 없다.
+
+<Primary />
+<Controls />
+
+## Variant
+
+`<Canvas of={...}>` 로 stories.tsx 에 이미 정의한 스토리를 그대로 재사용한다.
+스토리를 고치면 이 문서의 예제도 자동으로 바뀐다.
+
+<Canvas of={ButtonStories.Variants} />
+
+## Size
+
+<Canvas of={ButtonStories.Sizes} />
+
+## State
+
+<Canvas of={ButtonStories.States} />
+
+## Icon 사용
+
+`leftIcon` · `rightIcon` prop 으로 아이콘 슬롯을 채운다.
+
+<Canvas of={ButtonStories.WithIcons} />
+
+## Full Width
+
+<Canvas of={ButtonStories.FullWidth} />
