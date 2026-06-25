@@ -70,3 +70,15 @@ export * from './components/Toggle'
 export * from './components/Tooltip'
 export * from './components/TopBar'
 export * from './components/Tree'
+
+// default-export 컴포넌트의 named 재노출 — 위의 `export *` 는 default 를 전달하지 않으므로
+// 패키지 소비자가 `import { Table } from '@port/design-system'` 처럼 쓰도록 별칭을 추가한다.
+// (각 컴포넌트의 props 타입은 위 `export *` 가 이미 노출한다.)
+export { default as Table } from './components/Table'
+export { default as Badge } from './components/Badge'
+export { default as Pagination } from './components/Pagination'
+export { default as IconButton } from './components/IconButton'
+export { default as Input } from './components/Input'
+export { default as Checkbox } from './components/Checkbox'
+export { default as Filter } from './components/Filter'
+export { default as SideMenuBar } from './components/SideMenuBar'

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:embed": "vite build --config vite.embed.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
@@ -13,6 +14,7 @@
   "dependencies": {
     "@port/design-system": "workspace:*",
     "@port/icon-library": "workspace:*",
+    "@vanilla-extract/css": "^1.20.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

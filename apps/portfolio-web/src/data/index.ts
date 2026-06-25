@@ -86,6 +86,7 @@ export const projects: Project[] = [
     ],
     status: "shipped",
     category: "product",
+    link: "/dashboard/",
   },
   {
     id: "design-system",

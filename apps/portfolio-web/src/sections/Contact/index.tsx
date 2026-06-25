@@ -70,7 +70,7 @@ export function Contact() {
         </nav>
 
         <footer className={footer}>
-          <span className={footerLeft}>bbnayo23/nayoung_port</span>
+          <span className={footerLeft}>nayoung.dev</span>
           <span className={footerRight}>
             Built with React 19 · vanilla-extract · Turborepo
           </span>

@@ -69,7 +69,7 @@ export const rooms: RoomConfig[] = [
     description:
       '대규모 보안 이벤트를 실시간 시각화·분석하는 엔터프라이즈 대시보드. WebSocket 스트리밍, D3 커스텀 차트, 복합 필터링.',
     tags: ['React', 'D3.js', 'WebSocket', 'TypeScript'],
-    href: '/dashboard',
+    href: '/dashboard/',
     doorPosition: [1.2, 1.5, -6.0], // 중앙-우측·낮고 깊게
     palette: {
       wall: '#08152e',

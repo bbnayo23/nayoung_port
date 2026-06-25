@@ -67,6 +67,8 @@ export const card = style([glassPanel, {
   flexDirection: 'column',
   padding: '28px',
   borderRadius: '16px',
+  color: 'inherit',
+  textDecoration: 'none',
   selectors: {
     '&:hover': {
       borderColor: `${swiss.color.accent}66`,
@@ -74,6 +76,11 @@ export const card = style([glassPanel, {
     },
   },
 }])
+
+// 링크형 카드 — 카드 전체가 클릭 가능
+export const cardClickable = style({
+  cursor: 'pointer',
+})
 
 export const cardHeader = style({
   display: 'flex',
