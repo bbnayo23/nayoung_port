@@ -90,14 +90,14 @@ globalStyle(`${styledStep}.is-active:focus`, {
 })
 
 globalStyle(`${styledStep}.is-active .stepper-step-icon`, {
-  background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  background: vars.color.primarySoft,
   border: `1.5px solid ${vars.color.primary}`,
   color: vars.color.primary,
   animation: `${pulseActive} 2s infinite`,
 })
 
 globalStyle(`${styledStep}.is-active .stepper-step-icon:hover`, {
-  background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  background: vars.color.primarySoft,
   borderColor: vars.color.primary,
 })
 

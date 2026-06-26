@@ -1,4 +1,4 @@
-import { style, styleVariants, globalStyle, createVar, fallbackVar } from '@vanilla-extract/css'
+import { style, styleVariants, globalStyle } from '@vanilla-extract/css'
 import { vars } from '../../theme/contract.css'
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -50,20 +50,19 @@ export const pageLayoutHeaderRight = style({
 
 // ── 페이지 콘텐츠 래퍼 ──────────────────────────────────────────────────────
 
-export const pageContentPaddingVar = createVar()
-
 export const pageContent = style({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
   minWidth: 0,
   overflowY: 'auto',
-  padding: fallbackVar(pageContentPaddingVar, '0'),
+  padding: 0,
   background: vars.color.background,
 })
 
+// 패딩이 필요한 콘텐츠용 opt-in 모디파이어 — 순수 CSS override (런타임 var 불필요)
 export const pageContentPadded = style({
-  vars: { [pageContentPaddingVar]: '0 24px' },
+  padding: '0 24px',
 })
 
 export const pageContentGap = style({

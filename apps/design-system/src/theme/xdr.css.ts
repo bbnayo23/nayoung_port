@@ -12,6 +12,10 @@ createGlobalTheme(':root', vars, {
     primary: '#7187ff',
     primaryHover: '#5a6ee0',
     primaryActive: '#4a5dc0',
+    // var(--ds-color-primary) 기준 파생 — 테마와 무관하게 primary 를 따라간다.
+    primarySoft: 'color-mix(in srgb, var(--ds-color-primary) 10%, transparent)',
+    primarySoftStrong: 'color-mix(in srgb, var(--ds-color-primary) 15%, transparent)',
+    focusRing: 'color-mix(in srgb, var(--ds-color-primary) 20%, transparent)',
     secondary: '#f1f3ff',
     secondaryHover: '#e4e8ff',
     background: '#f0f3f6',

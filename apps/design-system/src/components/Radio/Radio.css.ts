@@ -65,7 +65,7 @@ globalStyle(`${radio}.radio-primary .radio-input[type='radio']`, { border: `1px 
 globalStyle(`${radio}.radio-primary .radio-input[type='radio']:checked`, { borderColor: vars.color.primary })
 globalStyle(`${radio}.radio-primary .radio-input[type='radio']:checked::after`, { background: vars.color.primary })
 globalStyle(`${radio}.radio-primary .radio-input[type='radio']:hover:not(:disabled):not(:checked)`, {
-  background: `color-mix(in srgb, ${vars.color.primary} 15%, transparent)`,
+  background: vars.color.primarySoftStrong,
 })
 globalStyle(`${radio}.radio-primary .radio-label`, { color: vars.color.primary })
 

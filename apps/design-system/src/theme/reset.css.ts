@@ -1,5 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css'
 import './xdr.css'
+import './xdr-dark.css'
 import { vars } from './contract.css'
 
 /**

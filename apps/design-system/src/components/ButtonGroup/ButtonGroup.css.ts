@@ -1,7 +1,7 @@
 import { style, globalStyle } from '@vanilla-extract/css'
 import { vars } from '../../theme/contract.css'
 
-const primarySubtle = `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`
+const primarySubtle = vars.color.primarySoft
 
 export const styledButtonGroupWrapper = style({
   display: 'flex',

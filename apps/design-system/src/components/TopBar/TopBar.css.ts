@@ -148,7 +148,7 @@ export const topBarUserAdminBadge = style({
   justifyContent: 'center',
   padding: '5px 8px',
   borderRadius: 30,
-  background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  background: vars.color.primarySoft,
   color: vars.color.primary,
   fontSize: vars.font.sizeXs,
   fontWeight: 500,
@@ -440,15 +440,15 @@ export const topBarUserDropdownItemDanger = style({
 })
 
 export const topBarBtnIsOpen = style({
-  background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  background: vars.color.primarySoft,
   color: vars.color.primary,
   selectors: {
     '&:hover, &.is-hover': {
-      background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+      background: vars.color.primarySoft,
       color: vars.color.primary,
     },
     '&:active, &.is-active': {
-      background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+      background: vars.color.primarySoft,
       color: vars.color.primary,
     },
   },

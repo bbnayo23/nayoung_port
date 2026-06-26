@@ -44,13 +44,13 @@ globalStyle(`${nodeContent}:focus-visible`, {
 })
 
 export const nodeSelected = style({
-  background: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  background: vars.color.primarySoft,
   color: vars.color.primary,
   fontWeight: 500,
 })
 
 globalStyle(`${nodeContent}${nodeSelected}:hover`, {
-  background: `color-mix(in srgb, ${vars.color.primary} 15%, transparent)`,
+  background: vars.color.primarySoftStrong,
 })
 
 export const nodeDisabled = style({

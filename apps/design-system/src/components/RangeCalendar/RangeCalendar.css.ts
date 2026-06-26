@@ -24,7 +24,7 @@ export const relativeTrigger = style({
   },
   ':focus': {
     borderColor: vars.color.primary,
-    boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
+    boxShadow: `0 0 0 2px ${vars.color.focusRing}`,
   },
   ':disabled': {
     opacity: 0.4,
@@ -48,7 +48,7 @@ export const absoluteTrigger = style({
   selectors: {
     '&:focus-within': {
       borderColor: vars.color.primary,
-      boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
+      boxShadow: `0 0 0 2px ${vars.color.focusRing}`,
     },
   },
 })
@@ -77,7 +77,7 @@ export const separator = style({
 
 export const triggerOpen = style({
   borderColor: vars.color.primary,
-  boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
+  boxShadow: `0 0 0 2px ${vars.color.focusRing}`,
 })
 
 export const calendarIcon = style({
@@ -144,11 +144,11 @@ export const presetButton = style({
 })
 
 export const presetButtonActive = style({
-  backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  backgroundColor: vars.color.primarySoft,
   color: vars.color.primary,
   fontWeight: vars.font.weightMedium,
   ':hover': {
-    backgroundColor: `color-mix(in srgb, ${vars.color.primary} 15%, transparent)`,
+    backgroundColor: vars.color.primarySoftStrong,
   },
 })
 
@@ -191,7 +191,7 @@ export const dateInput = style({
   },
   ':focus': {
     borderBottomColor: vars.color.primary,
-    boxShadow: `0 2px 0 0 color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
+    boxShadow: `0 2px 0 0 ${vars.color.focusRing}`,
   },
 })
 

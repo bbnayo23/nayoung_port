@@ -28,7 +28,7 @@ export const input = style({
   },
   ':focus': {
     borderColor: vars.color.primary,
-    boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 20%, transparent)`,
+    boxShadow: `0 0 0 2px ${vars.color.focusRing}`,
   },
   ':disabled': {
     opacity: 0.4,

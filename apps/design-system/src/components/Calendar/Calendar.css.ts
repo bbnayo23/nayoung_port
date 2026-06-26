@@ -11,7 +11,7 @@ const rdpCellSize = 32
 globalStyle(`${wrapper} .rdp-root`, {
   // @ts-expect-error CSS custom properties
   '--rdp-accent-color': vars.color.primary,
-  '--rdp-accent-background-color': `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  '--rdp-accent-background-color': vars.color.primarySoft,
   '--rdp-day-height': `${rdpCellSize}px`,
   '--rdp-day-width': `${rdpCellSize}px`,
   '--rdp-day_button-width': `${rdpCellSize}px`,
@@ -111,7 +111,7 @@ globalStyle(`${wrapper} .rdp-outside`, {
 })
 
 globalStyle(`${wrapper} .rdp-range_middle`, {
-  backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+  backgroundColor: vars.color.primarySoft,
 })
 
 globalStyle(`${wrapper} .rdp-disabled`, {

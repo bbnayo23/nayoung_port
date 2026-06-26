@@ -43,7 +43,7 @@ export const inputRecipe = recipe({
       },
       '&:focus, &.is-focus': {
         borderColor: `var(--color-input-focus-border, ${vars.color.primary})`,
-        boxShadow: '0 0 0 3px rgba(113, 135, 255, 0.24)' /* primary focus ring — xdr 고정값 */,
+        boxShadow: `0 0 0 3px color-mix(in srgb, ${vars.color.primary} 24%, transparent)`,
       },
       '&.full-width': { width: '100%' },
       '&.disabled, &:disabled': {

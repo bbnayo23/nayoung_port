@@ -13,6 +13,10 @@ export const vars = createGlobalThemeContract(
       primary: 'color-primary',
       primaryHover: 'color-primary-hover',
       primaryActive: 'color-primary-active',
+      // primary 파생 색 — 컴포넌트가 color-mix 문자열을 중복 작성하지 않도록 의미 토큰으로 묶음.
+      primarySoft: 'color-primary-soft', // 선택/활성 배경 틴트 (primary 10%)
+      primarySoftStrong: 'color-primary-soft-strong', // hover 배경 틴트 (primary 15%)
+      focusRing: 'color-focus-ring', // 포커스 링 색 (primary 20%)
       secondary: 'color-secondary',
       secondaryHover: 'color-secondary-hover',
       background: 'color-background',

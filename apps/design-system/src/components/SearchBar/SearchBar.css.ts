@@ -352,5 +352,5 @@ globalStyle(`[data-solution="xdr"] .${searchBarWrapper}`, {
 })
 
 globalStyle(`[data-solution="xdr"] .${searchBarWrapper}:focus-within`, {
-  boxShadow: '0 0 0 2px rgba(113, 135, 255, 0.30)',
+  boxShadow: `0 0 0 2px color-mix(in srgb, ${vars.color.primary} 30%, transparent)`,
 })

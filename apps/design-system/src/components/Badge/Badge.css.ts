@@ -94,7 +94,7 @@ export const badgeRecipe = recipe({
         whiteSpace: 'nowrap',
         flexShrink: 0,
         border: `1px solid ${vars.color.primary}`,
-        backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+        backgroundColor: vars.color.primarySoft,
         color: vars.color.primary,
       },
       icon: {
@@ -152,7 +152,7 @@ export const badgeRecipe = recipe({
         lineHeight: 1,
       },
       step: {
-        backgroundColor: `color-mix(in srgb, ${vars.color.primary} 10%, transparent)`,
+        backgroundColor: vars.color.primarySoft,
         color: vars.color.primary,
         minWidth: 'fit-content',
         height: 24,
