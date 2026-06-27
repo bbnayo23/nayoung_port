@@ -9,33 +9,59 @@ globalStyle('html, body, #root', {
 
 export const appShell = style({
   display: 'flex',
+  flexDirection: 'column',
   height: '100vh',
   overflow: 'hidden',
   background: vars.color.background,
   color: vars.color.text,
   fontFamily: vars.font.family,
+  // Firefox — 테마(vars) 기반 스크롤바. vars.color.* 가 :root.dark 에서 전환되므로 다크에도 자동 적용.
+  scrollbarWidth: 'thin',
+  scrollbarColor: `${vars.color.border} transparent`,
 })
 
-export const mainCol = style({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: 1,
-  minWidth: 0,
-  overflow: 'hidden',
+// WebKit 스크롤바 — appShell 하위 모든 스크롤 영역(테이블/필터 등)에 테마 색 적용 (라이트·다크 공통)
+globalStyle(`${appShell} ::-webkit-scrollbar`, {
+  width: 10,
+  height: 10,
 })
 
-// 우측 상단 헤더 스트립 — TopBar 액션 묶음을 오른쪽에 배치
-export const topStrip = style({
+globalStyle(`${appShell} ::-webkit-scrollbar-track`, {
+  background: 'transparent',
+})
+
+globalStyle(`${appShell} ::-webkit-scrollbar-thumb`, {
+  background: vars.color.border,
+  borderRadius: vars.radius.full,
+  border: '2px solid transparent',
+  backgroundClip: 'padding-box',
+})
+
+globalStyle(`${appShell} ::-webkit-scrollbar-thumb:hover`, {
+  background: vars.color.borderHover,
+})
+
+// 최상단 TopBar 영역 — 전체 폭. 왼쪽 로고(BI), 오른쪽 액션 묶음.
+// 페이지 배경과 구분되도록 surface 색 + 하단 보더 + 그림자로 분리한다.
+export const topHeader = style({
   position: 'relative',
   zIndex: 100,
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
-  height: 56,
+  justifyContent: 'space-between',
+  gap: vars.spacing.md,
+  height: 52,
   flexShrink: 0,
-  padding: '0 12px 0 24px',
+  padding: '0 16px',
   background: vars.color.surface,
   borderBottom: `1px solid ${vars.color.border}`,
+  boxShadow: vars.shadow.sm,
+})
+
+export const brandArea = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: vars.spacing.sm,
 })
 
 export const bodyRow = style({
@@ -44,6 +70,18 @@ export const bodyRow = style({
   display: 'flex',
   flex: 1,
   minHeight: 0,
+})
+
+// 사이드바의 로고/헤더 영역 제거 — 헤더 높이를 0 으로 만들어 메뉴 아이템이 최상단부터 보이게 한다.
+// collapse 토글 버튼은 절대 위치라 헤더 높이와 무관하게 사이드바 우측 상단 모서리에 그대로 노출된다.
+globalStyle(`${bodyRow} .side-menu-bar-header`, {
+  height: 0,
+  minHeight: 0,
+  padding: 0,
+})
+
+globalStyle(`${bodyRow} .side-menu-bar-header .header-collapse-btn`, {
+  top: 8,
 })
 
 export const content = style({
@@ -192,16 +230,6 @@ export const emptyState = style({
   fontSize: vars.font.sizeSm,
 })
 
-export const brandRow = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: vars.spacing.sm,
-  fontWeight: vars.font.weightBold,
-  fontSize: vars.font.sizeMd,
-  color: vars.color.text,
-  whiteSpace: 'nowrap',
-})
-
 export const brandMark = style({
   display: 'inline-flex',
   alignItems: 'center',
@@ -212,4 +240,11 @@ export const brandMark = style({
   background: vars.color.primary,
   color: vars.color.textInverse,
   flexShrink: 0,
+})
+
+export const brandName = style({
+  fontWeight: vars.font.weightBold,
+  fontSize: vars.font.sizeMd,
+  color: vars.color.text,
+  whiteSpace: 'nowrap',
 })

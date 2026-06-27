@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   SideMenuBar,
   TopBar,
@@ -20,7 +20,7 @@ import {
   StatCount,
   StatLabel,
 } from '@port/design-system'
-import type { MenuItem, FilterGroup } from '@port/design-system'
+import type { MenuItem, FilterGroup, ThemeMode } from '@port/design-system'
 import {
   XdrNavDashboardIcon,
   XdrNavLogsearchIcon,
@@ -63,6 +63,7 @@ const sideMenu: MenuItem[] = [
 
 export default function LogSearch() {
   const [activeMenu, setActiveMenu] = useState('logsearch')
+  const [navCollapsed, setNavCollapsed] = useState(false)
   const [input, setInput] = useState('')
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState<Record<string, string[]>>({})
@@ -71,6 +72,23 @@ export default function LogSearch() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+
+  // 다크모드 — TopBar 테마 토글에 따라 <html class="dark"> 를 켜고 끈다.
+  // design-system 의 다크 테마는 `:root.dark` 에 정의돼 있어 vars.color.* 가 전부 전환된다.
+  useEffect(() => {
+    const root = document.documentElement
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const apply = () => {
+      const isDark = themeMode === 'dark' || (themeMode === 'system' && mq.matches)
+      root.classList.toggle('dark', isDark)
+    }
+    apply()
+    if (themeMode === 'system') {
+      mq.addEventListener('change', apply)
+      return () => mq.removeEventListener('change', apply)
+    }
+  }, [themeMode])
 
   const facetGroups: FilterGroup[] = useMemo(
     () => [
@@ -177,39 +195,41 @@ export default function LogSearch() {
 
   return (
     <div className={s.appShell}>
-      <SideMenuBar
-        menuGroup={sideMenu}
-        activeKey={activeMenu}
-        onActiveChange={setActiveMenu}
-        showCollapseButton={false}
-        header={
-          <div className={s.brandRow}>
-            <span className={s.brandMark}>
-              <XdrShieldIcon size={16} />
-            </span>
-            SOC Console
-          </div>
-        }
-      />
-
-      <div className={s.mainCol}>
-        <div className={s.topStrip}>
-          <TopBar
-            style={{ height: 56 }}
-            userName="박나영"
-            userEmail="nayeong.park@igloo.co.kr"
-            userRole="Security Analyst"
-            notiCount={12}
-            products={[
-              { id: 'siem', label: 'SIEM' },
-              { id: 'soar', label: 'SOAR' },
-            ]}
-            defaultActiveProduct="siem"
-          />
+      {/* 최상단 TopBar — 왼쪽 로고(BI), 오른쪽 액션 묶음 */}
+      <header className={s.topHeader}>
+        <div className={s.brandArea}>
+          <span className={s.brandMark}>
+            <XdrShieldIcon size={16} />
+          </span>
+          <span className={s.brandName}>SOC Console</span>
         </div>
+        <TopBar
+          style={{ height: 44 }}
+          userName="박나영"
+          userEmail="nayeong.park@igloo.co.kr"
+          userRole="Security Analyst"
+          notiCount={12}
+          defaultTheme={themeMode}
+          onThemeChange={setThemeMode}
+          products={[
+            { id: 'siem', label: 'SIEM' },
+            { id: 'soar', label: 'SOAR' },
+          ]}
+          defaultActiveProduct="siem"
+        />
+      </header>
 
-        <div className={s.bodyRow}>
-          <main className={s.content}>
+      {/* TopBar 아래: 사이드메뉴(접힘 가능) + 콘텐츠 */}
+      <div className={s.bodyRow}>
+        <SideMenuBar
+          menuGroup={sideMenu}
+          activeKey={activeMenu}
+          onActiveChange={setActiveMenu}
+          collapsed={navCollapsed}
+          onCollapse={setNavCollapsed}
+          style={{ height: '100%', zIndex: 2 }}
+        />
+        <main className={s.content}>
             <div className={s.pageHead}>
               <div>
                 <h1 className={s.pageTitle}>로그검색</h1>
@@ -390,7 +410,6 @@ export default function LogSearch() {
             </SectionCard>
           </main>
         </div>
-      </div>
     </div>
   )
 }
