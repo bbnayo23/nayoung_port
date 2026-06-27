@@ -54,8 +54,12 @@ Desktop.ini
 *.sln
 *.sw?
 
-# VSCode — 팀 공통 설정은 커밋, 개인 설정만 제외
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/launch.json
+# VSCode — 깃헙 노출 제외
+.vscode/
+
+# 내부 개발/AI 문서 — 깃헙 노출 제외 (앱별 README 는 유지)
+CLAUDE.md
+apps/design-system/design.md
+apps/design-system/components-guide.md
+apps/design-system/src/components/**/*.md
+apps/portfolio-web/docs/3D-REDESIGN.md
