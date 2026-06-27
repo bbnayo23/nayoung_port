@@ -93,49 +93,149 @@ export const counterNum = style({
 
 export const topRight = style({ display: 'flex', gap: '8px' })
 
+// 텍스트 버전 버튼 + 보조 캡션을 세로로 묶어 우측 정렬
+export const textVersionWrap = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+  gap: '6px',
+})
+
+// 진입 시 주의를 끄는 펄스 링 (몇 번만 돌고 멈춤)
+const attnPulse = keyframes({
+  '0%': { boxShadow: '0 0 0 0 rgba(130,170,255,0.55), 0 6px 20px rgba(0,0,0,0.35)' },
+  '70%': { boxShadow: '0 0 0 13px rgba(130,170,255,0), 0 6px 20px rgba(0,0,0,0.35)' },
+  '100%': { boxShadow: '0 0 0 0 rgba(130,170,255,0), 0 6px 20px rgba(0,0,0,0.35)' },
+})
+
 export const textLink = style({
   pointerEvents: 'auto',
   cursor: 'pointer',
-  border: '1px solid rgba(160,175,230,0.25)',
-  background: 'rgba(20,28,52,0.5)',
-  backdropFilter: 'blur(6px)',
-  color: '#cdd3f0',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '7px',
+  border: '1px solid rgba(130,170,255,0.6)',
+  background: 'rgba(130,170,255,0.18)',
+  backdropFilter: 'blur(8px)',
+  WebkitBackdropFilter: 'blur(8px)',
+  color: '#eaf0ff',
   fontFamily: FONT,
-  fontSize: '12.5px',
-  fontWeight: 600,
-  padding: '7px 13px',
+  fontSize: '13px',
+  fontWeight: 700,
+  padding: '9px 15px',
   borderRadius: '99px',
-  transition: 'background 0.2s ease',
-  ':hover': { background: 'rgba(40,52,90,0.75)' },
+  boxShadow: '0 6px 20px rgba(0,0,0,0.35)',
+  // 0.6s 뒤 4회 펄스 후 정지
+  animation: `${attnPulse} 1.8s ease-out 0.6s 4`,
+  transition: 'background 0.2s ease, transform 0.2s ease',
+  ':hover': { background: 'rgba(130,170,255,0.32)', transform: 'translateY(-1px)' },
   ':focus-visible': { outline: '3px solid #82aaff', outlineOffset: '2px' },
+  '@media': {
+    'screen and (prefers-reduced-motion: reduce)': { animation: 'none' },
+  },
 })
 
-/* ---- bottom hint ---- */
-const float = keyframes({
-  '0%,100%': { transform: 'translate(-50%, 0)' },
-  '50%': { transform: 'translate(-50%, -5px)' },
+export const textLinkIcon = style({
+  width: '15px',
+  height: '15px',
+  flexShrink: 0,
 })
 
+// 버튼 아래 보조 캡션 (초기 상태에서만 노출)
+export const textHint = style({
+  fontSize: '11px',
+  fontWeight: 500,
+  color: '#aab2da',
+  fontFamily: FONT,
+  letterSpacing: '0.01em',
+  textShadow: '0 1px 3px rgba(0,0,0,0.5)',
+  pointerEvents: 'none',
+})
+
+/* ---- bottom legend (조작 안내) ---- */
+const legendIn = keyframes({
+  from: { opacity: 0, transform: 'translate(-50%, 10px)' },
+  to: { opacity: 1, transform: 'translate(-50%, 0)' },
+})
+
+// 항목을 키캡+라벨로 분리해 한눈에 스캔되는 범례. 좁은 화면에선 줄바꿈.
 export const hint = style({
   position: 'absolute',
-  bottom: '34px',
+  bottom: '28px',
   left: '50%',
   transform: 'translateX(-50%)',
-  padding: '11px 20px',
-  borderRadius: '99px',
-  background: 'rgba(12,18,36,0.66)',
-  backdropFilter: 'blur(10px)',
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '9px 14px',
+  maxWidth: 'min(92vw, 780px)',
+  padding: '12px 18px',
+  borderRadius: '16px',
+  background: 'rgba(12,18,36,0.74)',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
   border: '1px solid rgba(130,170,255,0.22)',
-  boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-  fontSize: '13px',
-  color: '#aab2d8',
-  whiteSpace: 'nowrap',
-  animation: `${float} 3.4s ease-in-out infinite`,
+  boxShadow: '0 10px 30px rgba(0,0,0,0.45)',
+  pointerEvents: 'none',
+  animation: `${legendIn} 0.4s ease both`,
+  '@media': {
+    'screen and (prefers-reduced-motion: reduce)': { animation: 'none' },
+  },
 })
 
-export const hintKey = style({
+export const legendItem = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '7px',
+  whiteSpace: 'nowrap',
+})
+
+// 키보드 키캡
+export const kbd = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: '22px',
+  height: '22px',
+  padding: '0 7px',
+  borderRadius: '6px',
+  border: '1px solid rgba(160,175,230,0.4)',
+  borderBottomWidth: '2px',
+  background: 'rgba(40,52,90,0.65)',
+  fontFamily: MONO,
+  fontSize: '11px',
   fontWeight: 700,
-  color: '#82aaff',
+  lineHeight: 1,
+  color: '#e3e8ff',
+})
+
+export const kbdSep = style({
+  color: '#6b74a0',
+  fontSize: '11px',
+})
+
+export const legendLabel = style({
+  fontSize: '12.5px',
+  fontWeight: 500,
+  color: '#b3bbe0',
+})
+
+export const wheelIcon = style({
+  width: '16px',
+  height: '16px',
+  color: '#9fb4ff',
+  flexShrink: 0,
+})
+
+// 줄바꿈 시 항목 그룹을 구분하는 얇은 세로선 (넓은 화면에서만)
+export const legendDivider = style({
+  width: '1px',
+  height: '16px',
+  background: 'rgba(160,175,230,0.22)',
+  '@media': {
+    'screen and (max-width: 640px)': { display: 'none' },
+  },
 })
 
 /* ---- 락온 칩 (focus, 진입 전) — 하단 중앙, 최소 정보 ---- */

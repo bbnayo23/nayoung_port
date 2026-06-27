@@ -72,23 +72,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "siem-dashboard",
-    name: "Security Dashboard UI/UX",
-    tagline: "SIEM Security Monitoring Solution",
-    description:
-      "복잡한 보안 데이터를 사용자가 빠르게 인지할 수 있도록 정보구조를 개선한 보안 관제 대시보드. 사용자 관점에서 화면 흐름과 인터페이스를 재설계하고, 대시보드 사용성과 시각적 일관성을 확보.",
-    tags: [
-      "React",
-      "TypeScript",
-      "styled-components",
-      "vanilla-extract",
-      "UI/UX",
-    ],
-    status: "shipped",
-    category: "product",
-    link: "/dashboard/",
-  },
-  {
     id: "design-system",
     name: "Design System",
     tagline: "공통 컴포넌트 표준화 & 운영",
@@ -98,6 +81,28 @@ export const projects: Project[] = [
     status: "in-progress",
     category: "system",
     link: "/design-system/",
+  },
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    tagline: "SIEM 보안 관제 대시보드",
+    description:
+      "디자인 시스템을 소비해 구성한 SIEM 로그검색 대시보드. 복잡한 보안 데이터를 빠르게 인지하도록 정보구조를 개선하고, 화면 흐름·사용성·시각적 일관성을 확보.",
+    tags: ["React", "TypeScript", "vanilla-extract", "UI/UX"],
+    status: "shipped",
+    category: "product",
+    link: "/dashboard/",
+  },
+  {
+    id: "icon-library",
+    name: "Icon Library",
+    tagline: "SVG 아이콘 세트 · 쇼케이스",
+    description:
+      "일관된 그리드와 스트로크 규칙으로 설계한 SVG 아이콘 라이브러리. currentColor 기반으로 색을 제어하고, 검색·복사·프리뷰를 제공하는 쇼케이스로 배포.",
+    tags: ["SVG", "React", "styled-components"],
+    status: "shipped",
+    category: "system",
+    link: "/icons/",
   },
   {
     id: "frontend-architecture",
