@@ -90,6 +90,8 @@ export const clearButton = style({
   alignItems: 'center',
   justifyContent: 'center',
   padding: 4,
+  // 입력값 텍스트(좌)·suffix 구분선(우)과 너무 붙지 않도록 좌우 여백을 둔다.
+  margin: '0 6px',
   border: 'none',
   background: 'transparent',
   cursor: 'pointer',

@@ -32,7 +32,8 @@ export function buildDropdownStyles(
       gap: sizeVar(size, 'gap'),
       fontSize: fs,
       fontFamily: 'inherit',
-      background: state.menuIsOpen ? vars.color.surface : 'transparent',
+      // 라벨이 있는 경우 선택영역을 surface(흰색)로 채워, 회색 라벨 애드온과 색을 구분한다.
+      background: state.menuIsOpen || hasLabel ? vars.color.surface : 'transparent',
       borderWidth: 1,
       borderStyle: 'solid',
       borderColor: state.menuIsOpen || state.isFocused ? vars.color.primary : vars.color.border,
