@@ -14,7 +14,7 @@ export function useCanRender3D(): boolean | null {
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    let webgl = false
+    let webgl: boolean
     try {
       const canvas = document.createElement('canvas')
       webgl = !!(
@@ -28,6 +28,8 @@ export function useCanRender3D(): boolean | null {
     const cores = navigator.hardwareConcurrency ?? 4
     const lowEnd = cores <= 2
 
+    // 브라우저 환경 감지 결과를 상태로 동기화 (외부 시스템 → React, 1회성)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCan(webgl && !reduced && !lowEnd)
   }, [])
 

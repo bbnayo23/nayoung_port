@@ -48,6 +48,8 @@ function Scramble({
   }, [text])
 
   useLayoutEffect(() => {
+    // 마운트 시 디코딩 애니메이션 시작 (reduced-motion 분기에서만 동기 setState)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!playOnHover) run()
     return () => cancelAnimationFrame(raf.current)
   }, [run, playOnHover])

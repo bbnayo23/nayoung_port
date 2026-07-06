@@ -36,8 +36,11 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
     if (!id) return
     const r = rooms.find((x) => x.id === id || x.app === id)
     if (r) {
+      // 딥링크(URL)로 지정된 방을 초기 1회 열어줌 (외부 → 상태 동기화)
+      /* eslint-disable react-hooks/set-state-in-effect */
       setActive(r)
       setEntered(r)
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
   }, [])
 

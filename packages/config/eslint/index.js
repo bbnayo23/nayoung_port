@@ -10,7 +10,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
  * 빌드 산출물은 무시하고, .ts/.tsx 에 recommended 규칙을 적용한다.
  */
 export default defineConfig([
-  globalIgnores(['dist', 'storybook-static', 'node_modules']),
+  // dist/스토리북 산출물과 public 정적 자산(벤더 번들 등)은 린트 대상이 아니다.
+  globalIgnores(['dist', 'storybook-static', 'node_modules', 'public']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
