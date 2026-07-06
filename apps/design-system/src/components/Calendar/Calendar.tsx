@@ -17,6 +17,8 @@ export const Calendar = ({ selected, onSelect, disabledBefore, disabledAfter, cl
 
   useEffect(() => {
     if (!selected) return
+    // 외부 selected 변경 시 표시 중인 월을 동기화 (동일 월이면 그대로 유지)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMonth((prev) => (sameMonth(prev, selected) ? prev : toMonth(selected)))
   }, [selected])
 

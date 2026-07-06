@@ -16,6 +16,9 @@ interface SubMenuProps {
 }
 
 const SubMenu = ({ items, parentRef, onClose }: SubMenuProps) => {
+  // 부모 li 의 화면상 위치로 서브메뉴 펼침 방향을 결정. SubMenu 는 부모가 이미 렌더된
+  // 뒤에만 마운트되므로 render 시점에 parentRef.current 를 읽어도 안전하다.
+  // eslint-disable-next-line react-hooks/refs
   const flip = shouldFlipSubMenu(parentRef.current);
 
   return (
@@ -148,6 +151,8 @@ export const ContextMenu = ({ open, x, y, items, onClose }: ContextMenuProps) =>
   useOutsideClose(menuRef, open, onClose);
 
   useEffect(() => {
+    // 메뉴가 닫히면 열려 있던 서브메뉴 인덱스 초기화
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!open) setOpenSubIdx(-1);
   }, [open]);
 

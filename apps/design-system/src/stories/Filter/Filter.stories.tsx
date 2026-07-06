@@ -93,7 +93,8 @@ const useFilterState = () => {
   const toggleGroup = (id: string, open: boolean) =>
     setOpenGroups((prev) => {
       const s = new Set(prev)
-      open ? s.add(id) : s.delete(id)
+      if (open) s.add(id)
+      else s.delete(id)
       return s
     })
 

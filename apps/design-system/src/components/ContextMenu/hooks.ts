@@ -24,6 +24,8 @@ export const useClampedPosition = (
 
   useLayoutEffect(() => {
     if (!open) {
+      // 닫힐 때 측정 전(measured:false) 상태로 되돌려 다음 오픈 시 깜빡임 방지
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPos({ left: x, top: y, measured: false })
       return
     }
@@ -71,6 +73,8 @@ export const useMenuKeyboard = (
   const [active, setActive] = useState<number>(-1)
 
   useEffect(() => {
+    // 메뉴가 열리거나 항목이 바뀌면 첫 선택 가능 항목으로 활성 인덱스 초기화
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActive(selectable.length > 0 ? (selectable[0] ?? -1) : -1)
   }, [open, selectable])
 

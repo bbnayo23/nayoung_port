@@ -233,8 +233,9 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
     const [startText, setStartText] = useState(formatDateTime(range.start))
     const [endText, setEndText] = useState(formatDateTime(range.end))
 
-    // range 변경 시 텍스트 동기화
+    // range 변경 시 직접입력 텍스트 동기화 (외부 상태 → 로컬 입력 미러링)
     useEffect(() => {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStartText(formatDateTime(range.start))
       setEndText(formatDateTime(range.end))
     }, [range])

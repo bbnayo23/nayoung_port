@@ -55,9 +55,11 @@ export const Popover: FC<PopoverProps> = ({
     ...popperOptions,
   })
 
-  // 최신 콜백을 ref로 유지해 effect deps를 안정화
+  // 최신 콜백을 ref로 유지해 effect deps를 안정화 (ref 쓰기는 render 중이 아닌 effect 에서)
   const onVisibleChangeRef = useRef(onVisibleChange)
-  onVisibleChangeRef.current = onVisibleChange
+  useEffect(() => {
+    onVisibleChangeRef.current = onVisibleChange
+  })
 
   useEffect(() => {
     if (!visible || !closeOnOutsideClick) return

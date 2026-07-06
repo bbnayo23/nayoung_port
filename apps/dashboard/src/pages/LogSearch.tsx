@@ -331,28 +331,29 @@ export default function LogSearch() {
   // 검색 키워드 하이라이트 단어 (S006)
   const highlightWords = useMemo(() => extractHighlightTerms(query), [query])
 
-  // 진행 중 스트리밍 — 결과/총건수/경과시간/히스토그램/페이지가 함께 증가 (S003)
+  // 진행 중 스트리밍 — 결과/총건수/경과시간/히스토그램/페이지가 함께 증가하고,
+  // 모든 결과가 출력되면 검색 완료 (S003, S004)
   useEffect(() => {
     if (phase !== 'running') return
     const target = filtered.length
+    // 결과가 없으면 다음 틱에 완료 처리 (effect 본문에서 동기 setState 회피)
     if (target === 0) {
-      setPhase('done')
-      return
+      const id = setTimeout(() => setPhase('done'), 0)
+      return () => clearTimeout(id)
     }
     intervalRef.current = setInterval(() => {
-      setLoaded((prev) => Math.min(prev + Math.max(1, Math.ceil(target / 14)), target))
       setElapsed((e) => Math.round((e + 0.1) * 10) / 10)
+      setLoaded((prev) => {
+        const next = Math.min(prev + Math.max(1, Math.ceil(target / 14)), target)
+        if (next >= target) {
+          clearTimer()
+          setPhase('done')
+        }
+        return next
+      })
     }, 90)
     return () => clearTimer()
   }, [phase, filtered])
-
-  // 모든 결과가 출력되면 검색 완료 (S004)
-  useEffect(() => {
-    if (phase === 'running' && filtered.length > 0 && loaded >= filtered.length) {
-      clearTimer()
-      setPhase('done')
-    }
-  }, [phase, loaded, filtered.length])
 
   // ── 적용된 검색 조건 칩 ──────────────────────────────────────────────────────
   const activeChips = [

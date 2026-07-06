@@ -38,15 +38,19 @@ export const RangeCalendar = ({
   const skipBlurCommitRef = useRef(false)
   const preCustomSnapshotRef = useRef<string | null | undefined>(undefined)
 
+  // 외부 start/end/mode 변경 시 로컬 입력·편집 상태를 동기화 (외부 상태 → 로컬 미러링)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStartInput(start ? formatDate(start) : '')
   }, [start, formatDate])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEndInput(end ? formatDate(end) : '')
   }, [end, formatDate])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (mode !== 'relative') setIsEditing(false)
   }, [mode])
 

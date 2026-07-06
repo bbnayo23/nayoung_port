@@ -63,7 +63,7 @@ const TabsList = ({ children, className, style, ...props }: TabsListProps) => {
     const idx = buttons.indexOf(document.activeElement as HTMLButtonElement)
     const isHoriz = direction !== 'vertical'
 
-    let next = -1
+    let next: number
     if (e.key === (isHoriz ? 'ArrowRight' : 'ArrowDown')) next = (idx + 1) % buttons.length
     else if (e.key === (isHoriz ? 'ArrowLeft' : 'ArrowUp')) next = (idx - 1 + buttons.length) % buttons.length
     else if (e.key === 'Home') next = 0

@@ -40,4 +40,4 @@ export interface FilterSearchProps extends PropsWithChildren<CommonProps> {
   className?: string
 }
 
-export interface FilterContentProps extends PropsWithChildren<{ className?: string }> {}
+export type FilterContentProps = PropsWithChildren<{ className?: string }>

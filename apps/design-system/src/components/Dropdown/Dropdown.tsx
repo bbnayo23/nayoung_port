@@ -267,10 +267,13 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) =
 
   const renderPanelMenuComponent = useMemo(() => {
     if (!renderPanel) return undefined
-    const RenderPanelMenu = (menuProps: MenuProps<RSOption, boolean, GroupBase<RSOption>>) => (
-      <rsComponents.Menu {...menuProps}>{renderPanel(() => setPanelOpen(false))}</rsComponents.Menu>
-    )
-    RenderPanelMenu.displayName = 'RenderPanelMenu'
+    // named function 표현식이면 함수 이름이 곧 displayName 이라 mutation 이 필요 없고,
+    // 정의 시점의 renderPanel narrowing(위 guard) 도 유지된다.
+    const RenderPanelMenu = function RenderPanelMenu(
+      menuProps: MenuProps<RSOption, boolean, GroupBase<RSOption>>,
+    ) {
+      return <rsComponents.Menu {...menuProps}>{renderPanel(() => setPanelOpen(false))}</rsComponents.Menu>
+    }
     return RenderPanelMenu
   }, [renderPanel])
 
@@ -285,6 +288,30 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) =
     menuPortalTarget: portalTarget,
     menuPlacement: (placement ?? 'auto') as 'bottom' | 'top' | 'auto',
   }
+
+  // 멀티 셀렉트용 파생값과 훅은 아래의 조건부 early-return 보다 위에서 항상 호출되어야
+  // 한다 (rules-of-hooks). single 분기에서는 사용되지 않을 뿐 계산 비용은 무시할 만하다.
+  const multiProps = props as DropdownMultiProps
+  const displayMode = multiProps.multiDisplayMode ?? 'count'
+  const resolvedValues = multiProps.values ?? multiProps.value
+  const selectedOptions = rsOptions.filter((o) => resolvedValues?.includes(o.value))
+  const isTagDisplay = displayMode === 'tags' || displayMode === 'tags-closable'
+  const placeholderMode = isTagDisplay ? ('count' as const) : (displayMode as 'count' | 'values')
+  const PlaceholderComp = useMemo(() => createMultiPlaceholder(placeholderMode), [placeholderMode])
+
+  const showSelectAll = multiProps.hideSelectAll === false
+  const allSelected = showSelectAll && selectedOptions.length === selectableRsOptions.length
+  const someSelected = showSelectAll && selectedOptions.length > 0 && !allSelected
+  const handleToggleAll = useCallback(() => {
+    if (allSelected) {
+      multiProps.onChange?.([], [])
+    } else {
+      multiProps.onChange?.(
+        selectableRsOptions.map((o) => o.value),
+        selectableRsOptions.map((o) => ({ value: o.value, label: o.label, disabled: o.isDisabled })),
+      )
+    }
+  }, [allSelected, selectableRsOptions, multiProps])
 
   if (!isMulti) {
     const singleProps = props as DropdownSingleProps
@@ -311,28 +338,6 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) =
       </DropdownShell>
     )
   }
-
-  const multiProps = props as DropdownMultiProps
-  const displayMode = multiProps.multiDisplayMode ?? 'count'
-  const resolvedValues = multiProps.values ?? multiProps.value
-  const selectedOptions = rsOptions.filter((o) => resolvedValues?.includes(o.value))
-  const isTagDisplay = displayMode === 'tags' || displayMode === 'tags-closable'
-  const placeholderMode = isTagDisplay ? ('count' as const) : (displayMode as 'count' | 'values')
-  const PlaceholderComp = useMemo(() => createMultiPlaceholder(placeholderMode), [placeholderMode])
-
-  const showSelectAll = multiProps.hideSelectAll === false
-  const allSelected = showSelectAll && selectedOptions.length === selectableRsOptions.length
-  const someSelected = showSelectAll && selectedOptions.length > 0 && !allSelected
-  const handleToggleAll = useCallback(() => {
-    if (allSelected) {
-      multiProps.onChange?.([], [])
-    } else {
-      multiProps.onChange?.(
-        selectableRsOptions.map((o) => o.value),
-        selectableRsOptions.map((o) => ({ value: o.value, label: o.label, disabled: o.isDisabled })),
-      )
-    }
-  }, [allSelected, selectableRsOptions, multiProps])
 
   const multiComponents: Partial<SelectComponentsConfig<RSOption, true, GroupBase<RSOption>>> = {
     IndicatorSeparator: () => null,

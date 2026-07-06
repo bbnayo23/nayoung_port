@@ -15,4 +15,15 @@ export default [
       'react-refresh/only-export-components': 'off',
     },
   },
+  /**
+   * 스토리 파일은 Storybook CSF 의 `render: () => { const [x] = useState() ... }`
+   * 패턴을 쓴다. render 는 대문자 컴포넌트가 아니라서 react-hooks 규칙이 훅 호출을
+   * 위반으로 잡지만, Storybook 에서는 정상 관용구이므로 데모 코드 한정으로 끈다.
+   */
+  {
+    files: ['**/*.stories.{ts,tsx}'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+    },
+  },
 ]
