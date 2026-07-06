@@ -1,5 +1,7 @@
 import { Suspense, lazy, useState } from 'react'
 import { useCanRender3D } from '../hooks/useCanRender3D'
+import { ErrorBoundary } from '../components/ErrorBoundary'
+import { Splash } from '../components/Splash'
 import FallbackPage from './FallbackPage'
 
 // 3D 번들은 무겁다 — 폴백 환경에선 아예 로드하지 않도록 동적 임포트
@@ -21,10 +23,16 @@ export default function MainPage() {
   const show3D = mode === 'three' || (mode === 'auto' && can3D === true)
 
   if (show3D) {
+    // 3D 씬이 렌더 중 throw 하면 텍스트 버전으로 강등한다 (백스크린 방지).
     return (
-      <Suspense fallback={null}>
-        <Experience onShowText={() => setMode('text')} />
-      </Suspense>
+      <ErrorBoundary
+        onError={() => setMode('text')}
+        fallback={<FallbackPage onShow3D={() => setMode('three')} />}
+      >
+        <Suspense fallback={<Splash />}>
+          <Experience onShowText={() => setMode('text')} />
+        </Suspense>
+      </ErrorBoundary>
     )
   }
 
