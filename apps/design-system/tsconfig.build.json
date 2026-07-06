@@ -8,5 +8,5 @@
     "allowImportingTsExtensions": false
   },
   "include": ["src"],
-  "exclude": ["**/*.stories.tsx"]
+  "exclude": ["**/*.stories.tsx", "**/*.test.tsx", "src/test/**"]
 }
