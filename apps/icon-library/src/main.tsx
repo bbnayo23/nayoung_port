@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './showcase/App.tsx';
 import './showcase/reset.css';
+import './showcase/print.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

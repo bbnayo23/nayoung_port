@@ -1,0 +1,16 @@
+/* 인쇄(브라우저 Print → "PDF로 저장") 대응.
+   대시보드는 테마 배경색을 쓰는데, 브라우저는 기본적으로 배경색을 인쇄하지 않아
+   흰 화면처럼 보인다. print-color-adjust: exact 로 렌더된 화면을 그대로 출력하고,
+   가로(landscape) 한 페이지로 뽑는다. */
+
+:root {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+}

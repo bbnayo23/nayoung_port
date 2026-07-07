@@ -5,6 +5,7 @@ import { GameProvider } from './store'
 import { World } from './scene/World'
 import { Hud } from './ui/Hud'
 import { Loader } from './ui/Loader'
+import { PrintCapture } from './ui/PrintCapture'
 import { useQuality } from '../hooks/useQuality'
 import { rooms, type RoomConfig } from './scene/rooms'
 import { stage, canvas } from './Experience.css'
@@ -50,7 +51,12 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
         className={canvas}
         shadows={quality === 'high' ? { type: PCFShadowMap } : false}
         dpr={quality === 'high' ? [1, 1.75] : [1, 1.25]}
-        gl={{ antialias: quality === 'high', powerPreference: 'high-performance' }}
+        // preserveDrawingBuffer: 인쇄 시 캔버스를 PNG 로 스냅샷하려면 필요 (PrintCapture)
+        gl={{
+          antialias: quality === 'high',
+          powerPreference: 'high-performance',
+          preserveDrawingBuffer: true,
+        }}
         camera={{ position: [0, 6, 11], fov: 42, near: 0.1, far: 100 }}
       >
         <Suspense fallback={null}>
@@ -69,6 +75,7 @@ export function Experience({ onShowText }: { onShowText?: () => void }) {
       </Canvas>
 
       <Loader />
+      <PrintCapture />
       <Hud
         active={active}
         entered={entered}

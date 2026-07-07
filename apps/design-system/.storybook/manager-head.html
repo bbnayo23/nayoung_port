@@ -1,0 +1,23 @@
+<style>
+  /* 인쇄(브라우저 Print → "PDF로 저장") 대응.
+     Storybook 매니저 UI(사이드바·툴바)를 가리고, 현재 스토리 프리뷰만
+     가로 한 페이지로 인쇄한다.
+     #storybook-preview-iframe 은 Storybook 버전 전반에 걸쳐 안정적인 id 라
+     내부 emotion 클래스에 의존하지 않는다. */
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    #storybook-preview-iframe {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      border: 0 !important;
+      background: #fff !important;
+      z-index: 2147483647 !important;
+    }
+  }
+</style>

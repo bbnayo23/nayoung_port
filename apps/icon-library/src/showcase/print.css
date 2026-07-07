@@ -1,0 +1,14 @@
+/* 인쇄(브라우저 Print → "PDF로 저장") 대응.
+   렌더된 화면 색을 그대로 유지하고(가로) 한 방향으로 뽑는다. */
+
+:root {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+}

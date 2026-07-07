@@ -1,0 +1,39 @@
+/* 인쇄(→ PDF 저장) 스타일.
+   3D 라이브 캔버스는 인쇄 시 비어(흰 화면) 나오므로, PrintCapture 가
+   beforeprint 에 캡처한 스냅샷 이미지(.print-snapshot)로 대체한다.
+   HUD 의 텍스트 오버레이(방 설명 등)는 스냅샷 위에 그대로 인쇄한다. */
+
+/* 화면에서는 스냅샷 이미지를 숨긴다 */
+.print-snapshot {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  /* 3D 모드(has-3d-print)에서만 적용. 텍스트 폴백 인쇄에는 영향 없음.
+     테마 색·글래스 패널 배경이 PDF 에 그대로 나오도록 색 보정을 강제한다. */
+  body.has-3d-print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 라이브 WebGL 캔버스는 인쇄 시 비어 나오므로 감춘다 (스냅샷으로 대체) */
+  body.has-3d-print canvas {
+    display: none !important;
+  }
+
+  /* 캡처된 3D 스냅샷을 페이지 배경처럼 깔고, HUD 텍스트는 그 위에 남긴다 */
+  body.has-3d-print .print-snapshot {
+    display: block;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 0;
+  }
+}
