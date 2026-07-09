@@ -69,6 +69,7 @@ export * from './components/Toggle'
 export * from './components/Tooltip'
 export * from './components/Gnb'
 export * from './components/Tree'
+export * from './components/AppLayout'
 
 // default-export 컴포넌트의 named 재노출 — 위의 `export *` 는 default 를 전달하지 않으므로
 // 패키지 소비자가 `import { Table } from '@port/design-system'` 처럼 쓰도록 별칭을 추가한다.
@@ -81,4 +82,5 @@ export { default as Input } from './components/Input'
 export { default as Checkbox } from './components/Checkbox'
 export { default as Filter } from './components/Filter'
 export { default as Lnb } from './components/Lnb'
+export { default as AppLayout } from './components/AppLayout'
 export { default as Breadcrumbs } from './components/Breadcrumbs'

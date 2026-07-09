@@ -5,135 +5,67 @@ import * as Stories from './Gnb.stories'
 
 <Title />
 
-<Subtitle>XDR 레이아웃 상단 우측에 고정되는 액션 바</Subtitle>
+<Subtitle>AiR Works 레이아웃 셸 상단 글로벌 내비게이션 바</Subtitle>
 
-XDR 레이아웃 상단 우측에 고정되는 액션 바입니다. 알림, 다운로드, 사용자 메뉴(테마/언어/로그아웃), 앱 전환 팝오버 4개의 버튼으로 구성됩니다. 팝오버는 영역 외부 클릭 시 자동으로 닫힙니다.
+전체 폭 상단 바입니다. 좌측 브랜드(로고 + 타이틀 + 드롭다운)와 우측 액션(AI Assistant · 다운로드 · 알림 · 테마 · 언어 · 사용자 · 홈)으로 구성됩니다. Figma `AW · Layout Shell (LNB+GNB · Empty)` 프레임을 재현한 프리젠테이션 컴포넌트로, 각 액션은 `onClick` 콜백만 노출합니다.
 
 <Source
   code={`import Gnb from '@port/design-system'
-import type {
-  GnbProps,
-  GnbNotiItem,
-  GnbDownloadItem,
-  GnbProduct,
-  GnbLangItem,
-  ThemeMode,
-  LangCode,
-} from '@port/design-system'`}
+import type { GnbProps } from '@port/design-system'`}
   language="tsx"
 />
 
 ## API — GnbProps
 
-### 사용자 정보
+### 좌측 브랜드
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `userName` | `string` | `'관리자'` | 사용자 이름 — 사용자 팝오버 프로필에 표시 |
-| `userEmail` | `string` | `'admin@example.com'` | 사용자 이메일 |
-| `userRole` | `string` | `'Admin'` | 사용자 역할 배지 텍스트 |
+| `logo` | `ReactNode` | AiR Works 로고 | 좌측 로고 마크 |
+| `title` | `string` | `'AiR Works'` | 브랜드 타이틀 |
+| `showBrandDropdown` | `boolean` | `true` | 드롭다운 셰브론 표시 |
+| `onBrandClick` | `() => void` | — | 브랜드 영역 클릭 콜백 |
 
-### 알림
-
-| Prop | Type | Default | 설명 |
-| --- | --- | --- | --- |
-| `notiCount` | `number` | `0` | 알림 아이콘 배지 숫자. 0이면 미표시, 99 초과 시 "99+" |
-| `notiItems` | `GnbNotiItem[]` | — | 알림 팝오버 목록. 미전달 시 내장 기본값 사용 |
-| `onNotificationClick` | `() => void` | — | 알림 아이콘 버튼 클릭 콜백 |
-| `onNotiItemClick` | `(id: string) => void` | — | 알림 항목 클릭 콜백 — 읽음 처리에 사용 |
-| `onNotiReadAll` | `() => void` | — | '모두 읽음' 버튼 클릭 콜백 |
-
-### 다운로드
+### AI Assistant
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `downloadItems` | `GnbDownloadItem[]` | — | 다운로드 팝오버 목록. 미전달 시 내장 기본값 사용 |
-| `onDownloadClick` | `() => void` | — | 다운로드 아이콘 버튼 클릭 콜백 |
-| `onDownloadItemClick` | `(id: string) => void` | — | 다운로드 항목 클릭 콜백 |
+| `showAiAssistant` | `boolean` | `true` | AI Assistant 버튼 표시 |
+| `aiAssistantLabel` | `string` | `'AI Assistant'` | 버튼 라벨 |
+| `onAiAssistantClick` | `() => void` | — | 클릭 콜백 |
 
-### 테마 / 언어
-
-| Prop | Type | Default | 설명 |
-| --- | --- | --- | --- |
-| `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'light'` | 초기 테마 모드 |
-| `defaultLang` | `'ko' \| 'en' \| 'ja'` | `'ko'` | 초기 언어 코드 |
-| `langs` | `GnbLangItem[]` | — | 언어 선택 목록. 미전달 시 ko/en/ja 기본값 사용 |
-| `onThemeChange` | `(mode: ThemeMode) => void` | — | 테마 변경 콜백 |
-| `onLangChange` | `(lang: LangCode) => void` | — | 언어 변경 콜백 |
-
-### 앱 전환 / 기타
+### 우측 액션
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `products` | `GnbProduct[]` | — | 앱 전환 팝오버 목록. 미전달 시 XDR/RN/UD 기본값 사용 |
-| `defaultActiveProduct` | `string` | `'xdr'` | 초기 활성 프로덕트 id |
-| `onProductChange` | `(id: string) => void` | — | 프로덕트 변경 콜백 |
-| `onProfileClick` | `() => void` | — | 프로필 영역 클릭 콜백 |
-| `onProgramInfoClick` | `() => void` | — | 프로그램 정보 메뉴 클릭 콜백 |
-| `onLogoutClick` | `() => void` | — | 로그아웃 메뉴 클릭 콜백 |
-| `className` | `string` | — | 루트 요소에 추가할 CSS 클래스 |
+| `showDownload` | `boolean` | `true` | 다운로드 버튼 |
+| `onDownloadClick` | `() => void` | — | 다운로드 클릭 |
+| `showNotification` | `boolean` | `true` | 알림 버튼 |
+| `notiCount` | `number` | `0` | 1 이상이면 빨간 점 표시 |
+| `onNotificationClick` | `() => void` | — | 알림 클릭 |
+| `showTheme` | `boolean` | `true` | 테마 버튼 |
+| `onThemeClick` | `() => void` | — | 테마 클릭 |
+| `showLanguage` | `boolean` | `true` | 언어 버튼 |
+| `onLanguageClick` | `() => void` | — | 언어 클릭 |
+| `showUser` | `boolean` | `true` | 사용자 버튼 |
+| `onUserClick` | `() => void` | — | 사용자 클릭 |
+| `showHome` | `boolean` | `true` | 홈 버튼(강조 박스) |
+| `onHomeClick` | `() => void` | — | 홈 클릭 |
 
-### 타입 정의
-
-<Source
-  code={`type ThemeMode = 'light' | 'dark' | 'system'
-type LangCode  = 'ko' | 'en' | 'ja'
-
-interface GnbLangItem {
-  code:  LangCode
-  label: string
-  flag:  string
-}
-
-interface GnbProduct {
-  id:    string
-  label: ReactNode
-}
-
-interface GnbNotiItem {
-  id:       string
-  title:    string
-  message?: string
-  time?:    string
-  read?:    boolean
-}
-
-interface GnbDownloadItem {
-  id:        string
-  fileName:  string
-  fileSize?: string
-  status:    'done' | 'progress' | 'error'
-  progress?: number
-}`}
-  language="tsx"
-/>
-
-## Playground
+## 기본
 
 <Canvas of={Stories.Playground} />
 
 <Controls />
 
-## 알림 읽음 처리
+## 알림 표시
 
-`notiItems`를 state로 관리하고 `onNotiItemClick`으로 개별 읽음 처리, `onNotiReadAll`로 전체 읽음 처리합니다.
+`notiCount`에 1 이상을 전달하면 알림 벨 우상단에 빨간 점이 표시됩니다.
 
-<Canvas of={Stories.WithNotifications} />
-
-## 다운로드 상태 표시
-
-`status: 'done' | 'progress' | 'error'` 로 다운로드 상태를 표시합니다. `progress`는 0-100 숫자로 진행률을 나타냅니다.
-
-<Canvas of={Stories.WithDownloads} />
-
-## 커스텀 프로덕트 목록
-
-`products` prop으로 앱 전환 팝오버 목록을 커스터마이징합니다. `label`은 `ReactNode`이므로 JSX로 커스텀 표현이 가능합니다.
-
-<Canvas of={Stories.CustomProducts} />
+<Canvas of={Stories.WithNotification} />
 
 ## 이벤트 콜백
 
-각 버튼을 클릭하면 대응하는 이벤트 콜백이 발생하며, 이벤트 로그로 확인할 수 있습니다.
+각 버튼을 클릭하면 대응하는 콜백이 발생합니다.
 
 <Canvas of={Stories.WithCallbacks} />

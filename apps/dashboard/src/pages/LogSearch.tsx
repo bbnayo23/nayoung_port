@@ -18,7 +18,7 @@ import {
   Tooltip,
   HighlightText,
 } from '@port/design-system'
-import type { MenuItem, ThemeMode, ContextMenuItem } from '@port/design-system'
+import type { MenuItem, ContextMenuItem } from '@port/design-system'
 import {
   XdrNavDashboardIcon,
   XdrNavLogsearchIcon,
@@ -27,7 +27,6 @@ import {
   XdrNavMonitoringIcon,
   XdrNavSecurityIcon,
   XdrSettingIcon,
-  XdrShieldIcon,
   XdrSadGhostIcon,
   ExdAiAssistantLogoIcon,
   ExdUppercaseIcon,
@@ -56,6 +55,9 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import * as s from './LogSearch.css'
+
+// 다크모드 토글 상태 타입 (Gnb 테마 버튼으로 제어)
+type ThemeMode = 'light' | 'dark' | 'system'
 
 // ── 검색 조건 옵션 ──────────────────────────────────────────────────────────────
 const LOG_TYPES: LogType[] = ['weblog', 'system', 'dbms', 'fw', 'ips', 'tms', 'waf']
@@ -428,28 +430,11 @@ export default function LogSearch() {
   return (
     <div className={s.appShell} data-solution="xdr">
       {/* 최상단 Gnb */}
-      <header className={s.topHeader}>
-        <div className={s.brandArea}>
-          <span className={s.brandMark}>
-            <XdrShieldIcon size={16} />
-          </span>
-          <span className={s.brandName}>SOC Console</span>
-        </div>
-        <Gnb
-          style={{ height: 44 }}
-          userName="박나영"
-          userEmail="nayeong.park@igloo.co.kr"
-          userRole="Security Analyst"
-          notiCount={12}
-          defaultTheme={themeMode}
-          onThemeChange={setThemeMode}
-          products={[
-            { id: 'siem', label: 'SIEM' },
-            { id: 'soar', label: 'SOAR' },
-          ]}
-          defaultActiveProduct="siem"
-        />
-      </header>
+      <Gnb
+        title="SOC Console"
+        notiCount={12}
+        onThemeClick={() => setThemeMode((m) => (m === 'dark' ? 'light' : 'dark'))}
+      />
 
       <div className={s.bodyRow}>
         <Lnb

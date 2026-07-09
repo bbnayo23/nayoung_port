@@ -9,10 +9,15 @@ const DURATION = '280ms'
 export const styledLnb = style({
   width: 240,
   position: 'relative',
-  height: '100vh',
+  // 셸(AppLayout) 안에서 부모 높이를 채우도록 100% — 단독 사용 시 소비처에서 높이 지정
+  height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: `var(--color-lnb-bg, ${vars.color.background})`,
+  // 기본(AiR Works) LNB 배경 — Figma #f9fafb (흰 Main 카드와 구분). 솔루션은 토큰으로 오버라이드.
+  backgroundColor: `var(--color-lnb-bg, #f9fafb)`,
+  // Figma "AW · Layout Shell" — 좌상단 한쪽 모서리만 라운드 + 은은한 외곽 그림자
+  borderTopLeftRadius: 16,
+  boxShadow: '0 0 1.5px rgba(22, 30, 52, 0.23)',
   transition: `width ${DURATION} ${EASE}`,
   overflow: 'visible',
   flexShrink: 0,
@@ -38,10 +43,6 @@ globalStyle(`${styledLnb}.collapsed .lnb-header .header-logo-mini`, {
   maxWidth: 40,
   opacity: 1,
   transition: `max-width ${DURATION} ${EASE}, opacity 200ms ease-in`,
-})
-
-globalStyle(`${styledLnb}.collapsed .lnb-header .header-collapse-btn`, {
-  right: -22,
 })
 
 globalStyle(`${styledLnb}.collapsed .menu-item-wrapper`, {
@@ -122,36 +123,6 @@ globalStyle(`${styledLnbHeader} .header-logo-full img`, {
   flexShrink: 0,
 })
 
-globalStyle(`${styledLnbHeader} .header-collapse-btn`, {
-  position: 'absolute',
-  top: 11,
-  right: -14,
-  zIndex: 10,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 28,
-  height: 28,
-  border: `1px solid var(--color-lnb-collapse-border, ${vars.color.border})`,
-  borderRadius: '50%',
-  background: `var(--color-lnb-collapse-bg, ${vars.color.surface})`,
-  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
-  cursor: 'pointer',
-  color: `var(--color-lnb-collapse-text, ${vars.color.text})`,
-  transition: `background 0.2s ease, box-shadow 0.2s ease, right ${DURATION} ${EASE}`,
-})
-
-globalStyle(`${styledLnbHeader} .header-collapse-btn:hover`, {
-  boxShadow: '0 3px 8px rgba(0, 0, 0, 0.18)',
-  background: vars.color.surfaceHover,
-})
-
-globalStyle(`${styledLnbHeader} .header-collapse-btn svg`, {
-  width: 14,
-  height: 14,
-  fill: `var(--color-lnb-collapse-text, ${vars.color.text})`,
-})
-
 // ── Body ─────────────────────────────────────────────────────────────────────
 
 export const styledLnbBody = style({
@@ -180,10 +151,11 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper`, {
   display: 'flex',
   alignItems: 'center',
   gap: 10,
-  padding: '10px 16px',
-  transition: `color 180ms ease-out, background 150ms ease-out, border-left-color 180ms ease-out, padding ${DURATION} ${EASE}, gap ${DURATION} ${EASE}, justify-content ${DURATION} ${EASE}`,
+  margin: '1px 8px',
+  padding: '8px 8px',
+  borderRadius: 6,
+  transition: `color 180ms ease-out, background 150ms ease-out, padding ${DURATION} ${EASE}, gap ${DURATION} ${EASE}, justify-content ${DURATION} ${EASE}`,
   color: `var(--color-lnb-item-text, ${vars.color.text})`,
-  borderLeft: '3px solid transparent',
   textDecoration: 'none',
 })
 
@@ -194,7 +166,6 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper svg`, {
 
 globalStyle(`${styledLnbItem} .menu-item-wrapper:hover`, {
   color: vars.color.primary,
-  borderLeftColor: vars.color.primary,
   background: `var(--color-lnb-item-hover-bg, ${vars.color.surfaceHover})`,
 })
 
@@ -202,9 +173,10 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper:hover svg`, {
   fill: vars.color.primary,
 })
 
+// 활성 항목 — Figma "AW" 라이트블루 필 (한쪽 border 대신 라운드 pill)
 globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active`, {
   color: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
-  borderLeftColor: `var(--color-lnb-item-active-border, ${vars.color.primary})`,
+  background: `var(--color-lnb-item-active-bg, #e3edfc)`,
   fontWeight: vars.font.weightBold,
 })
 
@@ -353,6 +325,56 @@ export const styledLnbFooter = style({
   textOverflow: 'ellipsis',
 })
 
+// ── Controls (하단 접기/펼치기 · 전체화면) ─────────────────────────────────────
+// Figma "AW" — 펼침: 우측 정렬 가로 배치 / 접힘: 세로 스택
+export const styledLnbControls = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  gap: 4,
+  height: 37,
+  padding: '0 10px',
+  flexShrink: 0,
+  borderTop: `1px solid var(--color-lnb-border, ${vars.color.border})`,
+  transition: `height ${DURATION} ${EASE}, padding ${DURATION} ${EASE}`,
+})
+
+globalStyle(`${styledLnbControls} .lnb-control-btn`, {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 28,
+  height: 28,
+  padding: 0,
+  border: 'none',
+  borderRadius: 8,
+  background: 'transparent',
+  color: `var(--color-lnb-item-text, #4b5563)`,
+  cursor: 'pointer',
+  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
+})
+
+globalStyle(`${styledLnbControls} .lnb-control-btn:hover`, {
+  background: `var(--color-lnb-item-hover-bg, ${vars.color.surfaceHover})`,
+  color: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
+})
+
+globalStyle(`${styledLnbControls} .lnb-control-btn svg`, {
+  width: 16,
+  height: 16,
+  display: 'block',
+  flexShrink: 0,
+})
+
+// 접힘 상태 — 컨트롤 버튼 세로 스택 (접기 위 / 전체화면 아래 = Figma 순서)
+globalStyle(`${styledLnb}.collapsed .lnb-controls`, {
+  flexDirection: 'column-reverse',
+  justifyContent: 'center',
+  height: 'auto',
+  padding: '10px 0',
+  gap: 6,
+})
+
 // ────────────────────────────────────────────────────────────────────────────
 // EXD 테마 구조 오버라이드 (컬러는 Lnb.tokens.ts + theme-tokens.ts 로 처리)
 // ────────────────────────────────────────────────────────────────────────────
@@ -372,15 +394,19 @@ globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-collapse-btn:hover
   boxShadow: 'none',
 })
 
-// depth 1 (root) 메뉴 아이템 — 패딩 (컬러는 토큰 처리)
+// depth 1 (root) 메뉴 아이템 — 패딩 + border-left 액센트 (EXD는 pill 대신 플러시 유지)
 globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper`, {
+  margin: 0,
   padding: '10px 12px',
+  borderRadius: 0,
   borderLeft: '3px solid transparent',
 })
 
 // depth 2+ (자식) 메뉴 아이템 — 패딩 (컬러는 토큰 처리)
 globalStyle(`[data-solution="exd"] ${styledSubMenuItem} li .menu-item-wrapper`, {
+  margin: 0,
   padding: '7px 12px 7px 42px',
+  borderRadius: 0,
 })
 
 // 아이콘 크기 — 20px

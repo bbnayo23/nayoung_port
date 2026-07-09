@@ -107,18 +107,22 @@ const Demo = ({
   menuOverride,
   footer,
   defaultActiveKey = 'log-search',
+  solution = 'xdr',
+  showHeader = true,
 }: {
   defaultCollapsed?: boolean
   menuOverride?: MenuItem[]
   footer?: React.ReactNode
   defaultActiveKey?: string
+  solution?: string
+  showHeader?: boolean
 }) => {
   const [activeKey, setActiveKey] = useState(defaultActiveKey)
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
 
   return (
     <div
-      data-solution="xdr"
+      data-solution={solution}
       style={{
         display: 'flex',
         height: 600,
@@ -134,7 +138,8 @@ const Demo = ({
         onActiveChange={setActiveKey}
         collapsed={collapsed}
         onCollapse={setCollapsed}
-        header={<XdrLogo />}
+        onFullscreen={() => console.log('fullscreen')}
+        header={showHeader ? <XdrLogo /> : undefined}
         footer={footer}
       />
       <div
@@ -201,12 +206,24 @@ export const Playground: Story = {
   render: () => <Demo />,
 }
 
+// ── AiR Works (기본) ─────────────────────────────────────────────────────────────
+
+/**
+ * Figma "AW · Layout Shell" 기준 기본 스타일 — 헤더 로고 없이 좌상단 한쪽 라운드,
+ * 활성 항목은 라이트블루 pill, 하단 컨트롤 바(접기/펼치기 · 전체화면).
+ */
+export const AirWorks: Story = {
+  args: { menuGroup: BASE_MENU, activeKey: 'workspace' },
+  render: () => <Demo solution="" showHeader={false} defaultActiveKey="log-search" />,
+  parameters: { controls: { disable: true } },
+}
+
 // ── Collapsed ──────────────────────────────────────────────────────────────────
 
-/** 접힌 상태(56px)로 시작합니다. 헤더 토글 버튼 또는 메뉴 본문 hover로 펼칩니다. */
+/** 접힌 상태로 시작합니다. 하단 접기 버튼 또는 메뉴 본문 hover로 펼칩니다. 접힘 시 하단 버튼은 세로로 쌓입니다. */
 export const Collapsed: Story = {
   args: { menuGroup: BASE_MENU, activeKey: 'log-search' },
-  render: () => <Demo defaultCollapsed />,
+  render: () => <Demo solution="" showHeader={false} defaultCollapsed />,
   parameters: { controls: { disable: true } },
 }
 

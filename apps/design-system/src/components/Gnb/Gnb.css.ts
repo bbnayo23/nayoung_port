@@ -1,717 +1,245 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css'
 import { vars } from '../../theme/contract.css'
 
-const userMenuIn = keyframes({
-  from: { opacity: 0, transform: 'translateY(-6px)' },
-  to: { opacity: 1, transform: 'none' },
-})
+/**
+ * AiR Works GNB 스타일 — Figma "AW · Layout Shell (LNB+GNB · Empty)" 재현.
+ * 브랜드 셸 고유 팔레트라 테마 토큰이 아닌 Figma 하드코딩 값을 그대로 사용한다.
+ */
+const C = {
+  logoCircle: '#131313',
+  brandText: '#111827',
+  divider: '#e5e7eb',
+  icon: '#4b5563', // gray-600 — 우측 액션 아이콘 stroke
+  iconHoverBg: 'rgba(17, 24, 39, 0.05)',
+  notiDot: '#dc2626',
+  homeBox: '#e3edfc',
+  homeBoxHover: '#d4e4fb',
+  homeIcon: '#123e80', // navy — 홈 박스 안 아이콘
+}
 
-const langPopoverIn = keyframes({
-  from: { opacity: 0, transform: 'translateX(6px)' },
-  to: { opacity: 1, transform: 'none' },
-})
+// 밴드 배경: 하단 은은한 파란 radial glow 3겹 + 상→하 라이트 그라디언트
+const BAND_BG = [
+  'radial-gradient(1600px 90px at 6% 120%, rgba(40, 120, 235, 0.14), rgba(40, 120, 235, 0) 62%)',
+  'radial-gradient(1200px 84px at 104% 122%, rgba(40, 120, 235, 0.09), rgba(40, 120, 235, 0) 58%)',
+  'radial-gradient(1600px 128px at 120% 128%, rgba(40, 120, 235, 0.05), rgba(40, 120, 235, 0) 72%)',
+  'linear-gradient(180deg, #e9f2f9 0%, #f3f8fc 50%, #fdfefe 100%)',
+].join(', ')
 
+// ── 밴드 (전체 폭 40px) ───────────────────────────────────────────────────────
 export const gnb = style({
+  position: 'relative',
+  zIndex: 100,
   display: 'flex',
   alignItems: 'center',
-  height: 86,
-  padding: '0 20px',
-  gap: 12,
-  background: 'transparent',
-})
-
-export const gnbBtnWrap = style({
-  position: 'relative',
-  display: 'inline-flex',
-  pointerEvents: 'auto',
-})
-
-export const gnbBtn = style({
-  width: 40,
+  width: '100%',
   height: 40,
-  borderRadius: 30,
-  background: vars.color.surface,
-  border: 'none',
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  color: vars.color.textSecondary,
-  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
-  pointerEvents: 'auto',
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.surfaceHover,
-      color: vars.color.text,
-    },
-    '&:active, &.is-active': {
-      background: vars.color.surfaceHover,
-      color: vars.color.primary,
-    },
-  },
-})
-
-globalStyle(`${gnbBtn} svg`, {
-  width: 16,
-  height: 16,
-  fill: 'currentColor',
   flexShrink: 0,
+  background: BAND_BG,
 })
 
-export const gnbNotiBadge = style({
-  position: 'absolute',
-  top: -3,
-  left: 26,
-  padding: 4,
-  minWidth: 18,
-  borderRadius: 20,
-  background: vars.color.error,
-  color: vars.color.textInverse,
-  fontSize: 8,
-  fontWeight: 500,
-  lineHeight: 1,
-  textAlign: 'center',
-  pointerEvents: 'none',
-  whiteSpace: 'nowrap',
-})
-
-export const gnbUserDropdown = style({
-  position: 'absolute',
-  top: 'calc(100% + 8px)',
-  right: 0,
-  zIndex: 200,
-  padding: 16,
-  background: vars.color.surface,
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  borderRadius: 16,
-  outline: `1px solid ${vars.color.border}`,
-  outlineOffset: -1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  gap: 16,
-  width: 225,
-  animationName: userMenuIn,
-  animationDuration: '180ms',
-  animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-})
-
-export const gnbUserProfile = style({
-  padding: '12px 16px',
-  borderRadius: 20,
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  transition: `background ${vars.transition.fast}`,
-  cursor: 'pointer',
-  selectors: {
-    '&:hover, &.is-hover': { background: vars.color.surfaceHover },
-  },
-})
-
-export const gnbUserProfileText = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 5,
-  flex: 1,
-  minWidth: 0,
-  overflow: 'hidden',
-})
-
-export const gnbUserName = style({
-  fontSize: vars.font.sizeSm,
-  fontWeight: 700,
-  lineHeight: '15px',
-  color: vars.color.text,
-  letterSpacing: '-0.01em',
-  margin: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-})
-
-export const gnbUserEmail = style({
-  fontSize: vars.font.sizeXs,
-  fontWeight: 400,
-  lineHeight: 1,
-  color: vars.color.textMuted,
-  margin: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-})
-
-export const gnbUserAdminBadge = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '5px 8px',
-  borderRadius: 30,
-  background: vars.color.primarySoft,
-  color: vars.color.primary,
-  fontSize: vars.font.sizeXs,
-  fontWeight: 500,
-  lineHeight: 1,
-  whiteSpace: 'nowrap',
-  flexShrink: 0,
-})
-
-export const gnbThemeGroup = style({
-  alignSelf: 'center',
-})
-
-globalStyle(`${gnbThemeGroup} .button-group-item`, {
-  width: 56,
-  minWidth: 56,
-  padding: '8px 0',
-  height: 34,
-})
-
-export const gnbLangSection = style({
-  position: 'relative',
-})
-
-export const gnbLangHeader = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  padding: '10px 12px',
-  borderRadius: 20,
-  border: 'none',
-  background: 'transparent',
-  color: vars.color.textSecondary,
-  fontSize: vars.font.sizeSm,
-  fontWeight: 500,
-  lineHeight: 1,
-  cursor: 'pointer',
-  width: '100%',
-  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.surfaceHover,
-      color: vars.color.primary,
-    },
-  },
-})
-
-export const gnbLangFlag = style({
-  fontSize: vars.font.sizeMd,
-  lineHeight: 1,
-  flexShrink: 0,
-})
-
-export const gnbLangLabel = style({
-  flex: 1,
-  textAlign: 'left',
-})
-
-export const gnbLangChevron = style({
-  display: 'inline-flex',
-  flexShrink: 0,
-  color: vars.color.textMuted,
-  transition: `transform ${vars.transition.fast}`,
-})
-
-export const gnbLangChevronOpen = style({
-  transform: 'rotate(180deg)',
-})
-
-export const gnbLangPopover = style({
-  position: 'absolute',
-  top: 0,
-  right: 'calc(100% + 24px)',
-  zIndex: 201,
-  padding: 8,
-  background: vars.color.surface,
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  borderRadius: 16,
-  outline: `1px solid ${vars.color.border}`,
-  outlineOffset: -1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-  width: 150,
-  animationName: langPopoverIn,
-  animationDuration: '150ms',
-  animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-})
-
-export const gnbLangItem = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  padding: '9px 12px',
-  borderRadius: 20,
-  border: 'none',
-  background: 'transparent',
-  color: vars.color.textSecondary,
-  fontSize: vars.font.sizeSm,
-  fontWeight: 500,
-  lineHeight: 1,
-  cursor: 'pointer',
-  width: '100%',
-  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.surfaceHover,
-      color: vars.color.primary,
-    },
-  },
-})
-
-export const gnbLangItemActive = style({
-  color: vars.color.primary,
-  fontWeight: 700,
-})
-
-export const gnbLangCheckMark = style({
-  marginLeft: 'auto',
-  width: 6,
-  height: 6,
-  borderRadius: '50%',
-  background: vars.color.primary,
-  flexShrink: 0,
-})
-
-export const gnbMenuPopover = style({
-  position: 'absolute',
-  top: 'calc(100% + 8px)',
-  right: 0,
-  zIndex: 200,
-  padding: 16,
-  background: vars.color.surface,
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  borderRadius: 20,
-  outline: `1px solid ${vars.color.border}`,
-  outlineOffset: -1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  gap: 2,
-  animationName: userMenuIn,
-  animationDuration: '180ms',
-  animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-})
-
-export const gnbMenuPopoverItem = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  padding: '10px 12px',
-  borderRadius: 20,
-  border: 'none',
-  background: 'transparent',
-  cursor: 'pointer',
-  width: '100%',
-  minWidth: 165,
-  textAlign: 'left',
-  transition: `background ${vars.transition.fast}`,
-  selectors: {
-    '&:hover, &.is-hover': { background: vars.color.surfaceHover },
-  },
-})
-
-export const gnbMenuPopoverItemActive = style({
-  background: vars.color.surfaceHover,
-})
-
-export const gnbMenuSpider = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 4,
-})
-
-export const gnbMenuSpiderText = style({
-  fontSize: 13,
-  fontWeight: 700,
-  lineHeight: 1,
-  letterSpacing: '-0.01em',
-  color: vars.color.text,
-  transition: `color ${vars.transition.fast}`,
-  selectors: {
-    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
-  },
-})
-
-export const gnbMenuSuffix = style({
-  fontSize: 13,
-  fontWeight: 700,
-  lineHeight: 1,
-  letterSpacing: '0.02em',
-  transition: `color ${vars.transition.fast}`,
-})
-
-export const gnbMenuSuffixMint = style({
-  color: vars.color.primary,
-  selectors: {
-    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
-  },
-})
-
-export const gnbMenuUD = style({
-  fontSize: 13,
-  fontWeight: 700,
-  lineHeight: 1,
-  letterSpacing: '-0.01em',
-  display: 'inline-flex',
-  gap: 2,
-})
-
-export const gnbMenuUDRed = style({
-  color: vars.color.error,
-  transition: `color ${vars.transition.fast}`,
-  selectors: {
-    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
-  },
-})
-
-export const gnbMenuUDBlack = style({
-  color: vars.color.text,
-  transition: `color ${vars.transition.fast}`,
-  selectors: {
-    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
-  },
-})
-
-export const gnbMenuActiveDot = style({
-  marginLeft: 'auto',
-  width: 6,
-  height: 6,
-  borderRadius: '50%',
-  background: vars.color.primary,
-  flexShrink: 0,
-})
-
-export const gnbUserMenuList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-})
-
-export const gnbUserDropdownItem = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  padding: '10px 12px',
-  borderRadius: 20,
-  border: 'none',
-  background: 'transparent',
-  color: vars.color.textSecondary,
-  fontSize: vars.font.sizeSm,
-  fontWeight: 500,
-  lineHeight: 1,
-  cursor: 'pointer',
-  textAlign: 'left',
-  width: '100%',
-  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.surfaceHover,
-      color: vars.color.primary,
-      fontWeight: 700,
-    },
-  },
-})
-
-export const gnbUserDropdownItemDanger = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  padding: '10px 12px',
-  borderRadius: 20,
-  border: 'none',
-  background: 'transparent',
-  color: vars.color.textSecondary,
-  fontSize: vars.font.sizeSm,
-  fontWeight: 500,
-  lineHeight: 1,
-  cursor: 'pointer',
-  textAlign: 'left',
-  width: '100%',
-  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.surfaceHover,
-      color: vars.color.error,
-      fontWeight: 700,
-    },
-  },
-})
-
-export const gnbBtnIsOpen = style({
-  background: vars.color.primarySoft,
-  color: vars.color.primary,
-  selectors: {
-    '&:hover, &.is-hover': {
-      background: vars.color.primarySoft,
-      color: vars.color.primary,
-    },
-    '&:active, &.is-active': {
-      background: vars.color.primarySoft,
-      color: vars.color.primary,
-    },
-  },
-})
-
-export const gnbPopoverHeader = style({
+// 콘텐츠 행 — 좌 브랜드 / 우 액션 (밴드에 세로 중앙 정렬)
+export const gnbInner = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '14px 16px 10px',
-  borderBottom: `1px solid ${vars.color.border}`,
+  width: '100%',
+  height: '100%',
+  padding: '0 14px 0 12px',
 })
 
-export const gnbPopoverTitle = style({
-  fontSize: 13,
-  fontWeight: 700,
-  color: vars.color.text,
+// ── 좌측 브랜드 ────────────────────────────────────────────────────────────────
+export const gnbBrand = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 6,
+  border: 'none',
+  background: 'transparent',
+  padding: 0,
+  cursor: 'pointer',
+  flexShrink: 0,
 })
 
-export const gnbPopoverCountBadge = style({
-  padding: '2px 6px',
-  borderRadius: 10,
-  background: vars.color.error,
-  color: vars.color.textInverse,
-  fontSize: 10,
-  fontWeight: 700,
-  lineHeight: 1.4,
-})
-
-export const gnbPopoverEmpty = style({
-  display: 'flex',
-  flexDirection: 'column',
+export const gnbLogoCircle = style({
+  display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '32px 16px',
-  gap: 8,
-  color: vars.color.textMuted,
-  fontSize: vars.font.sizeSm,
+  width: 24,
+  height: 24,
+  borderRadius: '50%',
+  background: C.logoCircle,
+  boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.35)',
+  flexShrink: 0,
+  marginRight: 9,
 })
 
-export const gnbNotiPopover = style({
-  position: 'absolute',
-  top: 'calc(100% + 8px)',
-  right: 0,
-  zIndex: 200,
-  background: vars.color.surface,
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  borderRadius: 16,
-  outline: `1px solid ${vars.color.border}`,
-  outlineOffset: -1,
-  width: 300,
-  animationName: userMenuIn,
-  animationDuration: '180ms',
-  animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+export const gnbTitle = style({
+  fontFamily: vars.font.family,
+  fontWeight: 900,
+  fontSize: 16,
+  lineHeight: '17.6px',
+  letterSpacing: '-0.5px',
+  color: C.brandText,
+  whiteSpace: 'nowrap',
 })
 
-export const gnbReadAllBtn = style({
-  fontSize: vars.font.sizeXs,
-  color: vars.color.primary,
+export const gnbBrandChevron = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  color: C.brandText,
+  marginLeft: 5,
+})
+
+// ── 우측 액션 그룹 ─────────────────────────────────────────────────────────────
+export const gnbActions = style({
+  display: 'flex',
+  alignItems: 'center',
+  flexShrink: 0,
+})
+
+// AI 스파클 애니메이션 — 큰 별은 회전하며 팝, 작은 반짝이는 깜빡(트윙클)
+const sparkleSpin = keyframes({
+  '0%': { transform: 'scale(1) rotate(0deg)' },
+  '50%': { transform: 'scale(1.15) rotate(12deg)' },
+  '100%': { transform: 'scale(1) rotate(0deg)' },
+})
+
+const sparkleTwinkle = keyframes({
+  '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+  '40%': { opacity: 0.2, transform: 'scale(0.5)' },
+  '70%': { opacity: 1, transform: 'scale(1.15)' },
+})
+
+// AI Assistant 버튼 (스파클 + 라벨)
+export const gnbAiButton = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 5,
+  height: 28,
+  padding: '0 6px',
   border: 'none',
+  borderRadius: 8,
   background: 'transparent',
   cursor: 'pointer',
-  padding: '2px 4px',
-  borderRadius: 4,
-  selectors: {
-    '&:hover, &.is-hover': { background: vars.color.surfaceHover },
-  },
-})
-
-export const gnbNotiList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  maxHeight: 320,
-  overflowY: 'auto',
-  padding: '4px 0',
-})
-
-export const gnbNotiItem = style({
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: 10,
-  padding: '12px 16px',
-  cursor: 'pointer',
-  border: 'none',
-  background: 'transparent',
-  width: '100%',
-  textAlign: 'left',
+  marginRight: 20,
   transition: `background ${vars.transition.fast}`,
   selectors: {
-    '&:hover, &.is-hover': { background: vars.color.surfaceHover },
+    '&:hover': { background: C.iconHoverBg },
   },
 })
 
-export const gnbNotiDot = style({
+export const gnbAiLabel = style({
+  fontFamily: vars.font.family,
+  fontWeight: 700,
+  fontSize: 12,
+  lineHeight: 'normal',
+  letterSpacing: '0.2px',
+  color: C.brandText,
+  whiteSpace: 'nowrap',
+})
+
+// 세로 구분선
+export const gnbDivider = style({
+  width: 1,
+  height: 16,
+  background: C.divider,
   flexShrink: 0,
-  marginTop: 4,
+  margin: '0 17px',
+})
+
+// 아이콘 버튼 그룹 (다운로드·알림·테마·언어·사용자·홈) — 8px 간격, 36px 피치
+export const gnbIconGroup = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+})
+
+// 공통 아이콘 버튼 (28×28, 16px 아이콘 중앙)
+export const gnbIconButton = style({
+  position: 'relative',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 28,
+  height: 28,
+  padding: 0,
+  border: 'none',
+  borderRadius: 8,
+  background: 'transparent',
+  color: C.icon,
+  cursor: 'pointer',
+  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
+  selectors: {
+    '&:hover': { background: C.iconHoverBg },
+  },
+})
+
+// 알림 빨간 점 (벨 우상단)
+export const gnbNotiDot = style({
+  position: 'absolute',
+  top: 4,
+  right: 5,
   width: 7,
   height: 7,
   borderRadius: '50%',
-  background: vars.color.primary,
+  background: C.notiDot,
+  border: '2px solid #ffffff',
+  boxSizing: 'content-box',
+  pointerEvents: 'none',
 })
 
-export const gnbNotiDotRead = style({
-  background: 'transparent',
-})
-
-export const gnbNotiBody = style({
-  flex: 1,
-  minWidth: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 3,
-})
-
-export const gnbNotiItemTitle = style({
-  fontSize: vars.font.sizeSm,
-  fontWeight: 600,
-  color: vars.color.text,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-})
-
-export const gnbNotiItemTitleRead = style({
-  fontWeight: 400,
-  color: vars.color.textSecondary,
-})
-
-export const gnbNotiItemMsg = style({
-  fontSize: vars.font.sizeXs,
-  color: vars.color.textSecondary,
-  overflow: 'hidden',
-  display: '-webkit-box' as 'flex',
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical' as const,
-  lineHeight: 1.5,
-})
-
-export const gnbNotiItemTime = style({
-  fontSize: 10,
-  color: vars.color.textMuted,
-  marginTop: 1,
-})
-
-export const gnbDlPopover = style({
-  position: 'absolute',
-  top: 'calc(100% + 8px)',
-  right: 0,
-  zIndex: 200,
-  background: vars.color.surface,
-  boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.10)',
-  borderRadius: 16,
-  outline: `1px solid ${vars.color.border}`,
-  outlineOffset: -1,
-  width: 280,
-  animationName: userMenuIn,
-  animationDuration: '180ms',
-  animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-})
-
-export const gnbDlList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  maxHeight: 320,
-  overflowY: 'auto',
-  padding: '4px 0',
-})
-
-export const gnbDlItem = style({
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: 10,
-  padding: '10px 16px',
-  cursor: 'pointer',
+// 홈 버튼 (강조 박스)
+export const gnbHomeButton = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 28,
+  height: 28,
+  padding: 0,
   border: 'none',
-  background: 'transparent',
-  width: '100%',
-  textAlign: 'left',
+  borderRadius: 8,
+  background: C.homeBox,
+  color: C.homeIcon,
+  cursor: 'pointer',
   transition: `background ${vars.transition.fast}`,
   selectors: {
-    '&:hover, &.is-hover': { background: vars.color.surfaceHover },
+    '&:hover': { background: C.homeBoxHover },
   },
 })
 
-export const gnbDlIconWrap = style({
+// svg 크기 안정화 (flex-shrink 방지)
+globalStyle(`${gnbIconButton} svg, ${gnbHomeButton} svg, ${gnbAiButton} svg, ${gnbBrandChevron} svg`, {
   flexShrink: 0,
-  width: 32,
-  height: 32,
-  borderRadius: 8,
-  background: vars.color.surfaceHover,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: vars.color.textSecondary,
+  display: 'block',
 })
 
-export const gnbDlInfo = style({
-  flex: 1,
-  minWidth: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 5,
+// ── AI 스파클 hover 트윙클 ─────────────────────────────────────────────────────
+// 큰 별(첫 path)은 버튼 hover 시 회전하며 반짝이고,
+// 작은 반짝이(우상단 십자 2획 + 좌하단 원)는 스태거드 깜빡임으로 반짝인다.
+globalStyle(`${gnbAiButton} svg`, {
+  transformOrigin: 'center',
 })
-
-export const gnbDlName = style({
-  fontSize: vars.font.sizeSm,
-  fontWeight: 500,
-  color: vars.color.text,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
+globalStyle(`${gnbAiButton}:hover svg`, {
+  animation: `${sparkleSpin} 900ms ease-in-out infinite`,
+  filter: 'drop-shadow(0 0 3px rgba(124, 92, 255, 0.55))',
 })
-
-export const gnbDlMeta = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 6,
-  fontSize: 10,
-  color: vars.color.textMuted,
+globalStyle(
+  `${gnbAiButton}:hover svg > path:nth-child(2), ${gnbAiButton}:hover svg > path:nth-child(3)`,
+  {
+    transformBox: 'fill-box',
+    transformOrigin: 'center',
+    animation: `${sparkleTwinkle} 700ms ease-in-out infinite`,
+  },
+)
+globalStyle(`${gnbAiButton}:hover svg > circle`, {
+  transformBox: 'fill-box',
+  transformOrigin: 'center',
+  animation: `${sparkleTwinkle} 700ms ease-in-out 350ms infinite`,
 })
-
-export const gnbDlStatusDone = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 3,
-  color: vars.color.success,
-  fontWeight: 600,
-})
-
-export const gnbDlStatusError = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 3,
-  color: vars.color.error,
-  fontWeight: 600,
-})
-
-export const gnbDlStatusProgress = style({
-  color: vars.color.primary,
-  fontWeight: 600,
-})
-
-export const gnbDlProgressWrap = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 3,
-})
-
-export const gnbDlProgressTrack = style({
-  width: '100%',
-  height: 3,
-  borderRadius: 2,
-  background: vars.color.border,
-  overflow: 'hidden',
-})
-
-export const gnbDlProgressFill = style({
-  height: '100%',
-  width: 'var(--dl-progress, 0%)',
-  background: vars.color.primary,
-  borderRadius: 2,
-  transition: `width ${vars.transition.normal}`,
-})
+// 모션 최소화 선호 시 애니메이션 비활성화
+globalStyle(
+  `${gnbAiButton}:hover svg, ${gnbAiButton}:hover svg > path, ${gnbAiButton}:hover svg > circle`,
+  {
+    '@media': {
+      '(prefers-reduced-motion: reduce)': { animation: 'none' },
+    },
+  },
+)

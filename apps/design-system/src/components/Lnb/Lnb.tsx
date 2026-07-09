@@ -15,12 +15,14 @@ import {
   styledLnbBody,
   styledLnbItem,
   styledLnbFooter,
+  styledLnbControls,
   styledLnbGroupLabel,
   styledSubMenuItem,
   styledDivider,
 } from './Lnb.css'
 import type { LnbProps, MenuItem } from './Lnb.types'
-import { XdrChevronRightIcon, XdrChevronLeftIcon, ExdExternalLinkIcon } from '@port/icon-library'
+import { XdrChevronRightIcon, ExdExternalLinkIcon } from '@port/icon-library'
+import { LnbCollapseIcon, LnbFullscreenIcon } from './Lnb.icons'
 import cn from 'classnames'
 
 const STORAGE_KEY = 'igloo-lnb-collapsed'
@@ -133,7 +135,10 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
     className,
     style,
     position = 'left',
+    showControls = true,
     showCollapseButton = true,
+    showFullscreenButton = true,
+    onFullscreen,
     collapsed = true,
     onCollapse,
     menuGroup = [],
@@ -141,8 +146,6 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
     onActiveChange,
     ...rest
   } = props
-  const CollapseIcon = XdrChevronLeftIcon
-  const ExpandIcon = XdrChevronRightIcon
   const [hoverExpanded, setHoverExpanded] = useState(false)
   const bodyRef = useRef<HTMLUListElement>(null)
 
@@ -227,19 +230,7 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
         data-position={position}
         {...rest}
       >
-        <div className={cn(styledLnbHeader, 'lnb-header')}>
-          {header}
-          {showCollapseButton && (
-            <button
-              type="button"
-              className="header-collapse-btn"
-              onClick={handleToggleCollapse}
-              aria-label={collapsed ? '메뉴 펼치기' : '메뉴 접기'}
-            >
-              {collapsed ? <ExpandIcon size={14} /> : <CollapseIcon size={14} />}
-            </button>
-          )}
-        </div>
+        {header && <div className={cn(styledLnbHeader, 'lnb-header')}>{header}</div>}
         <ul
           ref={bodyRef}
           className={cn(styledLnbBody, 'lnb-body')}
@@ -252,6 +243,31 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
           ))}
         </ul>
         {footer}
+        {showControls && (showCollapseButton || showFullscreenButton) && (
+          <div className={cn(styledLnbControls, 'lnb-controls')}>
+            {showFullscreenButton && (
+              <button
+                type="button"
+                className="lnb-control-btn"
+                onClick={onFullscreen}
+                aria-label="전체화면"
+              >
+                <LnbFullscreenIcon size={16} />
+              </button>
+            )}
+            {showCollapseButton && (
+              <button
+                type="button"
+                className="lnb-control-btn"
+                onClick={handleToggleCollapse}
+                aria-label={collapsed ? '메뉴 펼치기' : '메뉴 접기'}
+                aria-pressed={collapsed}
+              >
+                <LnbCollapseIcon size={16} />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </LnbContext.Provider>
   )
