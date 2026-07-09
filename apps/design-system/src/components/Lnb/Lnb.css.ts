@@ -6,66 +6,66 @@ const DURATION = '280ms'
 
 // ── Root ────────────────────────────────────────────────────────────────────
 
-export const styledSideMenuBar = style({
+export const styledLnb = style({
   width: 240,
   position: 'relative',
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: `var(--color-sidemenu-bg, ${vars.color.background})`,
+  backgroundColor: `var(--color-lnb-bg, ${vars.color.background})`,
   transition: `width ${DURATION} ${EASE}`,
   overflow: 'visible',
   flexShrink: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed`, {
+globalStyle(`${styledLnb}.collapsed`, {
   width: 56,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .side-menu-bar-header`, {
+globalStyle(`${styledLnb}.collapsed .lnb-header`, {
   gap: 0,
   paddingLeft: 0,
   justifyContent: 'center',
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .side-menu-bar-header .header-logo-full`, {
+globalStyle(`${styledLnb}.collapsed .lnb-header .header-logo-full`, {
   maxWidth: 0,
   opacity: 0,
   transition: `max-width ${DURATION} ${EASE}, opacity 180ms ease-out`,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .side-menu-bar-header .header-logo-mini`, {
+globalStyle(`${styledLnb}.collapsed .lnb-header .header-logo-mini`, {
   maxWidth: 40,
   opacity: 1,
   transition: `max-width ${DURATION} ${EASE}, opacity 200ms ease-in`,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .side-menu-bar-header .header-collapse-btn`, {
+globalStyle(`${styledLnb}.collapsed .lnb-header .header-collapse-btn`, {
   right: -22,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .menu-item-wrapper`, {
+globalStyle(`${styledLnb}.collapsed .menu-item-wrapper`, {
   padding: '10px 0',
   justifyContent: 'center',
   gap: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .menu-item-text`, {
+globalStyle(`${styledLnb}.collapsed .menu-item-text`, {
   maxWidth: 0,
   opacity: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .menu-item-arrow`, {
+globalStyle(`${styledLnb}.collapsed .menu-item-arrow`, {
   maxWidth: 0,
   opacity: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .menu-item-external`, {
+globalStyle(`${styledLnb}.collapsed .menu-item-external`, {
   maxWidth: 0,
   opacity: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .sub-menu-item`, {
+globalStyle(`${styledLnb}.collapsed .sub-menu-item`, {
   maxHeight: 0,
   opacity: 0,
   pointerEvents: 'none',
@@ -73,7 +73,7 @@ globalStyle(`${styledSideMenuBar}.collapsed .sub-menu-item`, {
 
 // ── Header ──────────────────────────────────────────────────────────────────
 
-export const styledSideMenuBarHeader = style({
+export const styledLnbHeader = style({
   display: 'flex',
   alignItems: 'center',
   height: 50,
@@ -84,7 +84,7 @@ export const styledSideMenuBarHeader = style({
   transition: `padding ${DURATION} ${EASE}, gap ${DURATION} ${EASE}`,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-logo-mini`, {
+globalStyle(`${styledLnbHeader} .header-logo-mini`, {
   display: 'flex',
   alignItems: 'center',
   maxWidth: 0,
@@ -93,13 +93,13 @@ globalStyle(`${styledSideMenuBarHeader} .header-logo-mini`, {
   transition: `max-width ${DURATION} ${EASE}, opacity 180ms ease-out`,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-logo-mini svg`, {
+globalStyle(`${styledLnbHeader} .header-logo-mini svg`, {
   width: 28,
   height: 16,
   flexShrink: 0,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-logo-full`, {
+globalStyle(`${styledLnbHeader} .header-logo-full`, {
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -110,19 +110,19 @@ globalStyle(`${styledSideMenuBarHeader} .header-logo-full`, {
   transition: `max-width ${DURATION} ${EASE}, opacity 200ms ease-in`,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-logo-full svg`, {
+globalStyle(`${styledLnbHeader} .header-logo-full svg`, {
   height: 20,
   width: 'auto',
   flexShrink: 0,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-logo-full img`, {
+globalStyle(`${styledLnbHeader} .header-logo-full img`, {
   height: 20,
   width: 'auto',
   flexShrink: 0,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-collapse-btn`, {
+globalStyle(`${styledLnbHeader} .header-collapse-btn`, {
   position: 'absolute',
   top: 11,
   right: -14,
@@ -132,43 +132,43 @@ globalStyle(`${styledSideMenuBarHeader} .header-collapse-btn`, {
   justifyContent: 'center',
   width: 28,
   height: 28,
-  border: `1px solid var(--color-sidemenu-collapse-border, ${vars.color.border})`,
+  border: `1px solid var(--color-lnb-collapse-border, ${vars.color.border})`,
   borderRadius: '50%',
-  background: `var(--color-sidemenu-collapse-bg, ${vars.color.surface})`,
+  background: `var(--color-lnb-collapse-bg, ${vars.color.surface})`,
   boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
   cursor: 'pointer',
-  color: `var(--color-sidemenu-collapse-text, ${vars.color.text})`,
+  color: `var(--color-lnb-collapse-text, ${vars.color.text})`,
   transition: `background 0.2s ease, box-shadow 0.2s ease, right ${DURATION} ${EASE}`,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-collapse-btn:hover`, {
+globalStyle(`${styledLnbHeader} .header-collapse-btn:hover`, {
   boxShadow: '0 3px 8px rgba(0, 0, 0, 0.18)',
   background: vars.color.surfaceHover,
 })
 
-globalStyle(`${styledSideMenuBarHeader} .header-collapse-btn svg`, {
+globalStyle(`${styledLnbHeader} .header-collapse-btn svg`, {
   width: 14,
   height: 14,
-  fill: `var(--color-sidemenu-collapse-text, ${vars.color.text})`,
+  fill: `var(--color-lnb-collapse-text, ${vars.color.text})`,
 })
 
 // ── Body ─────────────────────────────────────────────────────────────────────
 
-export const styledSideMenuBarBody = style({
+export const styledLnbBody = style({
   flex: 1,
   overflowY: 'auto',
   overflowX: 'hidden',
   padding: '4px 0 20px',
 })
 
-globalStyle(`${styledSideMenuBarBody}::-webkit-scrollbar`, {
+globalStyle(`${styledLnbBody}::-webkit-scrollbar`, {
   width: 0,
   height: 0,
 })
 
 // ── Item ─────────────────────────────────────────────────────────────────────
 
-export const styledSideMenuBarItem = style({
+export const styledLnbItem = style({
   fontSize: vars.font.sizeMd,
   cursor: 'pointer',
   whiteSpace: 'nowrap',
@@ -176,43 +176,43 @@ export const styledSideMenuBarItem = style({
   position: 'relative',
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper`, {
+globalStyle(`${styledLnbItem} .menu-item-wrapper`, {
   display: 'flex',
   alignItems: 'center',
   gap: 10,
   padding: '10px 16px',
   transition: `color 180ms ease-out, background 150ms ease-out, border-left-color 180ms ease-out, padding ${DURATION} ${EASE}, gap ${DURATION} ${EASE}, justify-content ${DURATION} ${EASE}`,
-  color: `var(--color-sidemenu-item-text, ${vars.color.text})`,
+  color: `var(--color-lnb-item-text, ${vars.color.text})`,
   borderLeft: '3px solid transparent',
   textDecoration: 'none',
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper svg`, {
-  fill: `var(--color-sidemenu-item-text, ${vars.color.text})`,
+globalStyle(`${styledLnbItem} .menu-item-wrapper svg`, {
+  fill: `var(--color-lnb-item-text, ${vars.color.text})`,
   transition: `fill ${vars.transition.fast}`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper:hover`, {
+globalStyle(`${styledLnbItem} .menu-item-wrapper:hover`, {
   color: vars.color.primary,
   borderLeftColor: vars.color.primary,
-  background: `var(--color-sidemenu-item-hover-bg, ${vars.color.surfaceHover})`,
+  background: `var(--color-lnb-item-hover-bg, ${vars.color.surfaceHover})`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper:hover svg`, {
+globalStyle(`${styledLnbItem} .menu-item-wrapper:hover svg`, {
   fill: vars.color.primary,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper.is-active`, {
-  color: `var(--color-sidemenu-item-active-text, ${vars.color.primary})`,
-  borderLeftColor: `var(--color-sidemenu-item-active-border, ${vars.color.primary})`,
+globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active`, {
+  color: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
+  borderLeftColor: `var(--color-lnb-item-active-border, ${vars.color.primary})`,
   fontWeight: vars.font.weightBold,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-wrapper.is-active svg`, {
-  fill: `var(--color-sidemenu-item-active-text, ${vars.color.primary})`,
+globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active svg`, {
+  fill: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-icon`, {
+globalStyle(`${styledLnbItem} .menu-item-icon`, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -220,12 +220,12 @@ globalStyle(`${styledSideMenuBarItem} .menu-item-icon`, {
   transition: `width ${DURATION} ${EASE}, height ${DURATION} ${EASE}, background ${DURATION} ${EASE}, border-radius ${DURATION} ${EASE}`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-icon svg`, {
+globalStyle(`${styledLnbItem} .menu-item-icon svg`, {
   width: 18,
   height: 18,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-text`, {
+globalStyle(`${styledLnbItem} .menu-item-text`, {
   flex: 1,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -234,7 +234,7 @@ globalStyle(`${styledSideMenuBarItem} .menu-item-text`, {
   transition: `max-width ${DURATION} ${EASE}, opacity 180ms ease-out`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-arrow`, {
+globalStyle(`${styledLnbItem} .menu-item-arrow`, {
   display: 'flex',
   alignItems: 'center',
   maxWidth: 20,
@@ -243,16 +243,16 @@ globalStyle(`${styledSideMenuBarItem} .menu-item-arrow`, {
   transition: `transform 0.25s ${EASE}, max-width ${DURATION} ${EASE}, opacity 180ms ease-out`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-arrow svg`, {
+globalStyle(`${styledLnbItem} .menu-item-arrow svg`, {
   width: 14,
   height: 14,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-arrow.expanded`, {
+globalStyle(`${styledLnbItem} .menu-item-arrow.expanded`, {
   transform: 'rotate(90deg)',
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-external`, {
+globalStyle(`${styledLnbItem} .menu-item-external`, {
   display: 'flex',
   alignItems: 'center',
   maxWidth: 20,
@@ -261,14 +261,14 @@ globalStyle(`${styledSideMenuBarItem} .menu-item-external`, {
   transition: `max-width ${DURATION} ${EASE}, opacity 180ms ease-out`,
 })
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-external svg`, {
+globalStyle(`${styledLnbItem} .menu-item-external svg`, {
   width: 14,
   height: 14,
 })
 
 // ── Badge ─────────────────────────────────────────────────────────────────────
 
-globalStyle(`${styledSideMenuBarItem} .menu-item-badge`, {
+globalStyle(`${styledLnbItem} .menu-item-badge`, {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -284,7 +284,7 @@ globalStyle(`${styledSideMenuBarItem} .menu-item-badge`, {
   flexShrink: 0,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed .menu-item-badge`, {
+globalStyle(`${styledLnb}.collapsed .menu-item-badge`, {
   maxWidth: 0,
   minWidth: 0,
   overflow: 'hidden',
@@ -295,7 +295,7 @@ globalStyle(`${styledSideMenuBar}.collapsed .menu-item-badge`, {
 
 // ── Group label ───────────────────────────────────────────────────────────────
 
-export const styledSideMenuBarGroupLabel = style({
+export const styledLnbGroupLabel = style({
   padding: '14px 16px 4px',
   fontSize: vars.font.sizeXs,
   fontWeight: 600,
@@ -309,7 +309,7 @@ export const styledSideMenuBarGroupLabel = style({
   transition: `opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1)`,
 })
 
-globalStyle(`${styledSideMenuBar}.collapsed ${styledSideMenuBarGroupLabel}`, {
+globalStyle(`${styledLnb}.collapsed ${styledLnbGroupLabel}`, {
   opacity: 0,
   height: 0,
   padding: 0,
@@ -326,54 +326,54 @@ export const styledSubMenuItem = style({
 })
 
 globalStyle(`${styledSubMenuItem} li .menu-item-wrapper`, {
-  color: `var(--color-sidemenu-submenu-text, ${vars.color.textSecondary})`,
+  color: `var(--color-lnb-submenu-text, ${vars.color.textSecondary})`,
   paddingLeft: 44,
 })
 
 globalStyle(`${styledSubMenuItem} li .menu-item-wrapper svg`, {
-  fill: `var(--color-sidemenu-submenu-text, ${vars.color.textSecondary})`,
+  fill: `var(--color-lnb-submenu-text, ${vars.color.textSecondary})`,
 })
 
 // ── Divider ──────────────────────────────────────────────────────────────────
 
 export const styledDivider = style({
   border: 'none',
-  borderTop: `1px solid var(--color-sidemenu-border, ${vars.color.border})`,
+  borderTop: `1px solid var(--color-lnb-border, ${vars.color.border})`,
   margin: '8px 16px',
 })
 
 // ── Footer ───────────────────────────────────────────────────────────────────
 
-export const styledSideMenuBarFooter = style({
+export const styledLnbFooter = style({
   padding: 16,
   flexShrink: 0,
-  borderTop: `1px solid var(--color-sidemenu-border, ${vars.color.border})`,
+  borderTop: `1px solid var(--color-lnb-border, ${vars.color.border})`,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 })
 
 // ────────────────────────────────────────────────────────────────────────────
-// EXD 테마 구조 오버라이드 (컬러는 SideMenuBar.tokens.ts + theme-tokens.ts 로 처리)
+// EXD 테마 구조 오버라이드 (컬러는 Lnb.tokens.ts + theme-tokens.ts 로 처리)
 // ────────────────────────────────────────────────────────────────────────────
 
 // 헤더 로고 이미지 높이
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarHeader} .header-logo-full img`, {
+globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-logo-full img`, {
   height: 24,
 })
 
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarHeader} .header-logo-mini img`, {
+globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-logo-mini img`, {
   height: 24,
 })
 
-// 접힘 버튼 — hover 배경 (나머지는 --color-sidemenu-collapse-* 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarHeader} .header-collapse-btn:hover`, {
+// 접힘 버튼 — hover 배경 (나머지는 --color-lnb-collapse-* 토큰 처리)
+globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-collapse-btn:hover`, {
   background: 'rgba(0,0,0,0.25)',
   boxShadow: 'none',
 })
 
 // depth 1 (root) 메뉴 아이템 — 패딩 (컬러는 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarItem} .menu-item-wrapper`, {
+globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper`, {
   padding: '10px 12px',
   borderLeft: '3px solid transparent',
 })
@@ -384,69 +384,69 @@ globalStyle(`[data-solution="exd"] ${styledSubMenuItem} li .menu-item-wrapper`, 
 })
 
 // 아이콘 크기 — 20px
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarItem} .menu-item-icon svg`, {
+globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-icon svg`, {
   width: 20,
   height: 20,
 })
 
 // 접힌 상태 아이콘 컨테이너 — 36×36
-globalStyle(`[data-solution="exd"] ${styledSideMenuBar}.collapsed ${styledSideMenuBarItem} .menu-item-icon`, {
+globalStyle(`[data-solution="exd"] ${styledLnb}.collapsed ${styledLnbItem} .menu-item-icon`, {
   width: 36,
   height: 36,
   borderRadius: vars.radius.sm,
   backgroundColor: 'rgba(0,0,0,0.12)',
 })
 
-globalStyle(`[data-solution="exd"] ${styledSideMenuBar}.collapsed ${styledSideMenuBarItem} .menu-item-wrapper`, {
+globalStyle(`[data-solution="exd"] ${styledLnb}.collapsed ${styledLnbItem} .menu-item-wrapper`, {
   padding: '10px',
 })
 
-// Hover — 텍스트/테두리 색 (배경은 --color-sidemenu-item-hover-bg 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarItem} .menu-item-wrapper:hover`, {
+// Hover — 텍스트/테두리 색 (배경은 --color-lnb-item-hover-bg 토큰 처리)
+globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper:hover`, {
   color: vars.color.textInverse,
   borderLeftColor: vars.color.textInverse,
 })
 
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarItem} .menu-item-wrapper:hover svg`, {
+globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper:hover svg`, {
   fill: vars.color.textInverse,
 })
 
-// Active — 배경 (색상/테두리는 --color-sidemenu-item-active-* 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarItem} .menu-item-wrapper.is-active`, {
+// Active — 배경 (색상/테두리는 --color-lnb-item-active-* 토큰 처리)
+globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper.is-active`, {
   background: 'rgba(0,0,0,0.22)',
 })
 
-// 푸터 — 텍스트 색 (테두리는 --color-sidemenu-border 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarFooter}`, {
+// 푸터 — 텍스트 색 (테두리는 --color-lnb-border 토큰 처리)
+globalStyle(`[data-solution="exd"] ${styledLnbFooter}`, {
   color: 'rgba(255,255,255,0.7)',
 })
 
 // ── XDR 헤더 로고 위치 ────────────────────────────────────────────────────────
-globalStyle(`[data-solution="xdr"] ${styledSideMenuBarHeader}`, {
+globalStyle(`[data-solution="xdr"] ${styledLnbHeader}`, {
   height: 60,
   alignItems: 'flex-end',
   paddingBottom: 11,
 })
 
-globalStyle(`[data-solution="xdr"] ${styledSideMenuBarHeader} .header-collapse-btn`, {
+globalStyle(`[data-solution="xdr"] ${styledLnbHeader} .header-collapse-btn`, {
   top: 24,
 })
 
-globalStyle(`[data-solution="xdr"] ${styledSideMenuBar}.collapsed .header-collapse-btn`, {
+globalStyle(`[data-solution="xdr"] ${styledLnb}.collapsed .header-collapse-btn`, {
   right: -28,
 })
 
 // 스크롤바 — EXD 브랜드 배경 위 반투명 흰색
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarBody}::-webkit-scrollbar`, {
+globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar`, {
   width: 4,
   height: 4,
 })
 
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarBody}::-webkit-scrollbar-thumb`, {
+globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar-thumb`, {
   backgroundColor: 'rgba(255,255,255,0.25)',
   borderRadius: vars.radius.sm,
 })
 
-globalStyle(`[data-solution="exd"] ${styledSideMenuBarBody}::-webkit-scrollbar-track`, {
+globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar-track`, {
   backgroundColor: 'transparent',
 })

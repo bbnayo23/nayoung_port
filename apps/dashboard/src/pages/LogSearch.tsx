@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  SideMenuBar,
-  TopBar,
+  Lnb,
+  Gnb,
   Dropdown,
   Toggle,
   SearchBar,
@@ -222,7 +222,7 @@ export default function LogSearch() {
   const [tplShared, setTplShared] = useState(false)
   const [ctxMenu, setCtxMenu] = useState<{ open: boolean; x: number; y: number }>({ open: false, x: 0, y: 0 })
 
-  // 다크모드 — TopBar 테마 토글에 따라 <html class="dark"> 를 켜고 끈다.
+  // 다크모드 — Gnb 테마 토글에 따라 <html class="dark"> 를 켜고 끈다.
   useEffect(() => {
     const root = document.documentElement
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
@@ -427,7 +427,7 @@ export default function LogSearch() {
 
   return (
     <div className={s.appShell} data-solution="xdr">
-      {/* 최상단 TopBar */}
+      {/* 최상단 Gnb */}
       <header className={s.topHeader}>
         <div className={s.brandArea}>
           <span className={s.brandMark}>
@@ -435,7 +435,7 @@ export default function LogSearch() {
           </span>
           <span className={s.brandName}>SOC Console</span>
         </div>
-        <TopBar
+        <Gnb
           style={{ height: 44 }}
           userName="박나영"
           userEmail="nayeong.park@igloo.co.kr"
@@ -452,7 +452,7 @@ export default function LogSearch() {
       </header>
 
       <div className={s.bodyRow}>
-        <SideMenuBar
+        <Lnb
           menuGroup={sideMenu}
           activeKey={activeMenu}
           onActiveChange={setActiveMenu}

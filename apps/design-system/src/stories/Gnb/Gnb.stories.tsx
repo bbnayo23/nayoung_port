@@ -2,14 +2,14 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { vars } from '../../theme/contract.css'
-import TopBar from '../../components/TopBar'
-import type { TopBarNotiItem, TopBarDownloadItem, TopBarProduct } from '../../components/TopBar'
+import Gnb from '../../components/Gnb'
+import type { GnbNotiItem, GnbDownloadItem, GnbProduct } from '../../components/Gnb'
 
 // ── Meta ───────────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: 'StyleGuide/TopBar',
-  component: TopBar,
+  title: 'StyleGuide/Gnb',
+  component: Gnb,
   parameters: { layout: 'padded' },
   argTypes: {
     notiCount: {
@@ -68,7 +68,7 @@ const meta = {
     defaultTheme: 'light',
     defaultLang: 'ko',
   },
-} satisfies Meta<typeof TopBar>
+} satisfies Meta<typeof Gnb>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -85,7 +85,7 @@ const Preview = ({ children }: { children: ReactNode }) => (
 export const Playground: Story = {
   render: (args) => (
     <Preview>
-      <TopBar {...args} />
+      <Gnb {...args} />
     </Preview>
   ),
 }
@@ -95,7 +95,7 @@ export const Playground: Story = {
 /** 알림 아이콘 클릭 시 notiItems 팝오버가 열립니다. 항목 클릭 시 읽음 처리됩니다. */
 export const WithNotifications: Story = {
   render: () => {
-    const [notiItems, setNotiItems] = useState<TopBarNotiItem[]>([
+    const [notiItems, setNotiItems] = useState<GnbNotiItem[]>([
       {
         id: '1',
         title: '새 위협 탐지',
@@ -122,7 +122,7 @@ export const WithNotifications: Story = {
 
     return (
       <Preview>
-        <TopBar
+        <Gnb
           notiCount={unread}
           notiItems={notiItems}
           onNotiItemClick={(id) => setNotiItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)))}
@@ -139,14 +139,14 @@ export const WithNotifications: Story = {
 /** 다운로드 아이콘 클릭 시 downloadItems 팝오버가 열립니다. 완료/진행/실패 상태를 보여줍니다. */
 export const WithDownloads: Story = {
   render: () => {
-    const downloadItems: TopBarDownloadItem[] = [
+    const downloadItems: GnbDownloadItem[] = [
       { id: '1', fileName: 'security_report_2025.csv', fileSize: '2.4 MB', status: 'done' },
       { id: '2', fileName: 'threat_analysis_log.xlsx', fileSize: '8.1 MB', status: 'progress', progress: 65 },
       { id: '3', fileName: 'incident_export_may.zip', fileSize: '15.3 MB', status: 'error' },
     ]
     return (
       <Preview>
-        <TopBar notiCount={0} downloadItems={downloadItems} />
+        <Gnb notiCount={0} downloadItems={downloadItems} />
       </Preview>
     )
   },
@@ -165,7 +165,7 @@ export const WithCallbacks: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <Preview>
-          <TopBar
+          <Gnb
             notiCount={3}
             userName="홍길동"
             userEmail="hong@example.com"
@@ -216,7 +216,7 @@ export const WithCallbacks: Story = {
 export const CustomProducts: Story = {
   render: () => {
     const [active, setActive] = useState('xdr')
-    const products: TopBarProduct[] = [
+    const products: GnbProduct[] = [
       { id: 'xdr', label: 'Spider XDR' },
       { id: 'rn', label: 'Spider RN' },
       { id: 'ud', label: 'Unified Defense' },
@@ -224,7 +224,7 @@ export const CustomProducts: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <Preview>
-          <TopBar notiCount={0} products={products} defaultActiveProduct={active} onProductChange={setActive} />
+          <Gnb notiCount={0} products={products} defaultActiveProduct={active} onProductChange={setActive} />
         </Preview>
         <p style={{ margin: 0, fontSize: 13, color: vars.color.textSecondary }}>
           현재 프로덕트: <strong style={{ color: vars.color.text }}>{active}</strong>

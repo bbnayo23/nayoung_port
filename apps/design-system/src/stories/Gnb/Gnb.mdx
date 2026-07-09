@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
-import * as Stories from './TopBar.stories'
+import * as Stories from './Gnb.stories'
 
 <Meta of={Stories} />
 
@@ -10,20 +10,20 @@ import * as Stories from './TopBar.stories'
 XDR 레이아웃 상단 우측에 고정되는 액션 바입니다. 알림, 다운로드, 사용자 메뉴(테마/언어/로그아웃), 앱 전환 팝오버 4개의 버튼으로 구성됩니다. 팝오버는 영역 외부 클릭 시 자동으로 닫힙니다.
 
 <Source
-  code={`import TopBar from '@port/design-system'
+  code={`import Gnb from '@port/design-system'
 import type {
-  TopBarProps,
-  TopBarNotiItem,
-  TopBarDownloadItem,
-  TopBarProduct,
-  TopBarLangItem,
+  GnbProps,
+  GnbNotiItem,
+  GnbDownloadItem,
+  GnbProduct,
+  GnbLangItem,
   ThemeMode,
   LangCode,
 } from '@port/design-system'`}
   language="tsx"
 />
 
-## API — TopBarProps
+## API — GnbProps
 
 ### 사용자 정보
 
@@ -38,7 +38,7 @@ import type {
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
 | `notiCount` | `number` | `0` | 알림 아이콘 배지 숫자. 0이면 미표시, 99 초과 시 "99+" |
-| `notiItems` | `TopBarNotiItem[]` | — | 알림 팝오버 목록. 미전달 시 내장 기본값 사용 |
+| `notiItems` | `GnbNotiItem[]` | — | 알림 팝오버 목록. 미전달 시 내장 기본값 사용 |
 | `onNotificationClick` | `() => void` | — | 알림 아이콘 버튼 클릭 콜백 |
 | `onNotiItemClick` | `(id: string) => void` | — | 알림 항목 클릭 콜백 — 읽음 처리에 사용 |
 | `onNotiReadAll` | `() => void` | — | '모두 읽음' 버튼 클릭 콜백 |
@@ -47,7 +47,7 @@ import type {
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `downloadItems` | `TopBarDownloadItem[]` | — | 다운로드 팝오버 목록. 미전달 시 내장 기본값 사용 |
+| `downloadItems` | `GnbDownloadItem[]` | — | 다운로드 팝오버 목록. 미전달 시 내장 기본값 사용 |
 | `onDownloadClick` | `() => void` | — | 다운로드 아이콘 버튼 클릭 콜백 |
 | `onDownloadItemClick` | `(id: string) => void` | — | 다운로드 항목 클릭 콜백 |
 
@@ -57,7 +57,7 @@ import type {
 | --- | --- | --- | --- |
 | `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'light'` | 초기 테마 모드 |
 | `defaultLang` | `'ko' \| 'en' \| 'ja'` | `'ko'` | 초기 언어 코드 |
-| `langs` | `TopBarLangItem[]` | — | 언어 선택 목록. 미전달 시 ko/en/ja 기본값 사용 |
+| `langs` | `GnbLangItem[]` | — | 언어 선택 목록. 미전달 시 ko/en/ja 기본값 사용 |
 | `onThemeChange` | `(mode: ThemeMode) => void` | — | 테마 변경 콜백 |
 | `onLangChange` | `(lang: LangCode) => void` | — | 언어 변경 콜백 |
 
@@ -65,7 +65,7 @@ import type {
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
-| `products` | `TopBarProduct[]` | — | 앱 전환 팝오버 목록. 미전달 시 XDR/RN/UD 기본값 사용 |
+| `products` | `GnbProduct[]` | — | 앱 전환 팝오버 목록. 미전달 시 XDR/RN/UD 기본값 사용 |
 | `defaultActiveProduct` | `string` | `'xdr'` | 초기 활성 프로덕트 id |
 | `onProductChange` | `(id: string) => void` | — | 프로덕트 변경 콜백 |
 | `onProfileClick` | `() => void` | — | 프로필 영역 클릭 콜백 |
@@ -79,18 +79,18 @@ import type {
   code={`type ThemeMode = 'light' | 'dark' | 'system'
 type LangCode  = 'ko' | 'en' | 'ja'
 
-interface TopBarLangItem {
+interface GnbLangItem {
   code:  LangCode
   label: string
   flag:  string
 }
 
-interface TopBarProduct {
+interface GnbProduct {
   id:    string
   label: ReactNode
 }
 
-interface TopBarNotiItem {
+interface GnbNotiItem {
   id:       string
   title:    string
   message?: string
@@ -98,7 +98,7 @@ interface TopBarNotiItem {
   read?:    boolean
 }
 
-interface TopBarDownloadItem {
+interface GnbDownloadItem {
   id:        string
   fileName:  string
   fileSize?: string

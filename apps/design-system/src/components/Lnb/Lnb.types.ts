@@ -17,7 +17,7 @@ export interface MenuItem {
   showDivider?: boolean
 }
 
-export interface SideMenuBarProps extends CommonProps {
+export interface LnbProps extends CommonProps {
   header?: ReactNode
   footer?: ReactNode
   position?: 'left' | 'right'

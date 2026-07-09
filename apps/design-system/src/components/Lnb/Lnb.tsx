@@ -10,22 +10,22 @@ import {
   type KeyboardEvent,
 } from 'react'
 import {
-  styledSideMenuBar,
-  styledSideMenuBarHeader,
-  styledSideMenuBarBody,
-  styledSideMenuBarItem,
-  styledSideMenuBarFooter,
-  styledSideMenuBarGroupLabel,
+  styledLnb,
+  styledLnbHeader,
+  styledLnbBody,
+  styledLnbItem,
+  styledLnbFooter,
+  styledLnbGroupLabel,
   styledSubMenuItem,
   styledDivider,
-} from './SideMenuBar.css'
-import type { SideMenuBarProps, MenuItem } from './SideMenuBar.types'
+} from './Lnb.css'
+import type { LnbProps, MenuItem } from './Lnb.types'
 import { XdrChevronRightIcon, XdrChevronLeftIcon, ExdExternalLinkIcon } from '@port/icon-library'
 import cn from 'classnames'
 
-const STORAGE_KEY = 'igloo-side-menu-bar-collapsed'
+const STORAGE_KEY = 'igloo-lnb-collapsed'
 
-const SideMenuBarContext = createContext<{
+const LnbContext = createContext<{
   collapsed: boolean
   activeKey: string
   setActiveKey: (key: string) => void
@@ -41,11 +41,11 @@ const SideMenuBarContext = createContext<{
   onCollapse: () => {},
 })
 
-const SideMenuBarItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem; depth: number }) => {
+const LnbItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem; depth: number }) => {
   const { key, icon, label, children, target, onClick, url, showDivider, badge, tooltip, type } = menuItem
   const [isExpanded, setIsExpanded] = useState(true)
   const { collapsed, activeKey, setActiveKey, hoverExpanded, setHoverExpanded, onCollapse } =
-    useContext(SideMenuBarContext)
+    useContext(LnbContext)
 
   const effectiveCollapsed = collapsed && !hoverExpanded
   const hasChildren = !effectiveCollapsed && children !== undefined
@@ -55,7 +55,7 @@ const SideMenuBarItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem;
   // group label — non-interactive section header
   if (type === 'group') {
     return (
-      <li className={styledSideMenuBarGroupLabel} aria-hidden="true">
+      <li className={styledLnbGroupLabel} aria-hidden="true">
         {label}
       </li>
     )
@@ -86,7 +86,7 @@ const SideMenuBarItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem;
 
   return (
     <>
-      <li className={styledSideMenuBarItem} data-depth={depth} data-collapsed={effectiveCollapsed} {...rest}>
+      <li className={styledLnbItem} data-depth={depth} data-collapsed={effectiveCollapsed} {...rest}>
         <a
           className={cn('menu-item-wrapper', isActive && 'is-active')}
           href={url}
@@ -116,7 +116,7 @@ const SideMenuBarItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem;
         {hasExpandedChildren &&
           children.map((childMenuItem) => (
             <ul key={childMenuItem.key} className={cn(styledSubMenuItem, 'sub-menu-item')} role="menu">
-              <SideMenuBarItem menuItem={childMenuItem} depth={depth + 1} />
+              <LnbItem menuItem={childMenuItem} depth={depth + 1} />
             </ul>
           ))}
       </li>
@@ -125,8 +125,8 @@ const SideMenuBarItem = ({ menuItem, depth = 1, ...rest }: { menuItem: MenuItem;
   )
 }
 
-// Main: SideMenuBar
-const SideMenuBar = forwardRef<HTMLDivElement, PropsWithChildren<SideMenuBarProps>>((props, ref) => {
+// Main: Lnb
+const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref) => {
   const {
     header,
     footer,
@@ -209,7 +209,7 @@ const SideMenuBar = forwardRef<HTMLDivElement, PropsWithChildren<SideMenuBarProp
   const effectiveCollapsed = collapsed && !hoverExpanded
 
   return (
-    <SideMenuBarContext.Provider
+    <LnbContext.Provider
       value={{
         collapsed,
         activeKey,
@@ -221,13 +221,13 @@ const SideMenuBar = forwardRef<HTMLDivElement, PropsWithChildren<SideMenuBarProp
     >
       <div
         ref={ref}
-        className={cn(styledSideMenuBar, 'side-menu-bar', effectiveCollapsed && 'collapsed', className)}
+        className={cn(styledLnb, 'lnb', effectiveCollapsed && 'collapsed', className)}
         style={style}
         onMouseLeave={handleSidebarMouseLeave}
         data-position={position}
         {...rest}
       >
-        <div className={cn(styledSideMenuBarHeader, 'side-menu-bar-header')}>
+        <div className={cn(styledLnbHeader, 'lnb-header')}>
           {header}
           {showCollapseButton && (
             <button
@@ -242,46 +242,46 @@ const SideMenuBar = forwardRef<HTMLDivElement, PropsWithChildren<SideMenuBarProp
         </div>
         <ul
           ref={bodyRef}
-          className={cn(styledSideMenuBarBody, 'side-menu-bar-body')}
+          className={cn(styledLnbBody, 'lnb-body')}
           role="menu"
           onMouseEnter={handleBodyMouseEnter}
           onKeyDown={handleBodyKeyDown}
         >
           {menuGroup.map((item) => (
-            <SideMenuBarItem key={item.key} menuItem={item} depth={1} />
+            <LnbItem key={item.key} menuItem={item} depth={1} />
           ))}
         </ul>
         {footer}
       </div>
-    </SideMenuBarContext.Provider>
+    </LnbContext.Provider>
   )
 })
 
-// Section: SideMenuBar
-const SideMenuBarHeader = forwardRef<HTMLDivElement, PropsWithChildren>(({ children, ...rest }, ref) => (
-  <div ref={ref} className={cn(styledSideMenuBarHeader, 'side-menu-bar-header')} {...rest}>
+// Section: Lnb
+const LnbHeader = forwardRef<HTMLDivElement, PropsWithChildren>(({ children, ...rest }, ref) => (
+  <div ref={ref} className={cn(styledLnbHeader, 'lnb-header')} {...rest}>
     {children}
   </div>
 ))
 
-const SideMenuBarFooter = forwardRef<HTMLDivElement, PropsWithChildren>(({ children, ...rest }, ref) => (
-  <div ref={ref} className={styledSideMenuBarFooter} {...rest}>
+const LnbFooter = forwardRef<HTMLDivElement, PropsWithChildren>(({ children, ...rest }, ref) => (
+  <div ref={ref} className={styledLnbFooter} {...rest}>
     {children}
   </div>
 ))
 
-SideMenuBar.displayName = 'SideMenuBar'
-SideMenuBarHeader.displayName = 'SideMenuBar.Header'
-SideMenuBarItem.displayName = 'SideMenuBar.Item'
-SideMenuBarFooter.displayName = 'SideMenuBar.Footer'
+Lnb.displayName = 'Lnb'
+LnbHeader.displayName = 'Lnb.Header'
+LnbItem.displayName = 'Lnb.Item'
+LnbFooter.displayName = 'Lnb.Footer'
 
-const SideMenuBarWithSections = Object.assign(SideMenuBar, {
-  Header: SideMenuBarHeader,
-  Item: SideMenuBarItem,
-  Footer: SideMenuBarFooter,
+const LnbWithSections = Object.assign(Lnb, {
+  Header: LnbHeader,
+  Item: LnbItem,
+  Footer: LnbFooter,
 })
 
-export default SideMenuBarWithSections
+export default LnbWithSections
 
 /** localStorage에서 접힘 초기값을 읽어옵니다. */
 export const getStoredCollapsed = (defaultValue = true): boolean => {

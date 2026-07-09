@@ -11,7 +11,7 @@ const langPopoverIn = keyframes({
   to: { opacity: 1, transform: 'none' },
 })
 
-export const topBar = style({
+export const gnb = style({
   display: 'flex',
   alignItems: 'center',
   height: 86,
@@ -20,13 +20,13 @@ export const topBar = style({
   background: 'transparent',
 })
 
-export const topBarBtnWrap = style({
+export const gnbBtnWrap = style({
   position: 'relative',
   display: 'inline-flex',
   pointerEvents: 'auto',
 })
 
-export const topBarBtn = style({
+export const gnbBtn = style({
   width: 40,
   height: 40,
   borderRadius: 30,
@@ -52,14 +52,14 @@ export const topBarBtn = style({
   },
 })
 
-globalStyle(`${topBarBtn} svg`, {
+globalStyle(`${gnbBtn} svg`, {
   width: 16,
   height: 16,
   fill: 'currentColor',
   flexShrink: 0,
 })
 
-export const topBarNotiBadge = style({
+export const gnbNotiBadge = style({
   position: 'absolute',
   top: -3,
   left: 26,
@@ -76,7 +76,7 @@ export const topBarNotiBadge = style({
   whiteSpace: 'nowrap',
 })
 
-export const topBarUserDropdown = style({
+export const gnbUserDropdown = style({
   position: 'absolute',
   top: 'calc(100% + 8px)',
   right: 0,
@@ -97,7 +97,7 @@ export const topBarUserDropdown = style({
   animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
 })
 
-export const topBarUserProfile = style({
+export const gnbUserProfile = style({
   padding: '12px 16px',
   borderRadius: 20,
   display: 'flex',
@@ -110,7 +110,7 @@ export const topBarUserProfile = style({
   },
 })
 
-export const topBarUserProfileText = style({
+export const gnbUserProfileText = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 5,
@@ -119,7 +119,7 @@ export const topBarUserProfileText = style({
   overflow: 'hidden',
 })
 
-export const topBarUserName = style({
+export const gnbUserName = style({
   fontSize: vars.font.sizeSm,
   fontWeight: 700,
   lineHeight: '15px',
@@ -131,7 +131,7 @@ export const topBarUserName = style({
   whiteSpace: 'nowrap',
 })
 
-export const topBarUserEmail = style({
+export const gnbUserEmail = style({
   fontSize: vars.font.sizeXs,
   fontWeight: 400,
   lineHeight: 1,
@@ -142,7 +142,7 @@ export const topBarUserEmail = style({
   whiteSpace: 'nowrap',
 })
 
-export const topBarUserAdminBadge = style({
+export const gnbUserAdminBadge = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -157,22 +157,22 @@ export const topBarUserAdminBadge = style({
   flexShrink: 0,
 })
 
-export const topBarThemeGroup = style({
+export const gnbThemeGroup = style({
   alignSelf: 'center',
 })
 
-globalStyle(`${topBarThemeGroup} .button-group-item`, {
+globalStyle(`${gnbThemeGroup} .button-group-item`, {
   width: 56,
   minWidth: 56,
   padding: '8px 0',
   height: 34,
 })
 
-export const topBarLangSection = style({
+export const gnbLangSection = style({
   position: 'relative',
 })
 
-export const topBarLangHeader = style({
+export const gnbLangHeader = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -195,29 +195,29 @@ export const topBarLangHeader = style({
   },
 })
 
-export const topBarLangFlag = style({
+export const gnbLangFlag = style({
   fontSize: vars.font.sizeMd,
   lineHeight: 1,
   flexShrink: 0,
 })
 
-export const topBarLangLabel = style({
+export const gnbLangLabel = style({
   flex: 1,
   textAlign: 'left',
 })
 
-export const topBarLangChevron = style({
+export const gnbLangChevron = style({
   display: 'inline-flex',
   flexShrink: 0,
   color: vars.color.textMuted,
   transition: `transform ${vars.transition.fast}`,
 })
 
-export const topBarLangChevronOpen = style({
+export const gnbLangChevronOpen = style({
   transform: 'rotate(180deg)',
 })
 
-export const topBarLangPopover = style({
+export const gnbLangPopover = style({
   position: 'absolute',
   top: 0,
   right: 'calc(100% + 24px)',
@@ -237,7 +237,7 @@ export const topBarLangPopover = style({
   animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
 })
 
-export const topBarLangItem = style({
+export const gnbLangItem = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -260,12 +260,12 @@ export const topBarLangItem = style({
   },
 })
 
-export const topBarLangItemActive = style({
+export const gnbLangItemActive = style({
   color: vars.color.primary,
   fontWeight: 700,
 })
 
-export const topBarLangCheckMark = style({
+export const gnbLangCheckMark = style({
   marginLeft: 'auto',
   width: 6,
   height: 6,
@@ -274,7 +274,7 @@ export const topBarLangCheckMark = style({
   flexShrink: 0,
 })
 
-export const topBarMenuPopover = style({
+export const gnbMenuPopover = style({
   position: 'absolute',
   top: 'calc(100% + 8px)',
   right: 0,
@@ -294,7 +294,7 @@ export const topBarMenuPopover = style({
   animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
 })
 
-export const topBarMenuPopoverItem = style({
+export const gnbMenuPopoverItem = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -312,17 +312,17 @@ export const topBarMenuPopoverItem = style({
   },
 })
 
-export const topBarMenuPopoverItemActive = style({
+export const gnbMenuPopoverItemActive = style({
   background: vars.color.surfaceHover,
 })
 
-export const topBarMenuSpider = style({
+export const gnbMenuSpider = style({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 4,
 })
 
-export const topBarMenuSpiderText = style({
+export const gnbMenuSpiderText = style({
   fontSize: 13,
   fontWeight: 700,
   lineHeight: 1,
@@ -330,11 +330,11 @@ export const topBarMenuSpiderText = style({
   color: vars.color.text,
   transition: `color ${vars.transition.fast}`,
   selectors: {
-    [`.${topBarMenuPopoverItem}:hover &`]: { color: vars.color.primary },
+    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
   },
 })
 
-export const topBarMenuSuffix = style({
+export const gnbMenuSuffix = style({
   fontSize: 13,
   fontWeight: 700,
   lineHeight: 1,
@@ -342,14 +342,14 @@ export const topBarMenuSuffix = style({
   transition: `color ${vars.transition.fast}`,
 })
 
-export const topBarMenuSuffixMint = style({
+export const gnbMenuSuffixMint = style({
   color: vars.color.primary,
   selectors: {
-    [`.${topBarMenuPopoverItem}:hover &`]: { color: vars.color.primary },
+    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
   },
 })
 
-export const topBarMenuUD = style({
+export const gnbMenuUD = style({
   fontSize: 13,
   fontWeight: 700,
   lineHeight: 1,
@@ -358,23 +358,23 @@ export const topBarMenuUD = style({
   gap: 2,
 })
 
-export const topBarMenuUDRed = style({
+export const gnbMenuUDRed = style({
   color: vars.color.error,
   transition: `color ${vars.transition.fast}`,
   selectors: {
-    [`.${topBarMenuPopoverItem}:hover &`]: { color: vars.color.primary },
+    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
   },
 })
 
-export const topBarMenuUDBlack = style({
+export const gnbMenuUDBlack = style({
   color: vars.color.text,
   transition: `color ${vars.transition.fast}`,
   selectors: {
-    [`.${topBarMenuPopoverItem}:hover &`]: { color: vars.color.primary },
+    [`.${gnbMenuPopoverItem}:hover &`]: { color: vars.color.primary },
   },
 })
 
-export const topBarMenuActiveDot = style({
+export const gnbMenuActiveDot = style({
   marginLeft: 'auto',
   width: 6,
   height: 6,
@@ -383,13 +383,13 @@ export const topBarMenuActiveDot = style({
   flexShrink: 0,
 })
 
-export const topBarUserMenuList = style({
+export const gnbUserMenuList = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 2,
 })
 
-export const topBarUserDropdownItem = style({
+export const gnbUserDropdownItem = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -414,7 +414,7 @@ export const topBarUserDropdownItem = style({
   },
 })
 
-export const topBarUserDropdownItemDanger = style({
+export const gnbUserDropdownItemDanger = style({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -439,7 +439,7 @@ export const topBarUserDropdownItemDanger = style({
   },
 })
 
-export const topBarBtnIsOpen = style({
+export const gnbBtnIsOpen = style({
   background: vars.color.primarySoft,
   color: vars.color.primary,
   selectors: {
@@ -454,7 +454,7 @@ export const topBarBtnIsOpen = style({
   },
 })
 
-export const topBarPopoverHeader = style({
+export const gnbPopoverHeader = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -462,7 +462,7 @@ export const topBarPopoverHeader = style({
   borderBottom: `1px solid ${vars.color.border}`,
 })
 
-export const topBarPopoverTitle = style({
+export const gnbPopoverTitle = style({
   fontSize: 13,
   fontWeight: 700,
   color: vars.color.text,
@@ -471,7 +471,7 @@ export const topBarPopoverTitle = style({
   gap: 6,
 })
 
-export const topBarPopoverCountBadge = style({
+export const gnbPopoverCountBadge = style({
   padding: '2px 6px',
   borderRadius: 10,
   background: vars.color.error,
@@ -481,7 +481,7 @@ export const topBarPopoverCountBadge = style({
   lineHeight: 1.4,
 })
 
-export const topBarPopoverEmpty = style({
+export const gnbPopoverEmpty = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -492,7 +492,7 @@ export const topBarPopoverEmpty = style({
   fontSize: vars.font.sizeSm,
 })
 
-export const topBarNotiPopover = style({
+export const gnbNotiPopover = style({
   position: 'absolute',
   top: 'calc(100% + 8px)',
   right: 0,
@@ -508,7 +508,7 @@ export const topBarNotiPopover = style({
   animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
 })
 
-export const topBarReadAllBtn = style({
+export const gnbReadAllBtn = style({
   fontSize: vars.font.sizeXs,
   color: vars.color.primary,
   border: 'none',
@@ -521,7 +521,7 @@ export const topBarReadAllBtn = style({
   },
 })
 
-export const topBarNotiList = style({
+export const gnbNotiList = style({
   display: 'flex',
   flexDirection: 'column',
   maxHeight: 320,
@@ -529,7 +529,7 @@ export const topBarNotiList = style({
   padding: '4px 0',
 })
 
-export const topBarNotiItem = style({
+export const gnbNotiItem = style({
   display: 'flex',
   alignItems: 'flex-start',
   gap: 10,
@@ -545,7 +545,7 @@ export const topBarNotiItem = style({
   },
 })
 
-export const topBarNotiDot = style({
+export const gnbNotiDot = style({
   flexShrink: 0,
   marginTop: 4,
   width: 7,
@@ -554,11 +554,11 @@ export const topBarNotiDot = style({
   background: vars.color.primary,
 })
 
-export const topBarNotiDotRead = style({
+export const gnbNotiDotRead = style({
   background: 'transparent',
 })
 
-export const topBarNotiBody = style({
+export const gnbNotiBody = style({
   flex: 1,
   minWidth: 0,
   display: 'flex',
@@ -566,7 +566,7 @@ export const topBarNotiBody = style({
   gap: 3,
 })
 
-export const topBarNotiItemTitle = style({
+export const gnbNotiItemTitle = style({
   fontSize: vars.font.sizeSm,
   fontWeight: 600,
   color: vars.color.text,
@@ -575,12 +575,12 @@ export const topBarNotiItemTitle = style({
   whiteSpace: 'nowrap',
 })
 
-export const topBarNotiItemTitleRead = style({
+export const gnbNotiItemTitleRead = style({
   fontWeight: 400,
   color: vars.color.textSecondary,
 })
 
-export const topBarNotiItemMsg = style({
+export const gnbNotiItemMsg = style({
   fontSize: vars.font.sizeXs,
   color: vars.color.textSecondary,
   overflow: 'hidden',
@@ -590,13 +590,13 @@ export const topBarNotiItemMsg = style({
   lineHeight: 1.5,
 })
 
-export const topBarNotiItemTime = style({
+export const gnbNotiItemTime = style({
   fontSize: 10,
   color: vars.color.textMuted,
   marginTop: 1,
 })
 
-export const topBarDlPopover = style({
+export const gnbDlPopover = style({
   position: 'absolute',
   top: 'calc(100% + 8px)',
   right: 0,
@@ -612,7 +612,7 @@ export const topBarDlPopover = style({
   animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
 })
 
-export const topBarDlList = style({
+export const gnbDlList = style({
   display: 'flex',
   flexDirection: 'column',
   maxHeight: 320,
@@ -620,7 +620,7 @@ export const topBarDlList = style({
   padding: '4px 0',
 })
 
-export const topBarDlItem = style({
+export const gnbDlItem = style({
   display: 'flex',
   alignItems: 'flex-start',
   gap: 10,
@@ -636,7 +636,7 @@ export const topBarDlItem = style({
   },
 })
 
-export const topBarDlIconWrap = style({
+export const gnbDlIconWrap = style({
   flexShrink: 0,
   width: 32,
   height: 32,
@@ -648,7 +648,7 @@ export const topBarDlIconWrap = style({
   color: vars.color.textSecondary,
 })
 
-export const topBarDlInfo = style({
+export const gnbDlInfo = style({
   flex: 1,
   minWidth: 0,
   display: 'flex',
@@ -656,7 +656,7 @@ export const topBarDlInfo = style({
   gap: 5,
 })
 
-export const topBarDlName = style({
+export const gnbDlName = style({
   fontSize: vars.font.sizeSm,
   fontWeight: 500,
   color: vars.color.text,
@@ -665,7 +665,7 @@ export const topBarDlName = style({
   whiteSpace: 'nowrap',
 })
 
-export const topBarDlMeta = style({
+export const gnbDlMeta = style({
   display: 'flex',
   alignItems: 'center',
   gap: 6,
@@ -673,7 +673,7 @@ export const topBarDlMeta = style({
   color: vars.color.textMuted,
 })
 
-export const topBarDlStatusDone = style({
+export const gnbDlStatusDone = style({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 3,
@@ -681,7 +681,7 @@ export const topBarDlStatusDone = style({
   fontWeight: 600,
 })
 
-export const topBarDlStatusError = style({
+export const gnbDlStatusError = style({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 3,
@@ -689,18 +689,18 @@ export const topBarDlStatusError = style({
   fontWeight: 600,
 })
 
-export const topBarDlStatusProgress = style({
+export const gnbDlStatusProgress = style({
   color: vars.color.primary,
   fontWeight: 600,
 })
 
-export const topBarDlProgressWrap = style({
+export const gnbDlProgressWrap = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 3,
 })
 
-export const topBarDlProgressTrack = style({
+export const gnbDlProgressTrack = style({
   width: '100%',
   height: 3,
   borderRadius: 2,
@@ -708,7 +708,7 @@ export const topBarDlProgressTrack = style({
   overflow: 'hidden',
 })
 
-export const topBarDlProgressFill = style({
+export const gnbDlProgressFill = style({
   height: '100%',
   width: 'var(--dl-progress, 0%)',
   background: vars.color.primary,

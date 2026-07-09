@@ -14,88 +14,88 @@ import {
 } from '@port/icon-library'
 import ButtonGroup from '../ButtonGroup'
 import {
-  topBar,
-  topBarBtn,
-  topBarBtnWrap,
-  topBarBtnIsOpen,
-  topBarNotiBadge,
-  topBarUserDropdown,
-  topBarUserProfile,
-  topBarUserProfileText,
-  topBarUserName,
-  topBarUserEmail,
-  topBarUserAdminBadge,
-  topBarThemeGroup,
-  topBarLangSection,
-  topBarLangHeader,
-  topBarLangFlag,
-  topBarLangLabel,
-  topBarLangChevron,
-  topBarLangChevronOpen,
-  topBarLangPopover,
-  topBarLangItem,
-  topBarLangItemActive,
-  topBarLangCheckMark,
-  topBarUserMenuList,
-  topBarUserDropdownItem,
-  topBarUserDropdownItemDanger,
-  topBarMenuPopover,
-  topBarMenuPopoverItem,
-  topBarMenuPopoverItemActive,
-  topBarMenuSpider,
-  topBarMenuSpiderText,
-  topBarMenuSuffix,
-  topBarMenuSuffixMint,
-  topBarMenuUD,
-  topBarMenuUDRed,
-  topBarMenuUDBlack,
-  topBarMenuActiveDot,
-  topBarPopoverHeader,
-  topBarPopoverTitle,
-  topBarPopoverCountBadge,
-  topBarPopoverEmpty,
-  topBarReadAllBtn,
-  topBarNotiPopover,
-  topBarNotiList,
-  topBarNotiItem,
-  topBarNotiDot,
-  topBarNotiDotRead,
-  topBarNotiBody,
-  topBarNotiItemTitle,
-  topBarNotiItemTitleRead,
-  topBarNotiItemMsg,
-  topBarNotiItemTime,
-  topBarDlPopover,
-  topBarDlList,
-  topBarDlItem,
-  topBarDlIconWrap,
-  topBarDlInfo,
-  topBarDlName,
-  topBarDlMeta,
-  topBarDlStatusDone,
-  topBarDlStatusError,
-  topBarDlStatusProgress,
-  topBarDlProgressWrap,
-  topBarDlProgressTrack,
-  topBarDlProgressFill,
-} from './TopBar.css'
+  gnb,
+  gnbBtn,
+  gnbBtnWrap,
+  gnbBtnIsOpen,
+  gnbNotiBadge,
+  gnbUserDropdown,
+  gnbUserProfile,
+  gnbUserProfileText,
+  gnbUserName,
+  gnbUserEmail,
+  gnbUserAdminBadge,
+  gnbThemeGroup,
+  gnbLangSection,
+  gnbLangHeader,
+  gnbLangFlag,
+  gnbLangLabel,
+  gnbLangChevron,
+  gnbLangChevronOpen,
+  gnbLangPopover,
+  gnbLangItem,
+  gnbLangItemActive,
+  gnbLangCheckMark,
+  gnbUserMenuList,
+  gnbUserDropdownItem,
+  gnbUserDropdownItemDanger,
+  gnbMenuPopover,
+  gnbMenuPopoverItem,
+  gnbMenuPopoverItemActive,
+  gnbMenuSpider,
+  gnbMenuSpiderText,
+  gnbMenuSuffix,
+  gnbMenuSuffixMint,
+  gnbMenuUD,
+  gnbMenuUDRed,
+  gnbMenuUDBlack,
+  gnbMenuActiveDot,
+  gnbPopoverHeader,
+  gnbPopoverTitle,
+  gnbPopoverCountBadge,
+  gnbPopoverEmpty,
+  gnbReadAllBtn,
+  gnbNotiPopover,
+  gnbNotiList,
+  gnbNotiItem,
+  gnbNotiDot,
+  gnbNotiDotRead,
+  gnbNotiBody,
+  gnbNotiItemTitle,
+  gnbNotiItemTitleRead,
+  gnbNotiItemMsg,
+  gnbNotiItemTime,
+  gnbDlPopover,
+  gnbDlList,
+  gnbDlItem,
+  gnbDlIconWrap,
+  gnbDlInfo,
+  gnbDlName,
+  gnbDlMeta,
+  gnbDlStatusDone,
+  gnbDlStatusError,
+  gnbDlStatusProgress,
+  gnbDlProgressWrap,
+  gnbDlProgressTrack,
+  gnbDlProgressFill,
+} from './Gnb.css'
 import type {
-  TopBarProps,
+  GnbProps,
   ThemeMode,
   LangCode,
-  TopBarLangItem,
-  TopBarProduct,
-  TopBarNotiItem,
-  TopBarDownloadItem,
-} from './TopBar.types'
+  GnbLangItem,
+  GnbProduct,
+  GnbNotiItem,
+  GnbDownloadItem,
+} from './Gnb.types'
 
-const DEFAULT_LANGS: TopBarLangItem[] = [
+const DEFAULT_LANGS: GnbLangItem[] = [
   { code: 'ko', label: '한국어', flag: '🇰🇷' },
   { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'ja', label: '日本語', flag: '🇯🇵' },
 ]
 
-const DEFAULT_NOTI_ITEMS: TopBarNotiItem[] = [
+const DEFAULT_NOTI_ITEMS: GnbNotiItem[] = [
   {
     id: '1',
     title: '새 위협 탐지',
@@ -119,7 +119,7 @@ const DEFAULT_NOTI_ITEMS: TopBarNotiItem[] = [
   },
 ]
 
-const DEFAULT_DL_ITEMS: TopBarDownloadItem[] = [
+const DEFAULT_DL_ITEMS: GnbDownloadItem[] = [
   { id: '1', fileName: 'security_report_2025.csv', fileSize: '2.4 MB', status: 'done' },
   { id: '2', fileName: 'threat_analysis_log.xlsx', fileSize: '8.1 MB', status: 'progress', progress: 65 },
   { id: '3', fileName: 'incident_export_may.zip', fileSize: '15.3 MB', status: 'error' },
@@ -128,33 +128,33 @@ const DEFAULT_DL_ITEMS: TopBarDownloadItem[] = [
 const formatNotiCount = (count: number) => (count >= 99 ? '99+' : String(count))
 
 const SpiderXdrLabel = () => (
-  <span className={topBarMenuSpider}>
-    <span className={topBarMenuSpiderText}>Spider</span>
-    <span className={`${topBarMenuSuffix} ${topBarMenuSuffixMint}`}>XDR</span>
+  <span className={gnbMenuSpider}>
+    <span className={gnbMenuSpiderText}>Spider</span>
+    <span className={`${gnbMenuSuffix} ${gnbMenuSuffixMint}`}>XDR</span>
   </span>
 )
 
 const SpiderRnLabel = () => (
-  <span className={topBarMenuSpider}>
-    <span className={topBarMenuSpiderText}>Spider</span>
-    <span className={`${topBarMenuSuffix} ${topBarMenuSuffixMint}`}>RN</span>
+  <span className={gnbMenuSpider}>
+    <span className={gnbMenuSpiderText}>Spider</span>
+    <span className={`${gnbMenuSuffix} ${gnbMenuSuffixMint}`}>RN</span>
   </span>
 )
 
 const UDLabel = () => (
-  <span className={topBarMenuUD}>
-    <span className={topBarMenuUDRed}>Unified</span>
-    <span className={topBarMenuUDBlack}>Defense</span>
+  <span className={gnbMenuUD}>
+    <span className={gnbMenuUDRed}>Unified</span>
+    <span className={gnbMenuUDBlack}>Defense</span>
   </span>
 )
 
-const DEFAULT_PRODUCTS: TopBarProduct[] = [
+const DEFAULT_PRODUCTS: GnbProduct[] = [
   { id: 'xdr', label: <SpiderXdrLabel /> },
   { id: 'rn', label: <SpiderRnLabel /> },
   { id: 'ud', label: <UDLabel /> },
 ]
 
-const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
+const Gnb = forwardRef<HTMLDivElement, GnbProps>(
   (
     {
       notiCount = 0,
@@ -268,11 +268,11 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
     }
 
     return (
-      <div ref={ref} className={`${topBar}${className ? ` ${className}` : ''}`} {...rest}>
-        <div className={topBarBtnWrap} ref={notiBtnWrapRef}>
+      <div ref={ref} className={`${gnb}${className ? ` ${className}` : ''}`} {...rest}>
+        <div className={gnbBtnWrap} ref={notiBtnWrapRef}>
           <button
             type="button"
-            className={`${topBarBtn}${notiOpen ? ` ${topBarBtnIsOpen}` : ''}`}
+            className={`${gnbBtn}${notiOpen ? ` ${gnbBtnIsOpen}` : ''}`}
             aria-label="알림"
             aria-haspopup="true"
             aria-expanded={notiOpen}
@@ -280,45 +280,45 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           >
             <XdrNavAlertIcon size={16} />
           </button>
-          {notiCount > 0 && <span className={topBarNotiBadge}>{formatNotiCount(notiCount)}</span>}
+          {notiCount > 0 && <span className={gnbNotiBadge}>{formatNotiCount(notiCount)}</span>}
 
           {notiOpen && (
-            <div className={topBarNotiPopover} role="dialog" aria-label="알림" onClick={(e) => e.stopPropagation()}>
-              <div className={topBarPopoverHeader}>
-                <span className={topBarPopoverTitle}>
+            <div className={gnbNotiPopover} role="dialog" aria-label="알림" onClick={(e) => e.stopPropagation()}>
+              <div className={gnbPopoverHeader}>
+                <span className={gnbPopoverTitle}>
                   알림
-                  {unreadCount > 0 && <span className={topBarPopoverCountBadge}>{unreadCount}</span>}
+                  {unreadCount > 0 && <span className={gnbPopoverCountBadge}>{unreadCount}</span>}
                 </span>
                 {unreadCount > 0 && (
-                  <button type="button" className={topBarReadAllBtn} onClick={() => onNotiReadAll?.()}>
+                  <button type="button" className={gnbReadAllBtn} onClick={() => onNotiReadAll?.()}>
                     모두 읽음
                   </button>
                 )}
               </div>
 
               {resolvedNotiItems.length === 0 ? (
-                <div className={topBarPopoverEmpty}>
+                <div className={gnbPopoverEmpty}>
                   <XdrNavAlertIcon size={24} />
                   알림이 없습니다
                 </div>
               ) : (
-                <div className={topBarNotiList}>
+                <div className={gnbNotiList}>
                   {resolvedNotiItems.map((item) => (
                     <button
                       key={item.id}
                       type="button"
-                      className={topBarNotiItem}
+                      className={gnbNotiItem}
                       onClick={() => {
                         onNotiItemClick?.(item.id)
                       }}
                     >
-                      <span className={`${topBarNotiDot}${item.read ? ` ${topBarNotiDotRead}` : ''}`} />
-                      <div className={topBarNotiBody}>
-                        <span className={`${topBarNotiItemTitle}${item.read ? ` ${topBarNotiItemTitleRead}` : ''}`}>
+                      <span className={`${gnbNotiDot}${item.read ? ` ${gnbNotiDotRead}` : ''}`} />
+                      <div className={gnbNotiBody}>
+                        <span className={`${gnbNotiItemTitle}${item.read ? ` ${gnbNotiItemTitleRead}` : ''}`}>
                           {item.title}
                         </span>
-                        {item.message && <span className={topBarNotiItemMsg}>{item.message}</span>}
-                        {item.time && <span className={topBarNotiItemTime}>{item.time}</span>}
+                        {item.message && <span className={gnbNotiItemMsg}>{item.message}</span>}
+                        {item.time && <span className={gnbNotiItemTime}>{item.time}</span>}
                       </div>
                     </button>
                   ))}
@@ -328,10 +328,10 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           )}
         </div>
 
-        <div className={topBarBtnWrap} ref={dlBtnWrapRef}>
+        <div className={gnbBtnWrap} ref={dlBtnWrapRef}>
           <button
             type="button"
-            className={`${topBarBtn}${dlOpen ? ` ${topBarBtnIsOpen}` : ''}`}
+            className={`${gnbBtn}${dlOpen ? ` ${gnbBtnIsOpen}` : ''}`}
             aria-label="다운로드"
             aria-haspopup="true"
             aria-expanded={dlOpen}
@@ -341,55 +341,55 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           </button>
 
           {dlOpen && (
-            <div className={topBarDlPopover} role="dialog" aria-label="다운로드" onClick={(e) => e.stopPropagation()}>
-              <div className={topBarPopoverHeader}>
-                <span className={topBarPopoverTitle}>다운로드</span>
+            <div className={gnbDlPopover} role="dialog" aria-label="다운로드" onClick={(e) => e.stopPropagation()}>
+              <div className={gnbPopoverHeader}>
+                <span className={gnbPopoverTitle}>다운로드</span>
               </div>
 
               {resolvedDlItems.length === 0 ? (
-                <div className={topBarPopoverEmpty}>
+                <div className={gnbPopoverEmpty}>
                   <XdrDownloadIcon size={24} />
                   다운로드 내역이 없습니다
                 </div>
               ) : (
-                <div className={topBarDlList}>
+                <div className={gnbDlList}>
                   {resolvedDlItems.map((item) => (
                     <button
                       key={item.id}
                       type="button"
-                      className={topBarDlItem}
+                      className={gnbDlItem}
                       onClick={() => {
                         onDownloadItemClick?.(item.id)
                       }}
                     >
-                      <div className={topBarDlIconWrap}>
+                      <div className={gnbDlIconWrap}>
                         <XdrDownloadIcon size={14} />
                       </div>
-                      <div className={topBarDlInfo}>
-                        <span className={topBarDlName}>{item.fileName}</span>
+                      <div className={gnbDlInfo}>
+                        <span className={gnbDlName}>{item.fileName}</span>
                         {item.status === 'progress' ? (
-                          <div className={topBarDlProgressWrap}>
-                            <div className={topBarDlProgressTrack}>
+                          <div className={gnbDlProgressWrap}>
+                            <div className={gnbDlProgressTrack}>
                               <div
-                                className={topBarDlProgressFill}
+                                className={gnbDlProgressFill}
                                 style={{ '--dl-progress': `${item.progress ?? 0}%` } as CSSProperties}
                               />
                             </div>
-                            <div className={topBarDlMeta}>
+                            <div className={gnbDlMeta}>
                               {item.fileSize && <span>{item.fileSize}</span>}
-                              <span className={topBarDlStatusProgress}>{item.progress ?? 0}%</span>
+                              <span className={gnbDlStatusProgress}>{item.progress ?? 0}%</span>
                             </div>
                           </div>
                         ) : (
-                          <div className={topBarDlMeta}>
+                          <div className={gnbDlMeta}>
                             {item.fileSize && <span>{item.fileSize}</span>}
                             {item.status === 'done' && (
-                              <span className={topBarDlStatusDone}>
+                              <span className={gnbDlStatusDone}>
                                 <XdrCheckIcon size={10} /> 완료
                               </span>
                             )}
                             {item.status === 'error' && (
-                              <span className={topBarDlStatusError}>
+                              <span className={gnbDlStatusError}>
                                 <XdrCautionIcon size={10} /> 실패
                               </span>
                             )}
@@ -404,10 +404,10 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           )}
         </div>
 
-        <div className={topBarBtnWrap} ref={userBtnWrapRef}>
+        <div className={gnbBtnWrap} ref={userBtnWrapRef}>
           <button
             type="button"
-            className={`${topBarBtn}${userOpen ? ` ${topBarBtnIsOpen}` : ''}`}
+            className={`${gnbBtn}${userOpen ? ` ${gnbBtnIsOpen}` : ''}`}
             aria-label="사용자 메뉴"
             aria-haspopup="true"
             aria-expanded={userOpen}
@@ -423,16 +423,16 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           </button>
 
           {userOpen && (
-            <div className={topBarUserDropdown} role="menu" onClick={(e) => e.stopPropagation()}>
-              <div className={topBarUserProfile} role="menuitem" tabIndex={0} onClick={onProfileClick}>
-                <div className={topBarUserProfileText}>
-                  <p className={topBarUserName}>{userName}</p>
-                  <p className={topBarUserEmail}>{userEmail}</p>
+            <div className={gnbUserDropdown} role="menu" onClick={(e) => e.stopPropagation()}>
+              <div className={gnbUserProfile} role="menuitem" tabIndex={0} onClick={onProfileClick}>
+                <div className={gnbUserProfileText}>
+                  <p className={gnbUserName}>{userName}</p>
+                  <p className={gnbUserEmail}>{userEmail}</p>
                 </div>
-                <span className={topBarUserAdminBadge}>{userRole}</span>
+                <span className={gnbUserAdminBadge}>{userRole}</span>
               </div>
 
-              <div className={topBarThemeGroup}>
+              <div className={gnbThemeGroup}>
                 <ButtonGroup variant="primary">
                   <ButtonGroup.Item
                     active={themeMode === 'light'}
@@ -458,44 +458,44 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
                 </ButtonGroup>
               </div>
 
-              <div className={topBarLangSection}>
+              <div className={gnbLangSection}>
                 <button
                   type="button"
-                  className={topBarLangHeader}
+                  className={gnbLangHeader}
                   aria-expanded={langOpen}
                   onClick={() => setLangOpen((p) => !p)}
                 >
-                  <span className={topBarLangFlag}>{currentLang?.flag}</span>
-                  <span className={topBarLangLabel}>{currentLang?.label}</span>
-                  <span className={`${topBarLangChevron}${langOpen ? ` ${topBarLangChevronOpen}` : ''}`}>
+                  <span className={gnbLangFlag}>{currentLang?.flag}</span>
+                  <span className={gnbLangLabel}>{currentLang?.label}</span>
+                  <span className={`${gnbLangChevron}${langOpen ? ` ${gnbLangChevronOpen}` : ''}`}>
                     <XdrChevronRightIcon size={12} />
                   </span>
                 </button>
 
                 {langOpen && (
-                  <div className={topBarLangPopover} role="menu" onClick={(e) => e.stopPropagation()}>
+                  <div className={gnbLangPopover} role="menu" onClick={(e) => e.stopPropagation()}>
                     {resolvedLangs.map(({ code, label, flag }) => (
                       <button
                         key={code}
                         type="button"
                         role="menuitem"
-                        className={`${topBarLangItem}${lang === code ? ` ${topBarLangItemActive}` : ''}`}
+                        className={`${gnbLangItem}${lang === code ? ` ${gnbLangItemActive}` : ''}`}
                         onClick={() => handleLangChange(code)}
                       >
-                        <span className={topBarLangFlag}>{flag}</span>
+                        <span className={gnbLangFlag}>{flag}</span>
                         {label}
-                        {lang === code && <span className={topBarLangCheckMark} />}
+                        {lang === code && <span className={gnbLangCheckMark} />}
                       </button>
                     ))}
                   </div>
                 )}
               </div>
 
-              <div className={topBarUserMenuList}>
+              <div className={gnbUserMenuList}>
                 <button
                   type="button"
                   role="menuitem"
-                  className={topBarUserDropdownItem}
+                  className={gnbUserDropdownItem}
                   onClick={() => {
                     closeAll()
                     onProgramInfoClick?.()
@@ -506,7 +506,7 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
                 <button
                   type="button"
                   role="menuitem"
-                  className={topBarUserDropdownItemDanger}
+                  className={gnbUserDropdownItemDanger}
                   onClick={() => {
                     closeAll()
                     onLogoutClick?.()
@@ -519,10 +519,10 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           )}
         </div>
 
-        <div className={topBarBtnWrap} ref={menuBtnWrapRef}>
+        <div className={gnbBtnWrap} ref={menuBtnWrapRef}>
           <button
             type="button"
-            className={`${topBarBtn}${menuOpen ? ` ${topBarBtnIsOpen}` : ''}`}
+            className={`${gnbBtn}${menuOpen ? ` ${gnbBtnIsOpen}` : ''}`}
             aria-label="앱 전환"
             aria-haspopup="true"
             aria-expanded={menuOpen}
@@ -539,17 +539,17 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
           </button>
 
           {menuOpen && (
-            <div className={topBarMenuPopover} role="menu" onClick={(e) => e.stopPropagation()}>
+            <div className={gnbMenuPopover} role="menu" onClick={(e) => e.stopPropagation()}>
               {resolvedProducts.map(({ id, label }) => (
                 <button
                   key={id}
                   type="button"
                   role="menuitem"
-                  className={`${topBarMenuPopoverItem}${activeProduct === id ? ` ${topBarMenuPopoverItemActive}` : ''}`}
+                  className={`${gnbMenuPopoverItem}${activeProduct === id ? ` ${gnbMenuPopoverItemActive}` : ''}`}
                   onClick={() => handleProductChange(id)}
                 >
                   {label}
-                  {activeProduct === id && <span className={topBarMenuActiveDot} />}
+                  {activeProduct === id && <span className={gnbMenuActiveDot} />}
                 </button>
               ))}
             </div>
@@ -560,6 +560,6 @@ const TopBar = forwardRef<HTMLDivElement, TopBarProps>(
   },
 )
 
-TopBar.displayName = 'TopBar'
+Gnb.displayName = 'Gnb'
 
-export default TopBar
+export default Gnb

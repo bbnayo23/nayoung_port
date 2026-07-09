@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Source, Canvas, Controls } from '@storybook/addon-docs/blocks'
-import * as Stories from './SideMenuBar.stories'
+import * as Stories from './Lnb.stories'
 
 <Meta of={Stories} />
 
@@ -9,10 +9,10 @@ import * as Stories from './SideMenuBar.stories'
 
 XDR 테마에서 사용하는 좌측 사이드 네비게이션 바입니다. 접기/펼치기, 다단계 서브메뉴, hover 확장, 배지 알림, 그룹 레이블을 지원합니다. `collapsed` 상태는 `localStorage`에 자동으로 저장됩니다.
 
-<Source code={`import SideMenuBar from '@port/design-system'
-import type { MenuItem, SideMenuBarProps } from '@port/design-system'`} language="tsx" />
+<Source code={`import Lnb from '@port/design-system'
+import type { MenuItem, LnbProps } from '@port/design-system'`} language="tsx" />
 
-## API — SideMenuBar
+## API — Lnb
 
 | Prop | Type | Default | 설명 |
 | --- | --- | --- | --- |
@@ -64,7 +64,7 @@ import type { MenuItem, SideMenuBarProps } from '@port/design-system'`} language
 
 ## 접힘 상태 (Collapsed)
 
-접힌 상태(56px)로 시작합니다. 헤더 토글 버튼 또는 메뉴 본문 hover로 일시 확장되며, 마우스가 벗어나면 다시 접힙니다. 접힘 상태는 `igloo-side-menu-bar-collapsed` 키로 `localStorage`에 자동 저장되고, `getStoredCollapsed()` 헬퍼로 초기값을 읽어올 수 있습니다.
+접힌 상태(56px)로 시작합니다. 헤더 토글 버튼 또는 메뉴 본문 hover로 일시 확장되며, 마우스가 벗어나면 다시 접힙니다. 접힘 상태는 `igloo-lnb-collapsed` 키로 `localStorage`에 자동 저장되고, `getStoredCollapsed()` 헬퍼로 초기값을 읽어올 수 있습니다.
 
 <Canvas of={Stories.Collapsed} />
 

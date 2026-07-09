@@ -32,7 +32,7 @@ globalStyle(`${appShell} ::-webkit-scrollbar-thumb`, {
 })
 globalStyle(`${appShell} ::-webkit-scrollbar-thumb:hover`, { background: vars.color.borderHover })
 
-// 최상단 TopBar
+// 최상단 Gnb
 export const topHeader = style({
   position: 'relative',
   zIndex: 100,
@@ -82,8 +82,8 @@ export const bodyRow = style({
 })
 
 // 사이드바 헤더 영역 제거 — 메뉴 아이템이 최상단부터 보이게
-globalStyle(`${bodyRow} .side-menu-bar-header`, { height: 0, minHeight: 0, padding: 0 })
-globalStyle(`${bodyRow} .side-menu-bar-header .header-collapse-btn`, { top: 8 })
+globalStyle(`${bodyRow} .lnb-header`, { height: 0, minHeight: 0, padding: 0 })
+globalStyle(`${bodyRow} .lnb-header .header-collapse-btn`, { top: 8 })
 
 export const content = style({
   flex: 1,

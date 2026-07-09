@@ -255,7 +255,7 @@ globalStyle(`${ghostIconButton}:hover, ${ghostIconButton}.is-hover`, {
   background: vars.color.surfaceHover,
 })
 
-// ── XDR SideMenuBar 헤더 오버라이드 ─────────────────────────────────────────
+// ── XDR Lnb 헤더 오버라이드 ─────────────────────────────────────────
 
 // ── XDR 툴바 오버라이드 ─────────────────────────────────────────────────────
 
@@ -292,11 +292,11 @@ globalStyle(`[data-solution="xdr"] .${totalCount} strong`, {
   color: vars.color.textSecondary,
 })
 
-globalStyle(`[data-solution="xdr"] .SideMenuBar_styledSideMenuBarHeader__rjun1s1`, {
+globalStyle(`[data-solution="xdr"] .lnb-header`, {
   height: 65,
 })
 
-globalStyle(`[data-solution="xdr"] .SideMenuBar_styledSideMenuBarHeader__rjun1s1 .header-collapse-btn`, {
+globalStyle(`[data-solution="xdr"] .lnb-header .header-collapse-btn`, {
   top: 29,
 })
 

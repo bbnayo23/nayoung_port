@@ -3,18 +3,18 @@ import type { ReactNode, HTMLAttributes } from 'react'
 export type ThemeMode = 'light' | 'dark' | 'system'
 export type LangCode = 'ko' | 'en' | 'ja'
 
-export interface TopBarLangItem {
+export interface GnbLangItem {
   code: LangCode
   label: string
   flag: string
 }
 
-export interface TopBarProduct {
+export interface GnbProduct {
   id: string
   label: ReactNode
 }
 
-export interface TopBarNotiItem {
+export interface GnbNotiItem {
   id: string
   title: string
   message?: string
@@ -22,7 +22,7 @@ export interface TopBarNotiItem {
   read?: boolean
 }
 
-export interface TopBarDownloadItem {
+export interface GnbDownloadItem {
   id: string
   fileName: string
   fileSize?: string
@@ -30,7 +30,7 @@ export interface TopBarDownloadItem {
   progress?: number
 }
 
-export interface TopBarProps extends HTMLAttributes<HTMLDivElement> {
+export interface GnbProps extends HTMLAttributes<HTMLDivElement> {
   notiCount?: number
   userName?: string
   userEmail?: string
@@ -44,12 +44,12 @@ export interface TopBarProps extends HTMLAttributes<HTMLDivElement> {
   onProfileClick?: () => void
   onProgramInfoClick?: () => void
   onLogoutClick?: () => void
-  products?: TopBarProduct[]
+  products?: GnbProduct[]
   defaultActiveProduct?: string
   onProductChange?: (id: string) => void
-  langs?: TopBarLangItem[]
-  notiItems?: TopBarNotiItem[]
-  downloadItems?: TopBarDownloadItem[]
+  langs?: GnbLangItem[]
+  notiItems?: GnbNotiItem[]
+  downloadItems?: GnbDownloadItem[]
   onNotiItemClick?: (id: string) => void
   onNotiReadAll?: () => void
   onDownloadItemClick?: (id: string) => void

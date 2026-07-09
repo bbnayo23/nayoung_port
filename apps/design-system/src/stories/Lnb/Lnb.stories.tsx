@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { vars } from '../../theme/contract.css'
-import SideMenuBar from '../../components/SideMenuBar'
-import type { MenuItem } from '../../components/SideMenuBar'
+import Lnb from '../../components/Lnb'
+import type { MenuItem } from '../../components/Lnb'
 import {
   XdrNavDashboardIcon,
   XdrNavAiIcon,
@@ -128,7 +128,7 @@ const Demo = ({
         background: vars.color.background,
       }}
     >
-      <SideMenuBar
+      <Lnb
         menuGroup={menuOverride ?? BASE_MENU}
         activeKey={activeKey}
         onActiveChange={setActiveKey}
@@ -162,8 +162,8 @@ const Demo = ({
 // ── Meta ───────────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: 'StyleGuide/SideMenuBar',
-  component: SideMenuBar,
+  title: 'StyleGuide/Lnb',
+  component: Lnb,
   parameters: { layout: 'padded' },
   argTypes: {
     collapsed: {
@@ -188,7 +188,7 @@ const meta = {
     onCollapse: { table: { disable: true } },
     onActiveChange: { table: { disable: true } },
   },
-} satisfies Meta<typeof SideMenuBar>
+} satisfies Meta<typeof Lnb>
 
 export default meta
 type Story = StoryObj<typeof meta>
