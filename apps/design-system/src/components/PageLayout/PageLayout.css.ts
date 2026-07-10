@@ -292,14 +292,6 @@ globalStyle(`[data-solution="xdr"] .${totalCount} strong`, {
   color: vars.color.textSecondary,
 })
 
-globalStyle(`[data-solution="xdr"] .lnb-header`, {
-  height: 65,
-})
-
-globalStyle(`[data-solution="xdr"] .lnb-header .header-collapse-btn`, {
-  top: 29,
-})
-
 // ══════════════════════════════════════════════════════════════════════════════
 // Stats Bar
 // ══════════════════════════════════════════════════════════════════════════════

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import cn from 'classnames'
-import { appLayout, appLayoutGnb, appLayoutBody, appLayoutMain } from './AppLayout.css'
+import { appLayout, appLayoutBody, appLayoutMainWrap, appLayoutMain } from './AppLayout.css'
 import type { AppLayoutProps } from './AppLayout.types'
 
 /**
@@ -26,10 +26,13 @@ const AppLayout = forwardRef<HTMLDivElement, AppLayoutProps>((props, ref) => {
       data-solution={solution}
       {...rest}
     >
-      {gnb && <div className={appLayoutGnb}>{gnb}</div>}
+      {gnb}
       <div className={cn(appLayoutBody, 'app-layout-body')}>
         {lnb}
-        <main className={cn(appLayoutMain, 'app-layout-main', mainClassName)}>{children}</main>
+        {/* Main 래퍼 — 배경은 LNB 배경색과 동일. Main 라운드 코너가 이 색을 드러낸다. */}
+        <div className={cn(appLayoutMainWrap, 'app-layout-main-wrap')}>
+          <main className={cn(appLayoutMain, 'app-layout-main', mainClassName)}>{children}</main>
+        </div>
       </div>
     </div>
   )

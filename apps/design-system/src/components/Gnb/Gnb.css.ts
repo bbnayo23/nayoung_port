@@ -17,22 +17,26 @@ const C = {
   homeIcon: '#123e80', // navy — 홈 박스 안 아이콘
 }
 
-// 밴드 배경: 하단 은은한 파란 radial glow 3겹 + 상→하 라이트 그라디언트
+// 밴드 배경: 하단 은은한 파란 radial glow 3겹 + 대각 라이트 그라디언트 (Figma 지정값)
 const BAND_BG = [
-  'radial-gradient(1600px 90px at 6% 120%, rgba(40, 120, 235, 0.14), rgba(40, 120, 235, 0) 62%)',
-  'radial-gradient(1200px 84px at 104% 122%, rgba(40, 120, 235, 0.09), rgba(40, 120, 235, 0) 58%)',
-  'radial-gradient(1600px 128px at 120% 128%, rgba(40, 120, 235, 0.05), rgba(40, 120, 235, 0) 72%)',
-  'linear-gradient(180deg, #e9f2f9 0%, #f3f8fc 50%, #fdfefe 100%)',
+  'radial-gradient(115% 160% at -5% 120%, rgba(40, 120, 235, 0.17) 0%, rgba(40, 120, 235, 0) 62%)',
+  'radial-gradient(110% 150% at 104% 122%, rgba(40, 120, 235, 0.10) 0%, rgba(40, 120, 235, 0) 58%)',
+  'radial-gradient(135% 230% at 120% 128%, rgba(40, 120, 235, 0.06) 0%, rgba(40, 120, 235, 0) 72%)',
+  'linear-gradient(155deg, #e9f2f9 0%, #f3f8fc 50%, #fdfefe 100%)',
 ].join(', ')
 
-// ── 밴드 (전체 폭 40px) ───────────────────────────────────────────────────────
+// ── 밴드 (전체 폭 56px, 콘텐츠는 상단 40px / 하단 16px 은 body 로 겹쳐 그라디언트 이음) ──
+// Figma "GNB-band" 56px. padding-bottom 16 로 콘텐츠를 상단 40px 에 두고, margin-bottom -16 로
+// 하단 16px 를 body 위로 겹쳐(z-index 20) LNB·Main 카드의 라운드 코너가 GNB 그라디언트를 드러낸다.
 export const gnb = style({
   position: 'relative',
-  zIndex: 100,
+  zIndex: 20,
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  height: 40,
+  height: 56,
+  paddingBottom: 16,
+  marginBottom: -16,
   flexShrink: 0,
   background: BAND_BG,
 })
@@ -95,17 +99,10 @@ export const gnbActions = style({
   flexShrink: 0,
 })
 
-// AI 스파클 애니메이션 — 큰 별은 회전하며 팝, 작은 반짝이는 깜빡(트윙클)
-const sparkleSpin = keyframes({
-  '0%': { transform: 'scale(1) rotate(0deg)' },
-  '50%': { transform: 'scale(1.15) rotate(12deg)' },
-  '100%': { transform: 'scale(1) rotate(0deg)' },
-})
-
+// AI 스파클 hover 애니메이션 — 은은하게 반짝이는 고급 트윙클 (미세한 스케일 + 글로우 숨쉬기)
 const sparkleTwinkle = keyframes({
-  '0%, 100%': { opacity: 1, transform: 'scale(1)' },
-  '40%': { opacity: 0.2, transform: 'scale(0.5)' },
-  '70%': { opacity: 1, transform: 'scale(1.15)' },
+  '0%, 100%': { transform: 'scale(1)', opacity: 0.92 },
+  '50%': { transform: 'scale(1.07)', opacity: 1 },
 })
 
 // AI Assistant 버튼 (스파클 + 라벨)
@@ -212,34 +209,17 @@ globalStyle(`${gnbIconButton} svg, ${gnbHomeButton} svg, ${gnbAiButton} svg, ${g
 })
 
 // ── AI 스파클 hover 트윙클 ─────────────────────────────────────────────────────
-// 큰 별(첫 path)은 버튼 hover 시 회전하며 반짝이고,
-// 작은 반짝이(우상단 십자 2획 + 좌하단 원)는 스태거드 깜빡임으로 반짝인다.
+// 버튼 hover 시 스파클이 작아졌다 커지며 반짝인다.
 globalStyle(`${gnbAiButton} svg`, {
   transformOrigin: 'center',
 })
 globalStyle(`${gnbAiButton}:hover svg`, {
-  animation: `${sparkleSpin} 900ms ease-in-out infinite`,
-  filter: 'drop-shadow(0 0 3px rgba(124, 92, 255, 0.55))',
-})
-globalStyle(
-  `${gnbAiButton}:hover svg > path:nth-child(2), ${gnbAiButton}:hover svg > path:nth-child(3)`,
-  {
-    transformBox: 'fill-box',
-    transformOrigin: 'center',
-    animation: `${sparkleTwinkle} 700ms ease-in-out infinite`,
-  },
-)
-globalStyle(`${gnbAiButton}:hover svg > circle`, {
-  transformBox: 'fill-box',
-  transformOrigin: 'center',
-  animation: `${sparkleTwinkle} 700ms ease-in-out 350ms infinite`,
+  animation: `${sparkleTwinkle} 1800ms ease-in-out infinite`,
+  filter: 'drop-shadow(0 0 2px rgba(124, 92, 255, 0.35))',
 })
 // 모션 최소화 선호 시 애니메이션 비활성화
-globalStyle(
-  `${gnbAiButton}:hover svg, ${gnbAiButton}:hover svg > path, ${gnbAiButton}:hover svg > circle`,
-  {
-    '@media': {
-      '(prefers-reduced-motion: reduce)': { animation: 'none' },
-    },
+globalStyle(`${gnbAiButton}:hover svg`, {
+  '@media': {
+    '(prefers-reduced-motion: reduce)': { animation: 'none' },
   },
-)
+})

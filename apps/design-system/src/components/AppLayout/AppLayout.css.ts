@@ -7,47 +7,86 @@ import { vars } from '../../theme/contract.css'
  * 이어지는 대각 그라디언트, LNB·Main 은 좌상단 한쪽 라운드 + 은은한 그림자 카드.
  */
 
-// 페이지 전체 배경 — Figma root(156:214). GNB 밴드 하단(#fdfefe)과 자연스럽게 이어진다.
-const ROOT_BG =
-  'linear-gradient(16.25deg, #eaf1ef 12.4%, #f2f6f5 50%, #f6f8f7 87.6%)'
+// 페이지 전체 배경 (Figma "--grad-chrome") — GNB 밴드가 페이드되는 밝은 대각 그라디언트.
+// GNB(56px)가 하단 16px 를 이 배경 위로 겹치며(z-index 20), LNB·Main(z-index 21)의 라운드
+// 코너가 GNB 그라디언트를 드러내 GNB→body 배경이 자연스럽게 이어진다.
+const ROOT_BG = 'linear-gradient(155deg, #eaf1ef 0%, #f2f6f5 50%, #f6f8f7 100%)'
+
+// 카드 좌상단 라운드 (Figma --c5j-radius)
+const CARD_RADIUS = 16
 
 // ── Root (세로: GNB → Body) ────────────────────────────────────────────────────
 export const appLayout = style({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   height: '100vh',
   overflow: 'hidden',
   background: `var(--color-app-bg, ${ROOT_BG})`,
+  backgroundRepeat: 'no-repeat',
   color: `var(--color-text-primary, ${vars.color.text})`,
   fontFamily: vars.font.family,
 })
 
-// GNB 슬롯 — 최상단 고정
-export const appLayoutGnb = style({
-  position: 'relative',
-  zIndex: 100,
-  flexShrink: 0,
-})
-
-// ── Body (가로: LNB → Main) ────────────────────────────────────────────────────
-// 배경은 지정하지 않아 루트 그라디언트가 그대로 비쳐 GNB 아래 영역이 이어진다.
+// ── Body (가로: LNB → Main) — GNB 하단 16px 겹침 위로 올라오도록 z-index 상향 ──────
 export const appLayoutBody = style({
   position: 'relative',
-  zIndex: 0,
+  zIndex: 21,
   display: 'flex',
   flex: 1,
   minHeight: 0,
+  background: "linear-gradient(to right, rgba(40, 120, 235, 0), rgba(40, 120, 235, 0.03))"
 })
 
-// LNB 슬롯 — Main 위로 그림자가 얹히도록 z-index 상향
 globalStyle(`${appLayoutBody} > .lnb`, {
-  zIndex: 2,
+  zIndex: 1,
 })
 
-// ── Main — 흰 카드 (좌상단 한쪽 라운드 + 그림자) ─────────────────────────────────
+
+
+// LNB 우측 은은한 경계 그라디언트 (그림자 대체 — 아주 옅게)
+globalStyle(`${appLayoutBody} > .lnb::before`, {
+  content: '""',
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  right: 0,
+  width: 20,
+  background: 'linear-gradient(to right, rgba(40, 120, 235, 0), rgba(40, 120, 235, 0.03))',
+  pointerEvents: 'none',
+  zIndex: 1,
+})
+
+// ── Main 래퍼 — 배경은 LNB 배경색과 동일. Main 좌상단 라운드 코너가 이 색을 드러낸다. ──
+const LNB_BG = '#f9fafb'
+
+export const appLayoutMainWrap = style({
+  position: 'relative',
+  zIndex: 2,
+  flex: 1,
+  minWidth: 0,
+  minHeight: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  background: `var(--color-lnb-bg, ${LNB_BG})`,
+})
+
+// 좌상단 — LNB ::before 와 동일한 옅은 그라디언트. Main(흰 카드) 뒤에 깔려 라운드 코너에서
+// 드러나며, LNB 우측 ::before 그림자와 이어져 경계를 없앤다.
+globalStyle(`${appLayoutMainWrap}::before`, {
+  content: '""',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: 20,
+  height: 20,
+  background: 'linear-gradient(135deg, rgba(40, 120, 235, 0.03), rgba(40, 120, 235, 0) 70%)',
+  pointerEvents: 'none',
+})
+
+// ── Main — 흰 카드 (좌상단 한쪽 라운드) — 래퍼(LNB색) 위에 얹혀 코너가 LNB색을 드러낸다 ──
 export const appLayoutMain = style({
   position: 'relative',
-  zIndex: 1,
   flex: 1,
   minWidth: 0,
   minHeight: 0,
@@ -55,8 +94,9 @@ export const appLayoutMain = style({
   display: 'flex',
   flexDirection: 'column',
   background: `var(--color-app-main-bg, #ffffff)`,
-  borderTopLeftRadius: 16,
-  boxShadow: '0 0 3px 0 rgba(22, 30, 52, 0.23)',
+  borderTopLeftRadius: CARD_RADIUS,
+  // 좌상단 코너가 배경 위로 살짝 떠 보이도록 미세한 그림자 (상단/좌측 방향)
+  boxShadow: '-2px -1px 8px -4px rgba(22, 30, 52, 0.1)',
 })
 
 // Main 스크롤바 — 테마 색

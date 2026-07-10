@@ -42,7 +42,8 @@ createGlobalTheme(':root.dark', vars, {
   radius: commonTokens.radius,
   font: {
     ...commonTokens.font,
-    family: "'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+    family:
+      "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif",
   },
   shadow: {
     // 다크에서는 그림자를 더 깊게 — 표면 분리감 유지

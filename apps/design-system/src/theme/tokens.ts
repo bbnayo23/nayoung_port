@@ -18,7 +18,8 @@ export const commonTokens = {
     full: '9999px',
   },
   font: {
-    family: "'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+    family:
+      "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif",
     sizeXs: '11px',
     sizeSm: '12px',
     sizeMd: '14px',

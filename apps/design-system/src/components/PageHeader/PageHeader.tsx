@@ -19,7 +19,7 @@ import { ExdArrowLIcon } from '@port/icon-library'
 import cn from 'classnames'
 
 const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
-  ({ title, subtitle, breadcrumbs, tags, actions, backButton, onBack, divider, className, ...rest }, ref) => {
+  ({ title, subtitle, breadcrumbs, tags, actions, backButton, onBack, divider = true, className, ...rest }, ref) => {
     const backEl =
       backButton ??
       (onBack ? (

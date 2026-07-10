@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
+  AppLayout,
   Lnb,
   Gnb,
   Dropdown,
@@ -12,7 +13,7 @@ import {
   SectionCard,
   ChipContainer,
   Chip,
-  Breadcrumbs,
+  PageHeader,
   Popover,
   ContextMenu,
   Tooltip,
@@ -54,7 +55,17 @@ import {
   logTypeLabel,
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
+import PortfolioNotice from '../components/PortfolioNotice'
+import Workspace from './Workspace'
 import * as s from './LogSearch.css'
+
+/** 워크스페이스 메뉴 아이콘 (레이아웃 패널, fill=currentColor) */
+const WorkspaceMenuIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <rect x="3" y="4" width="6" height="16" rx="1.5" />
+    <rect x="11" y="4" width="10" height="16" rx="1.5" />
+  </svg>
+)
 
 // 다크모드 토글 상태 타입 (Gnb 테마 버튼으로 제어)
 type ThemeMode = 'light' | 'dark' | 'system'
@@ -113,6 +124,7 @@ const extractHighlightTerms = (query: string): string[] => {
 
 const sideMenu: MenuItem[] = [
   { key: 'dashboard', label: '대시보드', icon: <XdrNavDashboardIcon size={18} /> },
+  { key: 'workspace', label: '워크스페이스', icon: <WorkspaceMenuIcon size={18} /> },
   { key: 'logsearch', label: '로그검색', icon: <XdrNavLogsearchIcon size={18} />, isActive: true },
   { key: 'alerts', label: '경보', icon: <XdrNavAlertIcon size={18} />, badge: 12 },
   { key: 'incidents', label: '인시던트', icon: <XdrNavIncidentIcon size={18} /> },
@@ -176,6 +188,8 @@ export default function LogSearch() {
   const [activeMenu, setActiveMenu] = useState('logsearch')
   const [navCollapsed, setNavCollapsed] = useState(false)
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+  // 대시보드 진입 시 포트폴리오 안내 모달을 띄운다.
+  const [noticeOpen, setNoticeOpen] = useState(true)
 
   // 검색 조건
   const [logTypes, setLogTypes] = useState<string[]>([])
@@ -428,34 +442,48 @@ export default function LogSearch() {
   const toggleExpandAll = () => setExpandedRows(allExpanded ? [] : pageIds)
 
   return (
-    <div className={s.appShell} data-solution="xdr">
-      {/* 최상단 Gnb */}
-      <Gnb
-        title="SOC Console"
-        notiCount={12}
-        onThemeClick={() => setThemeMode((m) => (m === 'dark' ? 'light' : 'dark'))}
-      />
-
-      <div className={s.bodyRow}>
-        <Lnb
-          menuGroup={sideMenu}
-          activeKey={activeMenu}
-          onActiveChange={setActiveMenu}
-          collapsed={navCollapsed}
-          onCollapse={setNavCollapsed}
-          style={{ height: '100%', zIndex: 2 }}
-        />
-
-        <main className={s.content}>
-          {/* 페이지 헤드 — 브레드크럼 + 타이틀 */}
-          <div className={s.pageHead}>
-            <h1 className={s.pageTitle}>로그 검색</h1>
-            <Breadcrumbs className={s.crumbs} separator="/">
-              <span>홈</span>
-              <span>검색</span>
-              <span>로그 검색</span>
-            </Breadcrumbs>
-          </div>
+    <>
+      <AppLayout
+        solution="xdr"
+        className={s.dashboardShell}
+        mainClassName={s.content}
+        gnb={
+          <Gnb
+            title="SOC Console"
+            notiCount={12}
+            onThemeClick={() => setThemeMode((m) => (m === 'dark' ? 'light' : 'dark'))}
+          />
+        }
+        lnb={
+          <Lnb
+            menuGroup={sideMenu}
+            activeKey={activeMenu}
+            onActiveChange={setActiveMenu}
+            collapsed={navCollapsed}
+            onCollapse={setNavCollapsed}
+            expandOnHover={false}
+          />
+        }
+      >
+        {activeMenu === 'workspace' ? (
+          <Workspace />
+        ) : (
+          <>
+          {/* 페이지 헤더 — 타이틀 + 우측 전역 버튼 (0~N개) */}
+          <PageHeader
+            title="로그 검색"
+            divider
+            actions={
+              <>
+                <Button variant="outline" size="sm" leftIcon={<ExdCsvIcon size={12} />}>
+                  내보내기
+                </Button>
+                <Button variant="dark" size="sm" leftIcon={<ExdFloppyFillIcon size={12} />}>
+                  검색 저장
+                </Button>
+              </>
+            }
+          />
 
           {/* 검색 조건 툴바 */}
           <div className={s.toolbar}>
@@ -857,8 +885,9 @@ export default function LogSearch() {
               </SectionCard>
             </div>
           )}
-        </main>
-      </div>
+          </>
+        )}
+      </AppLayout>
 
       <ContextMenu
         open={ctxMenu.open}
@@ -867,7 +896,10 @@ export default function LogSearch() {
         items={columnMenuItems}
         onClose={() => setCtxMenu((c) => ({ ...c, open: false }))}
       />
-    </div>
+
+      {/* 포트폴리오 안내 모달 — 대시보드 진입 시 노출 */}
+      <PortfolioNotice open={noticeOpen} onClose={() => setNoticeOpen(false)} />
+    </>
   )
 }
 

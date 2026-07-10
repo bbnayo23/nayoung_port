@@ -12,13 +12,11 @@ import {
   Link2,
   Database,
   Building2,
-  Users,
 } from 'lucide-react'
 import AppLayout from '../../components/AppLayout'
 import Gnb from '../../components/Gnb'
 import Lnb from '../../components/Lnb'
 import type { MenuItem } from '../../components/Lnb'
-import { vars } from '../../theme/contract.css'
 
 // ── AiR Works 메뉴 데이터 ────────────────────────────────────────────────────────
 
@@ -62,46 +60,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // ── 데모 ──────────────────────────────────────────────────────────────────────
-
-const SampleMain = () => (
-  <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-    {/* 페이지 헤더 — 타이틀 + 액션 */}
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 16,
-        padding: '16px 24px',
-        borderBottom: `1px solid ${vars.color.border}`,
-      }}
-    >
-      <h1 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: vars.color.text }}>워크스페이스</h1>
-      <button
-        type="button"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 6,
-          height: 32,
-          padding: '0 12px',
-          border: 'none',
-          borderRadius: 8,
-          background: '#131313',
-          color: '#fff',
-          fontSize: 13,
-          fontWeight: 600,
-          cursor: 'pointer',
-        }}
-      >
-        <Users size={14} /> 그룹 설정
-      </button>
-    </div>
-    <div style={{ flex: 1, padding: 24, color: vars.color.textMuted, fontSize: 13 }}>
-      메인 콘텐츠 영역 — 흰 카드(좌상단 라운드 + 그림자) 위에 페이지 콘텐츠가 배치됩니다.
-    </div>
-  </div>
-)
+// AppLayout 은 GNB·LNB·Main 셸 구조만 잡아주는 역할이며, 콘텐츠 영역은 비워 둔다.
+// (실제 페이지 콘텐츠는 각 소비 앱에서 children 으로 주입)
 
 const Demo = ({ defaultCollapsed = false, solution = '' }: { defaultCollapsed?: boolean; solution?: string }) => {
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
@@ -123,19 +83,19 @@ const Demo = ({ defaultCollapsed = false, solution = '' }: { defaultCollapsed?: 
           />
         }
       >
-        <SampleMain />
+        {/* 콘텐츠 영역 — 비어 있음 (레이아웃 구조만 확인) */}
       </AppLayout>
     </div>
   )
 }
 
-/** AiR Works 공통 셸 — GNB + LNB + Main. GNB 아래 영역 배경이 이어지고 LNB·Main 은 그림자 카드입니다. */
-export const AirWorks: Story = {
+/** AiR Works 공통 셸 — GNB + LNB + Main. 콘텐츠 영역은 비어 있고 레이아웃 구조만 잡아줍니다. */
+export const Empty: Story = {
   args: { children: null },
   render: () => <Demo />,
 }
 
-/** 접힌 LNB 상태의 셸 레이아웃. */
+/** 접힌 LNB 상태의 빈 셸 레이아웃. */
 export const CollapsedLnb: Story = {
   args: { children: null },
   render: () => <Demo defaultCollapsed />,

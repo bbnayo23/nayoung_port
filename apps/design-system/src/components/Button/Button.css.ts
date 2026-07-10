@@ -159,6 +159,17 @@ export const buttonRecipe = recipe({
           },
         },
       },
+      // AiR Works 브랜드 다크 버튼 (Figma "dp-btn primary") — 블랙 배경 + 화이트 텍스트
+      dark: {
+        background: '#111827',
+        color: '#ffffff',
+        border: '1.5px solid transparent',
+        selectors: {
+          '&:hover, &.is-hover': { background: '#1f2937' },
+          '&:active, &.is-active': { background: '#1f2937', transform: 'scale(0.98)' },
+          '&:focus-visible, &.is-focus': { outline: '3px solid rgba(17, 24, 39, 0.3)', outlineOffset: '2px' },
+        },
+      },
     },
     size: {
       sm: { vars: { [btnIconSizeVar]: '12px' }, height: 28, gap: 4, padding: '4px 8px', fontSize: vars.font.sizeXs },

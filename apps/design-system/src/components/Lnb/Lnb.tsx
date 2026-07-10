@@ -139,6 +139,7 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
     showCollapseButton = true,
     showFullscreenButton = true,
     onFullscreen,
+    expandOnHover = true,
     collapsed = true,
     onCollapse,
     menuGroup = [],
@@ -174,7 +175,7 @@ const Lnb = forwardRef<HTMLDivElement, PropsWithChildren<LnbProps>>((props, ref)
   }
 
   const handleBodyMouseEnter = () => {
-    if (collapsed) {
+    if (collapsed && expandOnHover) {
       setHoverExpanded(true)
     }
   }

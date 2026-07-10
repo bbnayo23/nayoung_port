@@ -9,119 +9,17 @@ globalStyle('html, body, #root', {
   margin: 0,
 })
 
-export const appShell = style({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-  overflow: 'hidden',
-  background: vars.color.background,
-  color: vars.color.text,
-  fontFamily: vars.font.family,
-  scrollbarWidth: 'thin',
-  scrollbarColor: `${vars.color.border} transparent`,
+// 대시보드 셸 최소 너비 — 1200px 미만에서는 가로 스크롤 (셸/카드 스타일은 AppLayout 담당)
+export const dashboardShell = style({
+  minWidth: 1200,
 })
 
-// WebKit 스크롤바 — 테마 색 적용
-globalStyle(`${appShell} ::-webkit-scrollbar`, { width: 10, height: 10 })
-globalStyle(`${appShell} ::-webkit-scrollbar-track`, { background: 'transparent' })
-globalStyle(`${appShell} ::-webkit-scrollbar-thumb`, {
-  background: vars.color.border,
-  borderRadius: vars.radius.full,
-  border: '2px solid transparent',
-  backgroundClip: 'padding-box',
-})
-globalStyle(`${appShell} ::-webkit-scrollbar-thumb:hover`, { background: vars.color.borderHover })
-
-// 최상단 Gnb
-export const topHeader = style({
-  position: 'relative',
-  zIndex: 100,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: vars.spacing.md,
-  height: 52,
-  flexShrink: 0,
-  padding: '0 16px',
-  background: vars.color.surface,
-  borderBottom: `1px solid ${vars.color.border}`,
-  boxShadow: vars.shadow.sm,
-})
-
-export const brandArea = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: vars.spacing.sm,
-})
-
-export const brandMark = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 28,
-  height: 28,
-  borderRadius: vars.radius.md,
-  background: vars.color.primary,
-  color: vars.color.textInverse,
-  flexShrink: 0,
-})
-
-export const brandName = style({
-  fontWeight: vars.font.weightBold,
-  fontSize: vars.font.sizeMd,
-  color: vars.color.text,
-  whiteSpace: 'nowrap',
-})
-
-export const bodyRow = style({
-  position: 'relative',
-  zIndex: 0,
-  display: 'flex',
-  flex: 1,
-  minHeight: 0,
-})
-
-// 사이드바 헤더 영역 제거 — 메뉴 아이템이 최상단부터 보이게
-globalStyle(`${bodyRow} .lnb-header`, { height: 0, minHeight: 0, padding: 0 })
-globalStyle(`${bodyRow} .lnb-header .header-collapse-btn`, { top: 8 })
-
+// Main 콘텐츠 여백/간격 (흰 카드 자체는 AppLayout 이 담당)
 export const content = style({
-  flex: 1,
-  minWidth: 0,
-  minHeight: 0,
-  overflowY: 'auto',
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.spacing.sm,
-  // 좌측은 사이드바 collapse 버튼(우측으로 14px 돌출)과 겹치지 않도록 여유를 둔다.
-  padding: '10px 24px 20px 40px',
-  background: vars.color.background,
-})
-
-// ── 페이지 헤드 ───────────────────────────────────────────────────────────────
-export const pageHead = style({
-  display: 'flex',
-  alignItems: 'baseline',
-  justifyContent: 'space-between',
-  gap: vars.spacing.md,
-  flexWrap: 'wrap',
-  flexShrink: 0,
-})
-
-export const pageTitle = style({
-  margin: 0,
-  fontSize: vars.font.sizeLg,
-  fontWeight: vars.font.weightBold,
-  color: vars.color.text,
-  lineHeight: 1.2,
-})
-
-export const crumbs = style({
-  // Breadcrumbs nav 기본 width:100% 를 덮어써, 타이틀과 같은 줄 우측에 위치하게 한다.
-  width: 'auto',
-  flexShrink: 0,
-  fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  gap: 12,
+  padding: '18px 24px 24px',
 })
 
 // ── 검색 조건 툴바 ────────────────────────────────────────────────────────────
@@ -269,9 +167,9 @@ export const widgetList = style({
 export const widgetItem = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 6,
   width: '100%',
-  padding: '12px 16px',
+  padding: '13px 16px',
   border: 'none',
   borderBottom: `1px solid ${vars.color.border}`,
   background: 'transparent',
@@ -290,7 +188,8 @@ export const widgetItemTitle = style({
 export const widgetItemMeta = style({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: vars.spacing.sm,
+  gap: `4px ${vars.spacing.md}`,
+  lineHeight: 1.5,
   fontSize: vars.font.sizeXs,
   color: vars.color.textMuted,
 })

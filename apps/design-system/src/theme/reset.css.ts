@@ -14,7 +14,7 @@ globalStyle('*, *::before, *::after', {
 globalStyle('body', {
   margin: 0,
   fontFamily: vars.font.family,
-  fontSize: vars.font.sizeMd,
+  fontSize: vars.font.sizeSm, // 기본 12px (AiR Works)
   lineHeight: 1.5,
   color: vars.color.text,
   backgroundColor: vars.color.background,

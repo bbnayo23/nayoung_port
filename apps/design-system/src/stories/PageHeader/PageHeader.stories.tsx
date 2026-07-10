@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { vars } from '../../theme/contract.css'
 import PageHeader from '../../components/PageHeader'
+import { Button } from '../../components/Button'
 import type { BreadcrumbItem } from '../../components/PageHeader'
 
 const meta = {
@@ -111,6 +112,77 @@ export const WithActions: Story = {
       }
       divider
     />
+  ),
+  parameters: { controls: { disable: true } },
+}
+
+// ── ActionButtons (AiR Works) ───────────────────────────────────────────────────
+
+/**
+ * Figma "AW_ver0.1 — 콘텐츠 타이틀 헤더" — 브레드크럼 없이 타이틀 + 전역 Button 을
+ * 우측에 0~5개 이상 배치할 수 있습니다.
+ */
+export const ActionButtons: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+      {/* 0개 */}
+      <PageHeader title="워크스페이스 · 버튼 0개" divider />
+
+      {/* 1개 */}
+      <PageHeader
+        title="워크스페이스 · 버튼 1개"
+        divider
+        actions={
+          <Button variant="dark" size="sm">
+            그룹 설정
+          </Button>
+        }
+      />
+
+      {/* 3개 */}
+      <PageHeader
+        title="워크스페이스 · 버튼 3개"
+        divider
+        actions={
+          <>
+            <Button variant="ghost" size="sm">
+              필터
+            </Button>
+            <Button variant="outline" size="sm">
+              내보내기
+            </Button>
+            <Button variant="dark" size="sm">
+              그룹 설정
+            </Button>
+          </>
+        }
+      />
+
+      {/* 5개 이상 */}
+      <PageHeader
+        title="워크스페이스 · 버튼 5개"
+        divider
+        actions={
+          <>
+            <Button variant="ghost" size="sm">
+              필터
+            </Button>
+            <Button variant="ghost" size="sm">
+              정렬
+            </Button>
+            <Button variant="outline" size="sm">
+              가져오기
+            </Button>
+            <Button variant="outline" size="sm">
+              내보내기
+            </Button>
+            <Button variant="dark" size="sm">
+              그룹 설정
+            </Button>
+          </>
+        }
+      />
+    </div>
   ),
   parameters: { controls: { disable: true } },
 }

@@ -36,7 +36,8 @@ createGlobalTheme(':root', vars, {
   radius: commonTokens.radius,
   font: {
     ...commonTokens.font,
-    family: "'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+    family:
+      "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif",
   },
   shadow: {
     sm: '0 1px 3px rgba(113,135,255,0.08)',

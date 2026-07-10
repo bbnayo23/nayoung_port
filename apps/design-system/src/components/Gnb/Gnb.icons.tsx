@@ -1,7 +1,6 @@
 // AiR Works GNB 아이콘 — 표준 아이콘은 lucide-react 를 그대로 import 해 사용한다.
 // (직접 그리지 않고 라이브러리 아이콘을 재노출) stroke 는 currentColor 라 CSS color 로 색을 제어한다.
 // 브랜드 로고 마크와 AI 스파클 그라디언트만 브랜드 고유색을 위해 별도 처리한다.
-import { Sparkles } from 'lucide-react'
 
 interface IconProps {
   size?: number
@@ -50,15 +49,27 @@ export const GnbLogoMark = ({ size = 24, className }: IconProps) => (
   </svg>
 )
 
-// ── AI Assistant 스파클 — lucide Sparkles 에 브랜드 그라디언트 stroke 적용 ────────
+// ── AI Assistant 스파클 (20×20, 채워진 그라디언트) — 큰 스파클 + 우상단 작은 스파클 ──
 export const GnbAiSparkleIcon = ({ size = 20, className }: IconProps) => (
-  <Sparkles size={size} className={className} stroke="url(#gnbAiGrad)">
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path
+      d="M10 2.28125C11.5938 6.9375 13.0625 8.40625 17.7188 10C13.0625 11.5938 11.5938 13.0625 10 17.7188C8.40625 13.0625 6.9375 11.5938 2.28125 10C6.9375 8.40625 8.40625 6.9375 10 2.28125Z"
+      fill="url(#gnbAiGrad0)"
+    />
+    <path
+      d="M15.625 1.875C16.0625 4.125 16.5 4.5625 18.75 5C16.5 5.4375 16.0625 5.875 15.625 8.125C15.1875 5.875 14.75 5.4375 12.5 5C14.75 4.5625 15.1875 4.125 15.625 1.875Z"
+      fill="url(#gnbAiGrad1)"
+    />
     <defs>
-      <linearGradient id="gnbAiGrad" x1="0" y1="0" x2="1" y2="1">
+      <linearGradient id="gnbAiGrad0" x1="3.75" y1="4.375" x2="16.25" y2="16.875" gradientUnits="userSpaceOnUse">
         <stop stopColor="#4F9CF9" />
         <stop offset="0.5" stopColor="#7C5CFF" />
         <stop offset="1" stopColor="#B14FE6" />
       </linearGradient>
+      <linearGradient id="gnbAiGrad1" x1="13.75" y1="1.875" x2="18.75" y2="6.875" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#5BC8FF" />
+        <stop offset="1" stopColor="#9A6CFF" />
+      </linearGradient>
     </defs>
-  </Sparkles>
+  </svg>
 )

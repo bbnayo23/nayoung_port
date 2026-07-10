@@ -9,15 +9,12 @@ const DURATION = '280ms'
 export const styledLnb = style({
   width: 240,
   position: 'relative',
-  // 셸(AppLayout) 안에서 부모 높이를 채우도록 100% — 단독 사용 시 소비처에서 높이 지정
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  // 기본(AiR Works) LNB 배경 — Figma #f9fafb (흰 Main 카드와 구분). 솔루션은 토큰으로 오버라이드.
-  backgroundColor: `var(--color-lnb-bg, #f9fafb)`,
-  // Figma "AW · Layout Shell" — 좌상단 한쪽 모서리만 라운드 + 은은한 외곽 그림자
+  background: "#F9FAFB",
   borderTopLeftRadius: 16,
-  boxShadow: '0 0 1.5px rgba(22, 30, 52, 0.23)',
+  isolation: 'isolate',
   transition: `width ${DURATION} ${EASE}`,
   overflow: 'visible',
   flexShrink: 0,
@@ -129,7 +126,7 @@ export const styledLnbBody = style({
   flex: 1,
   overflowY: 'auto',
   overflowX: 'hidden',
-  padding: '4px 0 20px',
+  padding: '0',
 })
 
 globalStyle(`${styledLnbBody}::-webkit-scrollbar`, {
@@ -140,7 +137,7 @@ globalStyle(`${styledLnbBody}::-webkit-scrollbar`, {
 // ── Item ─────────────────────────────────────────────────────────────────────
 
 export const styledLnbItem = style({
-  fontSize: vars.font.sizeMd,
+  fontSize: 12,
   cursor: 'pointer',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -173,15 +170,14 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper:hover svg`, {
   fill: vars.color.primary,
 })
 
-// 활성 항목 — Figma "AW" 라이트블루 필 (한쪽 border 대신 라운드 pill)
 globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active`, {
-  color: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
-  background: `var(--color-lnb-item-active-bg, #e3edfc)`,
+  color: `var(--color-lnb-item-active-text, #123E80)`,
+  background: `var(--color-lnb-item-active-bg, color-mix(in srgb, #2878EB 13%, #ffffff))`,
   fontWeight: vars.font.weightBold,
 })
 
 globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active svg`, {
-  fill: `var(--color-lnb-item-active-text, ${vars.color.primary})`,
+  fill: `var(--color-lnb-item-active-text, #123E80)`,
 })
 
 globalStyle(`${styledLnbItem} .menu-item-icon`, {
@@ -193,8 +189,8 @@ globalStyle(`${styledLnbItem} .menu-item-icon`, {
 })
 
 globalStyle(`${styledLnbItem} .menu-item-icon svg`, {
-  width: 18,
-  height: 18,
+  width: 14,
+  height: 14,
 })
 
 globalStyle(`${styledLnbItem} .menu-item-text`, {
@@ -375,104 +371,9 @@ globalStyle(`${styledLnb}.collapsed .lnb-controls`, {
   gap: 6,
 })
 
-// ────────────────────────────────────────────────────────────────────────────
-// EXD 테마 구조 오버라이드 (컬러는 Lnb.tokens.ts + theme-tokens.ts 로 처리)
-// ────────────────────────────────────────────────────────────────────────────
-
-// 헤더 로고 이미지 높이
-globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-logo-full img`, {
-  height: 24,
-})
-
-globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-logo-mini img`, {
-  height: 24,
-})
-
-// 접힘 버튼 — hover 배경 (나머지는 --color-lnb-collapse-* 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledLnbHeader} .header-collapse-btn:hover`, {
-  background: 'rgba(0,0,0,0.25)',
-  boxShadow: 'none',
-})
-
-// depth 1 (root) 메뉴 아이템 — 패딩 + border-left 액센트 (EXD는 pill 대신 플러시 유지)
-globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper`, {
-  margin: 0,
-  padding: '10px 12px',
-  borderRadius: 0,
-  borderLeft: '3px solid transparent',
-})
-
-// depth 2+ (자식) 메뉴 아이템 — 패딩 (컬러는 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledSubMenuItem} li .menu-item-wrapper`, {
-  margin: 0,
-  padding: '7px 12px 7px 42px',
-  borderRadius: 0,
-})
-
-// 아이콘 크기 — 20px
-globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-icon svg`, {
-  width: 20,
-  height: 20,
-})
-
-// 접힌 상태 아이콘 컨테이너 — 36×36
-globalStyle(`[data-solution="exd"] ${styledLnb}.collapsed ${styledLnbItem} .menu-item-icon`, {
-  width: 36,
-  height: 36,
-  borderRadius: vars.radius.sm,
-  backgroundColor: 'rgba(0,0,0,0.12)',
-})
-
-globalStyle(`[data-solution="exd"] ${styledLnb}.collapsed ${styledLnbItem} .menu-item-wrapper`, {
-  padding: '10px',
-})
-
-// Hover — 텍스트/테두리 색 (배경은 --color-lnb-item-hover-bg 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper:hover`, {
-  color: vars.color.textInverse,
-  borderLeftColor: vars.color.textInverse,
-})
-
-globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper:hover svg`, {
-  fill: vars.color.textInverse,
-})
-
-// Active — 배경 (색상/테두리는 --color-lnb-item-active-* 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledLnbItem} .menu-item-wrapper.is-active`, {
-  background: 'rgba(0,0,0,0.22)',
-})
-
-// 푸터 — 텍스트 색 (테두리는 --color-lnb-border 토큰 처리)
-globalStyle(`[data-solution="exd"] ${styledLnbFooter}`, {
-  color: 'rgba(255,255,255,0.7)',
-})
-
-// ── XDR 헤더 로고 위치 ────────────────────────────────────────────────────────
+// ── XDR 헤더 (로고 슬롯 사용 시 하단 정렬) ──────────────────────────────────────
 globalStyle(`[data-solution="xdr"] ${styledLnbHeader}`, {
   height: 60,
   alignItems: 'flex-end',
   paddingBottom: 11,
-})
-
-globalStyle(`[data-solution="xdr"] ${styledLnbHeader} .header-collapse-btn`, {
-  top: 24,
-})
-
-globalStyle(`[data-solution="xdr"] ${styledLnb}.collapsed .header-collapse-btn`, {
-  right: -28,
-})
-
-// 스크롤바 — EXD 브랜드 배경 위 반투명 흰색
-globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar`, {
-  width: 4,
-  height: 4,
-})
-
-globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar-thumb`, {
-  backgroundColor: 'rgba(255,255,255,0.25)',
-  borderRadius: vars.radius.sm,
-})
-
-globalStyle(`[data-solution="exd"] ${styledLnbBody}::-webkit-scrollbar-track`, {
-  backgroundColor: 'transparent',
 })

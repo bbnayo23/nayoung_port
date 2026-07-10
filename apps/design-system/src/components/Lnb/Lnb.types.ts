@@ -29,6 +29,8 @@ export interface LnbProps extends CommonProps {
   showFullscreenButton?: boolean
   /** 전체화면 버튼 클릭 콜백 */
   onFullscreen?: () => void
+  /** 접힘 상태에서 메뉴 본문 hover 시 자동으로 펼침(오버레이) 여부. 기본 true. false 면 hover 로 열리지 않는다. */
+  expandOnHover?: boolean
   collapsed?: boolean
   onCollapse?: (collapsed: boolean) => void
   menuGroup: MenuItem[]

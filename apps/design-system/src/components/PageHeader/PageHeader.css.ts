@@ -21,7 +21,7 @@ export const pageHeaderRow = style({
   display: 'flex',
   alignItems: 'center',
   gap: vars.spacing.sm,
-  minHeight: 32,
+  minHeight: 28,
 })
 
 /* ── Back button ── */
@@ -64,8 +64,9 @@ export const pageHeaderTitleGroup = style({
 
 export const pageHeaderTitle = style({
   margin: 0,
-  fontSize: vars.font.sizeLg,
+  fontSize: 18, // Figma "콘텐츠 타이틀 헤더" — 18px bold
   fontWeight: vars.font.weightBold,
+  letterSpacing: '-0.18px',
   color: vars.color.text,
   lineHeight: 1.2,
   whiteSpace: 'nowrap',
@@ -97,7 +98,7 @@ export const pageHeaderActions = style({
 
 /* ── Divider wrapper ── */
 export const pageHeaderDivider = style({
-  marginTop: vars.spacing.xs,
+  marginTop: 12,
 })
 
 /* ── Breadcrumb button reset ── */
