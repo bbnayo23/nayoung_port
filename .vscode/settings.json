@@ -1,4 +1,7 @@
 {
   "typescript.tsdk": "apps/portfolio-web/node_modules/typescript/lib",
-  "claudeCode.allowDangerouslySkipPermissions": true
+  "claudeCode.allowDangerouslySkipPermissions": true,
+  "permissions": {
+    "defaultMode": "plan"
+  }
 }

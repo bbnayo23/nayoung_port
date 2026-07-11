@@ -228,6 +228,12 @@ importers:
         specifier: ^0.184.0
         version: 0.184.0
     devDependencies:
+      '@port/dashboard':
+        specifier: workspace:*
+        version: link:../dashboard
+      '@port/design-system':
+        specifier: workspace:*
+        version: link:../design-system
       '@port/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config/eslint

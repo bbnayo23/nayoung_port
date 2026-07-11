@@ -22,6 +22,8 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@port/dashboard": "workspace:*",
+    "@port/design-system": "workspace:*",
     "@port/eslint-config": "workspace:*",
     "@port/icon-library": "workspace:*",
     "@port/typescript-config": "workspace:*",
