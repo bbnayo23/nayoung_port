@@ -1,7 +1,16 @@
-import { defineConfig } from 'vite'
+import { defineConfig, searchForWorkspaceRoot } from 'vite'
 import react from '@vitejs/plugin-react'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import svgr from 'vite-plugin-svgr'
+
+/**
+ * 워크스페이스 내부에서 "소스 그대로" 소비되는 @port 런타임 패키지.
+ * package.json 의 exports 가 dist 가 아닌 ./src 를 가리키므로, 소비 앱(dashboard 등)은
+ * 이 패키지들을 소스로 임포트한다. Vite dep-optimizer 가 이들을 사전 번들(pre-bundle)하면
+ * 소스 수정이 HMR 로 즉시 반영되지 않으므로(캐시된 번들을 서빙), 반드시 optimize 대상에서 제외한다.
+ * → design-system 컴포넌트/페이지를 고치면 dashboard 에 곧바로 반영된다.
+ */
+const PORT_SOURCE_PACKAGES = ['@port/design-system', '@port/icon-library']
 
 /**
  * 모든 패키지가 공유하는 Vite 기본 설정.
@@ -36,6 +45,17 @@ export function createBaseConfig() {
     ],
     resolve: {
       dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
+    },
+    // @port 소스 패키지를 사전 번들에서 제외 → 소스 수정이 즉시 HMR 로 반영된다.
+    optimizeDeps: {
+      exclude: PORT_SOURCE_PACKAGES,
+    },
+    server: {
+      fs: {
+        // 심링크된 워크스페이스 패키지 소스를 dev 서버가 서빙할 수 있도록 모노레포 루트를 허용.
+        // (pnpm 심링크는 apps/*/src 실제 경로로 해석되므로 Vite 가 그 경로를 그대로 watch → HMR 동작)
+        allow: [searchForWorkspaceRoot(process.cwd())],
+      },
     },
     build: {
       target: 'es2023',

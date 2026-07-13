@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import { createAppConfig } from '@port/vite-config/app'
+import { dashboardChunksOutput } from './vite.chunks'
 
 // dashboard 를 포트폴리오 배포물 안(/dashboard/)에 빌드한다.
 // base '/dashboard/' + outDir = portfolio-web/public/dashboard → portfolio 의 vite build 가
@@ -10,5 +11,8 @@ export default createAppConfig({
   build: {
     outDir: resolve(process.cwd(), '../portfolio-web/public/dashboard'),
     emptyOutDir: true,
+    rollupOptions: {
+      output: dashboardChunksOutput,
+    },
   },
 })
