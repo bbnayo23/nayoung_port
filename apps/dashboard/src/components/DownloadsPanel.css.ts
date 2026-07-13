@@ -1,20 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { vars } from '@port/design-system'
 
-export const panel = style({
-  position: 'fixed',
-  zIndex: 40,
-  width: 260,
-  maxWidth: 'calc(100vw - 16px)',
-  display: 'flex',
-  flexDirection: 'column',
-  background: vars.color.surface,
-  border: `1px solid ${vars.color.border}`,
-  borderRadius: vars.radius.md,
-  boxShadow: '0 12px 32px rgba(15, 23, 42, 0.16)',
-  overflow: 'hidden',
-})
-
 export const head = style({
   display: 'flex',
   alignItems: 'baseline',
