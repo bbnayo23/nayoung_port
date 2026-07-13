@@ -40,7 +40,6 @@ const IconGallery = () => {
   };
 
   // 선택된 솔루션과 검색어에 따라 아이콘 필터링
-  //  const currentIcons = iconStyle === 'outline' ? outlineIcons : solidIcons;
   const filteredIcons = useMemo(() => filterIcons(allIcons), [activeSolution, searchQuery]);
 
   // 탭별 타이틀과 설명

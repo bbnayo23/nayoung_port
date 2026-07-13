@@ -1,7 +1,6 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css'
 import { vars } from '@port/design-system'
 
-// ── Keyframes ───────────────────────────────────────────────────────────────
 const overlayIn = keyframes({ from: { opacity: 0 }, to: { opacity: 1 } })
 
 const panelIn = keyframes({

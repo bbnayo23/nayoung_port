@@ -1,8 +1,6 @@
 // Lnb component-specific CSS variable tokens
 // 솔루션 × 라이트/다크별 사이드 메뉴바 전용 컬러 토큰
 
-// ── XDR ──────────────────────────────────────────────────────────────────────
-
 export const lnbTokensXdrLight = {
   '--color-lnb-bg': 'var(--color-bg)',
   '--color-lnb-item-text': 'var(--color-gray800)',
@@ -28,8 +26,6 @@ export const lnbTokensXdrDark = {
   '--color-lnb-collapse-border': 'var(--color-border)',
   '--color-lnb-collapse-text': 'var(--color-text-primary)',
 } as const
-
-// ── SOAR ─────────────────────────────────────────────────────────────────────
 
 export const lnbTokensSoarLight = {
   '--color-lnb-bg': 'var(--color-bg)',
@@ -57,7 +53,6 @@ export const lnbTokensSoarDark = {
   '--color-lnb-collapse-text': 'var(--color-text-primary)',
 } as const
 
-// ── EXD ──────────────────────────────────────────────────────────────────────
 // EXD 사이드바는 primary 컬러 배경 (브랜드 컬러 기반 다크 네비게이션)
 
 export const lnbTokensExdLight = {

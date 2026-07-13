@@ -64,6 +64,4 @@ export interface DropdownMultiProps extends DropdownBaseProps {
   onReset?: () => void
 }
 
-// ── Union ─────────────────────────────────────────────────────────────────────
-
 export type DropdownProps = DropdownSingleProps | DropdownMultiProps

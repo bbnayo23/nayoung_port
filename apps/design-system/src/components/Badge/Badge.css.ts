@@ -7,8 +7,6 @@ import { createBadgeTokens } from './Badge.tokens'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 globalStyle(':root', createBadgeTokens() as any)
 
-// ── badgeRecipe ──────────────────────────────────────────────────────────────
-
 export const badgeRecipe = recipe({
   base: {
     boxSizing: 'border-box',
