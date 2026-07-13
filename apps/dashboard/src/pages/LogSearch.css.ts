@@ -55,9 +55,15 @@ export const aiPrefix = style({
   display: 'inline-flex',
   alignItems: 'center',
   gap: 4,
+  padding: 0,
+  border: 'none',
+  background: 'transparent',
+  cursor: 'pointer',
   fontSize: vars.font.sizeXs,
   fontWeight: vars.font.weightBold,
   color: vars.color.primary,
+  transition: `opacity ${vars.transition.fast}`,
+  ':hover': { opacity: 0.72 },
 })
 
 export const queryTools = style({
@@ -70,12 +76,12 @@ export const queryToolBtn = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 26,
-  height: 26,
+  width: 28,
+  height: 28,
   border: 'none',
   background: 'transparent',
   borderRadius: vars.radius.sm,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   cursor: 'pointer',
   transition: `all ${vars.transition.fast}`,
   ':hover': { background: vars.color.surfaceHover, color: vars.color.text },
@@ -104,7 +110,7 @@ export const chipsRow = style({
 
 export const chipsLabel = style({
   fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   marginRight: vars.spacing.xs,
 })
 
@@ -191,7 +197,7 @@ export const widgetItemMeta = style({
   gap: `4px ${vars.spacing.md}`,
   lineHeight: 1.5,
   fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
 })
 
 export const metaTag = style({
@@ -242,9 +248,19 @@ export const histoYmax = style({
   position: 'absolute',
   top: -2,
   left: 0,
-  fontSize: 10,
+  fontSize: vars.font.sizeXs,
   fontFamily: MONO,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
+  pointerEvents: 'none',
+})
+
+// 드래그 선택 힌트 — 히스토그램 우상단
+export const histoHint = style({
+  position: 'absolute',
+  top: -2,
+  right: 0,
+  fontSize: vars.font.sizeXs,
+  color: vars.color.textSecondary,
   pointerEvents: 'none',
 })
 
@@ -317,8 +333,8 @@ globalStyle(`${histoAxis} > *`, {
 })
 
 export const histoLabel = style({
-  fontSize: 10,
-  color: vars.color.textMuted,
+  fontSize: vars.font.sizeXs,
+  color: vars.color.textSecondary,
   fontFamily: MONO,
   whiteSpace: 'nowrap',
   flexShrink: 0,
@@ -349,7 +365,7 @@ export const histoEmpty = style({
   alignItems: 'center',
   justifyContent: 'center',
   height: 96,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   fontSize: vars.font.sizeSm,
 })
 
@@ -380,11 +396,14 @@ export const metaCount = style({
 
 export const metaRange = style({
   fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   fontFamily: MONO,
 })
 
 export const metaElapsed = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
   fontSize: vars.font.sizeXs,
   color: vars.color.textSecondary,
 })
@@ -458,11 +477,11 @@ export const expandAllBtn = style({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: 20,
-  height: 20,
+  width: 24,
+  height: 24,
   border: 'none',
   background: 'transparent',
-  borderRadius: '50%',
+  borderRadius: vars.radius.full,
   color: vars.color.textSecondary,
   cursor: 'pointer',
   transition: `transform ${vars.transition.fast}, background ${vars.transition.fast}`,
@@ -503,9 +522,9 @@ export const threatTag = style({
   height: 16,
   borderRadius: vars.radius.sm,
   background: vars.color.error,
-  color: '#fff',
+  color: vars.color.textInverse,
   fontFamily: vars.font.family,
-  fontSize: 10,
+  fontSize: vars.font.sizeXs,
   fontWeight: vars.font.weightBold,
 })
 
@@ -549,7 +568,7 @@ export const fieldWide = style({
 
 export const fieldLabel = style({
   fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
 })
 
 export const fieldValue = style({
@@ -582,8 +601,37 @@ export const emptyState = style({
   alignItems: 'center',
   gap: vars.spacing.sm,
   padding: `${vars.spacing.xxl} 0`,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   fontSize: vars.font.sizeSm,
+})
+
+// 스트리밍 진행 표시줄 (검색 중)
+export const searchProgress = style({
+  padding: `0 ${vars.spacing.md} ${vars.spacing.sm}`,
+})
+
+// ── 검색 오류 패널 ────────────────────────────────────────────────────────────
+export const errorPanel = style({
+  flex: 1,
+  minHeight: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: vars.spacing.sm,
+  padding: `${vars.spacing.xxl} 0`,
+  color: vars.color.textSecondary,
+})
+
+export const errorTitle = style({
+  fontSize: vars.font.sizeMd,
+  fontWeight: vars.font.weightBold,
+  color: vars.color.text,
+})
+
+export const errorMsg = style({
+  fontSize: vars.font.sizeSm,
+  color: vars.color.textSecondary,
 })
 
 // ── 팝오버 패널 (검색기록/템플릿 리스트, 템플릿 저장 폼) ─────────────────────────
@@ -632,7 +680,7 @@ export const savedListTitle = style({
 export const savedListQuery = style({
   fontFamily: MONO,
   fontSize: vars.font.sizeXs,
-  color: vars.color.textMuted,
+  color: vars.color.textSecondary,
   whiteSpace: 'normal',
   wordBreak: 'break-all',
   lineHeight: 1.4,

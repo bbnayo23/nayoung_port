@@ -18,6 +18,9 @@ import {
   ContextMenu,
   Tooltip,
   HighlightText,
+  Progress,
+  Toaster,
+  toast,
 } from '@port/design-system'
 import type { MenuItem, ContextMenuItem } from '@port/design-system'
 import {
@@ -26,7 +29,8 @@ import {
   XdrNavAlertIcon,
   XdrNavIncidentIcon,
   XdrNavMonitoringIcon,
-  XdrNavSecurityIcon,
+  XdrNavIntelligenceIcon,
+  XdrNavAppIcon,
   XdrSettingIcon,
   XdrSadGhostIcon,
   ExdAiAssistantLogoIcon,
@@ -56,16 +60,10 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
+import GuideTour, { type GuideStep } from '../components/GuideTour'
+import AiAssistantPanel from '../components/AiAssistantPanel'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
-
-/** 워크스페이스 메뉴 아이콘 (레이아웃 패널, fill=currentColor) */
-const WorkspaceMenuIcon = ({ size = 18 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <rect x="3" y="4" width="6" height="16" rx="1.5" />
-    <rect x="11" y="4" width="10" height="16" rx="1.5" />
-  </svg>
-)
 
 // 다크모드 토글 상태 타입 (Gnb 테마 버튼으로 제어)
 type ThemeMode = 'light' | 'dark' | 'system'
@@ -113,6 +111,19 @@ const bucketKey = (time: string) => {
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
+/** 구조화 쿼리의 기초 문법 검증 — 따옴표·괄호 짝을 확인해 오류 메시지를 반환(정상은 null). */
+const validateQuery = (q: string): string | null => {
+  if (!q) return null
+  if (((q.match(/'/g)?.length ?? 0) % 2) !== 0) return "작은따옴표(')의 짝이 맞지 않습니다."
+  let depth = 0
+  for (const c of q) {
+    if (c === '(') depth++
+    else if (c === ')' && --depth < 0) return '괄호가 올바르게 닫히지 않았습니다.'
+  }
+  if (depth !== 0) return '괄호가 올바르게 닫히지 않았습니다.'
+  return null
+}
+
 /** 검색 쿼리에서 하이라이트할 필드값(따옴표 값·전체 IP)을 추출 (S006 키워드 하이라이트) */
 const extractHighlightTerms = (query: string): string[] => {
   const terms = new Set<string>()
@@ -124,12 +135,12 @@ const extractHighlightTerms = (query: string): string[] => {
 
 const sideMenu: MenuItem[] = [
   { key: 'dashboard', label: '대시보드', icon: <XdrNavDashboardIcon size={18} /> },
-  { key: 'workspace', label: '워크스페이스', icon: <WorkspaceMenuIcon size={18} /> },
+  { key: 'workspace', label: '워크스페이스', icon: <XdrNavAppIcon size={18} /> },
   { key: 'logsearch', label: '로그검색', icon: <XdrNavLogsearchIcon size={18} />, isActive: true },
-  { key: 'alerts', label: '경보', icon: <XdrNavAlertIcon size={18} />, badge: 12 },
+  { key: 'alerts', label: '경보', icon: <XdrNavAlertIcon size={18} /> },
   { key: 'incidents', label: '인시던트', icon: <XdrNavIncidentIcon size={18} /> },
   { key: 'monitoring', label: '모니터링', icon: <XdrNavMonitoringIcon size={18} /> },
-  { key: 'threat', label: '위협 인텔리전스', icon: <XdrNavSecurityIcon size={18} /> },
+  { key: 'threat', label: '위협 인텔리전스', icon: <XdrNavIntelligenceIcon size={18} /> },
   { key: 'settings', label: '설정', icon: <XdrSettingIcon size={18} /> },
 ]
 
@@ -169,7 +180,7 @@ const searchHistory: SavedQuery[] = HISTORY_TIMES.map((title, i) => ({
   query: SAMPLE_QUERIES[i % SAMPLE_QUERIES.length],
 }))
 
-const TEMPLATE_NAMES = ['템플릿명1', '템플릿명3', '템플릿명2', 'C2 비콘 탐지', '랜섬웨어 행위 탐지', 'SQL Injection 탐지', '포트스캔 탐지', '관리자 로그인 추적', '외부 데이터 유출', '브루트포스 탐지', '지오 이상 접속', 'DDoS 트래픽']
+const TEMPLATE_NAMES = ['웹 공격 탐지', '내부망 이상 트래픽', '권한 상승 시도', 'C2 비콘 탐지', '랜섬웨어 행위 탐지', 'SQL Injection 탐지', '포트스캔 탐지', '관리자 로그인 추적', '외부 데이터 유출', '브루트포스 탐지', '지오 이상 접속', 'DDoS 트래픽']
 
 const templates: SavedQuery[] = TEMPLATE_NAMES.map((title, i) => ({
   id: `t${i}`,
@@ -181,7 +192,7 @@ const templates: SavedQuery[] = TEMPLATE_NAMES.map((title, i) => ({
   query: SAMPLE_QUERIES[i % SAMPLE_QUERIES.length],
 }))
 
-type SearchPhase = 'idle' | 'running' | 'paused' | 'done'
+type SearchPhase = 'idle' | 'running' | 'paused' | 'done' | 'error'
 type OpenPanel = null | 'history' | 'template' | 'save'
 
 export default function LogSearch() {
@@ -190,6 +201,13 @@ export default function LogSearch() {
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
   // 대시보드 진입 시 포트폴리오 안내 모달을 띄운다.
   const [noticeOpen, setNoticeOpen] = useState(true)
+  // 안내 모달을 닫으면 단계별 온보딩 가이드를 노출한다.
+  const [guideOpen, setGuideOpen] = useState(false)
+  // GNB의 AI Assistant 버튼으로 여는 우측 사이드 패널
+  const [aiOpen, setAiOpen] = useState(false)
+  const toolbarRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLDivElement>(null)
+  const widgetsRef = useRef<HTMLDivElement>(null)
 
   // 검색 조건
   const [logTypes, setLogTypes] = useState<string[]>([])
@@ -206,6 +224,7 @@ export default function LogSearch() {
 
   // 검색 상태 — 진행에 따라 결과가 순차 출력된다 (S003)
   const [phase, setPhase] = useState<SearchPhase>('idle')
+  const [searchError, setSearchError] = useState<string | null>(null)
   const [loaded, setLoaded] = useState(0) // 지금까지 스트리밍된 결과 수
   const [elapsed, setElapsed] = useState(0) // 경과시간(초)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -256,9 +275,24 @@ export default function LogSearch() {
   useEffect(() => () => clearTimer(), [])
 
   // ── 검색 실행 / 일시정지 / 중지 ─────────────────────────────────────────────
+  // 데모에서 아직 연결되지 않은 기능 — 토스트로 상태를 알린다.
+  const notReady = (label: string) =>
+    toast.info(`${label} — 준비 중`, {
+      message: '포트폴리오 데모 화면으로, 이 기능은 아직 연결되지 않았습니다.',
+    })
+
   const runSearch = (raw?: string) => {
     const q = (raw ?? input).trim()
     clearTimer()
+    const err = validateQuery(q)
+    if (err) {
+      setQuery(q)
+      setSearchError(err)
+      setPhase('error')
+      toast.error('검색 오류', { message: err })
+      return
+    }
+    setSearchError(null)
     setQuery(q)
     setPage(1)
     setExpandedRows([])
@@ -441,6 +475,25 @@ export default function LogSearch() {
   const allExpanded = pageIds.length > 0 && pageIds.every((id) => expandedRows.includes(id))
   const toggleExpandAll = () => setExpandedRows(allExpanded ? [] : pageIds)
 
+  // 온보딩 가이드 단계 — 조건 선택 → 검색어 입력 → 기록/템플릿 순서
+  const guideSteps: GuideStep[] = [
+    {
+      ref: toolbarRef,
+      title: '1. 검색 조건 선택',
+      description: '로그유형·로그소스·검색시간 등 조회할 로그의 조건을 먼저 지정하세요.',
+    },
+    {
+      ref: searchRef,
+      title: '2. 검색어 입력',
+      description: '쿼리를 입력하거나 비워둔 채로 Enter·검색 버튼을 누르면 결과가 순차적으로 출력됩니다.',
+    },
+    {
+      ref: widgetsRef,
+      title: '3. 검색기록 · 템플릿',
+      description: '자주 쓰는 검색은 검색기록과 템플릿에서 바로 불러올 수 있어요.',
+    },
+  ]
+
   return (
     <>
       <AppLayout
@@ -452,6 +505,7 @@ export default function LogSearch() {
             title="SOC Console"
             notiCount={12}
             onThemeClick={() => setThemeMode((m) => (m === 'dark' ? 'light' : 'dark'))}
+            onAiAssistantClick={() => setAiOpen((v) => !v)}
           />
         }
         lnb={
@@ -467,26 +521,15 @@ export default function LogSearch() {
       >
         {activeMenu === 'workspace' ? (
           <Workspace />
+        ) : activeMenu !== 'logsearch' ? (
+          <ComingSoon label={sideMenu.find((m) => m.key === activeMenu)?.label ?? ''} />
         ) : (
           <>
-          {/* 페이지 헤더 — 타이틀 + 우측 전역 버튼 (0~N개) */}
-          <PageHeader
-            title="로그 검색"
-            divider
-            actions={
-              <>
-                <Button variant="outline" size="sm" leftIcon={<ExdCsvIcon size={12} />}>
-                  내보내기
-                </Button>
-                <Button variant="dark" size="sm" leftIcon={<ExdFloppyFillIcon size={12} />}>
-                  검색 저장
-                </Button>
-              </>
-            }
-          />
+          {/* 페이지 헤더 — 저장/내보내기는 각각 툴바(템플릿 저장)·결과 툴바(CSV)에서 맥락에 맞게 제공 */}
+          <PageHeader title="로그 검색" divider />
 
           {/* 검색 조건 툴바 */}
-          <div className={s.toolbar}>
+          <div className={s.toolbar} ref={toolbarRef}>
             <div className={s.toolbarLeft}>
               <Dropdown
                 label="로그유형"
@@ -537,6 +580,9 @@ export default function LogSearch() {
             </div>
 
             <div className={s.toolbarRight}>
+              {/* 검색기록·템플릿 — 결과가 있을 때만 툴바에 노출 (검색 전에는 아래 위젯이 담당) */}
+              {hasResults && (
+                <>
               <Popover
                 placement="bottom"
                 style={{ maxWidth: 'none' }}
@@ -558,6 +604,8 @@ export default function LogSearch() {
               >
                 <Button variant="ghost" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
               </Popover>
+                </>
+              )}
 
               <Popover
                 placement="bottom"
@@ -590,11 +638,12 @@ export default function LogSearch() {
                 <Button variant="ghost" size="sm" leftIcon={<ExdFloppyFillIcon size={14} />} disabled={!hasResults}>템플릿 저장</Button>
               </Popover>
 
-              <Button variant="ghost" size="sm" leftIcon={<ExdAlarmIcon size={14} />}>경보조건 추가</Button>
+              <Button variant="ghost" size="sm" leftIcon={<ExdAlarmIcon size={14} />} onClick={() => notReady('경보조건 추가')}>경보조건 추가</Button>
             </div>
           </div>
 
           {/* AI 검색 쿼리 바 */}
+          <div ref={searchRef}>
           <SearchBar
             value={input}
             onChange={setInput}
@@ -606,9 +655,21 @@ export default function LogSearch() {
             expanded={expandedQuery}
             onExpandChange={setExpandedQuery}
             prefix={
-              <span className={s.aiPrefix} title="AI 검색">
-                <ExdAiAssistantLogoIcon size={18} />
-              </span>
+              <Tooltip content="AI 추천 쿼리 넣기">
+                <button
+                  type="button"
+                  className={s.aiPrefix}
+                  aria-label="AI 추천 쿼리 넣기"
+                  onClick={() => {
+                    setInput(SAMPLE_QUERIES[0])
+                    toast.info('AI 추천 쿼리', {
+                      message: '예시 쿼리를 입력창에 넣었어요. Enter 또는 검색 버튼으로 실행하세요.',
+                    })
+                  }}
+                >
+                  <ExdAiAssistantLogoIcon size={18} />
+                </button>
+              </Tooltip>
             }
             suffixActions={
               <span className={s.queryTools}>
@@ -622,13 +683,19 @@ export default function LogSearch() {
                     <ExdUppercaseIcon size={15} />
                   </button>
                 </Tooltip>
-                <Tooltip content="정렬">
-                  <button type="button" className={s.queryToolBtn} aria-label="정렬">
-                    <ExdTxtAlignIcon size={15} />
-                  </button>
-                </Tooltip>
-                <Tooltip content="도움말">
-                  <button type="button" className={s.queryToolBtn} aria-label="도움말">
+                <Tooltip content="검색 문법 도움말">
+                  <button
+                    type="button"
+                    className={s.queryToolBtn}
+                    aria-label="검색 문법 도움말"
+                    onClick={() =>
+                      toast.info('검색 문법 도움말', {
+                        message:
+                          "예) s_ip IN ('1.1.1.1', '2.2.2.2') AND s_country = 'KR' AND d_port <= 1000",
+                        duration: 8000,
+                      })
+                    }
+                  >
                     <ExdHelpIcon size={15} />
                   </button>
                 </Tooltip>
@@ -640,7 +707,7 @@ export default function LogSearch() {
                   type="button"
                   className={phase === 'paused' ? `${s.queryToolBtn} ${s.queryToolActive}` : s.queryToolBtn}
                   aria-label={phase === 'paused' ? '재생' : '일시정지'}
-                  disabled={phase === 'idle' || phase === 'done'}
+                  disabled={phase !== 'running' && phase !== 'paused'}
                   onClick={togglePause}
                 >
                   {phase === 'paused' ? <ExdPlayIcon size={13} /> : <ExdPauseIcon size={13} />}
@@ -649,7 +716,7 @@ export default function LogSearch() {
                   type="button"
                   className={s.queryToolBtn}
                   aria-label="중지"
-                  disabled={phase === 'idle' || phase === 'done'}
+                  disabled={phase !== 'running' && phase !== 'paused'}
                   onClick={stopSearch}
                 >
                   <ExdStopIcon size={13} />
@@ -657,6 +724,7 @@ export default function LogSearch() {
               </span>
             }
           />
+          </div>
 
           {/* 적용된 검색 조건 칩 */}
           {activeChips.length > 0 && (
@@ -664,8 +732,9 @@ export default function LogSearch() {
               <span className={s.chipsLabel}>적용된 조건</span>
               <ChipContainer>
                 {activeChips.map(({ group, value, label }) => (
-                  <Chip key={`${group}:${value}`} $active onClick={() => removeChip(group, value)}>
-                    {label} ✕
+                  <Chip key={`${group}:${value}`} $active onClick={() => removeChip(group, value)} aria-label={`${label} 조건 제거`}>
+                    {label}
+                    <ExdCloseIcon size={10} />
                   </Chip>
                 ))}
                 <Chip onClick={resetAll}>전체 초기화</Chip>
@@ -673,11 +742,27 @@ export default function LogSearch() {
             </div>
           )}
 
-          {/* 검색 전: 검색기록 / 템플릿 위젯  |  검색 후: 결과 */}
-          {!hasResults ? (
-            <div className={s.widgetsRow}>
-              <WidgetCard icon={<ExdClockIcon size={15} />} title="검색기록" items={searchHistory} onPick={applySaved} />
-              <WidgetCard icon={<ExdListUlIcon size={15} />} title="템플릿" items={templates} onPick={applySaved} />
+          {/* 검색 전: 위젯 | 오류: 에러 패널 | 검색 후: 결과 */}
+          {phase === 'error' ? (
+            <div className={s.errorPanel}>
+              <XdrSadGhostIcon size={40} />
+              <div className={s.errorTitle}>검색을 실행할 수 없습니다</div>
+              <div className={s.errorMsg}>{searchError}</div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPhase('idle')
+                  setSearchError(null)
+                }}
+              >
+                다시 입력
+              </Button>
+            </div>
+          ) : !hasResults ? (
+            <div className={s.widgetsRow} ref={widgetsRef}>
+              <WidgetCard icon={<ExdClockIcon size={15} />} title="검색기록" items={searchHistory} onPick={applySaved} onMore={() => notReady('검색기록 더보기')} />
+              <WidgetCard icon={<ExdListUlIcon size={15} />} title="템플릿" items={templates} onPick={applySaved} onMore={() => notReady('템플릿 더보기')} />
             </div>
           ) : (
             <div className={s.resultArea}>
@@ -689,6 +774,7 @@ export default function LogSearch() {
                     ) : (
                       <div className={s.histoPlot}>
                         <span className={s.histoYmax}>{histoData.max}</span>
+                        <span className={s.histoHint}>드래그하여 시간범위 선택</span>
                         <div className={s.histoTrack}>
                           {/* 하단 꺾은 선 그래프 (S005) */}
                           <svg className={s.histoLine} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
@@ -755,10 +841,30 @@ export default function LogSearch() {
                   <div className={s.metaRight}>
                     <Dropdown label="헤더 표시" size="sm" options={headerDisplayOptions} value={headerDisplay} onChange={setHeaderDisplay} />
                     <Dropdown label="프로파일" size="sm" options={profileOptions} value={profile} onChange={setProfile} />
-                    <Button variant="outline" size="sm" leftIcon={<ExdPivotIcon size={14} />}>피벗</Button>
-                    <Button variant="outline" size="sm" leftIcon={<ExdCsvIcon size={14} />}>CSV</Button>
+                    <Tooltip content="컬럼 자동 맞춤">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        leftIcon={<ExdColSettingIcon size={14} />}
+                        onClick={(e) => { setCtxCol('raw'); setCtxMenu({ open: true, x: e.clientX, y: e.clientY }) }}
+                      >
+                        컬럼
+                      </Button>
+                    </Tooltip>
+                    <Button variant="outline" size="sm" leftIcon={<ExdPivotIcon size={14} />} onClick={() => notReady('피벗')}>피벗</Button>
+                    <Button variant="outline" size="sm" leftIcon={<ExdCsvIcon size={14} />} onClick={() => notReady('CSV 다운로드')}>CSV</Button>
                   </div>
                 </div>
+
+                {(running || phase === 'paused') && loaded < filtered.length && (
+                  <div className={s.searchProgress}>
+                    <Progress
+                      value={filtered.length ? Math.round((loaded / filtered.length) * 100) : 0}
+                      shape="linear"
+                      color="info"
+                    />
+                  </div>
+                )}
 
                 <div className={s.tableScroll}>
                   <Table size="md" hoverable>
@@ -897,8 +1003,35 @@ export default function LogSearch() {
         onClose={() => setCtxMenu((c) => ({ ...c, open: false }))}
       />
 
-      {/* 포트폴리오 안내 모달 — 대시보드 진입 시 노출 */}
-      <PortfolioNotice open={noticeOpen} onClose={() => setNoticeOpen(false)} />
+      {/* 포트폴리오 안내 모달 — 대시보드 진입 시 노출, 닫으면 가이드 시작 */}
+      <PortfolioNotice open={noticeOpen} onClose={() => { setNoticeOpen(false); setGuideOpen(true) }} />
+
+      {/* 온보딩 가이드 — 단계별 코치마크 */}
+      <GuideTour
+        open={guideOpen && activeMenu === 'logsearch' && !hasResults && phase !== 'error'}
+        steps={guideSteps}
+        onClose={() => setGuideOpen(false)}
+      />
+
+      {/* AI Assistant 사이드 패널 — GNB AI Assistant 버튼으로 토글 */}
+      <AiAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
+
+      {/* 토스트 알림 (검색 오류 · 준비 중 기능 안내) */}
+      <Toaster position="top-right" />
+    </>
+  )
+}
+
+// ── 미구현 메뉴 플레이스홀더 ─────────────────────────────────────────────────
+function ComingSoon({ label }: { label: string }) {
+  return (
+    <>
+      <PageHeader title={label} divider />
+      <div className={s.errorPanel}>
+        <XdrSadGhostIcon size={40} />
+        <div className={s.errorTitle}>준비 중입니다</div>
+        <div className={s.errorMsg}>이 메뉴는 포트폴리오 데모에 포함되지 않았습니다. 로그검색 화면을 확인해 주세요.</div>
+      </div>
     </>
   )
 }
@@ -909,11 +1042,13 @@ function WidgetCard({
   title,
   items,
   onPick,
+  onMore,
 }: {
   icon: React.ReactNode
   title: string
   items: SavedQuery[]
   onPick: (sq: SavedQuery) => void
+  onMore?: () => void
 }) {
   return (
     <section className={s.widgetCard}>
@@ -922,7 +1057,7 @@ function WidgetCard({
           {icon}
           {title}
         </span>
-        <button type="button" className={s.widgetMore}>더보기</button>
+        <button type="button" className={s.widgetMore} onClick={onMore}>더보기</button>
       </header>
       <ul className={s.widgetList}>
         {items.slice(0, 10).map((it) => (

@@ -46,13 +46,13 @@ export interface LogEntry {
 
 /** 로그유형 라벨 */
 export const logTypeLabel: Record<LogType, string> = {
-  weblog: 'weblog',
-  system: 'system',
-  dbms: 'dbms',
-  fw: 'fw',
-  ips: 'ips',
-  tms: 'tms',
-  waf: 'waf',
+  weblog: '웹로그',
+  system: '시스템',
+  dbms: 'DBMS',
+  fw: '방화벽',
+  ips: 'IPS',
+  tms: 'TMS',
+  waf: 'WAF',
 }
 
 /** 심각도 → Badge color 매핑 (디자인 시스템 Badge color 토큰 기준) */
