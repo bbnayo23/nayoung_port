@@ -161,3 +161,217 @@ export const cardLink = style({
   transition: `color 0.3s ease, transform 0.4s ${swiss.ease.smooth}`,
   ':hover': { color: swiss.color.accent, transform: 'translateX(3px)' },
 })
+
+// ── Case study ────────────────────────────────────────────────────────────────
+
+export const caseList = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  marginBottom: '64px',
+})
+
+export const caseCard = style([glassPanel, {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '26px',
+  padding: '40px',
+  borderRadius: '20px',
+  '@media': {
+    'screen and (max-width: 640px)': { padding: '26px' },
+  },
+}])
+
+export const caseHead = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  gap: '16px',
+})
+
+export const caseHeadText = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+})
+
+export const caseRole = style({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'baseline',
+  gap: '10px',
+  fontSize: '14px',
+  lineHeight: '1.6',
+  color: swiss.color.inkSoft,
+})
+
+export const caseRoleLabel = style({
+  fontFamily: swiss.font.mono,
+  fontSize: '11px',
+  fontWeight: 600,
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  color: swiss.color.accent,
+  border: `1px solid ${swiss.color.accent}55`,
+  borderRadius: '2px',
+  padding: '3px 8px',
+  whiteSpace: 'nowrap',
+})
+
+// 정량 지표 스탯 행 — 케이스의 신뢰도를 숫자로 앵커링한다.
+export const metricRow = style({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '32px',
+  paddingBlock: '20px',
+  borderTop: `1px solid ${swiss.color.line}`,
+  borderBottom: `1px solid ${swiss.color.line}`,
+  '@media': {
+    'screen and (max-width: 560px)': { gap: '20px' },
+  },
+})
+
+export const metric = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+})
+
+export const metricValue = style({
+  fontFamily: swiss.font.sans,
+  fontSize: 'clamp(24px, 3vw, 32px)',
+  fontWeight: 800,
+  letterSpacing: '-0.03em',
+  lineHeight: '1',
+  color: swiss.color.ink,
+})
+
+export const metricLabel = style({
+  fontFamily: swiss.font.mono,
+  fontSize: '11px',
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+  color: swiss.color.inkFaint,
+})
+
+export const caseBody = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '28px',
+  '@media': {
+    'screen and (max-width: 780px)': { gridTemplateColumns: '1fr', gap: '24px' },
+  },
+})
+
+export const caseBlock = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px',
+})
+
+export const caseBlockLabel = style({
+  fontFamily: swiss.font.mono,
+  fontSize: '12px',
+  fontWeight: 600,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  color: swiss.color.accent,
+  paddingBottom: '10px',
+  borderBottom: `1px solid ${swiss.color.line}`,
+})
+
+export const casePoints = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px',
+  listStyle: 'none',
+  margin: 0,
+  padding: 0,
+})
+
+export const casePoint = style({
+  position: 'relative',
+  paddingLeft: '16px',
+  fontSize: '14px',
+  lineHeight: '1.65',
+  color: swiss.color.inkSoft,
+  selectors: {
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      top: '9px',
+      width: '5px',
+      height: '5px',
+      borderRadius: '50%',
+      background: swiss.color.accent,
+    },
+  },
+})
+
+// Before / After 미디어 — 스크린샷이 없으면 링크 카드로 렌더된다.
+export const mediaRow = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: '14px',
+  '@media': {
+    'screen and (max-width: 640px)': { gridTemplateColumns: '1fr' },
+  },
+})
+
+export const mediaItem = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  padding: '18px',
+  borderRadius: '12px',
+  border: `1px solid ${swiss.color.line}`,
+  background: swiss.glass.tint,
+  color: 'inherit',
+  textDecoration: 'none',
+  transition: `border-color 0.3s ease, transform 0.4s ${swiss.ease.smooth}`,
+  selectors: {
+    '&:hover': {
+      borderColor: `${swiss.color.accent}66`,
+      transform: 'translateY(-2px)',
+    },
+  },
+})
+
+export const mediaKind = style({
+  alignSelf: 'flex-start',
+  fontFamily: swiss.font.mono,
+  fontSize: '11px',
+  fontWeight: 600,
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  padding: '3px 8px',
+  borderRadius: '2px',
+  border: '1px solid',
+  selectors: {
+    '&[data-kind="before"]': { color: swiss.color.inkSoft, borderColor: swiss.color.line },
+    '&[data-kind="after"]': { color: swiss.color.accent, borderColor: `${swiss.color.accent}66` },
+  },
+})
+
+export const mediaCaption = style({
+  fontSize: '13px',
+  lineHeight: '1.5',
+  color: swiss.color.inkSoft,
+})
+
+export const caseLinks = style({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '18px',
+})
+
+export const moreTitle = style({
+  fontFamily: swiss.font.mono,
+  fontSize: '13px',
+  fontWeight: 600,
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  color: swiss.color.inkSoft,
+  marginBottom: '20px',
+})

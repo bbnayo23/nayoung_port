@@ -30,6 +30,12 @@ const contactLinks = [
     value: personal.github.replace("https://", ""),
     href: personal.github,
   },
+  {
+    icon: "▤",
+    label: "Portfolio PDF",
+    value: "이력서 · 포트폴리오 (PDF)",
+    href: personal.resume,
+  },
 ];
 
 export function Contact() {
@@ -43,15 +49,15 @@ export function Contact() {
         </p>
 
         <nav className={links} aria-label="Contact links">
-          {contactLinks.map((c) => (
+          {contactLinks.map((c) => {
+            const newTab = !c.href.startsWith("mailto:");
+            return (
             <a
               key={c.label}
               href={c.href}
               className={link}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={
-                c.href.startsWith("http") ? "noopener noreferrer" : undefined
-              }
+              target={newTab ? "_blank" : undefined}
+              rel={newTab ? "noopener noreferrer" : undefined}
             >
               <div className={linkLeft}>
                 <span className={linkIcon} aria-hidden="true">
@@ -66,7 +72,8 @@ export function Contact() {
                 →
               </span>
             </a>
-          ))}
+            );
+          })}
         </nav>
 
         <footer className={footer}>
