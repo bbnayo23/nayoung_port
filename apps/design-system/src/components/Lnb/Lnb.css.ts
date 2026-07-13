@@ -156,9 +156,12 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper`, {
   textDecoration: 'none',
 })
 
+// 아이콘 색은 wrapper 의 color(=currentColor)로만 제어한다.
+// - XDR 아이콘: fill="currentColor" (면 아이콘) → color 를 따라감
+// - lucide 라인 아이콘: stroke="currentColor" · fill="none" → 라인 유지
+// fill 을 직접 지정하면 라인 아이콘 내부까지 칠해져 검은 덩어리로 보이므로 지정하지 않는다.
 globalStyle(`${styledLnbItem} .menu-item-wrapper svg`, {
-  fill: `var(--color-lnb-item-text, ${vars.color.text})`,
-  transition: `fill ${vars.transition.fast}`,
+  transition: `color ${vars.transition.fast}`,
 })
 
 globalStyle(`${styledLnbItem} .menu-item-wrapper:hover`, {
@@ -166,18 +169,10 @@ globalStyle(`${styledLnbItem} .menu-item-wrapper:hover`, {
   background: `var(--color-lnb-item-hover-bg, ${vars.color.surfaceHover})`,
 })
 
-globalStyle(`${styledLnbItem} .menu-item-wrapper:hover svg`, {
-  fill: vars.color.primary,
-})
-
 globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active`, {
   color: `var(--color-lnb-item-active-text, #123E80)`,
   background: `var(--color-lnb-item-active-bg, color-mix(in srgb, #2878EB 13%, #ffffff))`,
   fontWeight: vars.font.weightBold,
-})
-
-globalStyle(`${styledLnbItem} .menu-item-wrapper.is-active svg`, {
-  fill: `var(--color-lnb-item-active-text, #123E80)`,
 })
 
 globalStyle(`${styledLnbItem} .menu-item-icon`, {
@@ -296,10 +291,6 @@ export const styledSubMenuItem = style({
 globalStyle(`${styledSubMenuItem} li .menu-item-wrapper`, {
   color: `var(--color-lnb-submenu-text, ${vars.color.textSecondary})`,
   paddingLeft: 44,
-})
-
-globalStyle(`${styledSubMenuItem} li .menu-item-wrapper svg`, {
-  fill: `var(--color-lnb-submenu-text, ${vars.color.textSecondary})`,
 })
 
 // ── Divider ──────────────────────────────────────────────────────────────────

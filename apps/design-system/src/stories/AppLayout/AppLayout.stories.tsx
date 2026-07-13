@@ -45,7 +45,7 @@ const AW_MENU: MenuItem[] = [
 // ── Meta ───────────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: 'StyleGuide/AppLayout',
+  title: 'Page/AppLayout',
   component: AppLayout,
   parameters: { layout: 'fullscreen' },
   argTypes: {
@@ -80,6 +80,7 @@ const Demo = ({ defaultCollapsed = false, solution = '' }: { defaultCollapsed?: 
             collapsed={collapsed}
             onCollapse={setCollapsed}
             onFullscreen={() => console.log('fullscreen')}
+            expandOnHover={false}
           />
         }
       >

@@ -40,6 +40,12 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    // Page(AppLayout) 그룹이 사이드바 가장 상단, 그다음 StyleGuide 순으로 정렬된다.
+    options: {
+      storySort: {
+        order: ['Page', 'StyleGuide', '*'],
+      },
+    },
   },
 }
 
