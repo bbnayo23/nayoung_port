@@ -62,6 +62,7 @@ import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
 import GuideTour, { type GuideStep } from '../components/GuideTour'
 import AiAssistantPanel from '../components/AiAssistantPanel'
+import DownloadsPanel from '../components/DownloadsPanel'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 
@@ -205,6 +206,8 @@ export default function LogSearch() {
   const [guideOpen, setGuideOpen] = useState(false)
   // GNB의 AI Assistant 버튼으로 여는 우측 사이드 패널
   const [aiOpen, setAiOpen] = useState(false)
+  // GNB의 다운로드 버튼으로 여는 다운로드 목록 드롭다운
+  const [dlOpen, setDlOpen] = useState(false)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
   const widgetsRef = useRef<HTMLDivElement>(null)
@@ -506,6 +509,7 @@ export default function LogSearch() {
             notiCount={12}
             onThemeClick={() => setThemeMode((m) => (m === 'dark' ? 'light' : 'dark'))}
             onAiAssistantClick={() => setAiOpen((v) => !v)}
+            onDownloadClick={() => setDlOpen((v) => !v)}
           />
         }
         lnb={
@@ -1015,6 +1019,9 @@ export default function LogSearch() {
 
       {/* AI Assistant 사이드 패널 — GNB AI Assistant 버튼으로 토글 */}
       <AiAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
+
+      {/* 다운로드 목록 드롭다운 — GNB 다운로드 버튼으로 토글 */}
+      <DownloadsPanel open={dlOpen} onClose={() => setDlOpen(false)} />
 
       {/* 토스트 알림 (검색 오류 · 준비 중 기능 안내) */}
       <Toaster position="top-right" />
