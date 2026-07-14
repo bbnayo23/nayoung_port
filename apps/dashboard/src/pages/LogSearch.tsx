@@ -68,10 +68,15 @@ import {
   SolutionSwitcher,
   DownloadDropdown,
   NotificationDropdown,
+  AiAssistantPanel,
   type GuideStep,
 } from '@port/design-system'
-import AiAssistantPanel from '../components/AiAssistantPanel'
-import { downloads as downloadItems, notifications as notiItems } from '../data/gnbMock'
+import {
+  downloads as downloadItems,
+  notifications as notiItems,
+  aiGreeting,
+  aiReply,
+} from '../data/gnbMock'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 
@@ -1107,7 +1112,16 @@ export default function LogSearch() {
       />
 
       {/* AI Assistant 사이드 패널 — GNB AI Assistant 버튼으로 토글 */}
-      <AiAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
+      <AiAssistantPanel
+        open={aiOpen}
+        onClose={() => setAiOpen(false)}
+        title="spider AI Assistant"
+        status="온라인 · GPT-4o"
+        greeting={aiGreeting}
+        getReply={aiReply}
+        userInitials="SK"
+        disclaimer="AI의 응답은 부정확할 수 있습니다 · 중요 결정은 검증 후 진행하세요"
+      />
 
       {/* 다운로드 목록 드롭다운 — GNB 다운로드 버튼으로 토글 */}
       <DownloadDropdown
