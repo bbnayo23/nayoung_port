@@ -290,7 +290,8 @@ export const styledSubMenuItem = style({
 
 globalStyle(`${styledSubMenuItem} li .menu-item-wrapper`, {
   color: `var(--color-lnb-submenu-text, ${vars.color.textSecondary})`,
-  paddingLeft: 44,
+  // 상위 라벨선(마진8+패딩8+아이콘14+gap10 ≈ 40px)에 맞춰 들여쓰기 (기존 44 → 과다 방지)
+  paddingLeft: 32,
 })
 
 // ── Divider ──────────────────────────────────────────────────────────────────
