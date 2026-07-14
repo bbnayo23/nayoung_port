@@ -104,13 +104,18 @@ export const tabActive = style({
 })
 
 // ── Before/After 슬라이더 ───────────────────────────────────────────────────────
-// 두 이미지 모두 1600×1000(16:10). 컨테이너를 같은 비율로 고정해 정렬을 보장하고,
-// 뷰포트 높이를 최대한 활용하되 상단 헤더/탭·하단 포인트가 함께 보이도록 maxHeight 로 상한.
+// 두 이미지 모두 1600×1000(16:10). 컨테이너를 같은 비율로 고정하면 cover 크롭이 없어
+// 번호 마커의 x/y 백분율이 이미지 좌표와 1:1로 정확히 맞는다(높이 상한 없음).
 export const compare = style({
   position: 'relative',
-  width: '100%',
+  // 높이 기준으로 크기를 잡아(16:10 유지) 크롭 없이 이미지 전체를 보이므로 번호 마커 좌표가 1:1로 정확.
+  // 아래 범례도 함께 보이도록 뷰포트 높이에 맞춘다.
+  height: '62vh',
+  width: 'auto',
+  maxWidth: '100%',
+  margin: '0 auto',
   aspectRatio: '16 / 10',
-  maxHeight: '72vh',
+  flexShrink: 0,
   borderRadius: vars.radius.md,
   overflow: 'hidden',
   border: `1px solid ${vars.color.border}`,
@@ -210,36 +215,124 @@ globalStyle(`${handle} svg`, {
 })
 globalStyle(`${handle} svg:first-child`, { marginRight: -3 })
 
-// ── 개선 포인트 ────────────────────────────────────────────────────────────────
-export const points = style({
+// ── 변경점 번호 마커(핀) ─────────────────────────────────────────────────────────
+export const pin = style({
+  position: 'absolute',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 4,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 24,
+  height: 24,
+  padding: 0,
+  borderRadius: '50%',
+  border: '2px solid #fff',
+  background: vars.color.primary,
+  color: '#fff',
+  fontSize: 12,
+  fontWeight: 800,
+  lineHeight: 1,
+  cursor: 'pointer',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+  transition: `transform ${vars.transition.fast}, background ${vars.transition.fast}`,
+  ':hover': { transform: 'translate(-50%, -50%) scale(1.18)' },
+})
+
+export const pinActive = style({
+  background: '#0f172a',
+  transform: 'translate(-50%, -50%) scale(1.18)',
+  zIndex: 5,
+})
+
+// 핀 위에 뜨는 라벨 툴팁
+export const pinTip = style({
+  position: 'absolute',
+  bottom: 'calc(100% + 6px)',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  padding: '3px 8px',
+  borderRadius: vars.radius.sm,
+  background: '#0f172a',
+  color: '#fff',
+  fontSize: 11,
+  fontWeight: vars.font.weightMedium,
+  whiteSpace: 'nowrap',
+  pointerEvents: 'none',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.35)',
+})
+
+// ── 변경점 번호 범례 ───────────────────────────────────────────────────────────
+export const notes = style({
   listStyle: 'none',
   margin: 0,
   padding: 0,
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-  columnGap: 24,
+  columnGap: 20,
   rowGap: 8,
   '@media': {
-    '(max-width: 720px)': { gridTemplateColumns: '1fr' },
+    '(max-width: 760px)': { gridTemplateColumns: '1fr' },
   },
 })
 
-export const point = style({
-  position: 'relative',
-  paddingLeft: 18,
+export const note = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 10,
+  padding: '6px 8px',
+  borderRadius: vars.radius.sm,
+  transition: `background ${vars.transition.fast}`,
+})
+
+export const noteActive = style({
+  background: vars.color.primarySoft,
+})
+
+export const noteNum = style({
+  flexShrink: 0,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 20,
+  height: 20,
+  marginTop: 1,
+  borderRadius: '50%',
+  background: vars.color.primary,
+  color: '#fff',
+  fontSize: 11,
+  fontWeight: 800,
+  lineHeight: 1,
+})
+
+export const noteBody = style({
+  minWidth: 0,
+})
+
+export const noteTitle = style({
   fontSize: vars.font.sizeSm,
-  lineHeight: 1.6,
+  fontWeight: vars.font.weightBold,
+  color: vars.color.text,
+})
+
+export const noteDiff = style({
+  marginTop: 2,
+  fontSize: vars.font.sizeXs,
+  lineHeight: 1.5,
   color: vars.color.textSecondary,
-  selectors: {
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      left: 0,
-      top: 9,
-      width: 6,
-      height: 6,
-      borderRadius: '50%',
-      background: vars.color.primary,
-    },
-  },
+})
+
+export const noteBefore = style({
+  color: vars.color.textSecondary,
+})
+
+export const noteArrow = style({
+  margin: '0 5px',
+  color: vars.color.primary,
+  fontWeight: vars.font.weightBold,
+})
+
+export const noteAfter = style({
+  color: vars.color.text,
+  fontWeight: vars.font.weightMedium,
 })

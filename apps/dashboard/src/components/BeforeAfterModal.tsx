@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 import { ExdCloseIcon, ExdChevronLeftIcon, ExdChevronRightIcon } from '@port/icon-library'
 import * as s from './BeforeAfterModal.css'
 
-type Pair = { id: string; label: string; before: string; after: string }
+// 화면 위에 얹는 번호 주석(화면설계서 스타일). x/y 는 이미지(1600×1000) 기준 백분율 위치.
+type Anno = { n: number; x: number; y: number; title: string; before: string; after: string }
+type Pair = { id: string; label: string; before: string; after: string; notes: Anno[] }
 
 // 이전(SPiDER ExD 실제 화면) ↔ 현재(대시보드) 비교 쌍.
 // 이미지는 apps/dashboard/public/ 에 배치 (없으면 이미지가 비어 보임).
@@ -12,21 +14,27 @@ const PAIRS: Pair[] = [
     label: '검색 전 화면',
     before: '/exd-before-logsearch.png',
     after: '/exd-after-idle.png',
+    notes: [
+      { n: 1, x: 90, y: 7, title: '전역 액션 정렬', before: '검색조건과 한 줄에 뒤섞임', after: '타이틀과 같은 선상 우측으로 분리' },
+      { n: 2, x: 40, y: 14, title: '검색조건 툴바', before: '액션·조건 혼재', after: '조건만 남긴 단일 카드' },
+      { n: 3, x: 40, y: 19.5, title: 'AI 쿼리바', before: '단순 입력창', after: 'AI 추천 쿼리 진입점' },
+      { n: 4, x: 30, y: 30, title: '검색기록·템플릿', before: '긴 목록 상시 노출', after: '검색 전 2열 카드로 압축(점진적 노출)' },
+      { n: 5, x: 6, y: 14, title: 'LNB', before: '좌측 내비 없음(상단 드롭다운)', after: '상시 8메뉴·현재 위치 강조' },
+    ],
   },
   {
     id: 'result',
     label: '검색 결과 화면',
     before: '/exd-before-logsearch2.png',
     after: '/exd-after-result.png',
+    notes: [
+      { n: 1, x: 50, y: 27, title: '히스토그램', before: '분포 파악 어려움', after: '시간대별 분포 시각화' },
+      { n: 2, x: 88, y: 41, title: '결과 툴바', before: '컨트롤 흩어짐', after: '헤더표시·프로파일·컬럼·피벗·CSV 정리' },
+      { n: 3, x: 21, y: 50, title: '심각도 배지', before: '3단계 솔리드', after: '5단계 status 소프트 틴트' },
+      { n: 4, x: 71, y: 49, title: '위협 IP 강조', before: '일반 텍스트', after: '적색 볼드 + ‘위협’ 태그' },
+      { n: 5, x: 15, y: 46, title: '핵심 컬럼', before: '12여 컬럼 과밀', after: '핵심 5컬럼 + 행 펼침 상세' },
+    ],
   },
-]
-
-const IMPROVEMENTS = [
-  '고밀도·과밀 정보 → 여백과 명확한 정보 계층으로 인지 부하 완화',
-  '진한 그린 브랜드 → 장시간 관제에 편한 차분한 뉴트럴 + 액센트',
-  '화면 단위 하드코딩 → 디자인 시스템 컴포넌트 기반으로 재구성(재사용)',
-  '플레이스홀더 데이터 → 실제 시나리오 기반 데이터로 현실감 확보',
-  '다크모드 · 접근성 · 상태(로딩/에러/빈 값) 처리 보강',
 ]
 
 /**
@@ -36,6 +44,7 @@ const IMPROVEMENTS = [
 export default function BeforeAfterModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [tab, setTab] = useState(0)
   const [pos, setPos] = useState(50)
+  const [activeAnno, setActiveAnno] = useState<number | null>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
 
@@ -44,6 +53,7 @@ export default function BeforeAfterModal({ open, onClose }: { open: boolean; onC
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTab(0)
     setPos(50)
+    setActiveAnno(null)
   }, [open])
 
   useEffect(() => {
@@ -91,7 +101,7 @@ export default function BeforeAfterModal({ open, onClose }: { open: boolean; onC
         <header className={s.head}>
           <div>
             <div className={s.title}>UI/UX 개선 — Before / After</div>
-            <div className={s.sub}>SPiDER ExD 실제 화면을 디자인 시스템 기반으로 재설계했습니다 · 핸들을 드래그해 비교하세요</div>
+            <div className={s.sub}>SPiDER ExD 실제 화면을 디자인 시스템 기반으로 재설계했습니다 · 핸들을 드래그해 비교하고, 번호를 짚어 변경점을 확인하세요</div>
           </div>
           <button type="button" className={s.close} onClick={onClose} aria-label="닫기">
             <ExdCloseIcon size={18} />
@@ -109,6 +119,7 @@ export default function BeforeAfterModal({ open, onClose }: { open: boolean; onC
                   onClick={() => {
                     setTab(i)
                     setPos(50)
+                    setActiveAnno(null)
                   }}
                 >
                   {p.label}
@@ -141,15 +152,47 @@ export default function BeforeAfterModal({ open, onClose }: { open: boolean; onC
                 <ExdChevronRightIcon size={12} />
               </span>
             </div>
+
+            {/* 변경점 번호 마커 (화면설계서 스타일) */}
+            {pair.notes.map((a) => (
+              <button
+                key={a.n}
+                type="button"
+                className={activeAnno === a.n ? `${s.pin} ${s.pinActive}` : s.pin}
+                style={{ left: `${a.x}%`, top: `${a.y}%` }}
+                onPointerDown={(e) => e.stopPropagation()}
+                onMouseEnter={() => setActiveAnno(a.n)}
+                onMouseLeave={() => setActiveAnno(null)}
+                onFocus={() => setActiveAnno(a.n)}
+                onBlur={() => setActiveAnno(null)}
+                aria-label={`${a.n}. ${a.title}`}
+              >
+                {a.n}
+                {activeAnno === a.n && <span className={s.pinTip}>{a.title}</span>}
+              </button>
+            ))}
           </div>
 
-          <ul className={s.points}>
-            {IMPROVEMENTS.map((t, i) => (
-              <li key={i} className={s.point}>
-                {t}
+          <ol className={s.notes}>
+            {pair.notes.map((a) => (
+              <li
+                key={a.n}
+                className={activeAnno === a.n ? `${s.note} ${s.noteActive}` : s.note}
+                onMouseEnter={() => setActiveAnno(a.n)}
+                onMouseLeave={() => setActiveAnno(null)}
+              >
+                <span className={s.noteNum}>{a.n}</span>
+                <div className={s.noteBody}>
+                  <div className={s.noteTitle}>{a.title}</div>
+                  <div className={s.noteDiff}>
+                    <span className={s.noteBefore}>{a.before}</span>
+                    <span className={s.noteArrow}>→</span>
+                    <span className={s.noteAfter}>{a.after}</span>
+                  </div>
+                </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
     </div>
