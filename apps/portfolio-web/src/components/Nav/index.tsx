@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { brand } from '../../data'
-import { header, headerScrolled, logo, logoExpand, nav, navList, navLink, contactBtn } from './Nav.css'
+import { header, headerScrolled, logo, logoExpand, nav, navList, navLink, contactBtn, three3dBtn } from './Nav.css'
 
 const links = [
   { href: '#career', label: 'Career' },
@@ -35,12 +35,7 @@ export function Nav({ onShow3D }: { onShow3D?: () => void }) {
           ))}
         </ul>
         {onShow3D && (
-          <button
-            type="button"
-            className={navLink}
-            onClick={onShow3D}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit' }}
-          >
+          <button type="button" className={three3dBtn} onClick={onShow3D}>
             3D 공간 ↗
           </button>
         )}

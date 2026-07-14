@@ -120,3 +120,26 @@ export const contactBtn = style({
     'screen and (max-width: 400px)': { display: 'none' },
   },
 })
+
+// 3D 공간 진입 — Contact(채운 pill)와 짝이 되는 아웃라인 액센트 pill(보조 CTA)
+export const three3dBtn = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  padding: '9px 16px',
+  fontFamily: swiss.font.sans,
+  fontSize: '14px',
+  fontWeight: 600,
+  color: swiss.color.accent,
+  background: 'transparent',
+  border: `1px solid ${swiss.color.accent}66`,
+  borderRadius: '2px',
+  cursor: 'pointer',
+  whiteSpace: 'nowrap',
+  transition: `background 0.3s ease, border-color 0.3s ease, transform 0.4s ${swiss.ease.smooth}`,
+  ':hover': {
+    background: `${swiss.color.accent}14`,
+    borderColor: swiss.color.accent,
+    transform: 'translateY(-2px)',
+  },
+})
