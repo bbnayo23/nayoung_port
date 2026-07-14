@@ -226,6 +226,9 @@ export default function LogSearch() {
   const [langOpen, setLangOpen] = useState(false)
   const [userOpen, setUserOpen] = useState(false)
   const [solOpen, setSolOpen] = useState(false)
+  // 검색기록·템플릿 — 삭제 반영을 위해 상태로 관리
+  const [history, setHistory] = useState(searchHistory)
+  const [tpls, setTpls] = useState(templates)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
   const widgetsRef = useRef<HTMLDivElement>(null)
@@ -447,11 +450,12 @@ export default function LogSearch() {
     setPage(1)
   }
 
-  const applySaved = (sq: SavedQuery) => {
-    setInput(sq.query)
+  const applySaved = (q: string) => {
+    setInput(q)
     setOpenPanel(null)
-    runSearch(sq.query)
+    runSearch(q)
   }
+  const copyToast = () => toast.info('쿼리가 복사되었습니다')
 
   // 컬럼 헤더 우클릭 → 자동 맞춤 컨텍스트 메뉴 (S002 #7)
   const openColumnMenu = (e: React.MouseEvent, col: ColumnKey) => {
@@ -616,7 +620,18 @@ export default function LogSearch() {
                 visible={openPanel === 'history'}
                 onVisibleChange={(v) => !v && setOpenPanel(null)}
                 onClick={() => setOpenPanel((p) => (p === 'history' ? null : 'history'))}
-                content={<SavedList title="검색기록" items={searchHistory} onPick={applySaved} />}
+                content={
+                  <div style={{ width: 360, height: 420 }}>
+                    <QueryListCard
+                      icon={<ExdClockIcon size={15} />}
+                      title="검색기록"
+                      items={toQueryItems(history)}
+                      onSelect={(it) => applySaved(it.query)}
+                      onCopy={copyToast}
+                      onRemove={(it) => setHistory((h) => h.filter((x) => x.id !== it.id))}
+                    />
+                  </div>
+                }
               >
                 <Button variant="ghost" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
               </Popover>
@@ -627,7 +642,18 @@ export default function LogSearch() {
                 visible={openPanel === 'template'}
                 onVisibleChange={(v) => !v && setOpenPanel(null)}
                 onClick={() => setOpenPanel((p) => (p === 'template' ? null : 'template'))}
-                content={<SavedList title="템플릿" items={templates} onPick={applySaved} />}
+                content={
+                  <div style={{ width: 360, height: 420 }}>
+                    <QueryListCard
+                      icon={<ExdListUlIcon size={15} />}
+                      title="템플릿"
+                      items={toQueryItems(tpls)}
+                      onSelect={(it) => applySaved(it.query)}
+                      onCopy={copyToast}
+                      onRemove={(it) => setTpls((t) => t.filter((x) => x.id !== it.id))}
+                    />
+                  </div>
+                }
               >
                 <Button variant="ghost" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
               </Popover>
@@ -792,8 +818,10 @@ export default function LogSearch() {
                 icon={<ExdClockIcon size={15} />}
                 title="검색기록"
                 actionLabel="전체"
-                items={toQueryItems(searchHistory)}
-                onSelect={(it) => { setInput(it.query); runSearch(it.query) }}
+                items={toQueryItems(history)}
+                onSelect={(it) => applySaved(it.query)}
+                onCopy={copyToast}
+                onRemove={(it) => setHistory((h) => h.filter((x) => x.id !== it.id))}
                 onAction={() => notReady('검색기록 전체 보기')}
                 emptyText="검색기록이 없습니다."
               />
@@ -801,8 +829,10 @@ export default function LogSearch() {
                 icon={<ExdListUlIcon size={15} />}
                 title="템플릿"
                 actionLabel="전체"
-                items={toQueryItems(templates)}
-                onSelect={(it) => { setInput(it.query); runSearch(it.query) }}
+                items={toQueryItems(tpls)}
+                onSelect={(it) => applySaved(it.query)}
+                onCopy={copyToast}
+                onRemove={(it) => setTpls((t) => t.filter((x) => x.id !== it.id))}
                 onAction={() => notReady('템플릿 전체 보기')}
                 emptyText="템플릿이 없습니다."
               />
@@ -1110,32 +1140,6 @@ function ComingSoon({ label }: { label: string }) {
   )
 }
 
-// ── 팝오버 내부 리스트 (검색기록 / 템플릿 버튼) ─────────────────────────────────
-function SavedList({
-  title,
-  items,
-  onPick,
-}: {
-  title: string
-  items: SavedQuery[]
-  onPick: (sq: SavedQuery) => void
-}) {
-  return (
-    <div className={s.savedListPanel}>
-      <div className={s.savedListHead}>{title}</div>
-      <ul className={s.savedList}>
-        {items.map((it) => (
-          <li key={it.id}>
-            <button type="button" className={s.savedListItem} onClick={() => onPick(it)}>
-              <span className={s.savedListTitle}>{it.title}</span>
-              <span className={s.savedListQuery}>{it.query}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
 
 function Field({
   label,

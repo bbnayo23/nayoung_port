@@ -547,58 +547,7 @@ export const errorMsg = style({
   color: vars.color.textSecondary,
 })
 
-// ── 팝오버 패널 (검색기록/템플릿 리스트, 템플릿 저장 폼) ─────────────────────────
-export const savedListPanel = style({
-  width: 380,
-  maxWidth: '70vw',
-  maxHeight: 380,
-  overflowY: 'auto',
-})
-
-export const savedListHead = style({
-  fontSize: vars.font.sizeSm,
-  fontWeight: vars.font.weightBold,
-  color: vars.color.text,
-  padding: '4px 4px 8px',
-  borderBottom: `1px solid ${vars.color.border}`,
-  marginBottom: 4,
-})
-
-export const savedList = style({
-  listStyle: 'none',
-  margin: 0,
-  padding: 0,
-})
-
-export const savedListItem = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-  width: '100%',
-  padding: '8px 8px',
-  border: 'none',
-  background: 'transparent',
-  borderRadius: vars.radius.sm,
-  textAlign: 'left',
-  cursor: 'pointer',
-  ':hover': { background: vars.color.surfaceHover },
-})
-
-export const savedListTitle = style({
-  fontSize: vars.font.sizeSm,
-  fontWeight: vars.font.weightMedium,
-  color: vars.color.text,
-})
-
-export const savedListQuery = style({
-  fontFamily: MONO,
-  fontSize: vars.font.sizeXs,
-  color: vars.color.textSecondary,
-  whiteSpace: 'normal',
-  wordBreak: 'break-all',
-  lineHeight: 1.4,
-})
-
+// ── 템플릿 저장 폼 팝오버 ──────────────────────────────────────────────────────
 export const savePanel = style({
   width: 260,
   display: 'flex',
