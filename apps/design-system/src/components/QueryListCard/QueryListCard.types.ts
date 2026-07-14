@@ -23,6 +23,10 @@ export interface QueryListCardProps {
   items: QueryListItem[]
   /** 항목 클릭(실행) */
   onSelect: (item: QueryListItem) => void
+  /** hover 복사 후 콜백 — 클립보드 쓰기는 내부에서 처리, 피드백(토스트 등)은 소비처가 담당 */
+  onCopy?: (item: QueryListItem) => void
+  /** 제공 시 hover 삭제 버튼 노출 — 실제 제거는 소비처가 처리 */
+  onRemove?: (item: QueryListItem) => void
   /** hover 시 노출되는 실행 어피던스 라벨 (기본: 실행) */
   runLabel?: string
   /** 빈 목록 안내 문구 */

@@ -144,22 +144,39 @@ export const itemMeta = style({
   color: vars.color.textSecondary,
 })
 
-// hover 시 노출되는 실행 어피던스
-export const runBtn = style({
+// 항목 행 — hover 액션(복사·삭제)을 얹기 위한 relative 컨테이너
+export const row = style({
+  position: 'relative',
+})
+
+// hover 시 노출되는 액션(복사·삭제) 그룹 — 항목 우상단
+export const rowActions = style({
+  position: 'absolute',
+  top: 8,
+  right: 10,
+  display: 'inline-flex',
+  gap: 2,
+  opacity: 0,
+  transition: `opacity ${vars.transition.fast}`,
+  selectors: {
+    [`${row}:hover &`]: { opacity: 1 },
+    [`${row}:focus-within &`]: { opacity: 1 },
+  },
+})
+
+export const actionBtn = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: 3,
-  flexShrink: 0,
-  fontSize: vars.font.sizeXs,
-  fontWeight: vars.font.weightMedium,
-  color: vars.color.primary,
-  opacity: 0,
-  transform: 'translateX(4px)',
-  transition: `opacity ${vars.transition.fast}, transform ${vars.transition.fast}`,
-  selectors: {
-    [`${item}:hover &`]: { opacity: 1, transform: 'translateX(0)' },
-    [`${item}:focus-visible &`]: { opacity: 1, transform: 'translateX(0)' },
-  },
+  justifyContent: 'center',
+  width: 24,
+  height: 24,
+  border: 'none',
+  borderRadius: vars.radius.sm,
+  background: vars.color.surface,
+  color: vars.color.textSecondary,
+  cursor: 'pointer',
+  transition: `background ${vars.transition.fast}, color ${vars.transition.fast}`,
+  ':hover': { background: vars.color.surfaceHover, color: vars.color.text },
 })
 
 export const query = style({

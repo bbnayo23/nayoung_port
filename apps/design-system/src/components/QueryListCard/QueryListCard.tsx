@@ -10,12 +10,14 @@ import {
   filterIcon,
   filterInput,
   list,
+  row,
   item,
   itemTop,
   titleWrap,
   itemTitle,
   itemMeta,
-  runBtn,
+  rowActions,
+  actionBtn,
   query,
   qKeyword,
   qValue,
@@ -41,13 +43,25 @@ const SearchIcon = () => (
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 )
+const CopyIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="9" y="9" width="13" height="13" rx="2" />
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+  </svg>
+)
+const TrashIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="3 6 5 6 21 6" />
+    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+  </svg>
+)
 
 /**
  * QueryListCard — 검색기록·템플릿처럼 저장된 쿼리 목록을 담는 카드.
  *
- * 헤더(아이콘 + 타이틀 + 개수 + 액션), 카드 내 필터 검색, 스크롤 목록으로 구성되며,
- * 각 항목은 제목·요약(meta)·쿼리(문법 하이라이트) 한 줄로 표시하고 hover 시 실행
- * 어피던스를 드러낸다.
+ * 헤더(아이콘 + 타이틀 + 개수 + 액션), 카드 내 필터 검색, 스크롤 목록으로 구성된다.
+ * 각 항목은 제목·요약(meta)·쿼리(문법 하이라이트) 한 줄로 표시하고, 클릭 시 실행,
+ * hover 시 복사·삭제(onRemove 제공 시) 액션을 드러낸다.
  *
  * @example
  * <QueryListCard icon={<ClockIcon />} title="검색기록" items={history} onSelect={applyQuery} />
@@ -60,6 +74,8 @@ const QueryListCard = forwardRef<HTMLDivElement, QueryListCardProps>((props, ref
     onAction,
     items,
     onSelect,
+    onCopy,
+    onRemove,
     runLabel = '실행',
     emptyText = '항목이 없습니다.',
     searchable = true,
@@ -76,6 +92,11 @@ const QueryListCard = forwardRef<HTMLDivElement, QueryListCardProps>((props, ref
           (it.meta?.toLowerCase().includes(f) ?? false),
       )
     : items
+
+  const copy = (it: QueryListCardProps['items'][number]) => {
+    navigator.clipboard?.writeText(it.query)
+    onCopy?.(it)
+  }
 
   return (
     <section ref={ref} className={cn(card, className)}>
@@ -112,7 +133,7 @@ const QueryListCard = forwardRef<HTMLDivElement, QueryListCardProps>((props, ref
       ) : (
         <ul className={list}>
           {filtered.map((it) => (
-            <li key={it.id}>
+            <li key={it.id} className={row}>
               <button
                 type="button"
                 className={item}
@@ -124,12 +145,19 @@ const QueryListCard = forwardRef<HTMLDivElement, QueryListCardProps>((props, ref
                     <span className={itemTitle}>{it.title}</span>
                     {it.meta && <span className={itemMeta}> · {it.meta}</span>}
                   </span>
-                  <span className={runBtn} aria-hidden="true">
-                    ▶ {runLabel}
-                  </span>
                 </span>
                 <span className={query}>{highlightQuery(it.query)}</span>
               </button>
+              <span className={rowActions}>
+                <button type="button" className={actionBtn} aria-label="쿼리 복사" title="복사" onClick={() => copy(it)}>
+                  <CopyIcon />
+                </button>
+                {onRemove && (
+                  <button type="button" className={actionBtn} aria-label="삭제" title="삭제" onClick={() => onRemove(it)}>
+                    <TrashIcon />
+                  </button>
+                )}
+              </span>
             </li>
           ))}
         </ul>
