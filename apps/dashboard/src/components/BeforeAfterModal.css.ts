@@ -141,24 +141,38 @@ export const imgBefore = style({
   objectPosition: 'top left',
 })
 
-// 뱃지: 스크린샷 상단 내비바(그린 로고·GNB 아이콘)와 겹치지 않도록 하단 모서리에 배치.
-// 솔리드 배경 + 그림자로 배경 콘텐츠 위에서도 또렷하게 보이도록 한다.
+// 뱃지: 스크린샷 상단 내비바와 겹치지 않도록 하단 모서리에 배치.
+// 불투명 배경 + 흰 테두리 링 + 볼드 텍스트 + 강한 그림자로 어떤 배경 위에서도 또렷하게.
 const tagBase = style({
   position: 'absolute',
-  bottom: 12,
-  zIndex: 5,
-  padding: '4px 11px',
+  bottom: 14,
+  zIndex: 6,
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  padding: '6px 14px',
   borderRadius: vars.radius.full,
-  fontSize: 11,
-  fontWeight: vars.font.weightBold,
-  letterSpacing: '0.08em',
+  fontSize: 12,
+  fontWeight: 800,
+  letterSpacing: '0.12em',
   color: '#fff',
   pointerEvents: 'none',
-  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+  border: '1.5px solid rgba(255, 255, 255, 0.92)',
+  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.45)',
+  selectors: {
+    '&::before': {
+      content: '""',
+      width: 7,
+      height: 7,
+      borderRadius: '50%',
+      background: 'currentColor',
+      opacity: 0.9,
+    },
+  },
 })
 
-export const tagBefore = style([tagBase, { left: 12, background: 'rgba(15, 23, 42, 0.92)' }])
-export const tagAfter = style([tagBase, { right: 12, background: vars.color.primary }])
+export const tagBefore = style([tagBase, { left: 14, background: '#0f172a' }])
+export const tagAfter = style([tagBase, { right: 14, background: vars.color.primary }])
 
 export const divider = style({
   position: 'absolute',
