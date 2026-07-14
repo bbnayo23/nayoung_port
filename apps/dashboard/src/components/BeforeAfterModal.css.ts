@@ -110,7 +110,7 @@ export const compare = style({
   position: 'relative',
   // 높이 기준으로 크기를 잡아(16:10 유지) 크롭 없이 이미지 전체를 보이므로 번호 마커 좌표가 1:1로 정확.
   // 아래 범례도 함께 보이도록 뷰포트 높이에 맞춘다.
-  height: '62vh',
+  height: '52vh',
   width: 'auto',
   maxWidth: '100%',
   margin: '0 auto',
@@ -335,4 +335,14 @@ export const noteArrow = style({
 export const noteAfter = style({
   color: vars.color.text,
   fontWeight: vars.font.weightMedium,
+})
+
+// 수정 이유(UI/UX 판단 근거) — 좌측 액센트 라인으로 구분
+export const noteWhy = style({
+  margin: '5px 0 0',
+  paddingLeft: 9,
+  borderLeft: `2px solid ${vars.color.primary}`,
+  fontSize: vars.font.sizeXs,
+  lineHeight: 1.6,
+  color: vars.color.textSecondary,
 })
