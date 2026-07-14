@@ -21,8 +21,9 @@ import {
   Progress,
   Toaster,
   toast,
+  QueryListCard,
 } from '@port/design-system'
-import type { MenuItem, ContextMenuItem } from '@port/design-system'
+import type { MenuItem, ContextMenuItem, QueryListItem } from '@port/design-system'
 import {
   XdrNavDashboardIcon,
   XdrNavLogsearchIcon,
@@ -196,6 +197,15 @@ const templates: SavedQuery[] = TEMPLATE_NAMES.map((title, i) => ({
   sort: i % 2 === 0 ? '내림차순' : '오름차순',
   query: SAMPLE_QUERIES[i % SAMPLE_QUERIES.length],
 }))
+
+/** SavedQuery → QueryListCard 항목 변환 (요약 meta 구성) */
+const toQueryItems = (arr: SavedQuery[]): QueryListItem[] =>
+  arr.map((q) => ({
+    id: q.id,
+    title: q.title,
+    meta: `${q.logType === '전체' ? '전체' : (logTypeLabel[q.logType as LogType] ?? q.logType)} · ${q.sort}`,
+    query: q.query,
+  }))
 
 type SearchPhase = 'idle' | 'running' | 'paused' | 'done' | 'error'
 type OpenPanel = null | 'history' | 'template' | 'save'
@@ -780,8 +790,24 @@ export default function LogSearch() {
             </div>
           ) : !hasResults ? (
             <div className={s.widgetsRow} ref={widgetsRef}>
-              <WidgetCard icon={<ExdClockIcon size={15} />} title="검색기록" items={searchHistory} onPick={applySaved} onMore={() => notReady('검색기록 더보기')} />
-              <WidgetCard icon={<ExdListUlIcon size={15} />} title="템플릿" items={templates} onPick={applySaved} onMore={() => notReady('템플릿 더보기')} />
+              <QueryListCard
+                icon={<ExdClockIcon size={15} />}
+                title="검색기록"
+                actionLabel="전체"
+                items={toQueryItems(searchHistory)}
+                onSelect={(it) => { setInput(it.query); runSearch(it.query) }}
+                onAction={() => notReady('검색기록 전체 보기')}
+                emptyText="검색기록이 없습니다."
+              />
+              <QueryListCard
+                icon={<ExdListUlIcon size={15} />}
+                title="템플릿"
+                actionLabel="전체"
+                items={toQueryItems(templates)}
+                onSelect={(it) => { setInput(it.query); runSearch(it.query) }}
+                onAction={() => notReady('템플릿 전체 보기')}
+                emptyText="템플릿이 없습니다."
+              />
             </div>
           ) : (
             <div className={s.resultArea}>
@@ -1077,49 +1103,6 @@ function ComingSoon({ label }: { label: string }) {
         <div className={s.errorMsg}>이 메뉴는 포트폴리오 데모에 포함되지 않았습니다. 로그검색 화면을 확인해 주세요.</div>
       </div>
     </>
-  )
-}
-
-// ── 검색기록 / 템플릿 위젯 카드 (검색 전 화면) ──────────────────────────────────
-function WidgetCard({
-  icon,
-  title,
-  items,
-  onPick,
-  onMore,
-}: {
-  icon: React.ReactNode
-  title: string
-  items: SavedQuery[]
-  onPick: (sq: SavedQuery) => void
-  onMore?: () => void
-}) {
-  return (
-    <section className={s.widgetCard}>
-      <header className={s.widgetHead}>
-        <span className={s.widgetTitle}>
-          {icon}
-          {title}
-        </span>
-        <button type="button" className={s.widgetMore} onClick={onMore}>더보기</button>
-      </header>
-      <ul className={s.widgetList}>
-        {items.slice(0, 10).map((it) => (
-          <li key={it.id}>
-            <button type="button" className={s.widgetItem} onClick={() => onPick(it)}>
-              <span className={s.widgetItemTitle}>{it.title}</span>
-              <span className={s.widgetItemMeta}>
-                <span className={s.metaTag}>로그유형 <b>{it.logType}</b></span>
-                <span className={s.metaTag}>로그소스 <b>{it.source}</b></span>
-                <span className={s.metaTag}>검색시간 {it.range}</span>
-                <span className={s.metaTag}>정렬기준 {it.sort}</span>
-              </span>
-              <span className={s.widgetItemQuery}>{it.query}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
   )
 }
 
