@@ -43,13 +43,6 @@ export const toolbarLeft = style({
   flexWrap: 'wrap',
 })
 
-export const toolbarRight = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: vars.spacing.xs,
-  flexWrap: 'wrap',
-})
-
 // ── AI 쿼리 바 ────────────────────────────────────────────────────────────────
 export const aiPrefix = style({
   display: 'inline-flex',

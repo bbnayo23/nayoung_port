@@ -570,8 +570,97 @@ export default function LogSearch() {
           <ComingSoon label={sideMenu.find((m) => m.key === activeMenu)?.label ?? ''} />
         ) : (
           <>
-          {/* 페이지 헤더 — 저장/내보내기는 각각 툴바(템플릿 저장)·결과 툴바(CSV)에서 맥락에 맞게 제공 */}
-          <PageHeader title="로그 검색" divider />
+          {/* 페이지 헤더 — 화면 전역 액션(검색기록/템플릿/저장/경보조건)은 타이틀과 같은 선상(우측)에 배치
+              (워크스페이스 PageHeader actions 패턴과 통일) · 아래 툴바는 순수 검색조건만 담당 */}
+          <PageHeader
+            title="로그 검색"
+            divider
+            actions={
+              <>
+                {/* 검색기록·템플릿 — 결과가 있을 때만 노출 (검색 전에는 아래 위젯이 담당) */}
+                {hasResults && (
+                  <>
+                    <Popover
+                      placement="bottom"
+                      style={{ maxWidth: 'none' }}
+                      visible={openPanel === 'history'}
+                      onVisibleChange={(v) => !v && setOpenPanel(null)}
+                      onClick={() => setOpenPanel((p) => (p === 'history' ? null : 'history'))}
+                      content={
+                        <div style={{ width: 360, height: 420 }}>
+                          <QueryListCard
+                            icon={<ExdClockIcon size={15} />}
+                            title="검색기록"
+                            items={toQueryItems(history)}
+                            onSelect={(it) => applySaved(it.query)}
+                            onCopy={copyToast}
+                            onRemove={(it) => setHistory((h) => h.filter((x) => x.id !== it.id))}
+                          />
+                        </div>
+                      }
+                    >
+                      <Button variant="ghost" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
+                    </Popover>
+
+                    <Popover
+                      placement="bottom"
+                      style={{ maxWidth: 'none' }}
+                      visible={openPanel === 'template'}
+                      onVisibleChange={(v) => !v && setOpenPanel(null)}
+                      onClick={() => setOpenPanel((p) => (p === 'template' ? null : 'template'))}
+                      content={
+                        <div style={{ width: 360, height: 420 }}>
+                          <QueryListCard
+                            icon={<ExdListUlIcon size={15} />}
+                            title="템플릿"
+                            items={toQueryItems(tpls)}
+                            onSelect={(it) => applySaved(it.query)}
+                            onCopy={copyToast}
+                            onRemove={(it) => setTpls((t) => t.filter((x) => x.id !== it.id))}
+                          />
+                        </div>
+                      }
+                    >
+                      <Button variant="ghost" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
+                    </Popover>
+                  </>
+                )}
+
+                <Popover
+                  placement="bottom"
+                  visible={openPanel === 'save'}
+                  onVisibleChange={(v) => !v && setOpenPanel(null)}
+                  onClick={() => setOpenPanel((p) => (p === 'save' ? null : 'save'))}
+                  content={
+                    <div className={s.savePanel}>
+                      <div className={s.savePanelTitle}>템플릿 저장</div>
+                      <label className={s.saveRow}>
+                        <span className={s.saveLabel}>템플릿 이름</span>
+                        <input
+                          className={s.saveInput}
+                          value={tplName}
+                          onChange={(e) => setTplName(e.target.value)}
+                          placeholder="이름 입력"
+                        />
+                      </label>
+                      <div className={s.saveRow}>
+                        <span className={s.saveLabel}>공유 설정</span>
+                        <Toggle size="sm" checked={tplShared} onChange={setTplShared} />
+                      </div>
+                      <div className={s.saveActions}>
+                        <Button variant="ghost" size="sm" onClick={() => setOpenPanel(null)}>취소</Button>
+                        <Button variant="primary" size="sm" onClick={() => { setOpenPanel(null); setTplName('') }}>저장</Button>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button variant="ghost" size="sm" leftIcon={<ExdFloppyFillIcon size={14} />} disabled={!hasResults}>템플릿 저장</Button>
+                </Popover>
+
+                <Button variant="ghost" size="sm" leftIcon={<ExdAlarmIcon size={14} />} onClick={() => notReady('경보조건 추가')}>경보조건 추가</Button>
+              </>
+            }
+          />
 
           {/* 검색 조건 툴바 */}
           <div className={s.toolbar} ref={toolbarRef}>
@@ -624,89 +713,6 @@ export default function LogSearch() {
               />
             </div>
 
-            <div className={s.toolbarRight}>
-              {/* 검색기록·템플릿 — 결과가 있을 때만 툴바에 노출 (검색 전에는 아래 위젯이 담당) */}
-              {hasResults && (
-                <>
-              <Popover
-                placement="bottom"
-                style={{ maxWidth: 'none' }}
-                visible={openPanel === 'history'}
-                onVisibleChange={(v) => !v && setOpenPanel(null)}
-                onClick={() => setOpenPanel((p) => (p === 'history' ? null : 'history'))}
-                content={
-                  <div style={{ width: 360, height: 420 }}>
-                    <QueryListCard
-                      icon={<ExdClockIcon size={15} />}
-                      title="검색기록"
-                      items={toQueryItems(history)}
-                      onSelect={(it) => applySaved(it.query)}
-                      onCopy={copyToast}
-                      onRemove={(it) => setHistory((h) => h.filter((x) => x.id !== it.id))}
-                    />
-                  </div>
-                }
-              >
-                <Button variant="ghost" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
-              </Popover>
-
-              <Popover
-                placement="bottom"
-                style={{ maxWidth: 'none' }}
-                visible={openPanel === 'template'}
-                onVisibleChange={(v) => !v && setOpenPanel(null)}
-                onClick={() => setOpenPanel((p) => (p === 'template' ? null : 'template'))}
-                content={
-                  <div style={{ width: 360, height: 420 }}>
-                    <QueryListCard
-                      icon={<ExdListUlIcon size={15} />}
-                      title="템플릿"
-                      items={toQueryItems(tpls)}
-                      onSelect={(it) => applySaved(it.query)}
-                      onCopy={copyToast}
-                      onRemove={(it) => setTpls((t) => t.filter((x) => x.id !== it.id))}
-                    />
-                  </div>
-                }
-              >
-                <Button variant="ghost" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
-              </Popover>
-                </>
-              )}
-
-              <Popover
-                placement="bottom"
-                visible={openPanel === 'save'}
-                onVisibleChange={(v) => !v && setOpenPanel(null)}
-                onClick={() => setOpenPanel((p) => (p === 'save' ? null : 'save'))}
-                content={
-                  <div className={s.savePanel}>
-                    <div className={s.savePanelTitle}>템플릿 저장</div>
-                    <label className={s.saveRow}>
-                      <span className={s.saveLabel}>템플릿 이름</span>
-                      <input
-                        className={s.saveInput}
-                        value={tplName}
-                        onChange={(e) => setTplName(e.target.value)}
-                        placeholder="이름 입력"
-                      />
-                    </label>
-                    <div className={s.saveRow}>
-                      <span className={s.saveLabel}>공유 설정</span>
-                      <Toggle size="sm" checked={tplShared} onChange={setTplShared} />
-                    </div>
-                    <div className={s.saveActions}>
-                      <Button variant="ghost" size="sm" onClick={() => setOpenPanel(null)}>취소</Button>
-                      <Button variant="primary" size="sm" onClick={() => { setOpenPanel(null); setTplName('') }}>저장</Button>
-                    </div>
-                  </div>
-                }
-              >
-                <Button variant="ghost" size="sm" leftIcon={<ExdFloppyFillIcon size={14} />} disabled={!hasResults}>템플릿 저장</Button>
-              </Popover>
-
-              <Button variant="ghost" size="sm" leftIcon={<ExdAlarmIcon size={14} />} onClick={() => notReady('경보조건 추가')}>경보조건 추가</Button>
-            </div>
           </div>
 
           {/* AI 검색 쿼리 바 */}
