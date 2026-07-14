@@ -14,23 +14,22 @@ export interface GuideStep {
   description: string
 }
 
+export interface GuideTourProps {
+  open: boolean
+  steps: GuideStep[]
+  onClose: () => void
+}
+
 // 스포트라이트가 대상보다 살짝 넓게 감싸도록 여백
 const PAD = 8
 const CALLOUT_W = 320
 
 /**
- * 온보딩 가이드 — 대상 요소를 스포트라이트로 강조하고 단계별 안내를 띄운다.
+ * GuideTour — 온보딩 코치마크. 대상 요소를 스포트라이트로 강조하고 단계별 안내를 띄운다.
  * 강조된 대상을 클릭하거나 콜아웃의 "다음"을 누르면 다음 단계로 진행한다.
+ * 대상은 `steps[].ref` 로 주입받으므로 도메인 데이터에 의존하지 않는다.
  */
-export default function GuideTour({
-  open,
-  steps,
-  onClose,
-}: {
-  open: boolean
-  steps: GuideStep[]
-  onClose: () => void
-}) {
+export default function GuideTour({ open, steps, onClose }: GuideTourProps) {
   const [i, setI] = useState(0)
   const [rect, setRect] = useState<DOMRect | null>(null)
 

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '@port/design-system'
+import { vars } from '../../theme/contract.css'
 
 // 대상 클릭이 통과하도록 오버레이 자체는 pointer-events 없음. 콜아웃만 클릭 가능.
 export const overlay = style({

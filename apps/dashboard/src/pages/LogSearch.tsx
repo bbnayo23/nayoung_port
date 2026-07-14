@@ -61,7 +61,7 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
-import GuideTour, { type GuideStep } from '../components/GuideTour'
+import { GuideTour, type GuideStep } from '@port/design-system'
 import AiAssistantPanel from '../components/AiAssistantPanel'
 import DownloadsPanel from '../components/DownloadsPanel'
 import NotificationsPanel from '../components/NotificationsPanel'

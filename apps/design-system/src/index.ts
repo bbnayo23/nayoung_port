@@ -92,3 +92,5 @@ export { default as QueryListCard } from './components/QueryListCard'
 // ── Patterns — 기능(로직·상태)이 포함된 UI 블록 (순수 프리미티브 components 와 구분) ──
 export { default as GnbDropdown } from './patterns/GnbDropdown'
 export type { GnbDropdownProps } from './patterns/GnbDropdown'
+export { default as GuideTour } from './patterns/GuideTour'
+export type { GuideStep, GuideTourProps } from './patterns/GuideTour'
