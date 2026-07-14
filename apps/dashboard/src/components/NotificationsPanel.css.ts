@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 import { vars } from '@port/design-system'
 
 export const head = style({
@@ -30,16 +30,27 @@ export const list = style({
 
 export const item = style({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   gap: 10,
-  padding: '10px 14px',
+  padding: '11px 14px',
   transition: `background ${vars.transition.fast}`,
   ':hover': { background: vars.color.surfaceHover },
 })
 
-// 읽지 않은 알림 — 옅은 강조 배경
-export const itemUnread = style({
-  background: vars.color.primarySoft,
+const dotBase = style({
+  width: 8,
+  height: 8,
+  marginTop: 5,
+  borderRadius: vars.radius.full,
+  flexShrink: 0,
+})
+
+// 심각도 도트 색 (medium 은 전용 토큰이 없어 데모용 앰버 리터럴)
+export const dot = styleVariants({
+  critical: [dotBase, { background: vars.color.error }],
+  high: [dotBase, { background: vars.color.warning }],
+  medium: [dotBase, { background: '#eab308' }],
+  ok: [dotBase, { background: vars.color.success }],
 })
 
 export const main = style({
@@ -53,26 +64,12 @@ export const main = style({
 export const title = style({
   fontSize: vars.font.sizeSm,
   color: vars.color.text,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-})
-
-export const titleUnread = style({
-  fontWeight: vars.font.weightBold,
+  lineHeight: 1.45,
 })
 
 export const meta = style({
   fontSize: vars.font.sizeXs,
   color: vars.color.textSecondary,
-})
-
-export const unreadDot = style({
-  width: 7,
-  height: 7,
-  borderRadius: vars.radius.full,
-  background: vars.color.primary,
-  flexShrink: 0,
 })
 
 export const footer = style({
