@@ -547,6 +547,29 @@ export const errorMsg = style({
   color: vars.color.textSecondary,
 })
 
+// ── 포트폴리오 개선사례(Before/After) 플로팅 버튼 ──────────────────────────────
+export const baFab = style({
+  position: 'fixed',
+  right: 20,
+  bottom: 20,
+  zIndex: 25,
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  padding: '10px 16px',
+  border: 'none',
+  borderRadius: vars.radius.full,
+  background: vars.color.primary,
+  color: vars.color.textInverse,
+  fontSize: vars.font.sizeSm,
+  fontWeight: vars.font.weightMedium,
+  fontFamily: vars.font.family,
+  cursor: 'pointer',
+  boxShadow: '0 8px 24px rgba(15, 23, 42, 0.22)',
+  transition: `transform ${vars.transition.fast}, opacity ${vars.transition.fast}`,
+  ':hover': { transform: 'translateY(-2px)' },
+})
+
 // ── 템플릿 저장 폼 팝오버 ──────────────────────────────────────────────────────
 export const savePanel = style({
   width: 260,

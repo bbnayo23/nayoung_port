@@ -61,6 +61,7 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
+import BeforeAfterModal from '../components/BeforeAfterModal'
 import {
   GuideTour,
   LanguageMenu,
@@ -227,6 +228,8 @@ export default function LogSearch() {
   const [noticeOpen, setNoticeOpen] = useState(true)
   // 안내 모달을 닫으면 단계별 온보딩 가이드를 노출한다.
   const [guideOpen, setGuideOpen] = useState(false)
+  // UI/UX 개선 전/후 비교 모달
+  const [baOpen, setBaOpen] = useState(false)
   // GNB의 AI Assistant 버튼으로 여는 우측 사이드 패널
   const [aiOpen, setAiOpen] = useState(false)
   // GNB의 다운로드 버튼으로 여는 다운로드 목록 드롭다운
@@ -1100,6 +1103,12 @@ export default function LogSearch() {
         items={columnMenuItems}
         onClose={() => setCtxMenu((c) => ({ ...c, open: false }))}
       />
+
+      {/* UI/UX 개선 전/후 비교 — 포트폴리오 개선사례 */}
+      <button type="button" className={s.baFab} onClick={() => setBaOpen(true)}>
+        ✦ UI/UX 개선 전·후
+      </button>
+      <BeforeAfterModal open={baOpen} onClose={() => setBaOpen(false)} />
 
       {/* 포트폴리오 안내 모달 — 대시보드 진입 시 노출, 닫으면 가이드 시작 */}
       <PortfolioNotice open={noticeOpen} onClose={() => { setNoticeOpen(false); setGuideOpen(true) }} />
