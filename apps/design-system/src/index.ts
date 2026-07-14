@@ -51,6 +51,7 @@ export {
   Chip,
 } from './components/PageLayout'
 export * from './components/Pagination'
+export * from './components/QueryListCard'
 export * from './components/Popover'
 export * from './components/Progress'
 export * from './components/Radio'
@@ -86,3 +87,4 @@ export { default as AppLayout } from './components/AppLayout'
 export { default as AlertModal } from './components/AlertModal'
 export { default as PageHeader } from './components/PageHeader'
 export { default as Breadcrumbs } from './components/Breadcrumbs'
+export { default as QueryListCard } from './components/QueryListCard'
