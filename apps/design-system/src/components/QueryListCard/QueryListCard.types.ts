@@ -27,5 +27,7 @@ export interface QueryListCardProps {
   runLabel?: string
   /** 빈 목록 안내 문구 */
   emptyText?: string
+  /** 카드 내 필터 검색 입력 표시 (기본: true) */
+  searchable?: boolean
   className?: string
 }

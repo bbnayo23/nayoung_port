@@ -34,6 +34,55 @@ export const headTitle = style({
   color: vars.color.text,
 })
 
+// 항목 수 배지
+export const count = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: 18,
+  height: 18,
+  marginLeft: 2,
+  padding: '0 6px',
+  borderRadius: vars.radius.full,
+  background: vars.color.background,
+  color: vars.color.textSecondary,
+  fontSize: vars.font.sizeXs,
+  fontWeight: vars.font.weightMedium,
+})
+
+// ── 필터 검색 ──────────────────────────────────────────────────────────────────
+export const filterRow = style({
+  position: 'relative',
+  flexShrink: 0,
+  padding: '8px 12px',
+  borderBottom: `1px solid ${vars.color.border}`,
+})
+
+export const filterIcon = style({
+  position: 'absolute',
+  left: 22,
+  top: '50%',
+  transform: 'translateY(-50%)',
+  display: 'inline-flex',
+  color: vars.color.textSecondary,
+  pointerEvents: 'none',
+})
+
+export const filterInput = style({
+  width: '100%',
+  height: 30,
+  padding: '0 10px 0 30px',
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: vars.radius.sm,
+  background: vars.color.surface,
+  color: vars.color.text,
+  fontSize: vars.font.sizeSm,
+  fontFamily: vars.font.family,
+  outline: 'none',
+  ':focus': { borderColor: vars.color.primary },
+  '::placeholder': { color: vars.color.textMuted },
+})
+
 export const action = style({
   border: 'none',
   background: 'transparent',
@@ -120,6 +169,16 @@ export const query = style({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+})
+
+// 쿼리 문법 하이라이트
+export const qKeyword = style({
+  color: vars.color.primary,
+  fontWeight: vars.font.weightBold,
+})
+
+export const qValue = style({
+  color: vars.color.success,
 })
 
 export const empty = style({
