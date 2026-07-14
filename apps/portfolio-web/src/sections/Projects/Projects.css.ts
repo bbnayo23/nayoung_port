@@ -218,61 +218,6 @@ export const caseRoleLabel = style({
   whiteSpace: 'nowrap',
 })
 
-// 정량 지표 — 케이스의 신뢰도·규모를 숫자로 강하게 앵커링하는 스탯 타일 그리드.
-export const metricRow = style({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))',
-  gap: '12px',
-  '@media': {
-    'screen and (max-width: 560px)': { gridTemplateColumns: 'repeat(2, 1fr)' },
-  },
-})
-
-export const metric = style({
-  position: 'relative',
-  overflow: 'hidden',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  padding: '18px 18px 16px',
-  borderRadius: '14px',
-  background: 'rgba(255, 255, 255, 0.5)',
-  border: `1px solid ${swiss.color.line}`,
-  // 상단 그라디언트 액센트 바
-  selectors: {
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      height: '3px',
-      backgroundImage: swiss.gradient,
-    },
-  },
-})
-
-export const metricValue = style({
-  fontFamily: swiss.font.sans,
-  fontSize: 'clamp(32px, 4.4vw, 46px)',
-  fontWeight: 800,
-  letterSpacing: '-0.035em',
-  lineHeight: '1',
-  // 브랜드 그라디언트 텍스트
-  backgroundImage: swiss.gradient,
-  WebkitBackgroundClip: 'text',
-  backgroundClip: 'text',
-  color: 'transparent',
-  WebkitTextFillColor: 'transparent',
-})
-
-export const metricLabel = style({
-  fontSize: '13px',
-  fontWeight: 500,
-  lineHeight: '1.35',
-  color: swiss.color.inkSoft,
-})
-
 export const caseBody = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',

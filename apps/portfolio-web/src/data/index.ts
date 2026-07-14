@@ -61,21 +61,19 @@ export const career: CareerItem[] = [
   },
 ];
 
-export type ProjectMetric = { label: string; value: string };
 export type ProjectMedia = {
   kind: "before" | "after";
   caption: string;
-  href?: string; // 클릭 시 열리는 링크 (Figma·라이브 화면 등)
+  href?: string; // 클릭 시 열리는 링크 (라이브 화면 등)
   src?: string; // 스크린샷 경로 (있으면 이미지로 렌더, 없으면 링크 카드)
 };
 
 /** 케이스 스터디 — 결과물이 아니라 "무엇을 왜 어떻게 풀어 무엇이 바뀌었나"를 담는다. */
 export type CaseStudy = {
-  role: string;
+  role?: string;
   problem: string[]; // Before · 문제
   process: string[]; // 설계·의사결정 과정
   outcome: string[]; // 성과
-  metrics?: ProjectMetric[];
   media?: ProjectMedia[];
   links?: { label: string; href: string }[];
 };
@@ -104,7 +102,6 @@ export const projects: Project[] = [
     category: "system",
     link: "/design-system/",
     caseStudy: {
-      role: "혼자 설계·구축 전담 → 사내 ONE UI 파일럿 공동 개발 주도 (공통 UI + 제품 UI/UX 스타일 담당)",
       problem: [
         "디자인 시스템이 없어 화면 단위로 디자인이 생성됐고, 스타일 코드와 개발 코드가 분리되지 않아 재사용이 어려웠다.",
         "어떤 컴포넌트가 존재하는지 파악할 방법이 없었다.",
@@ -122,30 +119,14 @@ export const projects: Project[] = [
         "스타일과 기능 개발을 병행할 수 있게 됐다.",
         "실제 4개 제품(ExD·XDR·SOAR·AirWorks)에 우선 적용하기로 결정, 현재 ONE UI 파일럿 진행 중 — 내년 컨퍼런스에서 신제품으로 공개 예정.",
       ],
-      metrics: [
-        { label: "표준 컴포넌트", value: "44" },
-        { label: "아이콘", value: "376" },
-        { label: "Storybook 문서", value: "40" },
-        { label: "적용 제품", value: "4" },
-        { label: "사용 개발자", value: "20+" },
-        { label: "1인 구축", value: "1개월" },
-      ],
       media: [
         {
-          kind: "before",
-          caption: "디자인 시스템 이전 — 화면 단위로 생성된 디자인 (SPiDER ExD v2)",
-          href: "https://www.figma.com/design/qTZMn61AHcHgFo9zKx1gzd/SPiDER-ExD-v2?node-id=252-1083&m=dev",
-        },
-        {
           kind: "after",
-          caption: "현재 — 표준 컴포넌트로 구성한 대시보드",
+          caption: "표준 컴포넌트로 구성한 대시보드",
           href: "/dashboard/",
         },
       ],
-      links: [
-        { label: "Storybook 열기", href: "/design-system/" },
-        { label: "Before · Figma", href: "https://www.figma.com/design/qTZMn61AHcHgFo9zKx1gzd/SPiDER-ExD-v2?node-id=252-1083&m=dev" },
-      ],
+      links: [{ label: "Storybook 열기", href: "/design-system/" }],
     },
   },
   {
@@ -172,11 +153,6 @@ export const projects: Project[] = [
       outcome: [
         "정보구조·화면 흐름·시각적 일관성을 확보해 로그를 인지·조회하는 흐름을 개선했다.",
         "디자인 시스템이 실제 제품 화면에서 동작함을 입증하는 소비 예시가 됐다.",
-      ],
-      metrics: [
-        { label: "소비 DS 컴포넌트", value: "20+" },
-        { label: "사용 아이콘", value: "25+" },
-        { label: "로그 시나리오", value: "24" },
       ],
       media: [
         {

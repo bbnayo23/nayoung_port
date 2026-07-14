@@ -7,7 +7,6 @@ import {
   statusBadge, cardTagline, cardDesc,
   cardFooter, cardTags, cardLink,
   caseList, caseCard, caseHead, caseHeadText, caseRole, caseRoleLabel,
-  metricRow, metric, metricValue, metricLabel,
   caseBody, caseBlock, caseBlockLabel, casePoints, casePoint,
   mediaRow, mediaItem, mediaKind, mediaCaption, caseLinks,
 } from './Projects.css'
@@ -37,20 +36,11 @@ function CaseStudyCard({ project }: { project: Project }) {
         <span className={statusBadge[project.status]}>{statusLabel[project.status]}</span>
       </header>
 
-      <p className={caseRole}>
-        <span className={caseRoleLabel}>Role</span>
-        {cs.role}
-      </p>
-
-      {cs.metrics && cs.metrics.length > 0 && (
-        <div className={metricRow}>
-          {cs.metrics.map((m) => (
-            <div key={m.label} className={metric}>
-              <span className={metricValue}>{m.value}</span>
-              <span className={metricLabel}>{m.label}</span>
-            </div>
-          ))}
-        </div>
+      {cs.role && (
+        <p className={caseRole}>
+          <span className={caseRoleLabel}>Role</span>
+          {cs.role}
+        </p>
       )}
 
       <div className={caseBody}>
