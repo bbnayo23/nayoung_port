@@ -1,5 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '@port/design-system'
+import { vars } from '../../theme/contract.css'
 
 export const head = style({
   display: 'flex',
@@ -22,7 +22,7 @@ export const headCount = style({
 })
 
 export const list = style({
-  maxHeight: 320,
+  maxHeight: 360,
   overflowY: 'auto',
   display: 'flex',
   flexDirection: 'column',
@@ -30,80 +30,46 @@ export const list = style({
 
 export const item = style({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   gap: 10,
-  padding: '10px 14px',
+  padding: '11px 14px',
   transition: `background ${vars.transition.fast}`,
   ':hover': { background: vars.color.surfaceHover },
 })
 
-const statusIconBase = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 28,
-  height: 28,
-  borderRadius: vars.radius.sm,
+const dotBase = style({
+  width: 8,
+  height: 8,
+  marginTop: 5,
+  borderRadius: vars.radius.full,
   flexShrink: 0,
 })
 
-export const statusIcon = styleVariants({
-  progress: [statusIconBase, { background: vars.color.primarySoft, color: vars.color.primary }],
-  done: [
-    statusIconBase,
-    { background: `color-mix(in srgb, ${vars.color.success} 14%, transparent)`, color: vars.color.success },
-  ],
-  failed: [
-    statusIconBase,
-    { background: `color-mix(in srgb, ${vars.color.error} 14%, transparent)`, color: vars.color.error },
-  ],
+// 심각도 도트 색 (medium 은 전용 토큰이 없어 데모용 앰버 리터럴)
+export const dot = styleVariants({
+  critical: [dotBase, { background: vars.color.error }],
+  high: [dotBase, { background: vars.color.warning }],
+  medium: [dotBase, { background: '#eab308' }],
+  ok: [dotBase, { background: vars.color.success }],
 })
 
 export const main = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 3,
   flex: 1,
   minWidth: 0,
 })
 
-export const name = style({
+export const title = style({
   fontSize: vars.font.sizeSm,
-  fontWeight: vars.font.weightMedium,
   color: vars.color.text,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
+  lineHeight: 1.45,
 })
 
 export const meta = style({
   fontSize: vars.font.sizeXs,
   color: vars.color.textSecondary,
-})
-
-export const retry = style({
-  border: 'none',
-  background: 'transparent',
-  padding: 0,
-  marginLeft: 6,
-  color: vars.color.primary,
-  fontSize: vars.font.sizeXs,
-  cursor: 'pointer',
-  ':hover': { textDecoration: 'underline' },
-})
-
-export const track = style({
-  height: 3,
-  marginTop: 2,
-  borderRadius: vars.radius.full,
-  background: vars.color.border,
-  overflow: 'hidden',
-})
-
-export const fill = style({
-  height: '100%',
-  borderRadius: vars.radius.full,
-  background: vars.color.primary,
 })
 
 export const footer = style({
@@ -113,11 +79,6 @@ export const footer = style({
   gap: 8,
   padding: '8px 14px',
   borderTop: `1px solid ${vars.color.border}`,
-})
-
-export const footerLeft = style({
-  fontSize: vars.font.sizeXs,
-  color: vars.color.textSecondary,
 })
 
 export const footerBtn = style({

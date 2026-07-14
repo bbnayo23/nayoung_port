@@ -1,21 +1,23 @@
-import { toast, GnbDropdown } from '@port/design-system'
-import * as s from './DownloadsPanel.css'
+import GnbDropdown from '../GnbDropdown'
+import * as s from './DownloadDropdown.css'
 
-type Download =
+export type DownloadItem =
   | { id: string; name: string; status: 'progress'; loaded: number; total: number; unit: string }
   | { id: string; name: string; status: 'done'; size: string; time: string }
   | { id: string; name: string; status: 'failed' }
 
-// 데모용 다운로드 목록 (Figma igloo-design node 329:394)
-const DOWNLOADS: Download[] = [
-  { id: 'd1', name: 'alert_export_20260508.csv', status: 'progress', loaded: 2.4, total: 3.8, unit: 'MB' },
-  { id: 'd2', name: 'log_archive_20260508.zip', status: 'progress', loaded: 156, total: 480, unit: 'MB' },
-  { id: 'd3', name: 'weekly_report_2026W19.pdf', status: 'done', size: '4.2 MB', time: '12:32' },
-  { id: 'd4', name: 'incident_INC-2847_detail.json', status: 'done', size: '88 KB', time: '11:58' },
-  { id: 'd5', name: 'audit_log_q1.xlsx', status: 'failed' },
-]
-
-const inProgress = DOWNLOADS.filter((d) => d.status === 'progress').length
+export interface DownloadDropdownProps {
+  open: boolean
+  onClose: () => void
+  /** 다운로드 항목 (도메인 데이터 — 소비처 주입) */
+  items: DownloadItem[]
+  /** 앵커할 GNB 버튼 aria-label (기본 "다운로드") */
+  targetLabel?: string
+  /** 실패 항목 다시 시도 */
+  onRetry?: (item: DownloadItem) => void
+  /** 전체 보기 */
+  onViewAll?: () => void
+}
 
 const DownloadIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -36,17 +38,26 @@ const XIcon = () => (
   </svg>
 )
 
-/** 다운로드 목록 드롭다운 — GNB 다운로드 버튼으로 열린다. */
-export default function DownloadsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+/** 다운로드 목록 드롭다운 — GNB 다운로드 버튼에 앵커. 항목은 props 로 주입. */
+export default function DownloadDropdown({
+  open,
+  onClose,
+  items,
+  targetLabel = '다운로드',
+  onRetry,
+  onViewAll,
+}: DownloadDropdownProps) {
+  const inProgress = items.filter((d) => d.status === 'progress').length
+
   return (
-    <GnbDropdown open={open} onClose={onClose} targetLabel="다운로드" width={260} ariaLabel="다운로드 목록">
+    <GnbDropdown open={open} onClose={onClose} targetLabel={targetLabel} width={260} ariaLabel="다운로드 목록">
       <div className={s.head}>
         <span className={s.headTitle}>다운로드</span>
         <span className={s.headCount}>{inProgress}건 진행 중</span>
       </div>
 
       <div className={s.list}>
-        {DOWNLOADS.map((d) => (
+        {items.map((d) => (
           <div key={d.id} className={s.item} role="menuitem">
             <span
               className={
@@ -73,7 +84,7 @@ export default function DownloadsPanel({ open, onClose }: { open: boolean; onClo
               ) : (
                 <span className={s.meta}>
                   실패
-                  <button type="button" className={s.retry} onClick={() => toast.info('다시 시도 — 준비 중')}>
+                  <button type="button" className={s.retry} onClick={() => onRetry?.(d)}>
                     다시 시도
                   </button>
                 </span>
@@ -85,7 +96,7 @@ export default function DownloadsPanel({ open, onClose }: { open: boolean; onClo
 
       <div className={s.footer}>
         <span className={s.footerLeft}>최근 24시간</span>
-        <button type="button" className={s.footerBtn} onClick={() => toast.info('전체 다운로드 보기 — 준비 중')}>
+        <button type="button" className={s.footerBtn} onClick={onViewAll}>
           전체 보기
         </button>
       </div>

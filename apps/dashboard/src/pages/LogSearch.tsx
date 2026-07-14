@@ -61,10 +61,17 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
-import { GuideTour, LanguageMenu, UserMenu, SolutionSwitcher, type GuideStep } from '@port/design-system'
+import {
+  GuideTour,
+  LanguageMenu,
+  UserMenu,
+  SolutionSwitcher,
+  DownloadDropdown,
+  NotificationDropdown,
+  type GuideStep,
+} from '@port/design-system'
 import AiAssistantPanel from '../components/AiAssistantPanel'
-import DownloadsPanel from '../components/DownloadsPanel'
-import NotificationsPanel from '../components/NotificationsPanel'
+import { downloads as downloadItems, notifications as notiItems } from '../data/gnbMock'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 
@@ -1103,10 +1110,22 @@ export default function LogSearch() {
       <AiAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
 
       {/* 다운로드 목록 드롭다운 — GNB 다운로드 버튼으로 토글 */}
-      <DownloadsPanel open={dlOpen} onClose={() => setDlOpen(false)} />
+      <DownloadDropdown
+        open={dlOpen}
+        onClose={() => setDlOpen(false)}
+        items={downloadItems}
+        onRetry={() => toast.info('다시 시도 — 준비 중')}
+        onViewAll={() => toast.info('전체 다운로드 보기 — 준비 중')}
+      />
 
       {/* 알림 드롭다운 — GNB 알림 버튼으로 토글 */}
-      <NotificationsPanel open={notiOpen} onClose={() => setNotiOpen(false)} />
+      <NotificationDropdown
+        open={notiOpen}
+        onClose={() => setNotiOpen(false)}
+        items={notiItems}
+        onReadAll={() => toast.info('모두 읽음 처리 — 준비 중')}
+        onViewAll={() => toast.info('전체 알림 보기 — 준비 중')}
+      />
 
       {/* 언어 · 사용자 드롭다운, 로고 옆 솔루션 스위처 */}
       <LanguageMenu open={langOpen} onClose={() => setLangOpen(false)} />
