@@ -1,6 +1,27 @@
 import type { ReactNode } from 'react'
-import { toast, GnbDropdown } from '@port/design-system'
+import GnbDropdown from '../GnbDropdown'
 import * as s from './SolutionSwitcher.css'
+
+export interface SolutionApp {
+  key: string
+  name: string
+  sub: string
+  variant: 'primary' | 'danger' | 'muted'
+  icon: ReactNode
+  active?: boolean
+  isMore?: boolean
+}
+
+export interface SolutionSwitcherProps {
+  open: boolean
+  onClose: () => void
+  /** 앵커할 브랜드(로고) 버튼 aria-label (기본 "SOC Console") */
+  targetLabel?: string
+  /** 앱 목록 (기본: spider 제품군) */
+  apps?: SolutionApp[]
+  /** 활성 앱이 아닌 타일 선택 시 */
+  onSelect?: (app: SolutionApp) => void
+}
 
 const ShieldIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -26,39 +47,35 @@ const PlusIcon = () => (
   </svg>
 )
 
-type App = {
-  key: string
-  name: string
-  sub: string
-  variant: 'primary' | 'danger' | 'muted'
-  icon: ReactNode
-  active?: boolean
-  isMore?: boolean
-}
-
-const APPS: App[] = [
+const DEFAULT_APPS: SolutionApp[] = [
   { key: 'exd', name: 'ExD', sub: '탐지 / 분석', variant: 'primary', icon: <ShieldIcon />, active: true },
   { key: 'iums', name: 'IUMS', sub: '계정 / 권한', variant: 'primary', icon: <LockIcon /> },
   { key: 'soar', name: 'SOAR', sub: '자동대응', variant: 'danger', icon: <CodeIcon /> },
   { key: 'more', name: '', sub: '10개 제품', variant: 'muted', icon: <PlusIcon />, isMore: true },
 ]
 
-/** 솔루션(앱 전환) 스위처 — GNB 로고(브랜드) 버튼으로 열린다. */
-export default function SolutionSwitcher({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const pick = (app: App) => {
+/** 솔루션(앱 전환) 스위처 — 브랜드(로고) 버튼에 앵커되는 좌측 정렬 팝오버. */
+export default function SolutionSwitcher({
+  open,
+  onClose,
+  targetLabel = 'SOC Console',
+  apps = DEFAULT_APPS,
+  onSelect,
+}: SolutionSwitcherProps) {
+  const pick = (app: SolutionApp) => {
     onClose()
     if (app.active) return
-    toast.info(`${app.isMore ? '더 보기' : `spider ${app.name}`} — 준비 중`)
+    onSelect?.(app)
   }
 
   return (
-    <GnbDropdown open={open} onClose={onClose} targetLabel="SOC Console" width={280} align="left" ariaLabel="앱 전환">
+    <GnbDropdown open={open} onClose={onClose} targetLabel={targetLabel} width={280} align="left" ariaLabel="앱 전환">
       <div className={s.head}>
         <span className={s.headTitle}>앱 전환</span>
         <span className={s.headSub}>spider 제품군</span>
       </div>
       <div className={s.grid}>
-        {APPS.map((app) => (
+        {apps.map((app) => (
           <button
             key={app.key}
             type="button"

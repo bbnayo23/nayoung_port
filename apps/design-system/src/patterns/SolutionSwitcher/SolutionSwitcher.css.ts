@@ -1,5 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { vars } from '@port/design-system'
+import { vars } from '../../theme/contract.css'
 
 export const head = style({
   display: 'flex',

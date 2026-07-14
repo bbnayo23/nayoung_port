@@ -61,11 +61,10 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
-import { GuideTour, LanguageMenu, UserMenu, type GuideStep } from '@port/design-system'
+import { GuideTour, LanguageMenu, UserMenu, SolutionSwitcher, type GuideStep } from '@port/design-system'
 import AiAssistantPanel from '../components/AiAssistantPanel'
 import DownloadsPanel from '../components/DownloadsPanel'
 import NotificationsPanel from '../components/NotificationsPanel'
-import SolutionSwitcher from '../components/SolutionSwitcher'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 
@@ -1118,7 +1117,11 @@ export default function LogSearch() {
         onSelect={(l) => toast.info(`${l} — 준비 중`)}
         onLogout={() => toast.info('로그아웃 — 준비 중')}
       />
-      <SolutionSwitcher open={solOpen} onClose={() => setSolOpen(false)} />
+      <SolutionSwitcher
+        open={solOpen}
+        onClose={() => setSolOpen(false)}
+        onSelect={(app) => toast.info(`${app.isMore ? '더 보기' : `spider ${app.name}`} — 준비 중`)}
+      />
 
       {/* 토스트 알림 (검색 오류 · 준비 중 기능 안내) */}
       <Toaster position="top-right" />
