@@ -126,8 +126,9 @@ export const projects: Project[] = [
         { label: "표준 컴포넌트", value: "44" },
         { label: "아이콘", value: "376" },
         { label: "Storybook 문서", value: "40" },
-        { label: "적용 결정 제품", value: "4" },
-        { label: "초기 구축", value: "1인 · 1개월" },
+        { label: "적용 제품", value: "4" },
+        { label: "사용 개발자", value: "20+" },
+        { label: "1인 구축", value: "1개월" },
       ],
       media: [
         {
