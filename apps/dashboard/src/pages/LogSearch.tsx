@@ -64,6 +64,9 @@ import GuideTour, { type GuideStep } from '../components/GuideTour'
 import AiAssistantPanel from '../components/AiAssistantPanel'
 import DownloadsPanel from '../components/DownloadsPanel'
 import NotificationsPanel from '../components/NotificationsPanel'
+import LanguagePanel from '../components/LanguagePanel'
+import UserMenuPanel from '../components/UserMenuPanel'
+import SolutionSwitcher from '../components/SolutionSwitcher'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 
@@ -211,6 +214,10 @@ export default function LogSearch() {
   const [dlOpen, setDlOpen] = useState(false)
   // GNB의 알림 버튼으로 여는 알림 드롭다운
   const [notiOpen, setNotiOpen] = useState(false)
+  // GNB 언어·사용자 드롭다운, 로고 옆 솔루션(앱 전환) 스위처
+  const [langOpen, setLangOpen] = useState(false)
+  const [userOpen, setUserOpen] = useState(false)
+  const [solOpen, setSolOpen] = useState(false)
   const toolbarRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
   const widgetsRef = useRef<HTMLDivElement>(null)
@@ -514,6 +521,9 @@ export default function LogSearch() {
             onAiAssistantClick={() => setAiOpen((v) => !v)}
             onDownloadClick={() => setDlOpen((v) => !v)}
             onNotificationClick={() => setNotiOpen((v) => !v)}
+            onLanguageClick={() => setLangOpen((v) => !v)}
+            onUserClick={() => setUserOpen((v) => !v)}
+            onBrandClick={() => setSolOpen((v) => !v)}
           />
         }
         lnb={
@@ -1029,6 +1039,11 @@ export default function LogSearch() {
 
       {/* 알림 드롭다운 — GNB 알림 버튼으로 토글 */}
       <NotificationsPanel open={notiOpen} onClose={() => setNotiOpen(false)} />
+
+      {/* 언어 · 사용자 드롭다운, 로고 옆 솔루션 스위처 */}
+      <LanguagePanel open={langOpen} onClose={() => setLangOpen(false)} />
+      <UserMenuPanel open={userOpen} onClose={() => setUserOpen(false)} />
+      <SolutionSwitcher open={solOpen} onClose={() => setSolOpen(false)} />
 
       {/* 토스트 알림 (검색 오류 · 준비 중 기능 안내) */}
       <Toaster position="top-right" />

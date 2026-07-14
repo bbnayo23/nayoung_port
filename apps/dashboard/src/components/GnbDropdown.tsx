@@ -11,6 +11,7 @@ export default function GnbDropdown({
   onClose,
   targetLabel,
   width = 260,
+  align = 'right',
   ariaLabel,
   children,
 }: {
@@ -18,10 +19,11 @@ export default function GnbDropdown({
   onClose: () => void
   targetLabel: string
   width?: number
+  align?: 'left' | 'right'
   ariaLabel?: string
   children: ReactNode
 }) {
-  const [pos, setPos] = useState<{ top: number; right: number } | null>(null)
+  const [pos, setPos] = useState<{ top: number; left?: number; right?: number } | null>(null)
   const ref = useRef<HTMLDivElement>(null)
 
   const targetSelector = `button[aria-label="${targetLabel}"]`
@@ -30,12 +32,16 @@ export default function GnbDropdown({
     if (!open) return
     const btn = document.querySelector(targetSelector)
     const r = btn?.getBoundingClientRect()
-    const next = r
-      ? { top: r.bottom + 8, right: Math.max(8, window.innerWidth - r.right) }
-      : { top: 56, right: 16 }
+    const horizontal = r
+      ? align === 'left'
+        ? { left: Math.max(8, r.left) }
+        : { right: Math.max(8, window.innerWidth - r.right) }
+      : align === 'left'
+        ? { left: 16 }
+        : { right: 16 }
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPos(next)
-  }, [open, targetSelector])
+    setPos({ top: r ? r.bottom + 8 : 56, ...horizontal })
+  }, [open, targetSelector, align])
 
   useEffect(() => {
     if (!open) return
@@ -62,7 +68,7 @@ export default function GnbDropdown({
     <div
       ref={ref}
       className={s.shell}
-      style={{ top: pos.top, right: pos.right, width }}
+      style={{ top: pos.top, left: pos.left, right: pos.right, width }}
       role="menu"
       aria-label={ariaLabel}
     >
