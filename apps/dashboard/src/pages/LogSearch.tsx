@@ -61,12 +61,10 @@ import {
 } from '../data/logs'
 import type { Severity, SourceType, LogType } from '../data/logs'
 import PortfolioNotice from '../components/PortfolioNotice'
-import { GuideTour, type GuideStep } from '@port/design-system'
+import { GuideTour, LanguageMenu, UserMenu, type GuideStep } from '@port/design-system'
 import AiAssistantPanel from '../components/AiAssistantPanel'
 import DownloadsPanel from '../components/DownloadsPanel'
 import NotificationsPanel from '../components/NotificationsPanel'
-import LanguagePanel from '../components/LanguagePanel'
-import UserMenuPanel from '../components/UserMenuPanel'
 import SolutionSwitcher from '../components/SolutionSwitcher'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
@@ -1082,8 +1080,14 @@ export default function LogSearch() {
       <NotificationsPanel open={notiOpen} onClose={() => setNotiOpen(false)} />
 
       {/* 언어 · 사용자 드롭다운, 로고 옆 솔루션 스위처 */}
-      <LanguagePanel open={langOpen} onClose={() => setLangOpen(false)} />
-      <UserMenuPanel open={userOpen} onClose={() => setUserOpen(false)} />
+      <LanguageMenu open={langOpen} onClose={() => setLangOpen(false)} />
+      <UserMenu
+        open={userOpen}
+        onClose={() => setUserOpen(false)}
+        user={{ name: 'Sarah Kim', role: 'SOC Analyst L2', initials: 'SK' }}
+        onSelect={(l) => toast.info(`${l} — 준비 중`)}
+        onLogout={() => toast.info('로그아웃 — 준비 중')}
+      />
       <SolutionSwitcher open={solOpen} onClose={() => setSolOpen(false)} />
 
       {/* 토스트 알림 (검색 오류 · 준비 중 기능 안내) */}
