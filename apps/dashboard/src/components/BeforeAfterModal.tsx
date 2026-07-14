@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import { ExdCloseIcon } from '@port/icon-library'
+import { ExdCloseIcon, ExdChevronLeftIcon, ExdChevronRightIcon } from '@port/icon-library'
 import * as s from './BeforeAfterModal.css'
 
 type Pair = { id: string; label: string; before: string; after: string }
@@ -137,7 +137,8 @@ export default function BeforeAfterModal({ open, onClose }: { open: boolean; onC
             <span className={s.tagAfter}>AFTER</span>
             <div className={s.divider} style={{ left: `${pos}%` }}>
               <span className={s.handle} aria-hidden="true">
-                ⟨⟩
+                <ExdChevronLeftIcon size={12} />
+                <ExdChevronRightIcon size={12} />
               </span>
             </div>
           </div>

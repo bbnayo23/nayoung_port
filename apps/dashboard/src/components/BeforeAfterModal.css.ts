@@ -1,4 +1,4 @@
-import { style, keyframes } from '@vanilla-extract/css'
+import { style, keyframes, globalStyle } from '@vanilla-extract/css'
 import { vars } from '@port/design-system'
 
 const fadeIn = keyframes({ from: { opacity: 0 }, to: { opacity: 1 } })
@@ -141,21 +141,24 @@ export const imgBefore = style({
   objectPosition: 'top left',
 })
 
+// 뱃지: 스크린샷 상단 내비바(그린 로고·GNB 아이콘)와 겹치지 않도록 하단 모서리에 배치.
+// 솔리드 배경 + 그림자로 배경 콘텐츠 위에서도 또렷하게 보이도록 한다.
 const tagBase = style({
   position: 'absolute',
-  top: 10,
-  zIndex: 2,
-  padding: '3px 8px',
-  borderRadius: vars.radius.sm,
-  fontSize: 10,
+  bottom: 12,
+  zIndex: 5,
+  padding: '4px 11px',
+  borderRadius: vars.radius.full,
+  fontSize: 11,
   fontWeight: vars.font.weightBold,
-  letterSpacing: '0.06em',
+  letterSpacing: '0.08em',
   color: '#fff',
   pointerEvents: 'none',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
 })
 
-export const tagBefore = style([tagBase, { left: 10, background: 'rgba(15, 23, 42, 0.6)' }])
-export const tagAfter = style([tagBase, { right: 10, background: vars.color.primary }])
+export const tagBefore = style([tagBase, { left: 12, background: 'rgba(15, 23, 42, 0.92)' }])
+export const tagAfter = style([tagBase, { right: 12, background: vars.color.primary }])
 
 export const divider = style({
   position: 'absolute',
@@ -178,13 +181,20 @@ export const handle = style({
   height: 34,
   borderRadius: vars.radius.full,
   background: '#fff',
-  color: vars.color.text,
+  color: vars.color.textSecondary,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: 13,
+  gap: 0,
   boxShadow: '0 2px 10px rgba(0, 0, 0, 0.28)',
 })
+
+// 좌우 셰브론(‹ ›)을 가운데로 모아 드래그 방향을 암시
+globalStyle(`${handle} svg`, {
+  display: 'block',
+  flexShrink: 0,
+})
+globalStyle(`${handle} svg:first-child`, { marginRight: -3 })
 
 // ── 개선 포인트 ────────────────────────────────────────────────────────────────
 export const points = style({

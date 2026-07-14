@@ -599,7 +599,7 @@ export default function LogSearch() {
                         </div>
                       }
                     >
-                      <Button variant="ghost" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
+                      <Button variant="outline" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
                     </Popover>
 
                     <Popover
@@ -621,7 +621,7 @@ export default function LogSearch() {
                         </div>
                       }
                     >
-                      <Button variant="ghost" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
+                      <Button variant="outline" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
                     </Popover>
                   </>
                 )}
@@ -654,10 +654,10 @@ export default function LogSearch() {
                     </div>
                   }
                 >
-                  <Button variant="ghost" size="sm" leftIcon={<ExdFloppyFillIcon size={14} />} disabled={!hasResults}>템플릿 저장</Button>
+                  <Button variant="outline" size="sm" leftIcon={<ExdFloppyFillIcon size={14} />} disabled={!hasResults}>템플릿 저장</Button>
                 </Popover>
 
-                <Button variant="ghost" size="sm" leftIcon={<ExdAlarmIcon size={14} />} onClick={() => notReady('경보조건 추가')}>경보조건 추가</Button>
+                <Button variant="outline" size="sm" leftIcon={<ExdAlarmIcon size={14} />} onClick={() => notReady('경보조건 추가')}>경보조건 추가</Button>
               </>
             }
           />
