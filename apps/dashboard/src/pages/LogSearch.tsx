@@ -524,6 +524,7 @@ export default function LogSearch() {
             onLanguageClick={() => setLangOpen((v) => !v)}
             onUserClick={() => setUserOpen((v) => !v)}
             onBrandClick={() => setSolOpen((v) => !v)}
+            onHomeClick={() => { setActiveMenu('logsearch'); resetAll() }}
           />
         }
         lnb={
@@ -793,7 +794,11 @@ export default function LogSearch() {
                       <div className={s.histoPlot}>
                         <span className={s.histoYmax}>{histoData.max}</span>
                         <span className={s.histoHint}>드래그하여 시간범위 선택</span>
-                        <div className={s.histoTrack}>
+                        <div
+                          className={s.histoTrack}
+                          role="group"
+                          aria-label={`시간대별 로그 분포 · 최대 ${histoData.max}건. 막대를 클릭·드래그하거나 Enter 로 시간범위를 선택합니다.`}
+                        >
                           {/* 하단 꺾은 선 그래프 (S005) */}
                           <svg className={s.histoLine} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
                             <polyline
@@ -809,9 +814,19 @@ export default function LogSearch() {
                               <div
                                 key={b.label}
                                 className={s.histoCol}
+                                role="button"
+                                tabIndex={0}
+                                aria-pressed={!!sel}
+                                aria-label={`${b.label}, ${b.count}건`}
                                 title={`${b.label} · ${b.count}건`}
                                 onMouseDown={() => startDrag(i)}
                                 onMouseEnter={() => dragOver(i)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault()
+                                    setHistoSel({ a: i, b: i })
+                                  }
+                                }}
                               >
                                 <span
                                   className={sel ? `${s.histoBar} ${s.histoBarSel}` : s.histoBar}

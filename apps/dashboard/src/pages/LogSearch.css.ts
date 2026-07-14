@@ -302,6 +302,12 @@ export const histoCol = style({
   alignItems: 'flex-end',
   justifyContent: 'center',
   height: '100%',
+  outline: 'none',
+  ':focus-visible': {
+    outline: `2px solid ${vars.color.primary}`,
+    outlineOffset: -2,
+    borderRadius: 2,
+  },
 })
 
 export const histoBar = style({
