@@ -653,7 +653,7 @@ export default function LogSearch() {
                     </label>
                     <div className={s.saveRow}>
                       <span className={s.saveLabel}>공유 설정</span>
-                      <Toggle size="sm" checked={tplShared} onChange={setTplShared} innerLabel />
+                      <Toggle size="sm" checked={tplShared} onChange={setTplShared} />
                     </div>
                     <div className={s.saveActions}>
                       <Button variant="ghost" size="sm" onClick={() => setOpenPanel(null)}>취소</Button>
