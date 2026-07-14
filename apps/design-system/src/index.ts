@@ -88,3 +88,7 @@ export { default as AlertModal } from './components/AlertModal'
 export { default as PageHeader } from './components/PageHeader'
 export { default as Breadcrumbs } from './components/Breadcrumbs'
 export { default as QueryListCard } from './components/QueryListCard'
+
+// ── Patterns — 기능(로직·상태)이 포함된 UI 블록 (순수 프리미티브 components 와 구분) ──
+export { default as GnbDropdown } from './patterns/GnbDropdown'
+export type { GnbDropdownProps } from './patterns/GnbDropdown'

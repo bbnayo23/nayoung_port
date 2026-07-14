@@ -1,5 +1,4 @@
-import { toast } from '@port/design-system'
-import GnbDropdown from './GnbDropdown'
+import { toast, GnbDropdown } from '@port/design-system'
 import * as s from './UserMenuPanel.css'
 
 const ITEMS = ['프로필 설정', '계정 보안', '내 활동 로그']

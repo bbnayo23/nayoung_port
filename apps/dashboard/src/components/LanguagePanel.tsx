@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import GnbDropdown from './GnbDropdown'
+import { GnbDropdown } from '@port/design-system'
 import * as s from './LanguagePanel.css'
 
 const LANGS = [

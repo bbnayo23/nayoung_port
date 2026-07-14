@@ -1,5 +1,4 @@
-import { toast } from '@port/design-system'
-import GnbDropdown from './GnbDropdown'
+import { toast, GnbDropdown } from '@port/design-system'
 import * as s from './NotificationsPanel.css'
 
 type Level = 'critical' | 'high' | 'medium' | 'ok'

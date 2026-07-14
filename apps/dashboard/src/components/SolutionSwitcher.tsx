@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
-import { toast } from '@port/design-system'
-import GnbDropdown from './GnbDropdown'
+import { toast, GnbDropdown } from '@port/design-system'
 import * as s from './SolutionSwitcher.css'
 
 const ShieldIcon = () => (
