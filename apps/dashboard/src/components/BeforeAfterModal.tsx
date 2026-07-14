@@ -8,10 +8,16 @@ type Pair = { id: string; label: string; before: string; after: string }
 // 이미지는 apps/dashboard/public/ 에 배치 (없으면 이미지가 비어 보임).
 const PAIRS: Pair[] = [
   {
-    id: 'logsearch',
-    label: '로그 검색',
+    id: 'idle',
+    label: '검색 전 화면',
     before: '/exd-before-logsearch.png',
-    after: '/exd-after-logsearch.png',
+    after: '/exd-after-idle.png',
+  },
+  {
+    id: 'result',
+    label: '검색 결과 화면',
+    before: '/exd-before-logsearch2.png',
+    after: '/exd-after-result.png',
   },
 ]
 

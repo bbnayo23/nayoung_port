@@ -11,11 +11,11 @@ export const overlay = style({
   position: 'fixed',
   inset: 0,
   zIndex: 60,
-  background: 'rgba(15, 23, 42, 0.55)',
+  background: 'rgba(15, 23, 42, 0.6)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: 24,
+  padding: 16,
   animation: `${fadeIn} 0.2s ease`,
 })
 
@@ -23,8 +23,8 @@ export const modal = style({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  maxWidth: 920,
-  maxHeight: '90vh',
+  maxWidth: 1360,
+  maxHeight: '95vh',
   overflow: 'hidden',
   background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
@@ -74,8 +74,8 @@ export const close = style({
 export const body = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16,
-  padding: 20,
+  gap: 14,
+  padding: '16px 20px 20px',
   overflowY: 'auto',
 })
 
@@ -104,9 +104,13 @@ export const tabActive = style({
 })
 
 // ── Before/After 슬라이더 ───────────────────────────────────────────────────────
+// 두 이미지 모두 1600×1000(16:10). 컨테이너를 같은 비율로 고정해 정렬을 보장하고,
+// 뷰포트 높이를 최대한 활용하되 상단 헤더/탭·하단 포인트가 함께 보이도록 maxHeight 로 상한.
 export const compare = style({
   position: 'relative',
   width: '100%',
+  aspectRatio: '16 / 10',
+  maxHeight: '72vh',
   borderRadius: vars.radius.md,
   overflow: 'hidden',
   border: `1px solid ${vars.color.border}`,
@@ -118,9 +122,13 @@ export const compare = style({
 })
 
 export const imgAfter = style({
+  position: 'absolute',
+  inset: 0,
   display: 'block',
   width: '100%',
-  height: 'auto',
+  height: '100%',
+  objectFit: 'cover',
+  objectPosition: 'top left',
 })
 
 export const imgBefore = style({
@@ -130,6 +138,7 @@ export const imgBefore = style({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+  objectPosition: 'top left',
 })
 
 const tagBase = style({
@@ -182,9 +191,13 @@ export const points = style({
   listStyle: 'none',
   margin: 0,
   padding: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 9,
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  columnGap: 24,
+  rowGap: 8,
+  '@media': {
+    '(max-width: 720px)': { gridTemplateColumns: '1fr' },
+  },
 })
 
 export const point = style({
