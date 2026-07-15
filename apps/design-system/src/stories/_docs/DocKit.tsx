@@ -125,6 +125,72 @@ export function Code({ children }: { children: ReactNode }) {
 }
 
 /**
+ * 사용 지침 — 권장(Do) / 지양(Don't) 2열 + 선택적 접근성 노트.
+ * 컴포넌트를 올바르게 쓰는 방법을 한눈에 안내한다.
+ */
+export function Guidelines({
+  dos,
+  donts,
+  a11y,
+}: {
+  dos: string[]
+  donts: string[]
+  a11y?: string[]
+}) {
+  return (
+    <>
+      <div className={s.guideGrid}>
+        <div className={s.guideCard}>
+          <div className={s.guideHeadDo}>
+            <span aria-hidden="true">✓</span> 권장 (Do)
+          </div>
+          <ul className={s.guideList}>
+            {dos.map((t, i) => (
+              <li key={i} className={s.guideItem}>
+                <span className={s.guideMarkDo} aria-hidden="true">
+                  ✓
+                </span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={s.guideCard}>
+          <div className={s.guideHeadDont}>
+            <span aria-hidden="true">✕</span> 지양 (Don't)
+          </div>
+          <ul className={s.guideList}>
+            {donts.map((t, i) => (
+              <li key={i} className={s.guideItem}>
+                <span className={s.guideMarkDont} aria-hidden="true">
+                  ✕
+                </span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      {a11y && a11y.length > 0 && (
+        <div className={s.a11yCard}>
+          <span className={s.a11yBadge} aria-hidden="true">
+            ♿
+          </span>
+          <div className={s.a11yBody}>
+            <div className={s.a11yTitle}>접근성</div>
+            <ul className={s.a11yList}>
+              {a11y.map((t, i) => (
+                <li key={i}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+/**
  * 스토리 파일의 스토리 객체를 그대로 렌더해 문서 예제로 재사용한다.
  * (render 함수가 args/context 를 쓰지 않으므로 안전하게 호출)
  */

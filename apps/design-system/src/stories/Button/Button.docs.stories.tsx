@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from '../../components/Button'
 import * as S from './Button.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 /**
  * Button.docs.stories.tsx — MDX 를 대체하는 "문서 스토리".
@@ -70,6 +70,28 @@ export const Docs: Story = {
 
       <DocSection title="Full Width" description={<><Code>fullWidth</Code> 로 컨테이너 너비에 꽉 채웁니다.</>}>
         <Example>{renderExample(S.FullWidth)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="버튼 위계와 접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            '한 화면의 주요 액션 하나에만 primary 를 사용해 위계를 명확히 합니다.',
+            '보조 액션은 secondary·outline, 취소·닫기 등 약한 액션은 ghost 를 씁니다.',
+            '레이블은 동사로 간결하게 작성합니다(예: "저장", "삭제").',
+            '비동기 처리 중에는 loading 으로 중복 클릭을 막습니다.',
+          ]}
+          donts={[
+            '한 영역에 primary 를 여러 개 두어 위계를 흐리지 않습니다.',
+            '파괴적 액션(삭제 등)에 primary 를 쓰지 않고 danger 를 사용합니다.',
+            '아이콘만 필요한 경우 Button 대신 IconButton 을 사용합니다.',
+            '레이블 없이 아이콘만 넣어 의미가 불명확해지지 않게 합니다.',
+          ]}
+          a11y={[
+            'disabled 대신 loading 을 쓰면 포커스가 유지돼 스크린리더 흐름이 끊기지 않습니다.',
+            '아이콘만 있는 버튼에는 aria-label 로 대체 텍스트를 제공합니다.',
+            '표준 button 요소라 키보드 포커스·Enter/Space 활성화가 기본 지원됩니다.',
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

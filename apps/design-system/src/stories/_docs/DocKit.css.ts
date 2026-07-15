@@ -227,6 +227,121 @@ export const code = style({
   color: vars.color.text,
 })
 
+// ── Guidelines (Do / Don't) ─────────────────────────────────────────────────────
+export const guideGrid = style({
+  marginTop: 16,
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  gap: 16,
+  '@media': {
+    '(max-width: 720px)': { gridTemplateColumns: '1fr' },
+  },
+})
+
+export const guideCard = style({
+  borderRadius: 14,
+  border: `1px solid ${vars.color.border}`,
+  overflow: 'hidden',
+  background: vars.color.surface,
+})
+
+const guideHeadBase = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '11px 16px',
+  fontSize: vars.font.sizeSm,
+  fontWeight: vars.font.weightBold,
+  borderBottom: `1px solid ${vars.color.border}`,
+})
+
+export const guideHeadDo = style([
+  guideHeadBase,
+  { color: '#15803d', background: 'rgba(34, 197, 94, 0.10)' },
+])
+
+export const guideHeadDont = style([
+  guideHeadBase,
+  { color: '#b91c1c', background: 'rgba(239, 68, 68, 0.10)' },
+])
+
+export const guideList = style({
+  listStyle: 'none',
+  margin: 0,
+  padding: '12px 16px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 10,
+})
+
+export const guideItem = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 8,
+  fontSize: vars.font.sizeSm,
+  lineHeight: 1.55,
+  color: vars.color.textSecondary,
+})
+
+const guideMarkBase = style({
+  flexShrink: 0,
+  marginTop: 2,
+  fontWeight: vars.font.weightBold,
+  lineHeight: 1,
+})
+
+export const guideMarkDo = style([guideMarkBase, { color: '#16a34a' }])
+export const guideMarkDont = style([guideMarkBase, { color: '#dc2626' }])
+
+// 접근성 콜아웃
+export const a11yCard = style({
+  marginTop: 16,
+  display: 'flex',
+  gap: 12,
+  padding: '14px 16px',
+  borderRadius: 14,
+  border: `1px solid ${vars.color.border}`,
+  borderLeft: `3px solid ${vars.color.primary}`,
+  background: vars.color.primarySoft,
+})
+
+export const a11yBadge = style({
+  flexShrink: 0,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 26,
+  height: 26,
+  borderRadius: vars.radius.full,
+  background: vars.color.primary,
+  color: '#fff',
+  fontSize: 13,
+  fontWeight: vars.font.weightBold,
+})
+
+export const a11yBody = style({
+  minWidth: 0,
+})
+
+export const a11yTitle = style({
+  fontSize: vars.font.sizeSm,
+  fontWeight: vars.font.weightBold,
+  color: vars.color.text,
+  marginBottom: 4,
+})
+
+export const a11yList = style({
+  listStyle: 'none',
+  margin: 0,
+  padding: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 5,
+  fontSize: vars.font.sizeSm,
+  lineHeight: 1.55,
+  color: vars.color.textSecondary,
+})
+
 // 예제 항목 라벨(예: variant 이름)
 export const specimen = style({
   display: 'flex',
