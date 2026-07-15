@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './RangeCalendar.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/RangeCalendar',
@@ -119,6 +119,30 @@ import type { RangePreset } from '@port/design-system'`}
 
       <DocSection title="Disabled" description={<><Code>disabled</Code>로 컴포넌트 전체를 비활성화합니다.</>}>
         <Example>{renderExample(S.Disabled)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="절대·상대 모드 전환과 controlled 연동을 올바르게 쓰기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "start·end 와 onStartChange·onEndChange 를 함께 넘겨 controlled 컴포넌트로 사용합니다.",
+            "formatDate 와 parseDate 를 서로 역함수 관계로 구현해 input 표시와 파싱이 일관되게 합니다.",
+            "presets 에는 type: 'preset' 항목과 함께 type: 'custom' 항목을 하나 두어 '-7d' 같은 직접입력을 지원합니다.",
+            "선택 가능한 기간 경계가 있으면 disabledBefore·disabledAfter 로 캘린더에서 미리 차단합니다.",
+            "상대 모드에서는 placeholder 로 '-6h', '-7d' 같은 입력 형식 예시를 안내합니다.",
+          ]}
+          donts={[
+            "relativeValue 를 로컬 상태로만 두고 onRelativeValueChange 를 무시해 절대·상대 모드 전환이 끊기게 하지 않습니다.",
+            "parseDate 에서 파싱 실패 시 예외를 던지지 않고 null 을 반환합니다. 실패하면 내부에서 직전 값으로 되돌립니다.",
+            "type: 'custom' preset 에 getValue 를 넣지 않습니다. custom 은 직접입력 진입 전용이라 무시됩니다.",
+            "직접입력은 maxLength 6 으로 제한되므로 6자를 넘는 긴 표현식을 기대하지 않습니다.",
+            "단일 날짜만 고르는 화면에는 RangeCalendar 대신 Calendar 컴포넌트를 사용합니다.",
+          ]}
+          a11y={[
+            "패널 내 시작·종료 날짜 input 에는 aria-label('시작 날짜'·'종료 날짜')이 연결되어 있고 Enter 키로 입력값을 커밋합니다.",
+            "트리거 input 에는 자체 label 이 없으므로, 한 화면에 여러 개를 둘 때는 className 으로 감싼 요소에 설명 텍스트나 label 을 연결해 구분합니다.",
+            "disabled 를 지정하면 트리거 input 과 캘린더 아이콘 버튼이 모두 비활성화되어 키보드 포커스에서 제외됩니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

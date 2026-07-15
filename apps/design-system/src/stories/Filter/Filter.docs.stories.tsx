@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Filter.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Filter',
@@ -89,6 +89,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.States)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="필터 상태 제어와 접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "카테고리가 데이터로 정해져 있으면 groups prop 을 넘겨 데이터 주도 방식으로 쓰고, selected · onChange 를 함께 controlled 로 관리합니다.",
+            "전체 선택은 직접 만들지 말고 showAll 과 allLabel 을 사용해, 부분 선택 시 indeterminate 상태가 자동으로 표시되게 합니다.",
+            "접힘 상태는 collapsed 와 onCollapse 를 짝지어 controlled 로 다루고, 접힌 뒤 다시 펼칠 외부 트리거를 반드시 제공합니다.",
+            "검색은 searchValue 와 onSearchChange 로 제어하고, 결과가 없을 때 보일 문구를 emptyText 로 지정합니다.",
+          ]}
+          donts={[
+            "groups 와 children 을 동시에 넘기지 않습니다. groups 가 있으면 children 은 무시되고 내부 렌더링만 표시됩니다.",
+            "selected · searchValue · expandedIds 를 controlled 로 넘기면서 onChange · onSearchChange · onExpandedChange 를 빠뜨리지 않습니다. 기본값이 no-op 이라 상태가 갱신되지 않습니다.",
+            "체크 상태를 none · some · all 세 단계로 다루지 않고 boolean 으로만 취급해 부분 선택 표시를 없애지 않습니다.",
+            "펼침 패널 자리를 대신할 화면 레이아웃 없이 collapsed 만 토글해 콘텐츠 영역이 갑자기 비어 보이게 하지 않습니다.",
+          ]}
+          a11y={[
+            "Filter.Search 에 배치하는 입력과 데이터 주도 방식의 검색 입력은 placeholder 만으로는 이름이 전달되지 않으므로 aria-label 로 대체 텍스트를 제공합니다.",
+            "카테고리 헤더의 그룹 체크박스는 시각적 라벨과 분리되어 있으므로 aria-label 에 그룹 이름을 넣어 스크린리더가 무엇을 선택하는지 알 수 있게 합니다.",
+            "접기 버튼은 aria-label='필터 접기' 가 기본 제공되며, 부분 선택은 indeterminate 로 전달돼 all · some 상태가 보조기술에 구분되어 노출됩니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

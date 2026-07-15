@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Progress from '../../components/Progress'
 import * as S from './Progress.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Progress',
@@ -143,6 +143,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.Interactive)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="진행률을 정확하고 접근성 있게 전달하기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "value 는 0~100 범위의 숫자로 전달합니다 — 범위를 벗어나면 해당 구간이 렌더링되지 않아 바가 비어 보입니다.",
+            "여러 항목의 비율을 한 줄에 나눠 표현할 때는 Progress 를 여러 개 겹치지 말고 Progress.Stack 과 Progress.Item 조합을 사용합니다.",
+            "color(success·danger·warning·info) 로 상태를 구분할 때는 수치나 라벨 텍스트를 함께 제공해 색상 없이도 의미가 전달되게 합니다.",
+            "value 가 100 에 도달한 뒤의 후속 동작은 직접 폴링하지 말고 onComplete 콜백으로 연결합니다.",
+          ]}
+          donts={[
+            "완료율을 알 수 없는 불확정 대기 상태에 임의 value 를 넣어 Progress 로 대체하지 않고 Spinner 를 사용합니다.",
+            "Progress.Stack 안 Item 들의 value 합을 100 초과로 두어 뒤쪽 구간이 잘려 사라지게 하지 않습니다.",
+            "값이 자주 갱신되는 화면에서 transition duration 을 길게 잡아 바가 실제 값보다 늦게 따라오게 하지 않습니다.",
+            "상태를 color 만으로 표현하고 텍스트 대체 정보를 생략하지 않습니다.",
+          ]}
+          a11y={[
+            "루트 div 에는 기본 role 이 없으므로 role='progressbar' 와 aria-valuenow·aria-valuemin·aria-valuemax 를 전달합니다. 나머지 속성은 rest 로 루트에 그대로 전달됩니다.",
+            "무엇의 진행률인지 aria-label 또는 aria-labelledby 로 명확히 연결합니다.",
+            "모션에 민감한 사용자를 위해 prefers-reduced-motion 환경에서는 transition={false} 로 애니메이션을 제거합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './AlertModal.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/AlertModal',
@@ -114,6 +114,28 @@ export const Docs: Story = {
 
       <DocSection title="취소 버튼 패턴" description="showCancelButton으로 취소 버튼을 표시합니다. 파괴적 작업 확인에 적합합니다.">
         <Example>{renderExample(S.WithCancel)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="사용자 확인 다이얼로그로서의 용도와 접근성을 지키기 위한 권장·지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "open 을 호출자가 직접 관리하는 controlled 방식으로 두고, onClose 와 Footer 의 onPrimary·onCancel 콜백으로 열림·닫힘과 액션을 제어합니다.",
+            "AlertModal.Header·Body·Footer 컴파운드 구조로 조합하고, 헤더 title 과 본문 description 으로 제목과 메시지를 분리합니다.",
+            "삭제 등 파괴적 작업 확인에는 Header 의 type='error' 와 Footer 의 confirmVariant='error' 를 함께 지정해 확인 버튼이 danger 로 렌더되게 합니다.",
+            "되돌릴 수 있어야 하는 확인 다이얼로그에는 showCancelButton 을 켜 취소 경로를 제공합니다.",
+          ]}
+          donts={[
+            "사용자 응답이 필요 없는 단순 알림·성공 피드백에 AlertModal 을 쓰지 않습니다. 그런 경우 Toast 등 비차단 컴포넌트를 사용합니다.",
+            "파괴적 작업에 confirmVariant 를 기본값 'info'(primary 버튼) 로 두지 않습니다. 위험을 시각적으로 구분하도록 'error' 를 지정합니다.",
+            "size='lg' 에도 긴 폼이나 복잡한 인터랙션을 담지 않습니다. 복잡한 작업 흐름은 별도 모달이나 페이지로 분리합니다.",
+            "closeOnOverlay 를 false 로 끈 상태에서 Footer 의 닫기·취소 버튼까지 생략해 사용자가 모달을 벗어날 수 없게 만들지 않습니다.",
+          ]}
+          a11y={[
+            "다이얼로그의 의미를 Header 의 type 색상에만 의존하지 말고 title·description 텍스트와 primaryLabel 로 명확히 전달해 색각 이상 사용자도 구분할 수 있게 합니다.",
+            "배경 클릭 닫기(closeOnOverlay)만으로는 키보드 사용자가 모달을 벗어날 수 없으므로 Footer 에 취소·확인 버튼을 항상 제공합니다.",
+            "AlertModal.Header 의 title 은 h3 로 렌더되므로 제목은 icon 이 아닌 title 로 전달해 스크린 리더가 다이얼로그 제목을 읽을 수 있게 합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

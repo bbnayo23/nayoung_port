@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './IconButton.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 /**
  * IconButton.docs.stories.tsx — MDX 를 대체하는 "문서 스토리".
@@ -61,6 +61,30 @@ export const Docs: Story = {
 
       <DocSection title="아이콘 예시" description="@port/icon-library 아이콘을 icon prop에 전달하는 기본 패턴입니다.">
         <Example>{renderExample(S.IconSet)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="아이콘만으로 의미를 전달하는 버튼의 접근성과 위계를 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "아이콘을 icon prop 으로 전달하고, 그 뜻을 aria-label 에 한 단어로 요약해 함께 지정합니다.",
+            "툴바·카드 헤더 등 공간이 좁아 텍스트 라벨을 둘 수 없는 아이콘 전용 액션에 사용합니다.",
+            "보조·아이콘 액션에는 ghost 를, 부유하는 원형 버튼에는 circle 을 기본으로 선택합니다.",
+            "삭제 등 파괴적 아이콘 액션에는 danger, 화면의 대표 아이콘 액션에는 primary 를 씁니다.",
+            "터치 대상 확보가 필요하면 size 를 lg 로 올려 최소 32px 클릭 영역을 확보합니다.",
+          ]}
+          donts={[
+            "텍스트 라벨이 함께 필요한 액션에는 IconButton 대신 icon 을 붙인 Button 을 사용합니다.",
+            "aria-label 을 빈 문자열이나 'button' 같은 무의미한 값으로 채우지 않습니다.",
+            "icon 과 children 을 동시에 넘겨 헷갈리게 하지 않습니다(icon 이 우선 렌더링됩니다).",
+            "한 영역에 primary IconButton 을 여러 개 두어 시각적 위계를 흐리지 않습니다.",
+            "sm 크기를 촘촘히 배치해 인접 아이콘 버튼의 터치 영역이 겹치게 하지 않습니다.",
+          ]}
+          a11y={[
+            "aria-label 은 타입상 필수이므로 아이콘만 있어도 스크린리더가 읽을 대체 텍스트가 보장됩니다.",
+            "네이티브 button 으로 렌더링되어 키보드 포커스와 Enter·Space 활성화가 기본 지원됩니다.",
+            "base 스타일에서 outline 을 제거하므로 상위 레이아웃에서 focus-visible 링을 반드시 보완합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

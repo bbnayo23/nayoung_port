@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Modal.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 /**
  * Modal.docs.stories.tsx — MDX 를 대체하는 "문서 스토리".
@@ -98,6 +98,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.WithDimmed)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="다이얼로그·사이드 패널의 열림/닫힘 제어와 접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "open · onClose 로 완전 제어(controlled)하며, 상태 변경은 항상 부모가 관리합니다.",
+            "제목은 Modal.Header, 본문은 Modal.Body, 확인·취소 버튼은 Modal.Footer 로 영역을 나눠 구성합니다.",
+            "type='modal' 은 sm·md·lg 로 콘텐츠 양에 맞춰 너비를 고르고, 화면 한쪽에서 여닫는 흐름에는 type='sidepanel' 과 position 을 씁니다.",
+            "닫힘 애니메이션이 필요하면 isClosing 을 true 로 두어 트랜지션 동안 마운트를 유지한 뒤 언마운트합니다.",
+          ]}
+          donts={[
+            "onClose 없이 열기만 해서 딤드 클릭·ESC·닫기 버튼으로 닫을 수 없는 상태를 만들지 않습니다.",
+            "긴 본문 전체를 Modal.Body 없이 넣어 스크롤 영역과 헤더·푸터가 함께 밀려나게 하지 않습니다.",
+            "실수로 닫히면 안 되는 입력 폼에서 closeOnOverlay·closeOnEsc 를 기본값(true)으로 방치하지 않고 false 로 막습니다.",
+            "type='modal' 에 position 을, sidepanel 에 size 를 주는 식으로 서로 다른 타입 전용 prop 을 섞어 쓰지 않습니다.",
+          ]}
+          a11y={[
+            "사이드 패널의 닫기 버튼은 아이콘만 있으므로 aria-label='닫기' 로 대체 텍스트가 제공됩니다.",
+            "closeOnEsc 기본값(true)으로 ESC 키 닫기가 지원되며, 폼처럼 오조작을 막아야 할 때만 끕니다.",
+            "role='dialog' 와 aria-modal, 초기 포커스는 자동 지정되지 않으므로, 접근성이 중요한 화면에서는 래퍼 요소에 직접 지정합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

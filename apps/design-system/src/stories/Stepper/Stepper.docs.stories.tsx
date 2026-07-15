@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Stepper.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Stepper',
@@ -113,6 +113,29 @@ export const Docs: Story = {
 
       <DocSection title="Playground" description="position · showNumbers 조합의 기본 예시입니다.">
         <Example>{renderExample(S.Playground)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="다단계 흐름의 진행 상태를 정확히 전달하기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "현재 진행 중인 스텝에만 isActive 를 부여하고, 지나온 스텝은 isCompleted 로 표시해 진행 위치를 명확히 합니다.",
+            "스텝 간 이동은 Stepper.Controls 의 onPrevious·onNext·onComplete 로 처리하고, 마지막 스텝에서는 showNext={false} 로 두고 showComplete 로 완료 버튼을 노출합니다.",
+            "인접한 두 스텝 사이에 Stepper.Connector 를 두고, 이미 지나온 구간은 isCompleted 로 연결선을 강조합니다.",
+            "건너뛸 수 있는 스텝에는 isOptional 을 지정해 (Optional) 표시로 필수/선택을 구분합니다.",
+            "stepNumber 는 0-based 로 순서대로 부여합니다 — 화면에는 stepNumber + 1 로 렌더되므로 실제 순서와 일치시킵니다.",
+          ]}
+          donts={[
+            "isActive 를 여러 스텝에 동시에 부여해 현재 위치를 모호하게 만들지 않습니다.",
+            "같은 스텝에 isCompleted 와 isError 를 함께 지정하지 않습니다 — 아이콘이 체크로 우선 표시되어 오류가 가려집니다.",
+            "검증에 실패한 스텝을 isDisabled 로 감추지 말고 isError 로 표시해 문제 위치를 드러냅니다.",
+            "Stepper.Step·Stepper.Connector 를 Stepper 바깥에서 사용하지 않습니다 — 컨텍스트가 없으면 오류가 발생합니다.",
+          ]}
+          a11y={[
+            "완료·오류 상태는 체크·X 아이콘과 색상으로만 구분되므로, title·description 에 상태를 알 수 있는 텍스트를 함께 제공해 색상에만 의존하지 않습니다.",
+            "Stepper.Step 은 onClick 을 받은 div 라 isClickable 이어도 Enter·Space 활성화가 보장되지 않으므로, 키보드 탐색은 실제 button 으로 렌더되는 Stepper.Controls 버튼을 주 이동 수단으로 제공합니다.",
+            "isClickable 을 주지 않은 스텝은 tabIndex 가 -1 이라 키보드 포커스를 받지 않으므로, 진행 상황은 활성·완료 스텝의 텍스트로도 전달합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

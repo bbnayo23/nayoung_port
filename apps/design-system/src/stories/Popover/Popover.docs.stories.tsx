@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Popover.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Popover',
@@ -76,6 +76,28 @@ export const Docs: Story = {
 
       <DocSection title="비활성화" description="비활성화 상태에서는 팝오버가 열리지 않습니다.">
         <Example>{renderExample(S.Disabled)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="controlled 팝오버를 올바르게 열고 닫고 배치하기 위한 권장·지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "visible 와 onVisibleChange 로 열림 상태를 부모에서 완전 제어(controlled)합니다.",
+            "위치는 placement 만 지정하고 화면 경계 보정은 Popper.js 의 flip·preventOverflow 자동 처리에 맡깁니다.",
+            "확인·경고처럼 명시적 닫기가 필요하면 title 과 closeButton 을 함께 써서 다이얼로그 형태로 구성합니다.",
+            "특정 컨테이너 안에 갇혀야 하는 경우 portalTarget 으로 렌더 위치를 지정하거나 portal={false} 로 인라인 렌더합니다.",
+          ]}
+          donts={[
+            "트리거 위치를 인라인 스타일로 강제 이동시키지 않고 offset 의 [skid, distance] 로 조정합니다.",
+            "넓은 폼이나 다단계 플로우 전체를 content 에 담지 않고 그런 경우 Modal 을 사용합니다.",
+            "임시로 숨기려고 disabled 를 켜지 않습니다 — disabled 는 팝오버를 아예 렌더하지 않으므로 임시 숨김에는 visible 를 false 로 둡니다.",
+            "closeOnOutsideClick 를 끈 상태에서 closeButton 도 없이 두어 사용자가 닫을 방법을 잃게 하지 않습니다.",
+          ]}
+          a11y={[
+            "트리거(children)는 button 등 포커스 가능한 요소로 제공합니다 — 래퍼가 div 라 키보드 접근이 children 요소의 semantics 에 의존합니다.",
+            "Escape 키 닫기는 내장되어 있지 않으므로 onVisibleChange 로 키보드 해제 동작을 별도 연결합니다.",
+            "내장 닫기 버튼에는 aria-label '닫기' 가 지정되어 스크린리더에서 목적이 전달됩니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

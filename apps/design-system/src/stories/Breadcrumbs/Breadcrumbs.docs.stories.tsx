@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Breadcrumbs.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 /**
  * Breadcrumbs.docs.stories.tsx — MDX 를 대체하는 "문서 스토리".
@@ -79,6 +79,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.WithOnClick)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="위치 탐색의 명확성과 접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "최상위 경로부터 현재 페이지까지 실제 계층 순서대로 항목을 배치합니다.",
+            "이동 가능한 상위 경로는 a 요소로 두고, 마지막 항목(현재 페이지)은 링크 없는 span 으로 두어 자기 자신으로의 이동을 막습니다.",
+            "경로가 길어지면 maxItems 로 중간 항목을 ... 버튼으로 축약해 한 줄 레이아웃을 유지합니다.",
+            "SPA 라우터와 연동할 때는 href 대신 onClick 을 사용해 전체 새로고침 없이 이동합니다.",
+          ]}
+          donts={[
+            "페이지 계층과 무관한 필터·탭 전환 UI를 브레드크럼으로 대체하지 않습니다.",
+            "마지막 항목(현재 페이지)에 링크를 걸어 자기 자신으로 이동하게 만들지 않습니다.",
+            "separator 로 방향성이 불분명한 기호를 써서 계층의 진행 방향을 헷갈리게 하지 않습니다.",
+            "단계가 한두 개뿐인 얕은 경로에 굳이 maxItems 축약을 적용하지 않습니다.",
+          ]}
+          a11y={[
+            "nav 에 aria-label='breadcrumb' 이 지정되고 마지막 항목에 aria-current='page' 가 자동 부여되어 스크린리더가 현재 위치를 안내합니다.",
+            "축약 항목은 button 요소이며 aria-label '숨겨진 항목 모두 보기'를 제공해 키보드·스크린리더로 펼칠 수 있습니다.",
+            "separator 는 장식 요소이므로 의미 전달에 의존하지 말고, 아이콘만으로 항목을 표현할 때는 aria-label 로 대체 텍스트를 제공합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

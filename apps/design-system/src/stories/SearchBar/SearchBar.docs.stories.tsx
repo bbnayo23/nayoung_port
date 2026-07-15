@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { SearchBar } from '../../components/SearchBar'
 import * as S from './SearchBar.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/SearchBar',
@@ -114,6 +114,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.Disabled)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="검색 입력의 상태·슬롯·확장 모드를 올바르게 다루기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "검색 실행 시점의 로직은 onSearch 에 두어 Enter 키와 검색 버튼 동작을 일관되게 유지합니다.",
+            "외부 상태와 동기화가 필요할 때만 value 로 제어 모드를 쓰고, 단순 검색창은 defaultValue 로 비제어로 둡니다.",
+            "정렬·필터처럼 검색과 관련된 보조 조작은 suffixActions 에, 추가 생성 같은 인접 액션은 leftOuterActions·rightActions 에 배치해 역할을 구분합니다.",
+            "여러 줄 쿼리 입력이 필요한 경우에만 expandable 을 켜고, 짧은 키워드 검색에는 기본 단일 행을 유지합니다.",
+          ]}
+          donts={[
+            "검색 버튼을 hideButton 으로 숨긴 채 onSearch 만 두어 Enter 키 외에 실행 수단이 없게 만들지 않습니다.",
+            "onChange 콜백이 이벤트가 아닌 문자열 값을 넘겨주므로 e.target.value 로 접근하려 하지 않습니다.",
+            "leftActions·prefix 같은 입력 내부 슬롯에 크고 복잡한 UI를 넣어 입력 영역을 좁히지 않습니다.",
+            "onClear 없이 입력값 초기화를 기대하지 않습니다. X 버튼은 값이 있을 때만 나타나며 클리어 후 입력에 포커스를 돌려줍니다.",
+          ]}
+          a11y={[
+            "아이콘만 있는 검색 버튼에는 searchLabel 로 의미 있는 대체 텍스트를 지정해 aria-label 을 채웁니다.",
+            "지우기·확장 버튼은 aria-label 이 제공되지만 tabIndex 가 -1 이므로, 키보드 사용자는 값이 있을 때 입력에서 바로 검색·수정하도록 흐름을 설계합니다.",
+            "입력 자체에는 별도 label 이 없으므로 placeholder 에만 의존하지 말고 주변 문맥이나 prefix 로 검색 대상을 명확히 전달합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

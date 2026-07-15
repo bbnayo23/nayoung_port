@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Input from '../../components/Input'
 import * as S from './Input.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Input',
@@ -91,6 +91,30 @@ export const Docs: Story = {
 
       <DocSection title="상태" description="disabled · readOnly · fullWidth 상태를 확인합니다.">
         <Example>{renderExample(S.States)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="입력 상태 표현과 접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "오류를 표시할 때는 variant 를 error 로 두고 helperText 에 원인을 함께 적어 색상과 메시지를 일치시킵니다.",
+            "값을 지우는 UI 가 필요하면 showClearButton 과 onClear 를 함께 지정해 클리어 동작을 실제 상태에 연결합니다.",
+            "검색·금액·단위처럼 입력 맥락이 있는 필드에는 prefixIcon·suffixIcon 으로 의미를 시각적으로 보조합니다.",
+            "폼에서는 fullWidth 기본값(true)을 유지하고, 컨테이너에 맞춰 좁혀야 하는 인라인 입력에만 false 로 지정합니다.",
+            "size 는 함께 놓이는 버튼 등 주변 컨트롤의 높이에 맞춰 sm·md·lg 중 하나로 통일합니다.",
+          ]}
+          donts={[
+            "showClearButton 을 true 로 두고 onClear 를 연결하지 않아, 버튼을 눌러도 값이 지워지지 않는 상태를 만들지 않습니다.",
+            "suffixIcon 과 클리어 버튼을 동시에 기대하지 않습니다 — suffixIcon 이 있으면 showClearButton 은 무시됩니다.",
+            "오류를 variant 색상만으로 표현하고 helperText 없이 원인 설명을 생략하지 않습니다.",
+            "라벨을 두지 않고 placeholder 로 필드의 의미를 대신하지 않습니다 — 값 입력 시 사라져 맥락이 없어집니다.",
+            "HTML size 속성으로 너비를 조절하려 하지 않습니다 — 컴포넌트의 size prop 이 우선해 무시됩니다.",
+          ]}
+          a11y={[
+            "컴포넌트에 label 이 내장되어 있지 않으므로, 외부 label 에 htmlFor 와 input 의 id 를 연결하거나 aria-label 을 전달해 접근 가능한 이름을 부여합니다.",
+            "variant='error' 는 테두리·텍스트 색상만 바꾸므로, 오류 상태는 aria-invalid 를 함께 전달해 스크린 리더에도 알립니다.",
+            "클리어 버튼은 tabIndex=-1 이라 키보드 포커스를 받지 않으므로, 키보드 사용자가 입력에서 직접 값을 선택·삭제할 수 있는지 확인합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

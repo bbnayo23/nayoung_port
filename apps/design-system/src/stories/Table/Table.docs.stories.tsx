@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Table.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Table',
@@ -91,6 +91,28 @@ export const Docs: Story = {
 
       <DocSection title="셀 인라인 편집" description="셀 내부에 Input 을 배치해 인라인 편집 패턴을 구현합니다.">
         <Example>{renderExample(S.CellEdit)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="테이블의 시맨틱 구조와 정렬·확장 상태를 올바르게 다루기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "Table.Head·Body·Row·Cell·HeaderCell 의 compound 조합으로만 구성해 시맨틱 table 구조를 유지합니다.",
+            "sortable 헤더는 sortDirection 과 onSort 를 함께 controlled 로 연결해 asc → desc → null 순환을 외부 상태로 관리합니다.",
+            "데이터가 없을 때는 Table.Body 의 emptyContent 로 빈 상태 안내를 제공합니다.",
+            "행 밀도는 size 를 sm·md·lg 중 하나로 통일하고, 선택된 행은 Table.Row 의 active 로 강조합니다.",
+          ]}
+          donts={[
+            "Table.Cell·HeaderCell 대신 raw td·th 를 섞어 align 등 공용 스타일·클래스가 빠지지 않게 합니다.",
+            "expandable 행에 별도의 클릭 가능한 버튼·링크를 넣어 행 전체 onClick 과 클릭 이벤트가 충돌하지 않게 합니다.",
+            "striped·hoverable·bordered 를 한꺼번에 켜서 시각적 노이즈를 만들지 않습니다.",
+            "sortDirection 을 비워둔 채 정렬만 수행해 표시된 정렬 방향과 실제 데이터 순서가 어긋나지 않게 합니다.",
+          ]}
+          a11y={[
+            "sortable 헤더에는 sortDirection 에 맞춰 aria-sort 를 Table.HeaderCell 로 전달해 스크린리더가 정렬 상태를 읽게 합니다.",
+            "expandable 행에는 aria-expanded 를 expanded 값과 동기화해 전달하고, 행 전체가 클릭 영역임을 label 로 안내합니다.",
+            "셀 인라인 편집 시 Input 에 aria-label 등 대체 텍스트를 제공해 어떤 열의 값인지 식별되게 합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

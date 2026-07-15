@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './DateTimePicker.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/DateTimePicker',
@@ -118,6 +118,30 @@ interface PresetItem {
 
       <DocSection title="비활성화" description="비활성 상태입니다.">
         <Example>{renderExample(S.Disabled)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="날짜·시간 범위 피커를 명확하고 접근 가능하게 쓰기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "자주 쓰는 조회 구간이 정해져 있으면 presets prop 으로 목록을 좁혀 사용자가 custom 없이 한 번에 선택하도록 합니다.",
+            "제어 모드에서는 onChange 가 range 와 preset 을 함께 전달하므로 두 인자를 모두 외부 상태에 반영합니다.",
+            "좁은 툴바에는 size='sm', 독립 필터 영역에는 md·lg 를 사용해 트리거 밀도를 조절합니다.",
+            "label 에는 조회 대상 기간을 알 수 있는 문구를 지정해 어떤 데이터의 범위인지 명확히 합니다.",
+            "직접 입력은 'YYYY-MM-DD HH:mm:ss' 형식을 따르며, 날짜만 입력하면 시작은 00:00:00·종료는 23:59:59로 자동 보정됨을 사용자에게 안내합니다.",
+          ]}
+          donts={[
+            "트리거 텍스트에 이미 선택된 범위가 표시되므로 옆에 동일한 범위 텍스트를 중복 노출하지 않습니다.",
+            "preset 으로 제어하면서 onChange 처리를 생략해 값이 고정되게 두지 않습니다.",
+            "임의 구간 입력이 필요한 화면에서 presets 에 custom 을 제외한 채로 사용하지 않습니다.",
+            "종료가 시작보다 앞선 값을 강제로 넣으려 하지 않습니다. 컴포넌트가 두 날짜를 같은 날로 자동 보정합니다.",
+            "단일 시점만 필요한 경우 범위 피커인 이 컴포넌트 대신 단일 날짜 입력을 사용합니다.",
+          ]}
+          a11y={[
+            "트리거는 표준 button 요소라 Tab 포커스와 Enter·Space 로 패널 열기가 기본 지원됩니다.",
+            "패널의 프리셋 항목은 li 클릭 기반이라 키보드 포커스를 받지 않으므로, 키보드 사용자를 위해 직접 입력 input 으로도 범위를 지정할 수 있음을 함께 안내합니다.",
+            "시각적 label 이 트리거 button 과 for·id 로 연결되어 있지 않고 시작·종료 input 에도 라벨이 없으므로, 스크린리더 사용자를 위해 트리거와 두 입력에 aria-label 을 별도로 부여합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

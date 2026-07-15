@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as S from './Tree.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Tree',
@@ -87,6 +87,28 @@ import type { TreeNode } from '@port/design-system'`}
         }
       >
         <Example>{renderExample(S.DropdownTree)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="계층 데이터를 정확히 제어하고 접근성 있게 표시하기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "각 노드에 렌더마다 바뀌지 않는 고유한 id 를 부여해 selectedId·expandedIds 로 특정 노드를 정확히 제어합니다.",
+            "하위 항목이 있는 노드는 children 배열을 채워 펼치기 셰브론이 자동으로 노출되도록 합니다.",
+            "펼침 상태를 다른 UI와 동기화해야 하면 expandedIds 와 onExpandChange 로 controlled 모드를 사용합니다.",
+            "선택 상태를 화면에 반영하려면 selectedId 와 onSelect 를 함께 전달합니다.",
+          ]}
+          donts={[
+            "onSelect 없이 selectedId 만 전달해 클릭해도 선택이 반영되지 않는 상태로 두지 않습니다.",
+            "controlled 모드에서 onExpandChange 결과로 expandedIds 를 갱신하지 않아 셰브론을 눌러도 펼쳐지지 않게 만들지 않습니다.",
+            "클릭을 막을 노드를 nodes 에서 통째로 제거하기보다 disabled: true 로 표시해 계층 구조의 맥락을 유지합니다.",
+            "계층이 없는 단순 나열에는 Tree 대신 단층 목록 컴포넌트를 사용합니다.",
+          ]}
+          a11y={[
+            "루트는 role='tree', 하위 묶음은 role='group', 각 노드는 role='treeitem' 으로 계층이 스크린리더에 전달되므로 label 은 의미가 분명한 값으로 채웁니다.",
+            "label 에 아이콘 등 비텍스트만 넣지 말고 텍스트 대체를 함께 제공해 스크린리더가 노드를 식별할 수 있게 합니다.",
+            "disabled 노드는 tabIndex -1 로 포커스에서 제외되고 활성 노드는 Enter·Space 로 선택, ArrowRight·ArrowLeft 로 펼치기/접기가 지원되므로 마우스 없이도 조작할 수 있게 유지합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

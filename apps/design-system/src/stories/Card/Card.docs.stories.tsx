@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Card from '../../components/Card'
 import * as S from './Card.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Card',
@@ -107,6 +107,28 @@ import { CardSkeleton } from '@port/design-system'`}
         }
       >
         <Example>{renderExample(S.SearchConditionCardPattern)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="카드의 위계와 선택 상태·접근성을 지키기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "onClick으로 선택형 카드를 만들 때 isActive 로 현재 선택 상태를 보더 강조로 함께 표시합니다.",
+            "검색기록·목록형 카드는 density=\"compact\" 로 패딩과 폰트를 줄여 한 화면에 더 많은 항목을 담습니다.",
+            "툴바·그리드처럼 자체 패딩을 가진 컨텐츠를 감쌀 때 noPadding 으로 이중 여백을 제거합니다.",
+            "헤더 제목은 title, 우측 버튼·뱃지는 action prop 에 넣어 헤더 슬롯 정렬을 일관되게 유지합니다.",
+          ]}
+          donts={[
+            "old-exd·neo variant 는 레거시·특수 화면 전용이므로 일반 카드에는 default·section 을 사용합니다.",
+            "disabled 는 시각적 opacity 만 낮출 뿐 onClick 핸들러는 그대로 실행되므로, 비활성 상태에서 동작 차단이 필요하면 핸들러 안에서 직접 막습니다.",
+            "size 는 sm·md·lg 고정 너비를 강제하므로 반응형 그리드 안에서는 size 대신 컨테이너 폭에 맡깁니다.",
+            "onClick 없이 hoverable 만 켜서 클릭되지 않는 카드에 호버 효과를 주지 않습니다.",
+          ]}
+          a11y={[
+            "onClick 카드는 div 기반이라 키보드 포커스와 Enter·Space 활성화가 기본 지원되지 않으므로, role=\"button\"·tabIndex·onKeyDown 을 함께 전달해 키보드 조작을 보장합니다.",
+            "선택 상태 isActive 는 보더 색 강조로만 표현되므로 aria-pressed 또는 aria-current 를 함께 지정해 스크린리더에 상태를 전달합니다.",
+            "old-exd 의 별 아이콘과 neo 의 액센트 바는 aria-hidden 처리된 장식이므로 의미 전달은 title 텍스트로 합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),

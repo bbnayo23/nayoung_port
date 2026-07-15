@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Toast from '../../components/Toast'
 import * as S from './Toast.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Toast',
@@ -111,6 +111,28 @@ export const Docs: Story = {
         }
       >
         <Example>{renderExample(S.Stacked)}</Example>
+      </DocSection>
+
+      <DocSection title="사용 지침" description="토스트의 지속 시간·variant·닫기 수단을 올바르게 쓰기 위한 권장/지양 사항입니다.">
+        <Guidelines
+          dos={[
+            "자동으로 사라지는 알림은 duration 을 3~4초 수준으로 두어 사용자가 메시지를 읽을 시간을 확보합니다.",
+            "되돌리기·재시도 등 사용자 조작이 필요한 알림은 duration=0 으로 자동 닫힘을 끄고 action 버튼(스낵바 패턴)을 함께 제공합니다.",
+            "variant 를 메시지 성격에 맞춰 성공은 success, 실패는 error, 안내는 info, 경고는 warning 으로 구분해 사용합니다.",
+            "Toaster 를 앱 루트에 한 번만 배치하고 toast() 헬퍼로 알림을 띄워 스태킹·위치·타이머 관리를 sonner 에 맡깁니다.",
+          ]}
+          donts={[
+            "닫기 버튼은 showCloseButton 과 onClose 가 모두 있어야 렌더되므로, showCloseButton=true 만 두고 onClose 를 빠뜨려 닫을 수 없는 토스트를 만들지 않습니다.",
+            "duration=0 스낵바에서는 닫기 버튼이나 action 중 하나는 반드시 제공해 사라지지도 닫히지도 않는 상태를 만들지 않습니다.",
+            "오류·경고를 info 나 success variant 로 표시해 메시지의 심각도를 흐리지 않습니다.",
+            "폼 검증 오류처럼 계속 확인해야 하는 지속 정보를 사라지는 토스트로 대체하지 않습니다.",
+          ]}
+          a11y={[
+            "아이콘만 있는 닫기 버튼에는 aria-label(예: '닫기')을 제공해 스크린리더 사용자가 용도를 알 수 있게 합니다.",
+            "동적으로 뜨는 알림은 role='alert' 또는 aria-live 속성을 전달(나머지 props 는 wrapper div 로 스프레드됨)해 스크린리더가 즉시 읽도록 합니다.",
+            "중요한 정보는 duration 을 너무 짧게 두지 않고 닫기 버튼으로 유지할 수 있게 하여 읽기 속도가 느린 사용자를 배려합니다.",
+          ]}
+        />
       </DocSection>
     </DocPage>
   ),
