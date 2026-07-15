@@ -4,7 +4,8 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "paths": {
       "@/*": ["./src/*"],
-      "@dc/*": ["../design-system/src/*"]
+      "@dc/*": ["../design-system/src/*"],
+      "@il/*": ["../icon-library/src/*"]
     }
   },
   "include": ["src"]

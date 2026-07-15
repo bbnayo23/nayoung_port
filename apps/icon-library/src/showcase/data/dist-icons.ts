@@ -2,7 +2,7 @@
  * IconImportTest 페이지용 아이콘 데이터
  * 빌드된 패키지에서 직접 import합니다.
  */
-import type { IconComponent } from '@/lib/types';
+import type { IconComponent } from '@il/lib/types';
 
 export interface DistIconItem {
   name: string;

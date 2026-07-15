@@ -131,18 +131,20 @@ pnpm dev          # 메인 포트폴리오(3D) 개발 서버
 **Import 경로** — 부모 상대경로(`../../`) 대신 alias 를 사용합니다.
 
 - `@/*` → **자기 패키지**의 `src/*` (앱 내부 import)
-- `@dc/*` → **design-system** 의 `src/*` (절대경로). 디자인 시스템 컴포넌트·토큰은 어디서든 `@dc/` 로 import 합니다 — design-system 내부에서도, dashboard·portfolio-web 에서도 동일하게.
+- `@dc/*` → **design-system** 의 `src/*` (절대경로). 디자인 시스템 컴포넌트·토큰은 어디서든 `@dc/` 로.
+- `@il/*` → **icon-library** 의 `src/*` (절대경로). 아이콘 라이브러리는 어디서든 `@il/` 로.
 
 ```ts
-// 디자인 시스템 컴포넌트·토큰 (어디서든 @dc/)
+// 디자인 시스템·아이콘 (어디서든 @dc/ · @il/)
 import { Button } from '@dc/components/Button'
 import { vars } from '@dc/theme/contract.css'
+import { createIcon } from '@il/lib/utils/createIcon'
 
 // 앱 자기 코드
 import { logs } from '@/data/logs'
 ```
 
-- `@dc` 는 **절대경로 alias**라 design-system 이 "소스로 소비"돼도 소비 앱 번들러가 항상 `design-system/src` 로 정확히 해석합니다. (제네릭 `@/` 는 소비 앱에서 자기 `src` 로 오해석되므로, design-system 의 소비 대상 코드(`components`·`theme`·`patterns`)에는 `@/` 대신 `@dc/` 를 씁니다.)
+- `@dc`·`@il` 은 **절대경로 alias**라 design-system·icon-library 가 "소스로 소비"돼도 소비 앱 번들러가 항상 해당 패키지의 `src` 로 정확히 해석합니다. (제네릭 `@/` 는 소비 앱에서 자기 `src` 로 오해석되므로, 소스로 소비되는 이 두 패키지의 코드에는 `@/` 대신 `@dc/`·`@il/` 를 씁니다.)
 - 같은 디렉터리는 `./x` 를 그대로 씁니다(부모 경로만 alias 로 대체).
 - 설정: 각 앱 `tsconfig` 의 `paths` + 공유 `packages/config/vite/base.js` 의 `resolve.alias`. Storybook 도 base 설정을 머지하므로 동일 동작합니다.
 

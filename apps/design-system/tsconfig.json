@@ -4,7 +4,8 @@
     "types": ["vite/client", "node"],
     "paths": {
       "@/*": ["./src/*"],
-      "@dc/*": ["./src/*"]
+      "@dc/*": ["./src/*"],
+      "@il/*": ["../icon-library/src/*"]
     }
   },
   "include": ["src", ".storybook", "vite.lib.config.ts"]

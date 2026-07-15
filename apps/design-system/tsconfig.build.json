@@ -5,7 +5,12 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@dc/*": ["./src/*"],
+      "@il/*": ["../icon-library/src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["**/*.stories.tsx", "**/*.test.tsx", "src/test/**"]

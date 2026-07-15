@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@dc/*": ["../design-system/src/*"]
+      "@dc/*": ["../design-system/src/*"],
+      "@il/*": ["../icon-library/src/*"]
     }
   },
   "include": ["src", "vite.config.ts"]

@@ -1,5 +1,5 @@
 import React, { forwardRef, type SVGProps } from 'react';
-import type { IconProps } from '../types';
+import type { IconProps } from '@il/lib/types';
 
 /**
  * 아이콘 컴포넌트 생성 함수

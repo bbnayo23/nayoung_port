@@ -108,7 +108,7 @@ import {
   SoarWarningTriangleIcon,
   SoarWatchIcon,
   SoarWriteFillIcon
-} from '@/lib/icons/soar';
+} from '@il/lib/icons/soar';
 
 export const soarIcons: IconItem[] = [
   { name: 'SoarAccordionDownIcon', component: SoarAccordionDownIcon, solution: 'SOAR' },

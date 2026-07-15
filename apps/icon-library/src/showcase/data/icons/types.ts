@@ -1,4 +1,4 @@
-import type { IconProps } from '@/lib/types';
+import type { IconProps } from '@il/lib/types';
 import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 
 // 솔루션 타입

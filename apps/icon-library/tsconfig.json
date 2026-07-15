@@ -4,6 +4,7 @@
     "paths": {
       "@igloo/igloo-icons": ["./src/lib/main.ts"],
       "@/*": ["./src/*"],
+      "@il/*": ["./src/*"],
       "@icons/*": ["./src/lib/icons/*"],
       "@showcase/*": ["./src/showcase/*"]
     }

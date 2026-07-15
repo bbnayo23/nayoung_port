@@ -1,4 +1,4 @@
-import type { IconProps } from '../lib/types'
+import type { IconProps } from '@il/lib/types'
 
 export function IconHeart({ size = 24, ...props }: IconProps) {
   return (

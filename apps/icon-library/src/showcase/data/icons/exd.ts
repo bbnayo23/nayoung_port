@@ -173,7 +173,7 @@ import {
   ExdUppercaseIcon,
   ExdUserListIcon,
   ExdUserIcon
-} from '@/lib/icons/exd';
+} from '@il/lib/icons/exd';
 
 export const exdIcons: IconItem[] = [
   { name: 'ExdAccessIcon', component: ExdAccessIcon, solution: 'EXD' },

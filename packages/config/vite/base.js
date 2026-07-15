@@ -51,10 +51,12 @@ export function createBaseConfig() {
       //          process.cwd() 는 vite 가 실행되는 패키지 루트라 각 앱·Storybook 이 각자 src 로 해석.
       // - '@dc': design-system 의 src (절대경로). 디자인 시스템 컴포넌트를 어디서든 동일하게 참조한다
       //          (design-system 내부·dashboard·portfolio-web 모두 @dc/components/Button 형태).
-      //          절대경로라 "소스로 소비"돼도 소비 앱 번들러가 항상 design-system/src 로 정확히 해석한다.
+      // - '@il': icon-library 의 src (절대경로). 아이콘 라이브러리를 어디서든 동일하게 참조한다.
+      //          @dc·@il 모두 절대경로라 "소스로 소비"돼도 소비 앱 번들러가 항상 해당 패키지 src 로 정확히 해석한다.
       alias: {
         '@': path.resolve(process.cwd(), 'src'),
         '@dc': path.resolve(searchForWorkspaceRoot(process.cwd()), 'apps/design-system/src'),
+        '@il': path.resolve(searchForWorkspaceRoot(process.cwd()), 'apps/icon-library/src'),
       },
     },
     // @port 소스 패키지를 사전 번들에서 제외 → 소스 수정이 즉시 HMR 로 반영된다.

@@ -5,7 +5,13 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@il/*": ["./src/*"],
+      "@igloo/igloo-icons": ["./src/lib/main.ts"],
+      "@icons/*": ["./src/lib/icons/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/showcase", "src/main.tsx"]

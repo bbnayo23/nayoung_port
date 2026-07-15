@@ -2,7 +2,7 @@
  * EXD 솔루션 아이콘 모음
  */
 
-import { createIcon } from '../../utils/createIcon';
+import { createIcon } from '@il/lib/utils/createIcon';
 
 // SVG imports
 import AccessSvg from './access.svg?react';
