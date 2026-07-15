@@ -2,9 +2,9 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import * as THREE from 'three'
-import { useGame } from '../store'
+import { useGame } from '@/three/store'
 import { FLOAT_SNIPPETS } from './codeData'
-import { clamp } from '../utils'
+import { clamp } from '@/three/utils'
 import firaCodeUrl from '@fontsource/fira-code/files/fira-code-latin-400-normal.woff'
 
 /** 코드 텍스트용 모노스페이스 폰트 — 로컬 번들(오프라인/헤드리스 안전, FOUT 없음) */

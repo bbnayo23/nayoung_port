@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { Collapse } from '../../components/Collapse'
-import type { CollapseVariant } from '../../components/Collapse'
+import { vars } from '@dc/theme/contract.css'
+import { Collapse } from '@dc/components/Collapse'
+import type { CollapseVariant } from '@dc/components/Collapse'
 
 const meta = {
   title: 'StyleGuide/Collapse',

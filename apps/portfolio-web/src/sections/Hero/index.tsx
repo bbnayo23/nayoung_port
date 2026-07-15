@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { brand, personal } from '../../data'
+import { brand, personal } from '@/data'
 import {
   section, gridLines, content,
   eyebrow, eyebrowAccent,

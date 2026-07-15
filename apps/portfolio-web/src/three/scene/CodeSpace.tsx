@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { FloatingCode } from './FloatingCode'
 import { AbyssShells } from './AbyssShells'
-import type { Quality } from '../../hooks/useQuality'
+import type { Quality } from '@/hooks/useQuality'
 
 /**
  * 코드 디멘션 허브 — 바닥/지평선이 없는 미지의 코드 보이드.

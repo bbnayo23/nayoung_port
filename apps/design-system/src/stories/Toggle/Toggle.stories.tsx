@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { Toggle } from '../../components/Toggle'
-import type { ToggleProps, ToggleSize } from '../../components/Toggle'
+import { vars } from '@dc/theme/contract.css'
+import { Toggle } from '@dc/components/Toggle'
+import type { ToggleProps, ToggleSize } from '@dc/components/Toggle'
 
 const meta = {
   title: 'StyleGuide/Toggle',

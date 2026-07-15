@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Collapse } from '../../components/Collapse'
+import { Collapse } from '@dc/components/Collapse'
 import * as S from './Collapse.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Collapse',

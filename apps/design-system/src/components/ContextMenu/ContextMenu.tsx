@@ -4,7 +4,7 @@ import type { RefObject } from "react";
 import { XdrChevronRightIcon } from "@port/icon-library";
 import type { ContextMenuProps, ContextMenuItem } from "./types";
 import { useClampedPosition, useMenuKeyboard, useOutsideClose, shouldFlipSubMenu } from "./hooks";
-import { usePortal } from "../Portal/hooks";
+import { usePortal } from "@dc/components/Portal/hooks";
 import * as styles from "./ContextMenu.css";
 
 const SUBMENU_CLOSE_DELAY = 200;

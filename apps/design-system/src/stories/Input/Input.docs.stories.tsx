@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Input from '../../components/Input'
+import Input from '@dc/components/Input'
 import * as S from './Input.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Input',

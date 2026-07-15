@@ -1,7 +1,7 @@
 import { style, keyframes, createVar, globalStyle } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import { createButtonTokens } from './Button.tokens'
 
 // ── 토큰 적용 ─────────────────────────────────────────────────────────────────

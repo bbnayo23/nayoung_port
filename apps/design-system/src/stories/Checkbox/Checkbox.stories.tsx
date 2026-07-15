@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Checkbox from '../../components/Checkbox'
-import type { CheckboxInterface } from '../../components/Checkbox'
+import { vars } from '@dc/theme/contract.css'
+import Checkbox from '@dc/components/Checkbox'
+import type { CheckboxInterface } from '@dc/components/Checkbox'
 
 const meta = {
   title: 'StyleGuide/Checkbox',

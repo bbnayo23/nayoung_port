@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import InputGroup from '../../components/InputGroup'
-import type { InputGroupProps } from '../../components/InputGroup'
+import { vars } from '@dc/theme/contract.css'
+import InputGroup from '@dc/components/InputGroup'
+import type { InputGroupProps } from '@dc/components/InputGroup'
 
 const meta = {
   title: 'StyleGuide/InputGroup',

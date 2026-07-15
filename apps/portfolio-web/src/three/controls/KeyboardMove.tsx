@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { useGame } from '../store'
-import { clampFlight } from '../scene/roomGeometry'
+import { useGame } from '@/three/store'
+import { clampFlight } from '@/three/scene/roomGeometry'
 
 const FORWARD = ['ArrowUp', 'KeyW']
 const BACK = ['ArrowDown', 'KeyS']

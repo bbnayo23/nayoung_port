@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Breadcrumbs from '../../components/Breadcrumbs'
+import { vars } from '@dc/theme/contract.css'
+import Breadcrumbs from '@dc/components/Breadcrumbs'
 
 const meta = {
   title: 'StyleGuide/Breadcrumbs',

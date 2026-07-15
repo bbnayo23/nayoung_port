@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { RangeCalendar } from '../../components/RangeCalendar'
-import type { RangePreset, DateRange } from '../../components/RangeCalendar'
+import { RangeCalendar } from '@dc/components/RangeCalendar'
+import type { RangePreset, DateRange } from '@dc/components/RangeCalendar'
 
 const meta = {
   title: 'StyleGuide/RangeCalendar',

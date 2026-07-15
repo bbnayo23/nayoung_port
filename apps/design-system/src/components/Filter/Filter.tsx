@@ -14,9 +14,9 @@ import {
 } from './Filter.css'
 import type { FilterProps, FilterSearchProps, FilterContentProps, FilterGroup } from './Filter.types'
 import { getGroupCheckState, getAllCheckState, filterGroups, formatCount } from './Filter.hooks'
-import IconButton from '../IconButton'
-import Checkbox from '../Checkbox'
-import Accordion from '../Accordion'
+import IconButton from '@dc/components/IconButton'
+import Checkbox from '@dc/components/Checkbox'
+import Accordion from '@dc/components/Accordion'
 import { XdrChevronLeftIcon } from '@port/icon-library'
 import cn from 'classnames'
 

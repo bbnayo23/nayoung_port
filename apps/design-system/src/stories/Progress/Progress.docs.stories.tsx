@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Progress from '../../components/Progress'
+import Progress from '@dc/components/Progress'
 import * as S from './Progress.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Progress',

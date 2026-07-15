@@ -1,7 +1,7 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 export const tabs = style({
   display: 'flex',

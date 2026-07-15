@@ -1,4 +1,4 @@
-import { personal } from "../../data";
+import { personal } from "@/data";
 import {
   section,
   inner,

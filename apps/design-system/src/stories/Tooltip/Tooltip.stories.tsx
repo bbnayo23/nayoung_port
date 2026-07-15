@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ReactNode } from 'react'
-import { vars } from '../../theme/contract.css'
-import { Tooltip } from '../../components/Tooltip'
+import { vars } from '@dc/theme/contract.css'
+import { Tooltip } from '@dc/components/Tooltip'
 
 const meta = {
   title: 'StyleGuide/Tooltip',

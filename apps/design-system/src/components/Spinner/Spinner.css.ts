@@ -1,6 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { style, globalStyle, keyframes, createVar } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 export const spinnerColorVar = createVar()
 

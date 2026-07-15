@@ -1,5 +1,5 @@
-import { Badge } from '../../components/ui/Badge'
-import { playgroundItems } from '../../data'
+import { Badge } from '@/components/ui/Badge'
+import { playgroundItems } from '@/data'
 import {
   section, inner, sectionTag, sectionTitle, sectionDesc,
   grid, card, cardIcon, cardTitle, cardDesc, cardTags,

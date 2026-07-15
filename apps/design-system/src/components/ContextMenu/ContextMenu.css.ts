@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 export const menu = style({
   position: 'fixed',

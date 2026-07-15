@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Checkbox from '../../components/Checkbox'
+import Checkbox from '@dc/components/Checkbox'
 import * as S from './Checkbox.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Checkbox',

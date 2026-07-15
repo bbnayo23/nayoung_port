@@ -1,8 +1,8 @@
 import { Fragment, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Stepper from '../../components/Stepper'
-import type { StepperProps } from '../../components/Stepper'
+import { vars } from '@dc/theme/contract.css'
+import Stepper from '@dc/components/Stepper'
+import type { StepperProps } from '@dc/components/Stepper'
 
 const meta = {
   title: 'StyleGuide/Stepper',

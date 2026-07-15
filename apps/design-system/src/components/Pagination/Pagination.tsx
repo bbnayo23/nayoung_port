@@ -10,7 +10,7 @@ import {
   pageInfo,
   pageJump,
 } from './Pagination.css'
-import { Dropdown } from '../Dropdown'
+import { Dropdown } from '@dc/components/Dropdown'
 import type { PaginationProps } from './Pagination.types'
 import cn from 'classnames'
 

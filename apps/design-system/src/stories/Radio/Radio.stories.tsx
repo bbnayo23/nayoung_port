@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Radio from '../../components/Radio'
-import type { RadioProps } from '../../components/Radio'
+import { vars } from '@dc/theme/contract.css'
+import Radio from '@dc/components/Radio'
+import type { RadioProps } from '@dc/components/Radio'
 
 const meta = {
   title: 'StyleGuide/Radio',

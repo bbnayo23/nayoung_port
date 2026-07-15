@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import { ExdSearchIcon, ExdCalendarIcon, XdrEyeIcon, XdrEyeSlashIcon, XdrLockIcon } from '@port/icon-library'
-import Input from '../../components/Input'
-import type { InputInterface } from '../../components/Input'
+import Input from '@dc/components/Input'
+import type { InputInterface } from '@dc/components/Input'
 
 const meta = {
   title: 'StyleGuide/Input',

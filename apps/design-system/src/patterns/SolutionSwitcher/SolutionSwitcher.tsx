@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import GnbDropdown from '../GnbDropdown'
+import GnbDropdown from '@dc/patterns/GnbDropdown'
 import * as s from './SolutionSwitcher.css'
 
 export interface SolutionApp {

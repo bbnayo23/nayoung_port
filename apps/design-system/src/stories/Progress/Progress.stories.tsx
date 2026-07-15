@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Progress from '../../components/Progress'
-import type { ProgressProps } from '../../components/Progress'
+import { vars } from '@dc/theme/contract.css'
+import Progress from '@dc/components/Progress'
+import type { ProgressProps } from '@dc/components/Progress'
 
 const meta = {
   title: 'StyleGuide/Progress',

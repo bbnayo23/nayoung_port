@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import { skeleton } from './Skeleton.css'
 import type { SkeletonProps } from './Skeleton.types'
 import cn from 'classnames'

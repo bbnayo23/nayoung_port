@@ -19,7 +19,7 @@ import {
   styledInputGroupLabel,
   styledInputGroupText,
 } from './InputGroup.css'
-import { Button } from '../Button'
+import { Button } from '@dc/components/Button'
 import cn from 'classnames'
 
 const InputGroup = forwardRef<HTMLDivElement, PropsWithChildren<InputGroupProps>>((props, ref) => {

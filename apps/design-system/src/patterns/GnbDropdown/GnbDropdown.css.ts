@@ -1,5 +1,5 @@
 import { style, keyframes } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 const dropIn = keyframes({
   from: { transform: 'translateY(-6px)', opacity: 0 },

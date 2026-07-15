@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { Button } from '../Button'
+import { Button } from '@dc/components/Button'
 import {
   alertModalRoot,
   alertModalDimmed,

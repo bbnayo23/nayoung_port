@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Lnb from '../../components/Lnb'
-import type { MenuItem } from '../../components/Lnb'
+import { vars } from '@dc/theme/contract.css'
+import Lnb from '@dc/components/Lnb'
+import type { MenuItem } from '@dc/components/Lnb'
 import {
   XdrNavDashboardIcon,
   XdrNavAiIcon,

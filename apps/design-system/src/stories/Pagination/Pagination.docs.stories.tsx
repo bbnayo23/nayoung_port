@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Pagination from '../../components/Pagination'
+import Pagination from '@dc/components/Pagination'
 import * as S from './Pagination.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Pagination',

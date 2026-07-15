@@ -1,5 +1,5 @@
 import type { StylesConfig, GroupBase } from 'react-select'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 type RSOption = { value: string; label: string; isDisabled?: boolean; variant?: string }
 

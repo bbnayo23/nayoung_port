@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom'
 import { forwardRef, useEffect } from 'react'
 import type { ModalProps, ModalSubComponentProps } from './Modal.types'
 import { modalDimmed, modalWrapper, modalHeader, modalBody, modalFooter, modalSidepanelClose } from './Modal.css'
-import IconButton from '../IconButton'
+import IconButton from '@dc/components/IconButton'
 import { ExdCloseIcon } from '@port/icon-library'
 import cn from 'classnames'
 

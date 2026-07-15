@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { brand } from '../../data'
+import { brand } from '@/data'
 import { header, headerScrolled, logo, logoExpand, nav, navList, navLink, contactBtn, three3dBtn } from './Nav.css'
 
 const links = [

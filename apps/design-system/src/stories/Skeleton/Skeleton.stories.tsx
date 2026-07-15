@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Skeleton from '../../components/Skeleton'
-import type { SkeletonProps } from '../../components/Skeleton'
-import { CardSkeleton } from '../../components/Card'
+import { vars } from '@dc/theme/contract.css'
+import Skeleton from '@dc/components/Skeleton'
+import type { SkeletonProps } from '@dc/components/Skeleton'
+import { CardSkeleton } from '@dc/components/Card'
 
 const meta = {
   title: 'StyleGuide/Skeleton',

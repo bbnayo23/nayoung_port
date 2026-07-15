@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Toast from '../../components/Toast'
+import Toast from '@dc/components/Toast'
 import * as S from './Toast.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Toast',

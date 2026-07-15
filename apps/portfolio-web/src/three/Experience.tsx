@@ -6,7 +6,7 @@ import { World } from './scene/World'
 import { Hud } from './ui/Hud'
 import { Loader } from './ui/Loader'
 import { PrintCapture } from './ui/PrintCapture'
-import { useQuality } from '../hooks/useQuality'
+import { useQuality } from '@/hooks/useQuality'
 import { rooms, type RoomConfig } from './scene/rooms'
 import { stage, canvas } from './Experience.css'
 

@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 /**
  * AppLayout — 솔루션 공통 애플리케이션 셸 (GNB + LNB + Main).

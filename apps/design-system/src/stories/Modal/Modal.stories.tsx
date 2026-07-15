@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Modal from '../../components/Modal'
-import type { ModalProps } from '../../components/Modal'
+import { vars } from '@dc/theme/contract.css'
+import Modal from '@dc/components/Modal'
+import type { ModalProps } from '@dc/components/Modal'
 
 const meta = {
   title: 'StyleGuide/Modal',

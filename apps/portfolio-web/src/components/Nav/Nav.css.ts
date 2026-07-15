@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { swiss } from '../../styles/swiss'
+import { swiss } from '@/styles/swiss'
 
 export const header = style({
   position: 'fixed',

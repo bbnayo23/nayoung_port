@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import PageHeader from '../../components/PageHeader'
-import { Button } from '../../components/Button'
-import type { BreadcrumbItem } from '../../components/PageHeader'
+import { vars } from '@dc/theme/contract.css'
+import PageHeader from '@dc/components/PageHeader'
+import { Button } from '@dc/components/Button'
+import type { BreadcrumbItem } from '@dc/components/PageHeader'
 
 const meta = {
   title: 'StyleGuide/PageHeader',

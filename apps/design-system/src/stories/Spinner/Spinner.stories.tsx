@@ -1,8 +1,8 @@
 import type { ReactNode, CSSProperties } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Spinner from '../../components/Spinner'
-import type { SpinnerProps } from '../../components/Spinner'
+import { vars } from '@dc/theme/contract.css'
+import Spinner from '@dc/components/Spinner'
+import type { SpinnerProps } from '@dc/components/Spinner'
 
 const meta = {
   title: 'StyleGuide/Spinner',

@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Filter from '../../components/Filter'
-import type { FilterGroup, FilterItem } from '../../components/Filter'
-import Input from '../../components/Input'
-import Accordion from '../../components/Accordion'
-import Checkbox from '../../components/Checkbox'
-import IconButton from '../../components/IconButton'
+import Filter from '@dc/components/Filter'
+import type { FilterGroup, FilterItem } from '@dc/components/Filter'
+import Input from '@dc/components/Input'
+import Accordion from '@dc/components/Accordion'
+import Checkbox from '@dc/components/Checkbox'
+import IconButton from '@dc/components/IconButton'
 import { XdrChevronRightIcon } from '@port/icon-library'
 
 const meta = {

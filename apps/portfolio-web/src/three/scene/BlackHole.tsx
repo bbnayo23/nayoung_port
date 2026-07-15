@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { Billboard } from '@react-three/drei'
 import { Color, NormalBlending, type Group, type Mesh } from 'three'
 import type { RoomConfig } from './rooms'
-import { useGame } from '../store'
+import { useGame } from '@/three/store'
 
 /** 안으로 빨려드는 연기 — 그리드 없는 가우시안 헤이즈가 소용돌이치며 어두운 중심으로 흘러든다 */
 const SMOKE_VERT = /* glsl */ `

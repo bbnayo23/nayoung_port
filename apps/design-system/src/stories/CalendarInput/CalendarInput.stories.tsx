@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { CalendarInput } from '../../components/CalendarInput'
+import { CalendarInput } from '@dc/components/CalendarInput'
 
 const meta = {
   title: 'StyleGuide/CalendarInput',

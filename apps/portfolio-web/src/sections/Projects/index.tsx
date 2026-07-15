@@ -1,6 +1,6 @@
-import { Badge } from '../../components/ui/Badge'
-import { projects } from '../../data'
-import type { Project } from '../../data'
+import { Badge } from '@/components/ui/Badge'
+import { projects } from '@/data'
+import type { Project } from '@/data'
 import {
   section, inner, sectionTag, sectionTitle, moreTitle,
   grid, card, cardClickable, cardHeader, cardName,

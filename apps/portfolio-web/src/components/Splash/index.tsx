@@ -1,4 +1,4 @@
-import { brand } from '../../data'
+import { brand } from '@/data'
 import { splashRoot, splashMark } from './Splash.css'
 
 // 3D 번들(무거운 lazy 청크)을 내려받는 동안 보이는 가벼운 스플래시.

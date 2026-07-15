@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Dropdown } from '../../components/Dropdown'
+import { Dropdown } from '@dc/components/Dropdown'
 import * as S from './Dropdown.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 /**
  * Dropdown.docs.stories.tsx — MDX 를 대체하는 "문서 스토리".

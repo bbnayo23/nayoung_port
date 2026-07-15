@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
 const DURATION = '280ms'

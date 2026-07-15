@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { StatsBar, StatItem, StatCount, StatLabel } from '../../components/StatsBar'
-import Popover from '../../components/Popover'
+import { vars } from '@dc/theme/contract.css'
+import { StatsBar, StatItem, StatCount, StatLabel } from '@dc/components/StatsBar'
+import Popover from '@dc/components/Popover'
 import { ExdHomeIcon, ExdDetectionIcon, ExdEventIcon, ExdDataCodeIcon, ExdGaugeIcon } from '@port/icon-library'
 
 // ── Mock 데이터 ────────────────────────────────────────────────────────────────

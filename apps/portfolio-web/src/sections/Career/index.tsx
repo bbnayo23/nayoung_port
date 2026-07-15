@@ -1,5 +1,5 @@
-import { Badge } from '../../components/ui/Badge'
-import { career } from '../../data'
+import { Badge } from '@/components/ui/Badge'
+import { career } from '@/data'
 import {
   section, inner, sectionTag, sectionTitle,
   items, item, itemMeta, period, company,

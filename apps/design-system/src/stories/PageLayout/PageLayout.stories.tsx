@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import {
   PageContent,
   PageHeaderRow,
@@ -22,8 +22,8 @@ import {
   TopologyContainer,
   ChipContainer,
   Chip,
-} from '../../components/PageLayout'
-import PageHeader from '../../components/PageHeader'
+} from '@dc/components/PageLayout'
+import PageHeader from '@dc/components/PageHeader'
 import {
   ExdSettingsIcon,
   ExdDownloadIcon,

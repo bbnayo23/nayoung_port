@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Points, PointMaterial } from '@react-three/drei'
 import { AdditiveBlending, type Group } from 'three'
-import type { Quality } from '../../hooks/useQuality'
+import type { Quality } from '@/hooks/useQuality'
 
 /** 풀-스피어 샘플링 — 위·아래·사방 모든 방향으로 점을 흩뿌려 "바닥 없는 볼륨"을 만든다 */
 function sphereCloud(count: number, rMin: number, rMax: number): Float32Array {

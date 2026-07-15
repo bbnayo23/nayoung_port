@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { HighlightText } from '../../components/HighlightText'
+import { HighlightText } from '@dc/components/HighlightText'
 
 const meta = {
   title: 'StyleGuide/HighlightText',

@@ -35,8 +35,8 @@ import {
   multiValueBadge,
 } from './Dropdown.css'
 import { buildDropdownStyles } from './Dropdown.styles'
-import Checkbox from '../Checkbox'
-import Badge from '../Badge'
+import Checkbox from '@dc/components/Checkbox'
+import Badge from '@dc/components/Badge'
 
 type RSOption = { value: string; label: string; isDisabled?: boolean; variant?: string; isDivider?: boolean }
 

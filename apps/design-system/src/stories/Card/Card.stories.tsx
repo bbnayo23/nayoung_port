@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Card from '../../components/Card'
-import type { CardProps } from '../../components/Card'
+import { vars } from '@dc/theme/contract.css'
+import Card from '@dc/components/Card'
+import type { CardProps } from '@dc/components/Card'
 
 const ClockIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { Popover } from '../../components/Popover'
-import type { PopoverProps } from '../../components/Popover'
+import { vars } from '@dc/theme/contract.css'
+import { Popover } from '@dc/components/Popover'
+import type { PopoverProps } from '@dc/components/Popover'
 
 const meta = {
   title: 'StyleGuide/Popover',

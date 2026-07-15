@@ -1,5 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { swiss } from '../../styles/swiss'
+import { swiss } from '@/styles/swiss'
 
 const base = style({
   display: 'inline-flex',

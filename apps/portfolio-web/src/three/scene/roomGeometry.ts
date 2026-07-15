@@ -1,4 +1,4 @@
-import { clamp } from '../utils'
+import { clamp } from '@/three/utils'
 
 /** 코드 차원 공용 치수 — World · Controls · CameraRig · ProjectSpace 가 공유 */
 export const WALL_Z = -7 // 보이드 안쪽 경계(에러 게이트 면)

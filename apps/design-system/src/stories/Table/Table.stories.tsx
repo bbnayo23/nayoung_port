@@ -1,10 +1,10 @@
 import { useState, Fragment } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Table from '../../components/Table'
-import type { TableProps } from '../../components/Table'
-import Badge from '../../components/Badge'
-import Input from '../../components/Input'
+import { vars } from '@dc/theme/contract.css'
+import Table from '@dc/components/Table'
+import type { TableProps } from '@dc/components/Table'
+import Badge from '@dc/components/Badge'
+import Input from '@dc/components/Input'
 
 const meta = {
   title: 'StyleGuide/Table',

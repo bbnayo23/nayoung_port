@@ -58,10 +58,10 @@ import {
   severityColor,
   severityLabel,
   logTypeLabel,
-} from '../data/logs'
-import type { Severity, SourceType, LogType } from '../data/logs'
-import PortfolioNotice from '../components/PortfolioNotice'
-import BeforeAfterModal from '../components/BeforeAfterModal'
+} from '@/data/logs'
+import type { Severity, SourceType, LogType } from '@/data/logs'
+import PortfolioNotice from '@/components/PortfolioNotice'
+import BeforeAfterModal from '@/components/BeforeAfterModal'
 import {
   GuideTour,
   LanguageMenu,
@@ -77,7 +77,7 @@ import {
   notifications as notiItems,
   aiGreeting,
   aiReply,
-} from '../data/gnbMock'
+} from '@/data/gnbMock'
 import Workspace from './Workspace'
 import * as s from './LogSearch.css'
 

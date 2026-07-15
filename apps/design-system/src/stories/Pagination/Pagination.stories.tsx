@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Pagination from '../../components/Pagination'
-import type { PaginationProps } from '../../components/Pagination'
+import { vars } from '@dc/theme/contract.css'
+import Pagination from '@dc/components/Pagination'
+import type { PaginationProps } from '@dc/components/Pagination'
 
 const meta = {
   title: 'StyleGuide/Pagination',

@@ -1,4 +1,4 @@
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 /** Modal 컴포넌트 전용 CSS 커스텀 프로퍼티 토큰 */
 export const createModalTokens = (): Record<string, string> => ({

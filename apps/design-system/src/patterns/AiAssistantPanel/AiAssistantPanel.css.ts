@@ -1,5 +1,5 @@
 import { style, keyframes, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 const GNB_H = 56
 

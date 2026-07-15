@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useGame } from '../store'
-import { dampAngle, damp, clamp } from '../utils'
+import { useGame } from '@/three/store'
+import { dampAngle, damp, clamp } from '@/three/utils'
 
 /** 디자이너 토이풍 팔레트 — 파스텔 핑크 베어 후드 + 코지 원지 + 에어맥스 + 헤드셋 */
 /** 네온 코드월드에 맞춘 우주인 팔레트 — 웜 스킨/블러시 유지(유일한 난색), 수트는 바이올렛/시안, 헤드셋·스우시는 단일 마젠타 히어로 */

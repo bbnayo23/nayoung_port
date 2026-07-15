@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Spinner from '../../components/Spinner'
+import Spinner from '@dc/components/Spinner'
 import * as S from './Spinner.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, renderExample, Guidelines } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Spinner',

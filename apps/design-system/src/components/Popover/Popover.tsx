@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type FC } from 'react'
 import { createPortal } from 'react-dom'
 import { usePopper } from 'react-popper'
-import IconButton from '../IconButton'
+import IconButton from '@dc/components/IconButton'
 import { ExdCloseIcon } from '@port/icon-library'
 import type { PopoverProps } from './Popover.types'
 import {

@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 /* ── 테마 토큰 → Dropdown 전용 CSS 변수 바인딩 ── */
 const dropdownVars = {

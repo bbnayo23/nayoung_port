@@ -5,7 +5,7 @@ import { AdditiveBlending, DoubleSide, type Group, type ShaderMaterial } from 't
 import type { RoomConfig } from './rooms'
 import { CODE_COLOR } from './codeData'
 import { CODE_FONT } from './FloatingCode'
-import { damp } from '../utils'
+import { damp } from '@/three/utils'
 
 const R = 1.5 // 포탈 반경
 

@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useGame } from '../store'
-import { clamp } from '../utils'
-import { clampFlight } from '../scene/roomGeometry'
+import { useGame } from '@/three/store'
+import { clamp } from '@/three/utils'
+import { clampFlight } from '@/three/scene/roomGeometry'
 
 /** 한 번 클릭 시 커서 방향으로 헤엄쳐 나아가는 거리(스트로크) */
 const STROKE = 3.4

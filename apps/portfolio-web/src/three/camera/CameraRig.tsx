@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useGame } from '../store'
-import { damp3 } from '../utils'
-import type { RoomConfig } from '../scene/rooms'
-import { WALL_Z, ROOM_BACK_Z } from '../scene/roomGeometry'
+import { useGame } from '@/three/store'
+import { damp3 } from '@/three/utils'
+import type { RoomConfig } from '@/three/scene/rooms'
+import { WALL_Z, ROOM_BACK_Z } from '@/three/scene/roomGeometry'
 
 export type CameraMode = 'living' | 'focus' | 'room'
 

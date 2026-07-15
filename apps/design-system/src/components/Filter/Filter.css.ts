@@ -1,6 +1,6 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
-import { accordionContainerCard } from '../Accordion/Accordion.css'
+import { vars } from '@dc/theme/contract.css'
+import { accordionContainerCard } from '@dc/components/Accordion/Accordion.css'
 
 const filterSlideInKf = keyframes({
   from: { opacity: 0, transform: 'translateX(-12px)' },

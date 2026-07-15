@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Toast, { Toaster, toast } from '../../components/Toast'
-import type { ToastProps } from '../../components/Toast'
+import { vars } from '@dc/theme/contract.css'
+import Toast, { Toaster, toast } from '@dc/components/Toast'
+import type { ToastProps } from '@dc/components/Toast'
 
 const meta = {
   title: 'StyleGuide/Toast',

@@ -1,5 +1,5 @@
 import { forwardRef, useState, type MouseEvent } from 'react'
-import { Popover } from '../Popover'
+import { Popover } from '@dc/components/Popover'
 import { statsBar, statItem, statItemActive, statItemTotal, statCountVariant, statLabel } from './StatsBar.css'
 import type { StatsBarProps, StatItemProps, StatCountProps, StatLabelProps } from './StatsBar.types'
 import cn from 'classnames'

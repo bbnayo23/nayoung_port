@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
-import Accordion from '../../components/Accordion'
+import { vars } from '@dc/theme/contract.css'
+import Accordion from '@dc/components/Accordion'
 
 /**
  * Accordion — 여러 섹션을 그룹으로 묶어 관리하는 컴포넌트

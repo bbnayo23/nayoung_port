@@ -1,7 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 import type { RecipeVariants } from '@vanilla-extract/recipes'
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import { createBadgeTokens } from './Badge.tokens'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

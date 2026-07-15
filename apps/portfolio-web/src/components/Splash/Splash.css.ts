@@ -1,5 +1,5 @@
 import { style, keyframes } from '@vanilla-extract/css'
-import { reduceMotion } from '../../styles/swiss'
+import { reduceMotion } from '@/styles/swiss'
 
 const fade = keyframes({
   from: { opacity: 0 },

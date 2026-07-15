@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { DateTimePicker } from '../../components/DateTimePicker'
-import type { DateTimePreset, DateTimeRange } from '../../components/DateTimePicker'
+import { vars } from '@dc/theme/contract.css'
+import { DateTimePicker } from '@dc/components/DateTimePicker'
+import type { DateTimePreset, DateTimeRange } from '@dc/components/DateTimePicker'
 
 const meta = {
   title: 'StyleGuide/DateTimePicker',

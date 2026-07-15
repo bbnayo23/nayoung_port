@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { Dropdown } from '../../components/Dropdown'
-import type { DropdownOption, DropdownSize } from '../../components/Dropdown'
+import { vars } from '@dc/theme/contract.css'
+import { Dropdown } from '@dc/components/Dropdown'
+import type { DropdownOption, DropdownSize } from '@dc/components/Dropdown'
 
 // ── Sample Data ───────────────────────────────────────────────────────────────
 

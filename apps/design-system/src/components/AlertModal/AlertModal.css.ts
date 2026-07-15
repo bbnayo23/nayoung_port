@@ -1,5 +1,5 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 const modalDropIn = keyframes({
   '0%': { opacity: 0, transform: 'translateY(-40px)' },

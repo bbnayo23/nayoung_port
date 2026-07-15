@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { Tree } from '../../components/Tree'
-import { Dropdown } from '../../components/Dropdown'
-import type { TreeNode, TreeProps } from '../../components/Tree'
-import type { DropdownOption } from '../../components/Dropdown'
+import { vars } from '@dc/theme/contract.css'
+import { Tree } from '@dc/components/Tree'
+import { Dropdown } from '@dc/components/Dropdown'
+import type { TreeNode, TreeProps } from '@dc/components/Tree'
+import type { DropdownOption } from '@dc/components/Dropdown'
 
 const meta = {
   title: 'StyleGuide/Tree',

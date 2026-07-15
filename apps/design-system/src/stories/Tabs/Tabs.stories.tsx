@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Tabs from '../../components/Tabs'
-import type { TabsProps } from '../../components/Tabs'
+import { vars } from '@dc/theme/contract.css'
+import Tabs from '@dc/components/Tabs'
+import type { TabsProps } from '@dc/components/Tabs'
 
 const meta = {
   title: 'StyleGuide/Tabs',

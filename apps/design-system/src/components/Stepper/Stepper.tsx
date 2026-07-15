@@ -19,7 +19,7 @@ import {
   styledStepConnector,
   styledStepper,
 } from './Stepper.css'
-import { Button } from '../Button/Button'
+import { Button } from '@dc/components/Button/Button'
 import cn from 'classnames'
 
 const StepperContext = createContext<StepperContextType | null>(null)

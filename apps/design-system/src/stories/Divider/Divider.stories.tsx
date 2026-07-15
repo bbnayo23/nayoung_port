@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Divider from '../../components/Divider'
-import type { DividerProps } from '../../components/Divider'
+import { vars } from '@dc/theme/contract.css'
+import Divider from '@dc/components/Divider'
+import type { DividerProps } from '@dc/components/Divider'
 
 const meta = {
   title: 'StyleGuide/Divider',

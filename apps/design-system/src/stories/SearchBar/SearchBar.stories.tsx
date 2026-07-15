@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import { SearchBar } from '../../components/SearchBar'
-import type { SearchBarProps } from '../../components/SearchBar'
+import { vars } from '@dc/theme/contract.css'
+import { SearchBar } from '@dc/components/SearchBar'
+import type { SearchBarProps } from '@dc/components/SearchBar'
 
 const meta = {
   title: 'StyleGuide/SearchBar',

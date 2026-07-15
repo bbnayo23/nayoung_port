@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import Card from './Card'
-import Skeleton from '../Skeleton'
+import Skeleton from '@dc/components/Skeleton'
 import type { CardSkeletonProps } from './Card.types'
 import { styledCardSkeleton } from './Card.css'
 

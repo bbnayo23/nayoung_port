@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Gnb from '../../components/Gnb'
+import { vars } from '@dc/theme/contract.css'
+import Gnb from '@dc/components/Gnb'
 
 // ── Meta ───────────────────────────────────────────────────────────────────────
 

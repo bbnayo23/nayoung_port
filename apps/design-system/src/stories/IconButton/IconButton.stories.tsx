@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import IconButton from '../../components/IconButton'
+import { vars } from '@dc/theme/contract.css'
+import IconButton from '@dc/components/IconButton'
 import { XdrSettingIcon, XdrNavAlertIcon, XdrSearchIcon, XdrCloseIcon, XdrDownloadIcon } from '@port/icon-library'
 
 const meta = {

@@ -13,8 +13,8 @@ import {
   pageHeaderDivider,
   breadcrumbBtn,
 } from './PageHeader.css'
-import Breadcrumbs from '../Breadcrumbs'
-import Divider from '../Divider'
+import Breadcrumbs from '@dc/components/Breadcrumbs'
+import Divider from '@dc/components/Divider'
 import { ExdArrowLIcon } from '@port/icon-library'
 import cn from 'classnames'
 

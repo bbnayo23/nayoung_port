@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Card from '../../components/Card'
+import Card from '@dc/components/Card'
 import * as S from './Card.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Card',

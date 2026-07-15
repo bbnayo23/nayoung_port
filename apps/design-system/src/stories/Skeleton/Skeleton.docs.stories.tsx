@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Skeleton from '../../components/Skeleton'
+import Skeleton from '@dc/components/Skeleton'
 import * as S from './Skeleton.stories'
-import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '../_docs/DocKit'
+import { DocPage, DocHero, DocSection, Example, ApiTable, Code, Guidelines, renderExample } from '@dc/stories/_docs/DocKit'
 
 const meta = {
   title: 'StyleGuide/Skeleton',

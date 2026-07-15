@@ -1,12 +1,12 @@
 import { Suspense, lazy, useState } from 'react'
-import { useCanRender3D } from '../hooks/useCanRender3D'
-import { ErrorBoundary } from '../components/ErrorBoundary'
-import { Splash } from '../components/Splash'
+import { useCanRender3D } from '@/hooks/useCanRender3D'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { Splash } from '@/components/Splash'
 import FallbackPage from './FallbackPage'
 
 // 3D 번들은 무겁다 — 폴백 환경에선 아예 로드하지 않도록 동적 임포트
 const Experience = lazy(() =>
-  import('../three/Experience').then((m) => ({ default: m.Experience })),
+  import('@/three/Experience').then((m) => ({ default: m.Experience })),
 )
 
 type Mode = 'auto' | 'three' | 'text'

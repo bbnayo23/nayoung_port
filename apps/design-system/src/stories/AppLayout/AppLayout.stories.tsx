@@ -13,10 +13,10 @@ import {
   Database,
   Building2,
 } from 'lucide-react'
-import AppLayout from '../../components/AppLayout'
-import Gnb from '../../components/Gnb'
-import Lnb from '../../components/Lnb'
-import type { MenuItem } from '../../components/Lnb'
+import AppLayout from '@dc/components/AppLayout'
+import Gnb from '@dc/components/Gnb'
+import Lnb from '@dc/components/Lnb'
+import type { MenuItem } from '@dc/components/Lnb'
 
 // ── AiR Works 메뉴 데이터 ────────────────────────────────────────────────────────
 

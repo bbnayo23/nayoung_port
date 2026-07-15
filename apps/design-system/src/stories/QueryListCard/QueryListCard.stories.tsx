@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Clock, ListChecks } from 'lucide-react'
-import QueryListCard from '../../components/QueryListCard'
-import type { QueryListItem } from '../../components/QueryListCard'
+import QueryListCard from '@dc/components/QueryListCard'
+import type { QueryListItem } from '@dc/components/QueryListCard'
 
 const HISTORY: QueryListItem[] = [
   { id: 'h1', title: '1분 전', meta: '전체 · 내림차순', query: "d_port:80 AND d_ip:1.1.1.1 OR s_ip: 2.2.2.2" },

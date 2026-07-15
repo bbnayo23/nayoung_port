@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import {
   XdrStatusInfoIcon,
   XdrStatusNormalIcon,
@@ -8,9 +8,9 @@ import {
   XdrStatusErrorIcon,
   XdrStatusNodataIcon,
 } from '@port/icon-library'
-import { Button } from '../../components/Button'
-import AlertModal from '../../components/AlertModal'
-import type { AlertType } from '../../components/AlertModal'
+import { Button } from '@dc/components/Button'
+import AlertModal from '@dc/components/AlertModal'
+import type { AlertType } from '@dc/components/AlertModal'
 
 const meta = {
   title: 'StyleGuide/AlertModal',

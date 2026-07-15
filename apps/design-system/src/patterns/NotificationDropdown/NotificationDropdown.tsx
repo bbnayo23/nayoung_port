@@ -1,4 +1,4 @@
-import GnbDropdown from '../GnbDropdown'
+import GnbDropdown from '@dc/patterns/GnbDropdown'
 import * as s from './NotificationDropdown.css'
 
 export type NotificationLevel = 'critical' | 'high' | 'medium' | 'ok'

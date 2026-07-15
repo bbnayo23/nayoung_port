@@ -1,5 +1,5 @@
 import { style, styleVariants, globalStyle } from '@vanilla-extract/css'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 
 // ══════════════════════════════════════════════════════════════════════════════
 // 공통 페이지 레이아웃

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import GnbDropdown from '../GnbDropdown'
+import GnbDropdown from '@dc/patterns/GnbDropdown'
 import * as s from './LanguageMenu.css'
 
 export interface LanguageOption {

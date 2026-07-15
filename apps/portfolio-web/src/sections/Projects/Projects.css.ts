@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { swiss } from '../../styles/swiss'
-import { glassPanel } from '../../styles/glass.css'
+import { swiss } from '@/styles/swiss'
+import { glassPanel } from '@/styles/glass.css'
 
 export const section = style({
   paddingBlock: '104px',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
-import ButtonGroup from '../../components/ButtonGroup'
+import { vars } from '@dc/theme/contract.css'
+import ButtonGroup from '@dc/components/ButtonGroup'
 
 const meta = {
   title: 'StyleGuide/ButtonGroup',

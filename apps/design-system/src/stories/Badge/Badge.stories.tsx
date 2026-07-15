@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
-import Badge from '../../components/Badge'
+import { vars } from '@dc/theme/contract.css'
+import Badge from '@dc/components/Badge'
 import { XdrPropertyUserIcon } from '@port/icon-library'
 
 const meta = {

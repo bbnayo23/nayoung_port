@@ -1,5 +1,5 @@
-import { brand, personal } from '../../data'
-import type { RoomConfig } from '../scene/rooms'
+import { brand, personal } from '@/data'
+import type { RoomConfig } from '@/three/scene/rooms'
 import {
   hudRoot, scanlines, vfxTint, topBar, brandMark, brandName, topRight,
   textVersionWrap, textLink, textLinkIcon, textHint,

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { vars } from '../../theme/contract.css'
-import Textarea from '../../components/Textarea'
-import type { TextareaProps } from '../../components/Textarea'
+import { vars } from '@dc/theme/contract.css'
+import Textarea from '@dc/components/Textarea'
+import type { TextareaProps } from '@dc/components/Textarea'
 
 const meta = {
   title: 'StyleGuide/Textarea',

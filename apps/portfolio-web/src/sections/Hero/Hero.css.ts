@@ -1,5 +1,5 @@
 import { keyframes, style } from '@vanilla-extract/css'
-import { swiss, reduceMotion as reduce } from '../../styles/swiss'
+import { swiss, reduceMotion as reduce } from '@/styles/swiss'
 
 const rise = keyframes({
   from: { opacity: '0', transform: 'translateY(18px)' },

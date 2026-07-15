@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { ExdCogIcon, ExdTrashIcon, ExdEditIcon } from '@port/icon-library'
-import { ContextMenu } from '../../components/ContextMenu'
-import type { ContextMenuItem } from '../../components/ContextMenu'
+import { ContextMenu } from '@dc/components/ContextMenu'
+import type { ContextMenuItem } from '@dc/components/ContextMenu'
 
 const meta = {
   title: 'StyleGuide/ContextMenu',
