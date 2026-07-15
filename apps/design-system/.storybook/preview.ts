@@ -1,4 +1,5 @@
 import type { Preview, Decorator } from '@storybook/react-vite'
+import theme from './theme'
 import '../src/theme/reset.css'
 
 /**
@@ -34,6 +35,7 @@ const preview: Preview = {
     },
   },
   parameters: {
+    docs: { theme },
     controls: {
       matchers: {
         color: /(background|color)$/i,
