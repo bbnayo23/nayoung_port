@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { vars } from '../../theme/contract.css'
+import { vars } from '@dc/theme/contract.css'
 import { XdrPlusIcon, XdrArrowRightIcon, XdrDownloadIcon, XdrSettingIcon } from '@port/icon-library'
-import { Button } from '../../components/Button'
-import type { ButtonVariant, ButtonSize } from '../../components/Button'
+import { Button } from '@dc/components/Button'
+import type { ButtonVariant, ButtonSize } from '@dc/components/Button'
 
 const meta = {
   title: 'StyleGuide/Button',

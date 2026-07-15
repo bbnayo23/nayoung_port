@@ -3,7 +3,8 @@
   "compilerOptions": {
     "types": ["vite/client", "node"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@dc/*": ["./src/*"]
     }
   },
   "include": ["src", ".storybook", "vite.lib.config.ts"]

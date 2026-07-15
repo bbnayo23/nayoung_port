@@ -128,16 +128,23 @@ pnpm dev          # 메인 포트폴리오(3D) 개발 서버
 
 ## 🧱 개발 컨벤션
 
-**Import 경로** — 부모로 거슬러 올라가는 상대경로(`../../`) 대신 `@/` alias 를 사용합니다. `@/*` → 각 패키지의 `src/*`.
+**Import 경로** — 부모 상대경로(`../../`) 대신 alias 를 사용합니다.
+
+- `@/*` → **자기 패키지**의 `src/*` (앱 내부 import)
+- `@dc/*` → **design-system** 의 `src/*` (절대경로). 디자인 시스템 컴포넌트·토큰은 어디서든 `@dc/` 로 import 합니다 — design-system 내부에서도, dashboard·portfolio-web 에서도 동일하게.
 
 ```ts
-import { Button } from '@/components/Button'      // ✅ 권장
-import { Button } from '../../components/Button'   // ❌ 지양
+// 디자인 시스템 컴포넌트·토큰 (어디서든 @dc/)
+import { Button } from '@dc/components/Button'
+import { vars } from '@dc/theme/contract.css'
+
+// 앱 자기 코드
+import { logs } from '@/data/logs'
 ```
 
-- 설정: 각 앱 `tsconfig` 의 `paths`(`"@/*": ["./src/*"]`) + 공유 `packages/config/vite/base.js` 의 `resolve.alias`(`'@' → <package>/src`). Storybook 도 base 설정을 머지하므로 동일 동작합니다.
-- 같은 디렉터리는 `./x` 를 그대로 씁니다(부모 경로만 `@/` 로 대체).
-- ⚠️ `design-system`·`icon-library` 는 **소스로 소비**되는 패키지라, 소비 대상 코드(`src/components`·`theme`·`patterns`)에 `@/` 를 쓰면 소비 앱 번들러가 자기 `src` 로 오해석해 깨집니다. 이 코드는 상대경로를 유지하고, `@/` 는 비소비 코드(`src/stories`·`showcase` 등)에서만 사용합니다.
+- `@dc` 는 **절대경로 alias**라 design-system 이 "소스로 소비"돼도 소비 앱 번들러가 항상 `design-system/src` 로 정확히 해석합니다. (제네릭 `@/` 는 소비 앱에서 자기 `src` 로 오해석되므로, design-system 의 소비 대상 코드(`components`·`theme`·`patterns`)에는 `@/` 대신 `@dc/` 를 씁니다.)
+- 같은 디렉터리는 `./x` 를 그대로 씁니다(부모 경로만 alias 로 대체).
+- 설정: 각 앱 `tsconfig` 의 `paths` + 공유 `packages/config/vite/base.js` 의 `resolve.alias`. Storybook 도 base 설정을 머지하므로 동일 동작합니다.
 
 ---
 
