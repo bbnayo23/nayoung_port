@@ -126,6 +126,21 @@ pnpm dev          # 메인 포트폴리오(3D) 개발 서버
 
 ---
 
+## 🧱 개발 컨벤션
+
+**Import 경로** — 부모로 거슬러 올라가는 상대경로(`../../`) 대신 `@/` alias 를 사용합니다. `@/*` → 각 패키지의 `src/*`.
+
+```ts
+import { Button } from '@/components/Button'      // ✅ 권장
+import { Button } from '../../components/Button'   // ❌ 지양
+```
+
+- 설정: 각 앱 `tsconfig` 의 `paths`(`"@/*": ["./src/*"]`) + 공유 `packages/config/vite/base.js` 의 `resolve.alias`(`'@' → <package>/src`). Storybook 도 base 설정을 머지하므로 동일 동작합니다.
+- 같은 디렉터리는 `./x` 를 그대로 씁니다(부모 경로만 `@/` 로 대체).
+- ⚠️ `design-system`·`icon-library` 는 **소스로 소비**되는 패키지라, 소비 대상 코드(`src/components`·`theme`·`patterns`)에 `@/` 를 쓰면 소비 앱 번들러가 자기 `src` 로 오해석해 깨집니다. 이 코드는 상대경로를 유지하고, `@/` 는 비소비 코드(`src/stories`·`showcase` 등)에서만 사용합니다.
+
+---
+
 ## 🧭 보는 방법
 
 - **3D 버전** — 방향키로 헤엄치고, 마우스 휠로 확대/축소하며 프로젝트에 진입

@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { defineConfig, searchForWorkspaceRoot } from 'vite'
 import react from '@vitejs/plugin-react'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
@@ -45,6 +46,13 @@ export function createBaseConfig() {
     ],
     resolve: {
       dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
+      // 경로 alias — 실행 패키지의 src 를 '@' 로 참조한다(@/x → <package>/src/x).
+      // process.cwd() 는 vite 가 실행되는 패키지 루트이므로, 각 앱·Storybook 이 각자 src 로 해석된다.
+      // 주의: design-system 처럼 "소스로 소비되는" 패키지의 소비 대상 코드(components/theme/patterns)에는
+      //       @/ 를 쓰면 소비 앱 번들러가 자기 src 로 오해석하므로 상대경로를 유지한다(stories/docs 는 안전).
+      alias: {
+        '@': path.resolve(process.cwd(), 'src'),
+      },
     },
     // @port 소스 패키지를 사전 번들에서 제외 → 소스 수정이 즉시 HMR 로 반영된다.
     optimizeDeps: {
