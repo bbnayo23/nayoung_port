@@ -111,3 +111,18 @@ globalStyle(`${appLayoutMain}::-webkit-scrollbar-thumb`, {
 globalStyle(`${appLayoutMain}::-webkit-scrollbar-thumb:hover`, {
   background: vars.color.borderHover,
 })
+
+// ── 다크 테마 오버라이드 ─────────────────────────────────────────────────────────
+// 셸(AppLayout·Lnb)이 참조하는 CSS 변수(--color-*)를 :root.dark 에서 다크 토큰으로 세팅한다.
+// 라이트(:root)는 각 var 의 라이트 폴백값을 그대로 쓰므로 기존 모습 변화 없음.
+// 계층: main(카드)=surface(밝음) / LNB·root=background(어두움) 로 라이트의 위계를 그대로 반영.
+globalStyle(':root.dark', {
+  vars: {
+    '--color-app-bg': vars.color.background,
+    '--color-app-main-bg': vars.color.surface,
+    '--color-lnb-bg': vars.color.background,
+    '--color-text-primary': vars.color.text,
+    '--color-lnb-item-active-text': vars.color.primary,
+    '--color-lnb-item-active-bg': vars.color.primarySoft,
+  },
+})

@@ -12,7 +12,8 @@ export const styledLnb = style({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  background: "#F9FAFB",
+  // 라이트는 폴백(#F9FAFB), 다크는 AppLayout 의 :root.dark 에서 --color-lnb-bg 를 세팅해 전환된다.
+  background: 'var(--color-lnb-bg, #F9FAFB)',
   borderTopLeftRadius: 16,
   isolation: 'isolate',
   transition: `width ${DURATION} ${EASE}`,

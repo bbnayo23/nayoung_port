@@ -217,6 +217,25 @@ globalStyle(`${gnbAiButton}:hover svg`, {
   animation: `${sparkleTwinkle} 1800ms ease-in-out infinite`,
   filter: 'drop-shadow(0 0 2px rgba(124, 92, 255, 0.35))',
 })
+
+// ── 다크 테마 오버라이드 ─────────────────────────────────────────────────────────
+// GNB 는 Figma 브랜드 팔레트(C·BAND_BG)를 하드코딩하므로 :root.dark 에서 토큰으로 덮어쓴다.
+globalStyle(`:root.dark ${gnb}`, { background: vars.color.background })
+globalStyle(
+  `:root.dark ${gnbTitle}, :root.dark ${gnbBrandChevron}, :root.dark ${gnbAiLabel}`,
+  { color: vars.color.text },
+)
+globalStyle(`:root.dark ${gnbDivider}`, { background: vars.color.border })
+globalStyle(`:root.dark ${gnbIconButton}`, { color: vars.color.textSecondary })
+globalStyle(`:root.dark ${gnbIconButton}:hover, :root.dark ${gnbAiButton}:hover`, {
+  background: vars.color.surfaceHover,
+})
+globalStyle(`:root.dark ${gnbNotiDot}`, { borderColor: vars.color.background })
+globalStyle(`:root.dark ${gnbHomeButton}`, {
+  background: vars.color.primarySoft,
+  color: vars.color.primary,
+})
+globalStyle(`:root.dark ${gnbLogoCircle}`, { background: vars.color.surfaceHover })
 // 모션 최소화 선호 시 애니메이션 비활성화
 globalStyle(`${gnbAiButton}:hover svg`, {
   '@media': {
