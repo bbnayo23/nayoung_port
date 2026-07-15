@@ -190,6 +190,68 @@ export function Guidelines({
   )
 }
 
+// ── argTypes → ApiTable 자동 변환 ────────────────────────────────────────────────
+// Storybook meta 의 argTypes 에서 PropRow[] 를 생성해 API 표 수기 유지보수를 줄인다.
+// 콜백/서브컴포넌트 등 argTypes 에 없는 항목은 수동으로 이어붙이는 패턴을 권장:
+//   rows={[...argTypesToRows(S.default.argTypes, S.default.args),
+//          { name: 'onChange', type: '(v: T) => void', desc: '변경 콜백' }]}
+export type DocArgType = {
+  description?: string
+  control?: unknown
+  options?: readonly unknown[]
+  type?: unknown
+  table?: {
+    disable?: boolean
+    type?: { summary?: string; required?: boolean }
+    defaultValue?: { summary?: string }
+  }
+}
+
+function controlToType(control: unknown): string {
+  const t =
+    typeof control === 'string'
+      ? control
+      : control && typeof control === 'object' && 'type' in control
+        ? (control as { type?: string }).type
+        : undefined
+  switch (t) {
+    case 'boolean':
+      return 'boolean'
+    case 'text':
+      return 'string'
+    case 'number':
+    case 'range':
+      return 'number'
+    case 'object':
+      return 'object'
+    default:
+      return '—'
+  }
+}
+
+export function argTypesToRows(argTypes: unknown, args?: unknown): PropRow[] {
+  // Storybook meta 의 argTypes/args 는 구체 타입이라 Record 대입이 까다로워 unknown 으로 받고 내부에서 취급한다.
+  const map = (argTypes ?? {}) as Record<string, DocArgType>
+  const argValues = (args ?? {}) as Record<string, unknown>
+  return Object.entries(map)
+    .filter(([, at]) => at && !at.table?.disable)
+    .map(([name, at]) => {
+      const table = at.table ?? {}
+      const type =
+        table.type?.summary ??
+        (Array.isArray(at.options) && at.options.length > 0
+          ? at.options.map((o) => (typeof o === 'string' ? `'${o}'` : String(o))).join(' | ')
+          : controlToType(at.control))
+      let def = table.defaultValue?.summary
+      if (def == null && name in argValues) {
+        const v = argValues[name]
+        def = typeof v === 'string' ? `'${v}'` : v == null ? undefined : String(v)
+      }
+      const required = Boolean(table.type?.required)
+      return { name, type, default: def, required, desc: at.description ?? '' }
+    })
+}
+
 /**
  * 스토리 파일의 스토리 객체를 그대로 렌더해 문서 예제로 재사용한다.
  * (render 함수가 args/context 를 쓰지 않으므로 안전하게 호출)
