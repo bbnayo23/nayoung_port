@@ -100,7 +100,7 @@ dashboard     ──build──▶  /dashboard/
 | 영역 | 사용 기술 |
 | --- | --- |
 | **Core** | React 19 · TypeScript(strict) · Vite |
-| **3D** | Three.js · @react-three/fiber · drei · postprocessing |
+| **3D** | Three.js · @react-three/fiber · drei · @react-three/postprocessing |
 | **스타일** | vanilla-extract (기본) · styled-components (icon-library) |
 | **디자인 시스템** | Storybook · 디자인 토큰 컨트랙트 · 라이트/다크 테마 |
 | **인프라** | Turborepo · pnpm workspace · ESLint(flat) · Husky |

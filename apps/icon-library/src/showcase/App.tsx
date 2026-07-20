@@ -83,7 +83,9 @@ const router = createBrowserRouter([
     ]
   }
 ], {
-  basename: '/icons',
+  // Vite base 에 맞춰 basename 을 잡는다. dev(base '/') → '/', 쇼케이스 빌드(base '/icons/') → '/icons'.
+  // (하드코딩 '/icons' 는 dev 에서 URL '/' 와 안 맞아 라우터가 아무것도 렌더하지 않았다)
+  basename: import.meta.env.BASE_URL.replace(/\/+$/, '') || '/',
 });
 
 function App() {
