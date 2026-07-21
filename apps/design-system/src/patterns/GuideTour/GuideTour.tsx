@@ -18,6 +18,8 @@ export interface GuideTourProps {
   open: boolean
   steps: GuideStep[]
   onClose: () => void
+  /** "오늘 하루 보지 않기" — 지정 시 콜아웃에 노출되고, 클릭하면 하루 동안 재노출되지 않는다. */
+  onDontShowToday?: () => void
 }
 
 // 스포트라이트가 대상보다 살짝 넓게 감싸도록 여백
@@ -29,7 +31,7 @@ const CALLOUT_W = 320
  * 강조된 대상을 클릭하거나 콜아웃의 "다음"을 누르면 다음 단계로 진행한다.
  * 대상은 `steps[].ref` 로 주입받으므로 도메인 데이터에 의존하지 않는다.
  */
-export default function GuideTour({ open, steps, onClose }: GuideTourProps) {
+export default function GuideTour({ open, steps, onClose, onDontShowToday }: GuideTourProps) {
   const [i, setI] = useState(0)
   const [rect, setRect] = useState<DOMRect | null>(null)
 
@@ -121,6 +123,11 @@ export default function GuideTour({ open, steps, onClose }: GuideTourProps) {
         <div className={s.title}>{step.title}</div>
         <div className={s.desc}>{step.description}</div>
         <div className={s.actions}>
+          {onDontShowToday && (
+            <button type="button" className={s.dontShow} onClick={onDontShowToday}>
+              오늘 하루 보지 않기
+            </button>
+          )}
           <button type="button" className={s.nextBtn} onClick={next}>
             {isLast ? '시작하기' : '다음'}
           </button>

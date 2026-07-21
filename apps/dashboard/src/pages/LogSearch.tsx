@@ -34,6 +34,8 @@ import {
   XdrNavAppIcon,
   XdrSettingIcon,
   XdrSadGhostIcon,
+  XdrRefreshIcon,
+  XdrFolderIcon,
   ExdAiAssistantLogoIcon,
   ExdUppercaseIcon,
   ExdTxtAlignIcon,
@@ -41,8 +43,6 @@ import {
   ExdPauseIcon,
   ExdPlayIcon,
   ExdStopIcon,
-  ExdClockIcon,
-  ExdListUlIcon,
   ExdFloppyFillIcon,
   ExdAlarmIcon,
   ExdPivotIcon,
@@ -62,6 +62,7 @@ import {
 import type { Severity, SourceType, LogType } from '@/data/logs'
 import PortfolioNotice from '@/components/PortfolioNotice'
 import BeforeAfterModal from '@/components/BeforeAfterModal'
+import { isDismissedToday, dismissForToday } from '@/lib/dismissToday'
 import {
   GuideTour,
   LanguageMenu,
@@ -220,14 +221,21 @@ const toQueryItems = (arr: SavedQuery[]): QueryListItem[] =>
 type SearchPhase = 'idle' | 'running' | 'paused' | 'done' | 'error'
 type OpenPanel = null | 'history' | 'template' | 'save'
 
+// "오늘 하루 보지 않기" localStorage 키 — 안내 모달 · 온보딩 가이드 각각 독립 관리
+const NOTICE_DISMISS_KEY = 'dashboard:notice-dismissed'
+const GUIDE_DISMISS_KEY = 'dashboard:guide-dismissed'
+
 export default function LogSearch() {
   const [activeMenu, setActiveMenu] = useState('logsearch')
   const [navCollapsed, setNavCollapsed] = useState(false)
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-  // 대시보드 진입 시 포트폴리오 안내 모달을 띄운다.
-  const [noticeOpen, setNoticeOpen] = useState(true)
+  // 대시보드 진입 시 포트폴리오 안내 모달을 띄운다. (오늘 하루 보지 않기 처리 시 생략)
+  const [noticeOpen, setNoticeOpen] = useState(() => !isDismissedToday(NOTICE_DISMISS_KEY))
   // 안내 모달을 닫으면 단계별 온보딩 가이드를 노출한다.
-  const [guideOpen, setGuideOpen] = useState(false)
+  // 안내가 이미 생략된 경우엔 진입 즉시 가이드를 띄우되, 가이드도 오늘 보지 않기면 생략.
+  const [guideOpen, setGuideOpen] = useState(
+    () => isDismissedToday(NOTICE_DISMISS_KEY) && !isDismissedToday(GUIDE_DISMISS_KEY),
+  )
   // UI/UX 개선 전/후 비교 모달
   const [baOpen, setBaOpen] = useState(false)
   // GNB의 AI Assistant 버튼으로 여는 우측 사이드 패널
@@ -589,7 +597,7 @@ export default function LogSearch() {
                       content={
                         <div style={{ width: 360, height: 420 }}>
                           <QueryListCard
-                            icon={<ExdClockIcon size={15} />}
+                            icon={<XdrRefreshIcon size={15} />}
                             title="검색기록"
                             items={toQueryItems(history)}
                             onSelect={(it) => applySaved(it.query)}
@@ -599,7 +607,7 @@ export default function LogSearch() {
                         </div>
                       }
                     >
-                      <Button variant="outline" size="sm" leftIcon={<ExdClockIcon size={14} />}>검색기록</Button>
+                      <Button variant="outline" size="sm" leftIcon={<XdrRefreshIcon size={14} />}>검색기록</Button>
                     </Popover>
 
                     <Popover
@@ -611,7 +619,7 @@ export default function LogSearch() {
                       content={
                         <div style={{ width: 360, height: 420 }}>
                           <QueryListCard
-                            icon={<ExdListUlIcon size={15} />}
+                            icon={<XdrFolderIcon size={15} />}
                             title="템플릿"
                             items={toQueryItems(tpls)}
                             onSelect={(it) => applySaved(it.query)}
@@ -621,7 +629,7 @@ export default function LogSearch() {
                         </div>
                       }
                     >
-                      <Button variant="outline" size="sm" leftIcon={<ExdListUlIcon size={14} />}>템플릿</Button>
+                      <Button variant="outline" size="sm" leftIcon={<XdrFolderIcon size={14} />}>템플릿</Button>
                     </Popover>
                   </>
                 )}
@@ -835,7 +843,7 @@ export default function LogSearch() {
           ) : !hasResults ? (
             <div className={s.widgetsRow} ref={widgetsRef}>
               <QueryListCard
-                icon={<ExdClockIcon size={15} />}
+                icon={<XdrRefreshIcon size={15} />}
                 title="검색기록"
                 actionLabel="전체"
                 items={toQueryItems(history)}
@@ -846,7 +854,7 @@ export default function LogSearch() {
                 emptyText="검색기록이 없습니다."
               />
               <QueryListCard
-                icon={<ExdListUlIcon size={15} />}
+                icon={<XdrFolderIcon size={15} />}
                 title="템플릿"
                 actionLabel="전체"
                 items={toQueryItems(tpls)}
@@ -1117,13 +1125,22 @@ export default function LogSearch() {
       <BeforeAfterModal open={baOpen} onClose={() => setBaOpen(false)} />
 
       {/* 포트폴리오 안내 모달 — 대시보드 진입 시 노출, 닫으면 가이드 시작 */}
-      <PortfolioNotice open={noticeOpen} onClose={() => { setNoticeOpen(false); setGuideOpen(true) }} />
+      <PortfolioNotice
+        open={noticeOpen}
+        onClose={() => { setNoticeOpen(false); setGuideOpen(!isDismissedToday(GUIDE_DISMISS_KEY)) }}
+        onDontShowToday={() => {
+          dismissForToday(NOTICE_DISMISS_KEY)
+          setNoticeOpen(false)
+          setGuideOpen(!isDismissedToday(GUIDE_DISMISS_KEY))
+        }}
+      />
 
       {/* 온보딩 가이드 — 단계별 코치마크 */}
       <GuideTour
         open={guideOpen && activeMenu === 'logsearch' && !hasResults && phase !== 'error'}
         steps={guideSteps}
         onClose={() => setGuideOpen(false)}
+        onDontShowToday={() => { dismissForToday(GUIDE_DISMISS_KEY); setGuideOpen(false) }}
       />
 
       {/* AI Assistant 사이드 패널 — GNB AI Assistant 버튼으로 토글 */}

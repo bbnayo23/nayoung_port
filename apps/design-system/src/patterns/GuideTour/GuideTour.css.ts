@@ -71,11 +71,25 @@ export const desc = style({
 
 export const actions = style({
   display: 'flex',
-  justifyContent: 'flex-end',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 8,
   marginTop: 4,
 })
 
+// "오늘 하루 보지 않기" — 조용한 텍스트 버튼
+export const dontShow = style({
+  border: 'none',
+  background: 'transparent',
+  padding: 0,
+  color: vars.color.textSecondary,
+  fontSize: vars.font.sizeXs,
+  cursor: 'pointer',
+  ':hover': { color: vars.color.text, textDecoration: 'underline' },
+})
+
 export const nextBtn = style({
+  marginLeft: 'auto',
   padding: '7px 16px',
   border: 'none',
   borderRadius: vars.radius.sm,

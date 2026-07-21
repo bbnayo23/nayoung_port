@@ -30,10 +30,6 @@ export const toolbar = style({
   gap: vars.spacing.md,
   flexWrap: 'wrap',
   flexShrink: 0,
-  padding: '10px 12px',
-  background: vars.color.surface,
-  border: `1px solid ${vars.color.border}`,
-  borderRadius: vars.radius.md,
 })
 
 export const toolbarLeft = style({

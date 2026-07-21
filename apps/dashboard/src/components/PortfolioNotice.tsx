@@ -30,13 +30,15 @@ const BellIcon = () => (
 interface PortfolioNoticeProps {
   open: boolean
   onClose: () => void
+  /** "오늘 하루 보지 않기" — 지정 시 확인 버튼 좌측에 노출되고, 클릭하면 하루 동안 재노출되지 않는다. */
+  onDontShowToday?: () => void
 }
 
 /**
  * 포트폴리오 안내 모달 — 대시보드 진입 시 노출.
  * 글래스모피즘 + 앰비언트 글로우 + 커서 3D 틸트 + 벨 헤일로.
  */
-export default function PortfolioNotice({ open, onClose }: PortfolioNoticeProps) {
+const PortfolioNotice = ({ open, onClose, onDontShowToday }: PortfolioNoticeProps) => {
   const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -109,6 +111,11 @@ export default function PortfolioNotice({ open, onClose }: PortfolioNoticeProps)
           </div>
 
           <div className={s.footer}>
+            {onDontShowToday && (
+              <button type="button" className={s.dontShowBtn} onClick={onDontShowToday}>
+                오늘 하루 보지 않기
+              </button>
+            )}
             <button type="button" className={s.confirmBtn} onClick={onClose}>
               확인
             </button>
@@ -119,3 +126,5 @@ export default function PortfolioNotice({ open, onClose }: PortfolioNoticeProps)
     document.body,
   )
 }
+
+export default PortfolioNotice

@@ -172,14 +172,32 @@ globalStyle(`${paragraphs} strong`, { color: vars.color.primary, fontWeight: 700
 // ── Footer / 버튼 (호버 스윕) ───────────────────────────────────────────────────
 export const footer = style({
   display: 'flex',
-  justifyContent: 'flex-end',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 12,
   marginTop: 24,
   animation: `${contentUp} 360ms ease-out 340ms both`,
+})
+
+// ── "오늘 하루 보지 않기" — 조용한 고스트 버튼 ────────────────────────────────────
+export const dontShowBtn = style({
+  border: 'none',
+  background: 'transparent',
+  padding: '4px 2px',
+  color: vars.color.textSecondary,
+  fontSize: 12.5,
+  fontWeight: 500,
+  cursor: 'pointer',
+  transition: 'color 0.15s ease',
+  selectors: {
+    '&:hover': { color: vars.color.text, textDecoration: 'underline' },
+  },
 })
 
 export const confirmBtn = style({
   position: 'relative',
   overflow: 'hidden',
+  marginLeft: 'auto',
   height: 40,
   padding: '0 22px',
   border: 'none',
