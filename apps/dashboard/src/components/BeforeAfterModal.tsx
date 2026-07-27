@@ -2,10 +2,13 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 import { ExdCloseIcon, ExdChevronLeftIcon, ExdChevronRightIcon } from '@port/icon-library'
 import * as s from './BeforeAfterModal.css'
 
-// 화면 위에 얹는 번호 주석(화면설계서 스타일). x/y 는 이미지(1600×1000) 기준 백분율 위치.
-// why: 그렇게 바꾼 UI/UX 판단 근거.
 type Anno = { n: number; x: number; y: number; title: string; before: string; after: string; why: string }
 type Pair = { id: string; label: string; before: string; after: string; notes: Anno[] }
+
+// public/ 자산은 배포 base 를 따라야 한다. 임베드 빌드(vite.embed.config.ts)는 base 가 '/dashboard/'
+// 이므로 절대경로 '/exd-*.png' 는 루트를 가리켜 404 가 난다. BASE_URL(dev='/', 임베드='/dashboard/')
+// 을 접두어로 붙여 어느 배포 형태에서든 올바른 경로로 해석되게 한다.
+const asset = (file: string) => `${import.meta.env.BASE_URL}${file}`
 
 // 이전(SPiDER ExD 실제 화면) ↔ 현재(대시보드) 비교 쌍.
 // 이미지는 apps/dashboard/public/ 에 배치 (없으면 이미지가 비어 보임).
@@ -13,8 +16,8 @@ const PAIRS: Pair[] = [
   {
     id: 'idle',
     label: '검색 전 화면',
-    before: '/exd-before-logsearch.png',
-    after: '/exd-after-idle.png',
+    before: asset('exd-before-logsearch.png'),
+    after: asset('exd-after-idle.png'),
     notes: [
       {
         n: 1,
@@ -75,8 +78,8 @@ const PAIRS: Pair[] = [
   {
     id: 'result',
     label: '검색 결과 화면',
-    before: '/exd-before-logsearch2.png',
-    after: '/exd-after-result.png',
+    before: asset('exd-before-logsearch2.png'),
+    after: asset('exd-after-result.png'),
     notes: [
       {
         n: 1,
