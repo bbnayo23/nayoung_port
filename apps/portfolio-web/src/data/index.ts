@@ -59,6 +59,63 @@ export const career: CareerItem[] = [
       },
     ],
   },
+  {
+    company: "한국정보보안원",
+    role: "Web Designer · Publisher",
+    period: "2020.03 — 2022.09 (2년 7개월)",
+    description:
+      "웹컨텐츠팀 주임 · 사내 디자인 업무 전반과 홈페이지·쇼핑몰 운영을 담당하고, 파견 프로젝트에서 웹디자인·퍼블리싱·프론트엔드 개발을 수행",
+    tags: [
+      "HTML/CSS",
+      "JavaScript",
+      "jQuery",
+      "Photoshop",
+      "Illustrator",
+      "Web Publishing",
+    ],
+    highlights: [
+      {
+        title: "Brand Identity & Design",
+        detail: "로고·챗봇 캐릭터 디자인 · 홍보물 제작 등 브랜드 아이덴티티 구축",
+      },
+      {
+        title: "Design Standardization",
+        detail: "업무·보고서·PPT 템플릿 제작으로 사내 문서 디자인 표준화",
+      },
+      {
+        title: "Web Service Operation",
+        detail: "홈페이지 신규 제작·유지보수 · 쇼핑몰 운영 및 콘텐츠 관리",
+      },
+      {
+        title: "Client Projects",
+        detail:
+          "시청자미디어재단 홈페이지 유지보수(2021.01–2022.06) · 생산기술연구원 빅데이터 플랫폼 구축(2022.03–06, 디자인·퍼블리싱·프론트엔드) · 방위사업청 국방통합원가시스템 고도화(2022.02–04, 디자인 리뉴얼·퍼블리싱)",
+      },
+    ],
+  },
+  {
+    company: "인터커뮤즈",
+    role: "Web Designer",
+    period: "2018.07 — 2019.09 (1년 3개월)",
+    description:
+      "디자인팀 사원 · 기업 홈페이지 기획부터 UI 디자인, 반응형 퍼블리싱, 유지보수·운영까지 전 과정 담당",
+    tags: ["HTML/CSS", "jQuery", "Responsive Web", "Photoshop", "UI Design"],
+    highlights: [
+      {
+        title: "Website Build",
+        detail:
+          "다양한 산업군의 홈페이지 구축 프로젝트를 기획·디자인·퍼블리싱 전 과정 수행",
+      },
+      {
+        title: "IA & Screen Design",
+        detail: "사용자 경험을 고려한 정보구조·화면 설계 경험 축적",
+      },
+      {
+        title: "Client Communication",
+        detail: "고객 요구사항을 반영하며 커뮤니케이션·유지보수 대응 역량 강화",
+      },
+    ],
+  },
 ];
 
 export type ProjectMedia = {
