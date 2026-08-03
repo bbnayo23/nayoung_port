@@ -1,8 +1,9 @@
 import { Badge } from '@/components/ui/Badge'
 import { projects } from '@/data'
 import type { Project } from '@/data'
+import { LegacyWork } from './LegacyWork'
 import {
-  section, inner, sectionTag, sectionTitle, moreTitle,
+  section, inner, sectionTag, sectionTitle, moreTitle, legacyBlock,
   grid, card, cardClickable, cardHeader, cardName,
   statusBadge, cardTagline, cardDesc,
   cardFooter, cardTags, cardLink,
@@ -166,6 +167,10 @@ export function Projects() {
             </div>
           </>
         )}
+
+        <div className={legacyBlock}>
+          <LegacyWork />
+        </div>
       </div>
     </section>
   )

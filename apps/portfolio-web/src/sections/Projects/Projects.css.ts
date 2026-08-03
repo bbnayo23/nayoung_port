@@ -330,6 +330,16 @@ export const caseLinks = style({
   gap: '18px',
 })
 
+/** 이전 이력(Earlier Work) 블록 — More 그리드 아래에 구분선을 두고 이어 붙인다. */
+export const legacyBlock = style({
+  marginTop: '64px',
+  paddingTop: '56px',
+  borderTop: `1px solid ${swiss.color.line}`,
+  '@media': {
+    'screen and (max-width: 640px)': { marginTop: '44px', paddingTop: '40px' },
+  },
+})
+
 export const moreTitle = style({
   fontFamily: swiss.font.mono,
   fontSize: '13px',
